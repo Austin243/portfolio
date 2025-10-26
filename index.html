@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Academic Portfolio Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chivo:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="hero" id="top">
+      <div class="hero__overlay"></div>
+      <nav class="nav">
+        <a class="nav__brand" href="#top">Austin Ellis</a>
+        <button class="nav__toggle" aria-expanded="false" aria-controls="site-menu">
+          <span class="sr-only">Toggle navigation</span>
+          &#9776;
+        </button>
+        <ul class="nav__links" id="site-menu">
+          <li><a href="#about">About</a></li>
+          <li><a href="#research">Research</a></li>
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="#service">Outreach</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="hero__content">
+        <div class="hero__avatar" aria-hidden="true"></div>
+        <div class="hero__text">
+          <h1>Austin Ellis</h1>
+          <p class="hero__tagline">
+            M.S. Chemistry candidate at CSU Northridge · Ph.D. applicant in theoretical &amp; computational materials science
+          </p>
+          <ul class="hero__meta">
+            <li><span class="meta__label">Research Focus:</span> Materials discovery and ML-accelerated electronic-structure methods.</li>
+            <li><span class="meta__label">Current Affiliation:</span> Graduate Research Assistant, Miao Lab · California State University, Northridge.</li>
+            <li><span class="meta__label">Contact:</span> austin.ellis.386@my.csun.edu · +1 (818) 384-4461</li>
+          </ul>
+          <div class="hero__actions">
+            <a class="btn" href="CV_1025.pdf" target="_blank" rel="noopener">Download CV</a>
+            <a class="btn btn--ghost" href="mailto:austin.ellis.386@my.csun.edu">Email Me</a>
+          </div>
+          <div class="hero__social">
+            <a href="mailto:austin.ellis.386@my.csun.edu" aria-label="Email Austin Ellis">Email</a>
+            <a href="https://www.linkedin.com/in/Austin243" aria-label="Austin Ellis on LinkedIn" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/Austin243" aria-label="Austin Ellis on GitHub" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://orcid.org/0009-0007-1031-132X" aria-label="Austin Ellis ORCID Profile" target="_blank" rel="noopener">ORCID</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" id="about">
+        <div class="section__inner split">
+          <div>
+            <h2>About</h2>
+            <p>
+              I am a Master of Science candidate in Chemistry at California State University, Northridge,
+              where I work in the Miao Lab on theoretical and computational materials chemistry. My research
+              centers on 2D materials, chemical behavior of materials under pressure, and machine-learning acceleration of
+              electronic-structure workflows for novel materials discovery.
+            </p>
+            <p>
+              I design automated, high-throughput pipelines for quantum chemistry calculations, maintain
+              our lab’s GPU-enabled HPC resources, and translate results into reports for collaborators,
+              DoD sponsors, and NSF programs. I am eager to bring this combination of methodological depth
+              and operational experience to a Ph.D. program focused on transformative materials research.
+            </p>
+          </div>
+          <aside class="aside-card">
+            <h3>At a Glance</h3>
+            <ul>
+              <li><strong>Current Role:</strong> Graduate Research Assistant, Miao Lab (CSUN), incoming PhD student (Fall 2026)</li>
+              <li><strong>Education:</strong> M.S. Chemistry (2023–present); B.S. Pharmacological Chemistry (UC San Diego, 2022)</li>
+              <li><strong>Research Interests:</strong> ML-guided materials discovery for energy, catalysis, and compute </li>
+              <li><strong>Technical:</strong> Python/PyTorch, high-throughput DFT, HPC admin</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section section--alt" id="research">
+        <div class="section__inner">
+          <h2>Research Interests</h2>
+          <div class="card-grid">
+            <article class="card">
+              <h3>AI-accelerated Materials Discovery</h3>
+              <p>
+                I am interested in developing and integrating autonomous workflows that combine high-throughput
+		calculation, ML, and experiment to improve the discovery process through inverse design. 
+              </p>
+            </article>
+            <article class="card">
+              <h3>Computational Design for Energy Storage</h3>
+              <p>
+                I am interested applying DFT and ML methods to help understand and predict ion transport, interfacial
+		stability, and degradation to help design next-generation solid-state electrolytes and electrode materials.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Thermodynamics and Kinetics</h3>
+              <p>
+                I am curious about the fundamental questions of why and how materials form. Hoping to contribute to the
+		process of modeling complex systems to predict and improve synthesizability and performance.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="publications">
+        <div class="section__inner">
+          <h2>Publications</h2>
+          <div class="timeline">
+            <article class="timeline__item">
+              <span class="timeline__year">2025</span>
+              <div class="timeline__body">
+                <h3>Batch Discovery of Complex Metal Superhydrides via an Effective Machine Learning Method Structured by Chemical Template Concept</h3>
+                <p>
+                  Yuanhui Sun, Austin Ellis, X. Chen, M. Miao. <em>Journal of the American Chemical Society</em>.
+                  Accepted, in press (DOI pending).
+                </p>
+              </div>
+            </article>
+            <article class="timeline__item">
+              <span class="timeline__year">2025</span>
+              <div class="timeline__body">
+                <h3>Pressure-induced Redox Reversal of Iron and the Distribution of Elements in Deep Earth</h3>
+                <p>
+                  X. Wang, X. Feng, J. Li, Austin Ellis, S. Scott, D. Khodagholian, J. Lin, M. G. Jackson,
+                  F. J. Spera, S. A. T. Redfern, M. Miao. <em>Proceedings of the National Academy of Sciences</em>.
+                  Accepted, in press (DOI pending).
+                </p>
+              </div>
+            </article>
+            <article class="timeline__item">
+              <span class="timeline__year">2025</span>
+              <div class="timeline__body">
+                <h3>Unlocking the Origin of High-Temperature Superconductivity in Molecular Hydrides at Moderate Pressures</h3>
+                <p>
+                  W. Zhao, Austin Ellis, D. Duan, H. Wang, Q. Jiang, M. Du, T. Cui, M. Miao.
+                  <em>Advanced Functional Materials</em> 35 (2025) 2415910. DOI: 10.1002/adfm.202415910.
+                </p>
+              </div>
+            </article>
+            <article class="timeline__item">
+              <span class="timeline__year">2024</span>
+              <div class="timeline__body">
+                <h3>Constructing Tunable Electrides on Monolayer Transition Metal Dichalcogenides</h3>
+                <p>
+                  Y. Sun, Austin Ellis, S. Diaz, W. Li, M. Miao. <em>The Journal of Physical Chemistry Letters</em>
+                  15 (23), 6174–6182 (2024). DOI: 10.1021/acs.jpclett.4c01263.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="service">
+        <div class="section__inner">
+          <h2>Leadership &amp; Outreach</h2>
+          <div class="card-grid">
+            <article class="card card--compact">
+              <h3>Chem/Biochem Journal Club</h3>
+              <p>
+                Co-founded CSUN’s first Chem/Biochem Journal Club, curating articles, scheduling presenters, and building participants’ communication skills through structured discussions and figure analysis.
+              </p>
+            </article>
+            <article class="card card--compact">
+              <h3>CSUN Research Showcase</h3>
+              <p>
+                Invited by the department to present exemplary CSUN research for visiting faculty from UCSD, City of Hope, UCI, and USC, highlighting computational chemistry contributions and networking opportunities.
+              </p>
+            </article>
+            <article class="card card--compact">
+              <h3>Undergraduate Outreach Speaker</h3>
+              <p>
+                Regularly volunteer to speak at Chemistry Club events, graduate panels, and Matador Day and Science Day programs, translating complex research topics for prospective and current undergraduates.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--alt" id="contact">
+        <div class="section__inner">
+          <div>
+            <h2>Get in Touch</h2>
+            <p>
+              I am actively seeking Ph.D. opportunities beginning Fall 2025. I welcome conversations with prospective advisors,
+              collaborators, and students interested in computational materials discovery and high-pressure chemistry.
+            </p>
+            <ul class="list">
+              <li><strong>Email:</strong> <a href="mailto:austin.ellis.386@my.csun.edu">austin.ellis.386@my.csun.edu</a></li>
+              <li><strong>Phone:</strong> <a href="tel:+18183844461">+1 (818) 384-4461</a></li>
+              <li><strong>Location:</strong> Los Angeles, California · Open to relocation</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <p>© <span id="year"></span> Austin Ellis · Built with love, minimal frustration, and static HTML/CSS.</p>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+
+    <script>
+      const navToggle = document.querySelector('.nav__toggle');
+      const navLinks = document.getElementById('site-menu');
+      navToggle.addEventListener('click', () => {
+        const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+        navToggle.setAttribute('aria-expanded', String(!expanded));
+        navLinks.classList.toggle('nav__links--open');
+      });
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
