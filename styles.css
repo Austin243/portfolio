@@ -305,6 +305,30 @@ main {
   color: rgba(28, 37, 48, 0.9);
 }
 
+.section#about p + p {
+  margin-top: 1rem;
+}
+
+.section#updates .section__inner {
+  display: block;
+}
+
+.section#updates h2 {
+  margin-bottom: 1rem;
+}
+
+.section#updates h3 {
+  margin: 1.25rem 0 0.5rem;
+}
+
+.section#updates h3:first-of-type {
+  margin-top: 0;
+}
+
+.section#updates p + p {
+  margin-top: 1rem;
+}
+
 .split {
   display: grid;
   gap: calc(var(--spacing-unit) * 2.5);
