@@ -329,6 +329,20 @@ main {
   margin-top: 1rem;
 }
 
+.updates-figure {
+  margin: 1rem 0 1.5rem;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  max-width: 820px;
+}
+
+.updates-figure img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 .split {
   display: grid;
   gap: calc(var(--spacing-unit) * 2.5);
