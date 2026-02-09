@@ -309,6 +309,14 @@ main {
   margin-top: 1rem;
 }
 
+.section#about {
+  padding-bottom: calc(var(--spacing-unit) * 3.5);
+}
+
+.section#updates {
+  padding-top: calc(var(--spacing-unit) * 3.5);
+}
+
 .section#updates .section__inner {
   display: block;
 }
@@ -552,6 +560,14 @@ main {
 
   .card-grid {
     grid-template-columns: 1fr;
+  }
+
+  .section#about {
+    padding-bottom: calc(var(--spacing-unit) * 2.5);
+  }
+
+  .section#updates {
+    padding-top: calc(var(--spacing-unit) * 2.5);
   }
 
   .footer__inner {
