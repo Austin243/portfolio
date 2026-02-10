@@ -350,11 +350,17 @@ main {
 }
 
 .updates-figure--medium {
-  max-width: 680px;
+  max-width: 560px;
 }
 
 .updates-figure--logo {
   max-width: 340px;
+  background: #111821;
+  padding: 0.75rem 1rem;
+}
+
+.updates-figure--logo img {
+  object-fit: contain;
 }
 
 .updates-figure img {
