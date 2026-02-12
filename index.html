@@ -3,272 +3,113 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Austin Ellis Portfolio</title>
+    <title>Austin Ellis | About</title>
+    <meta
+      name="description"
+      content="Austin Ellis - computational materials chemist focused on machine-learning-enabled materials discovery and high-throughput electronic-structure workflows."
+    >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Chivo:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500;600&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap"
       rel="stylesheet"
     >
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <header class="hero" id="top">
-      <div class="hero__overlay"></div>
-      <nav class="nav">
-        <a class="nav__brand" href="#top">Austin Ellis</a>
-        <button class="nav__toggle" aria-expanded="false" aria-controls="site-menu">
-          <span class="sr-only">Toggle navigation</span>
-          &#9776;
-        </button>
-        <ul class="nav__links" id="site-menu">
-          <li><a href="#about">About</a></li>
-          <li><a href="#updates">What I've Been Up To</a></li>
-          <li><a href="#posters">Posters</a></li>
-          <li><a href="#publications">Publications</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-      <div class="hero__content">
-        <div class="hero__avatar" aria-hidden="true"></div>
-        <div class="hero__text">
-          <h1>Austin Ellis</h1>
-          <p class="hero__tagline">
-            M.S. Chemistry candidate at CSU Northridge · Ph.D. applicant in theoretical &amp; computational materials science
-          </p>
-          <ul class="hero__meta">
-            <li><span class="meta__label">Research Focus:</span> Materials discovery and ML-accelerated electronic-structure methods.</li>
-            <li><span class="meta__label">Current Affiliation:</span> Graduate Research Assistant, Miao Lab · California State University, Northridge.</li>
-            <li><span class="meta__label">Contact:</span> austin.ellis.386@my.csun.edu · +1 (818) 384-4461</li>
-          </ul>
-          <div class="hero__actions">
-            <a class="btn" href="AustinEllisCV_0226.pdf" target="_blank" rel="noopener">Download CV</a>
-            <a class="btn btn--ghost" href="mailto:austin.ellis.386@my.csun.edu">Email Me</a>
-          </div>
-          <div class="hero__social">
-            <a href="mailto:austin.ellis.386@my.csun.edu" aria-label="Email Austin Ellis">Email</a>
-            <a href="https://www.linkedin.com/in/Austin243" aria-label="Austin Ellis on LinkedIn" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://github.com/Austin243" aria-label="Austin Ellis on GitHub" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://orcid.org/0009-0007-1031-132X" aria-label="Austin Ellis ORCID Profile" target="_blank" rel="noopener">ORCID</a>
-          </div>
+    <div class="site-shell">
+      <header class="site-header reveal" style="--delay: 0ms;">
+        <a class="brand" href="index.html">Austin Ellis</a>
+        <div class="header-links" aria-label="Quick header links">
+          <a href="mailto:austin.ellis.386@my.csun.edu">Email</a>
+          <a href="AustinEllisCV_0226.pdf" target="_blank" rel="noopener">CV</a>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <main>
-      <section class="section" id="about">
-        <div class="section__inner split">
-          <div>
-            <h2>About</h2>
-            <p>
-              I am a Master of Science candidate in Chemistry at California State University, Northridge,
-              where I work in the Miao Lab on theoretical and computational materials chemistry. My research
-              centers on 2D materials, chemical behavior of materials under pressure, and machine-learning acceleration of
-              electronic-structure workflows for novel materials discovery.
+      <main class="page">
+        <section class="landing reveal" style="--delay: 50ms;" aria-labelledby="about-intro">
+          <article class="card profile-stack">
+            <img class="avatar" src="profile.png" alt="Portrait of Austin Ellis" loading="eager">
+            <h1 class="hero-name" id="about-intro">Austin Ellis</h1>
+            <p class="hero-tagline">
+              M.S. Chemistry candidate at CSU Northridge
             </p>
-            <p>
-              I design automated, high-throughput pipelines for quantum chemistry calculations, maintain
-              our lab’s GPU-enabled HPC resources, and translate results into reports for collaborators,
-              DoD sponsors, and NSF programs.
+            <p class="hero-detail">
+              Ph.D. applicant in theoretical and computational materials science
             </p>
-          </div>
-          <aside class="aside-card">
-            <h3>At a Glance</h3>
-            <ul>
-              <li><strong>Current Role:</strong> Graduate Research Assistant, Miao Lab (CSUN)</li>
-              <li><strong>Education:</strong> M.S. Chemistry (2023 - May 2026); B.S. Pharmacological Chemistry (UC San Diego, 2022)</li>
-              <li><strong>Research Interests:</strong> ML-guided materials discovery for energy, catalysis, and compute </li>
-              <li><strong>Technical:</strong> Python/PyTorch, high-throughput DFT, HPC admin</li>
-            </ul>
-          </aside>
-        </div>
-      </section>
+          </article>
 
-      <section class="section" id="updates">
-        <div class="section__inner">
-          <h2>What I've Been Up To</h2>
-          <h3>Chem/Biochem Journal Club — February 20</h3>
-          <p>
-            I am excited to lead this semester’s first Chem/Biochem Journal Club meeting on February 20. We will discuss
-            <a href="https://pubs.acs.org/doi/full/10.1021/acs.chemmater.5c02578" target="_blank" rel="noopener"><em>Metallic Oxides and the Overlooked Role of Bandwidth</em></a>,
-            a very interesting <em>Chemistry of Materials</em> paper that connects solid-state chemistry with core electronic-structure concepts. If you are curious and want to attend, please <a href="mailto:austin.ellis.386@my.csun.edu">reach out by email</a>; beginners are absolutely welcome.
-          </p>
-          <figure class="updates-figure updates-figure--small">
-            <img src="journal_club_coverimage_feb20.jpeg" alt="Cover image for the February 20 Chem/Biochem Journal Club discussion.">
-          </figure>
-          <p>
-            Thank you to the UCSB team for such a fascinating piece of research.
-          </p>
-          <h3>DCOMP Travel Award — Global Physics Summit 2026</h3>
-          <p>
-            I received a DCOMP travel award to attend the Global Physics Summit 2026 in Denver, Colorado. I will be presenting my electron localization function (ELF) work that I first shared at NeurIPS AI4Mat in December.
-          </p>
-          <figure class="updates-figure updates-figure--logo">
-            <img src="dcomp_logo.png" alt="DCOMP logo associated with the Global Physics Summit travel award." loading="eager">
-          </figure>
-          <h3>GRC: Multifunctional Materials and Structures</h3>
-          <p>
-            In late January, I attended the Gordon Research Conference on Multifunctional Materials and Structures in Ventura, CA. I presented two posters: one on machine-learning-guided discovery of complex metal superhydrides and one on symmetry-aware deep-learning prediction of electron localization functions. It was an excellent chance to exchange ideas across disciplines and build new research connections.
-          </p>
-          <figure class="updates-figure updates-figure--medium">
-            <img src="grc_group_photo.jpeg" alt="Group photo from the Gordon Research Conference on Multifunctional Materials and Structures in Ventura, California.">
-          </figure>
-          <h3>CSUN Department News</h3>
-          <p>
-            Our lab's two most recent publications were featured on the CSUN Department of Science and Mathematics news site: one highlighting our machine-learning guided materials discovery work
-            (<a href="https://news.csun.edu/college-of-science-and-mathematics/the-latest-manuscript-on-machine-learning-to-design-new-materials-has-been-published-by-the-miao-lab/" target="_blank" rel="noopener">article link</a>)
-            and another covering pressure-induced redox reversal of iron in deep-Earth conditions
-            (<a href="https://news.csun.edu/college-of-science-and-mathematics/study-by-dr-miao-upends-our-understanding-of-what-happens-to-iron-at-earths-core/" target="_blank" rel="noopener">article link</a>).
-          </p>
-          <div class="updates-gallery" aria-label="Figures from CSUN Department News features">
-            <img src="department_news_figures/JACS_figure.webp" alt="Figure from the CSUN Department News feature on machine-learning-guided materials discovery." loading="lazy">
-            <img src="department_news_figures/earths_core.jpg" alt="Figure from the CSUN Department News feature on deep-Earth iron redox behavior." loading="lazy">
-          </div>
-          <h3>NeurIPS AI4Mat 2025</h3>
-          <p>
-            I am proud to announce that I received a travel grant to attend NeurIPS AI4Mat 2025 and will be presenting two posters there. One shares our JACS study on batch discovery of complex metal superhydrides and how template-guided ML accelerates the search for high-pressure materials
-            (<a href="77_ML_Batched_SHydrides.pdf" target="_blank" rel="noopener">PDF</a>). The other covers an in-progress symmetry-aware 3D-UNet that predicts electron localization functions from superposed atomic density grids with promising early accuracy
-            (<a href="82_Symmetry_Aware_Prediction.pdf" target="_blank" rel="noopener">PDF</a>).
-          </p>
-          <h3>CSUN Newsroom feature</h3>
-          <p>
-            Our group's work on pressure-driven redox reversal of iron and its role in element distribution deep in Earth was featured by CSUN Newsroom. The piece highlights how computational evidence for iron's redox reversal points to new bonding pathways for p-block elements under extreme pressure and can reshape models of core formation and evolution.
-            <a href="https://newsroom.csun.edu/2025/11/18/study-by-csun-prof-upends-understanding-of-what-happens-to-iron-at-earths-core/" target="_blank" rel="noopener">Read the story</a>.
-          </p>
-        </div>
-      </section>
+          <article class="card intro-card">
+            <h2>Computational materials chemistry with an ML-first workflow</h2>
+            <p class="lead">
+              I build high-throughput computational pipelines for materials discovery, with an emphasis on 2D materials,
+              high-pressure chemistry, and machine-learning acceleration of electronic-structure methods.
+            </p>
+            <div class="pill-row" aria-label="Research interests">
+              <span class="pill">2D materials</span>
+              <span class="pill">High-pressure chemistry</span>
+              <span class="pill">Machine learning for DFT</span>
+              <span class="pill">HPC automation</span>
+            </div>
+            <nav class="profile-links" aria-label="Profile links">
+              <a href="https://github.com/Austin243" target="_blank" rel="noopener">GitHub</a>
+              <a href="https://www.linkedin.com/in/Austin243" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://orcid.org/0009-0007-1031-132X" target="_blank" rel="noopener">ORCID</a>
+              <a href="https://scholar.google.com/citations?user=Y8mlpekAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+              <a href="mailto:austin.ellis.386@my.csun.edu">Email</a>
+            </nav>
+          </article>
+        </section>
 
-      <section class="section" id="posters">
-        <div class="section__inner">
-          <h2>Posters</h2>
-          <p>
-            A curated set of recent posters spanning machine-learning-guided materials discovery,
-            high-pressure chemistry, and symmetry-aware electronic-structure modeling.
+        <nav class="tabs reveal" style="--delay: 100ms;" aria-label="Portfolio tabs">
+          <a class="tab is-active" href="index.html" aria-current="page">About</a>
+          <a class="tab" href="updates.html">Recent News / Updates</a>
+          <a class="tab" href="posters.html">Posters</a>
+          <a class="tab" href="slides.html">Slides</a>
+          <a class="tab" href="blog.html">Blog</a>
+        </nav>
+
+        <section class="panel reveal" style="--delay: 140ms;" aria-labelledby="about-title">
+          <h2 class="panel-title" id="about-title">About Me</h2>
+          <p class="panel-subtitle">
+            Graduate Research Assistant, Miao Lab (CSUN), working at the intersection of computational chemistry,
+            condensed-matter theory, and scientific machine learning.
           </p>
-          <div class="card-grid">
-            <article class="card">
-              <h3>ML Batched Superhydrides</h3>
+
+          <div class="two-col">
+            <article class="info-card reveal" style="--delay: 190ms;">
+              <h3>Current Focus</h3>
               <p>
-                Template-guided machine learning for discovering stable complex metal superhydrides and
-                prioritizing promising high-pressure superconducting candidates.
+                Designing robust, GPU-enabled workflows for automated electronic-structure calculations and data-driven
+                model development across chemically diverse systems.
               </p>
-              <p><a href="posters/ML_BatchedSuperhydrides.pdf" target="_blank" rel="noopener">View poster (PDF)</a></p>
+              <ul class="key-list">
+                <li>Template-guided ML for complex superhydride discovery</li>
+                <li>Symmetry-aware prediction of electron localization functions</li>
+                <li>Pressure-driven reactivity and bonding behavior in deep-Earth systems</li>
+              </ul>
             </article>
-            <article class="card">
-              <h3>Molecular Hydrogen Metallization</h3>
-              <p>
-                DFT analysis of pressure-driven metal-insulator transitions in molecular hydrogen and how
-                evolving electronic delocalization relates to superconductivity pathways.
-              </p>
-              <p><a href="posters/MolecularHydrogen_Metallization.pdf" target="_blank" rel="noopener">View poster (PDF)</a></p>
-            </article>
-            <article class="card">
-              <h3>Symmetry-Aware ELF 3D-CNN</h3>
-              <p>
-                A periodic, symmetry-aware deep-learning model that predicts electron localization functions
-                from superposed atomic densities for fast electronic-structure screening.
-              </p>
-              <p><a href="posters/SeitzELF_3DCNN.pdf" target="_blank" rel="noopener">View poster (PDF)</a></p>
-            </article>
-            <article class="card">
-              <h3>Tunable Electrides in Monolayer TMDCs</h3>
-              <p>
-                Vacancy-controlled electride behavior in 2D transition-metal dichalcogenides and the impact
-                of localized interstitial electrons on catalytic hydrogen-evolution trends.
-              </p>
-              <p><a href="posters/TunableElectride_TMDCs.pdf" target="_blank" rel="noopener">View poster (PDF)</a></p>
-            </article>
-            <article class="card">
-              <h3>Cs Polyoxides and Core Reactivity Under Pressure</h3>
-              <p>
-                First-principles structure-search results showing pressure-induced breakdown of polyoxygen motifs
-                in Cs-O compounds and activation of Cs core-level electrons in high-pressure bonding.
-              </p>
-              <p><a href="posters/Cs_polyoxide_CoreReactivity.pdf" target="_blank" rel="noopener">View poster (PDF)</a></p>
+
+            <article class="info-card reveal" style="--delay: 240ms;">
+              <h3>At a Glance</h3>
+              <ul class="key-list">
+                <li><strong>Role:</strong> Graduate Research Assistant, Miao Lab</li>
+                <li><strong>Education:</strong> M.S. Chemistry (2023-2026), B.S. Pharmacological Chemistry (UCSD, 2022)</li>
+                <li><strong>Technical:</strong> Python, PyTorch, high-throughput DFT, HPC administration</li>
+                <li><strong>Location:</strong> Los Angeles, California</li>
+              </ul>
             </article>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      <section class="section" id="publications">
-        <div class="section__inner">
-          <h2>Publications</h2>
-          <div class="timeline">
-            <article class="timeline__item">
-              <span class="timeline__year">2025</span>
-              <div class="timeline__body">
-                <h3><a href="https://doi.org/10.1073/pnas.2414911122" target="_blank" rel="noopener">Pressure-induced Redox Reversal of Iron and the Distribution of Elements in Deep Earth</a></h3>
-                <p>
-                  X. Wang, X. Feng, J. Li, Y. Lv, A. Ellis, S. Scott, A. Pandit, D. Khodagholian, R. J. Hemley, M. G. Jackson,
-                  F. J. Spera, S. A. T. Redfern, M. Miao.
-                  <em>Proceedings of the National Academy of Sciences</em> 122, e2414911122 (2025). DOI 10.1073/pnas.2414911122.
-                </p>
-              </div>
-            </article>
-            <article class="timeline__item">
-              <span class="timeline__year">2025</span>
-              <div class="timeline__body">
-                <h3><a href="https://doi.org/10.1021/jacs.5c11731" target="_blank" rel="noopener">Batch Discovery of Complex Metal Superhydrides via an Effective Machine Learning Method Structured by Chemical Template Concept</a></h3>
-                <p>
-                  Y. Sun, A. Ellis, X. Chen, M. Miao.
-                  <em>Journal of the American Chemical Society</em> 147(44), 40407–40419 (2025). DOI 10.1021/jacs.5c11731.
-                </p>
-              </div>
-            </article>
-            <article class="timeline__item">
-              <span class="timeline__year">2025</span>
-              <div class="timeline__body">
-                <h3><a href="https://doi.org/10.1002/adfm.202415910" target="_blank" rel="noopener">Unlocking the Origin of High-Temperature Superconductivity in Molecular Hydrides at Moderate Pressures</a></h3>
-                <p>
-                  W. Zhao, Austin Ellis, D. Duan, H. Wang, Q. Jiang, M. Du, T. Cui, M. Miao.
-                  <em>Advanced Functional Materials</em> 35 (2025) 2415910. DOI 10.1002/adfm.202415910.
-                </p>
-              </div>
-            </article>
-            <article class="timeline__item">
-              <span class="timeline__year">2024</span>
-              <div class="timeline__body">
-                <h3><a href="https://doi.org/10.1021/acs.jpclett.4c01263" target="_blank" rel="noopener">Constructing Tunable Electrides on Monolayer Transition Metal Dichalcogenides</a></h3>
-                <p>
-                  Y. Sun, Austin Ellis, S. Diaz, W. Li, M. Miao. <em>The Journal of Physical Chemistry Letters</em>
-                  15 (23), 6174–6182 (2024). DOI 10.1021/acs.jpclett.4c01263.
-                </p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section--alt" id="contact">
-        <div class="section__inner">
-          <div>
-            <h2>Get in Touch</h2>
-            <ul class="list">
-              <li><strong>Email:</strong> <a href="mailto:austin.ellis.386@my.csun.edu">austin.ellis.386@my.csun.edu</a></li>
-              <li><strong>Phone:</strong> <a href="tel:+18183844461">+1 (818) 384-4461</a></li>
-              <li><strong>Location:</strong> Los Angeles, California</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="footer__inner">
-        <p>© <span id="year"></span> Austin Ellis · Built with love, minimal frustration, and static HTML/CSS.</p>
-        <a href="#top">Back to top ↑</a>
-      </div>
-    </footer>
+      <footer class="site-footer">
+        <p>© <span id="year"></span> Austin Ellis</p>
+        <a href="updates.html">Go to latest updates</a>
+      </footer>
+    </div>
 
     <script>
-      const navToggle = document.querySelector('.nav__toggle');
-      const navLinks = document.getElementById('site-menu');
-      navToggle.addEventListener('click', () => {
-        const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-        navToggle.setAttribute('aria-expanded', String(!expanded));
-        navLinks.classList.toggle('nav__links--open');
-      });
-
       document.getElementById('year').textContent = new Date().getFullYear();
     </script>
   </body>

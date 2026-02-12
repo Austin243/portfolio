@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Austin Ellis | Posters</title>
+    <meta
+      name="description"
+      content="Research posters by Austin Ellis on machine-learning-guided materials discovery and electronic-structure modeling."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500;600&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header reveal" style="--delay: 0ms;">
+        <a class="brand" href="index.html">Austin Ellis</a>
+        <div class="header-links" aria-label="Quick header links">
+          <a href="mailto:austin.ellis.386@my.csun.edu">Email</a>
+          <a href="AustinEllisCV_0226.pdf" target="_blank" rel="noopener">CV</a>
+        </div>
+      </header>
+
+      <main class="page">
+        <nav class="tabs reveal" style="--delay: 30ms;" aria-label="Portfolio tabs">
+          <a class="tab" href="index.html">About</a>
+          <a class="tab" href="updates.html">Recent News / Updates</a>
+          <a class="tab is-active" href="posters.html" aria-current="page">Posters</a>
+          <a class="tab" href="slides.html">Slides</a>
+          <a class="tab" href="blog.html">Blog</a>
+        </nav>
+
+        <section class="panel reveal" style="--delay: 80ms;" aria-labelledby="posters-title">
+          <h1 class="panel-title" id="posters-title">Posters</h1>
+          <p class="panel-subtitle">
+            A curated set of poster work spanning machine-learning-guided materials discovery, high-pressure chemistry,
+            and symmetry-aware electronic-structure modeling.
+          </p>
+
+          <div class="poster-grid">
+            <article class="poster-card reveal" style="--delay: 120ms;">
+              <h3>ML Batched Superhydrides</h3>
+              <p>
+                Template-guided machine learning for discovering stable complex metal superhydrides and prioritizing
+                promising high-pressure superconducting candidates.
+              </p>
+              <a class="button-link" href="posters/ML_BatchedSuperhydrides.pdf" target="_blank" rel="noopener">View poster (PDF)</a>
+            </article>
+
+            <article class="poster-card reveal" style="--delay: 160ms;">
+              <h3>Molecular Hydrogen Metallization</h3>
+              <p>
+                DFT analysis of pressure-driven metal-insulator transitions in molecular hydrogen and how evolving
+                electronic delocalization relates to superconductivity pathways.
+              </p>
+              <a class="button-link" href="posters/MolecularHydrogen_Metallization.pdf" target="_blank" rel="noopener">View poster (PDF)</a>
+            </article>
+
+            <article class="poster-card reveal" style="--delay: 200ms;">
+              <h3>Symmetry-Aware ELF 3D-CNN</h3>
+              <p>
+                A periodic, symmetry-aware deep-learning model that predicts electron localization functions from
+                superposed atomic densities for fast electronic-structure screening.
+              </p>
+              <a class="button-link" href="posters/SeitzELF_3DCNN.pdf" target="_blank" rel="noopener">View poster (PDF)</a>
+            </article>
+
+            <article class="poster-card reveal" style="--delay: 240ms;">
+              <h3>Tunable Electrides in Monolayer TMDCs</h3>
+              <p>
+                Vacancy-controlled electride behavior in 2D transition-metal dichalcogenides and the impact of localized
+                interstitial electrons on catalytic hydrogen-evolution trends.
+              </p>
+              <a class="button-link" href="posters/TunableElectride_TMDCs.pdf" target="_blank" rel="noopener">View poster (PDF)</a>
+            </article>
+
+            <article class="poster-card reveal" style="--delay: 280ms;">
+              <h3>Cs Polyoxides and Core Reactivity Under Pressure</h3>
+              <p>
+                First-principles structure-search results showing pressure-induced breakdown of polyoxygen motifs in Cs-O
+                compounds and activation of Cs core-level electrons in high-pressure bonding.
+              </p>
+              <a class="button-link" href="posters/Cs_polyoxide_CoreReactivity.pdf" target="_blank" rel="noopener">View poster (PDF)</a>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>© <span id="year"></span> Austin Ellis</p>
+        <a href="slides.html">Next tab: Slides</a>
+      </footer>
+    </div>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
