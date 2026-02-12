@@ -91,18 +91,18 @@
             <p>
               A key practical point is that they actually have enough data to probe scaling. They generate dielectric
               functions for 205,224 intermetallic compounds filtered from the Alexandria database, and they report
-              201,361 converged calculations that make it into the final dataset (<a href="#ref-3">[3]</a>).
+              201,361 converged calculations that make it into the final dataset (<a href="#ref-1">[1]</a>).
             </p>
             <p>
               They then train two closely related invariant graph neural networks. OptiMetal2B is a two-body
-              message-passing model. OptiMetal3B adds explicit three-body interactions (<a href="#ref-3">[3]</a>).
+              message-passing model. OptiMetal3B adds explicit three-body interactions (<a href="#ref-1">[1]</a>).
             </p>
 
             <h3>The part I am going to steal for MLIPs: scaling can have regimes</h3>
             <p>
               They subsample the training set over more than an order of magnitude in dataset size and they also sweep
               model size across orders of magnitude. The result is a clean look at how validation loss behaves as you
-              change D and N (<a href="#ref-3">[3]</a>).
+              change D and N (<a href="#ref-1">[1]</a>).
             </p>
 
             <figure class="blog-figure">
@@ -110,7 +110,7 @@
               <figcaption>
                 Figure 1. One-dimensional scaling curves in the OptiMetal models. The top panel shows validation loss
                 versus dataset size at fixed parameter count. The bottom panel shows validation loss versus parameter
-                count at fixed dataset size. From Grossmann et al. 2026 (<a href="#ref-3">[3]</a>).
+                count at fixed dataset size. From Grossmann et al. 2026 (<a href="#ref-1">[1]</a>).
               </figcaption>
             </figure>
 
@@ -118,44 +118,44 @@
               In their Figure 1 setup, the data scaling sweep holds the model size fixed at about 10 million
               parameters, and the parameter scaling sweep holds the dataset size fixed at 20,000 structures. They
               define the validation loss as the sum of mean absolute errors for the interband dielectric function and
-              the Drude frequency (<a href="#ref-3">[3]</a>).
+              the Drude frequency (<a href="#ref-1">[1]</a>).
             </p>
             <p>
               The dataset-size scaling is the surprising part. Instead of a single power law, they fit a smoothly
               broken power law and the slope changes around a crossover dataset size Dc. In the low-data regime the
               scaling exponent is around 0.15 to 0.18. Above Dc the exponent steepens to around 0.38 to 0.42. The
               fitted Dc values are around 10^4.43 to 10^4.72 training examples, so on the order of a few times 10^4
-              (<a href="#ref-3">[3]</a>).
+              (<a href="#ref-1">[1]</a>).
             </p>
             <p>
               What does that mean in plain terms? Early on, adding more data helps, but it helps slowly. After the
               crossover, each additional chunk of data buys you a larger reduction in validation loss than it did
               before. In their discussion, one way to think about this is that in the smallest data regime the model is
               underconstrained and can only learn broad trends, while finer structure-property correlations become
-              learnable once the dataset samples a wider range of environments (<a href="#ref-3">[3]</a>).
+              learnable once the dataset samples a wider range of environments (<a href="#ref-1">[1]</a>).
             </p>
             <p>
               Parameter scaling looks different. Validation loss improves with model size up to a few million
               parameters and then saturates quickly. They fit a power law with a saturation floor, with scaling
-              exponents around 0.41 to 0.58 depending on architecture (<a href="#ref-3">[3]</a>).
+              exponents around 0.41 to 0.58 depending on architecture (<a href="#ref-1">[1]</a>).
             </p>
             <p>
               A small methodological detail that I like is that they do not force one functional form. They compare
               multiple candidate scaling functions and select among them using AICc. In their fits, the broken power
               law is preferred for data scaling, and a saturating form is preferred for parameter scaling
-              (<a href="#ref-3">[3]</a>).
+              (<a href="#ref-1">[1]</a>).
             </p>
 
             <h3>Two dimensions matter: D and N interact</h3>
             <p>
               They also do a two-dimensional analysis where they vary dataset size and model size together and plot a
               full L(D, N) landscape. This matters because if you always keep the model heavily overparameterized, you
-              might see artifacts that are not intrinsic to the task (<a href="#ref-3">[3]</a>).
+              might see artifacts that are not intrinsic to the task (<a href="#ref-1">[1]</a>).
             </p>
             <p>
               Their 2D maps show that the story is more nuanced. In an intermediate regime where model capacity and
               data are better matched, the data scaling can look closer to a simple power law. As you push back into
-              strongly overparameterized settings, the broken behavior can re-emerge (<a href="#ref-3">[3]</a>).
+              strongly overparameterized settings, the broken behavior can re-emerge (<a href="#ref-1">[1]</a>).
             </p>
 
             <figure class="blog-figure">
@@ -163,7 +163,7 @@
               <figcaption>
                 Figure 2. Two-dimensional scaling maps L(D, N) for OptiMetal2B and OptiMetal3B. The heatmaps summarize
                 validation loss across dataset sizes and parameter counts, and the line plots show slices at fixed D or
-                fixed N. From Grossmann et al. 2026 (<a href="#ref-3">[3]</a>).
+                fixed N. From Grossmann et al. 2026 (<a href="#ref-1">[1]</a>).
               </figcaption>
             </figure>
 
@@ -171,7 +171,7 @@
               There is also a subtle but useful architectural point. Adding three-body interactions in OptiMetal3B
               shifts the curves downward and improves performance. In the 1D view, the exponents look broadly similar
               across architectures, but the 2D view suggests that increasing body order can improve data scaling
-              without changing parameter scaling much (<a href="#ref-3">[3]</a>).
+              without changing parameter scaling much (<a href="#ref-1">[1]</a>).
             </p>
 
             <h3>What I take from this for foundational MLIPs</h3>
@@ -186,7 +186,7 @@
             <p>
               Second, if you are in a regime where model capacity is not the limiting factor, scaling up the model may
               do very little. That is a reminder to not assume that larger always wins in the materials setting,
-              especially when data is expensive (<a href="#ref-3">[3]</a>).
+              especially when data is expensive (<a href="#ref-1">[1]</a>).
             </p>
             <p>
               Third, the idea that you might need to cross a threshold before you get into a data-efficient regime
@@ -198,7 +198,7 @@
             <p>
               That last point is more of an inference than a conclusion of the paper. The paper does not claim an
               MLIP-specific mechanism. But the regime change is a useful reminder that dataset diversity and dataset
-              size are not the same thing (<a href="#ref-3">[3]</a>).
+              size are not the same thing (<a href="#ref-1">[1]</a>).
             </p>
 
             <h2>Paper 2: Better without U: Impact of selective Hubbard U correction on foundational MLIPs</h2>
@@ -346,7 +346,7 @@
               The scaling-law paper is about quantity and regimes. It suggests that you might not see smooth
               diminishing returns with dataset size. You can have thresholds where the learning problem changes
               character. In practice, that means scaling studies can be worth doing even in materials, because your
-              intuition about where you are on the curve might be wrong (<a href="#ref-3">[3]</a>).
+              intuition about where you are on the curve might be wrong (<a href="#ref-1">[1]</a>).
             </p>
             <p>
               The Hubbard-U paper is about consistency. It shows that more data is not automatically better data. If
@@ -361,7 +361,7 @@
             <p>
               For MLIPs, the quantity that matters is not only how many structures you have. It is how well the dataset
               covers the local environments that define your target applications. Scaling curves can change slope when
-              the dataset starts covering the right modes, not just when D gets larger (<a href="#ref-3">[3]</a>).
+              the dataset starts covering the right modes, not just when D gets larger (<a href="#ref-1">[1]</a>).
             </p>
 
             <h3>Heuristic 2: Track energy provenance like it is part of the label</h3>
@@ -422,14 +422,6 @@
                 Warford T, Thiemann FL, Csanyi G. Better without U: Impact of selective Hubbard U correction on
                 foundational MLIPs. arXiv 2601.21056 (2026).
                 <a href="https://arxiv.org/html/2601.21056v1" target="_blank" rel="noopener">arXiv html</a>
-              </li>
-              <li id="ref-3">
-                Grossmann M, Grunert M, Runge E. PDF version for detailed figures and scaling analysis.
-                <a href="https://www.arxiv.org/pdf/2602.05702" target="_blank" rel="noopener">arXiv PDF</a>
-              </li>
-              <li id="ref-4">
-                Warford T, Thiemann FL, Csanyi G. arXiv abstract entry.
-                <a href="https://www.arxiv.org/abs/2601.21056" target="_blank" rel="noopener">arXiv abstract</a>
               </li>
             </ol>
           </article>
