@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Austin Ellis | Introduction</title>
+    <meta
+      name="description"
+      content="A short introduction to this blog and what these posts are for."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500;600&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header reveal" style="--delay: 0ms;">
+        <a class="brand" href="../../index.html">Austin Ellis</a>
+        <div class="header-links" aria-label="Quick header links">
+          <a href="mailto:austin.ellis.386@my.csun.edu">Email</a>
+          <a href="../../AustinEllisCV_0226.pdf" target="_blank" rel="noopener">CV</a>
+        </div>
+      </header>
+
+      <main class="page">
+        <nav class="tabs reveal" style="--delay: 30ms;" aria-label="Portfolio tabs">
+          <a class="tab" href="../../index.html">About</a>
+          <a class="tab" href="../../updates.html">Recent News / Updates</a>
+          <a class="tab" href="../../posters.html">Posters</a>
+          <a class="tab" href="../../slides.html">Slides</a>
+          <a class="tab is-active" href="../../blog.html" aria-current="page">Blog</a>
+        </nav>
+
+        <section class="panel article-panel reveal" style="--delay: 80ms;" aria-labelledby="post-title">
+          <p class="article-back-link"><a href="../../blog.html">Back to all blog posts</a></p>
+          <h1 class="panel-title" id="post-title">Introduction</h1>
+          <p class="post-meta">Austin Ellis | 2026</p>
+
+          <article class="article-content">
+            <p>
+              I have been keeping a running list of papers and ideas that I want to revisit later. Until now, that
+              list has mostly lived in private notes and half-finished whiteboard sketches.
+            </p>
+            <p>
+              This is my attempt to move a slice of that into public writing. I am going to post short write-ups of
+              papers I read and concepts I have been thinking about recently. There is no fixed schedule. Some posts
+              may come out back to back, and some topics may sit for a while before I get around to them.
+            </p>
+            <p>
+              This is mostly for me and maybe for people in my lab. Still, I am going to try to make these posts
+              usable. That means adding figures where it helps, and writing down the parts that tend to fade from
+              memory first. If any of this is interesting to someone else, or if you have been thinking about
+              something similar, I would love to hear from you.
+            </p>
+            <p>
+              The first technical post in this series is
+              <a href="../data-and-foundational-mlips/">Data and foundational MLIPs</a>, focused on the role of data
+              in foundational machine learning interatomic potentials.
+            </p>
+          </article>
+
+          <p class="article-back-link article-back-link--bottom">
+            <a href="../../blog.html">Back to all blog posts</a>
+          </p>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>© <span id="year"></span> Austin Ellis</p>
+        <a href="../../blog.html">Back to Blog Index</a>
+      </footer>
+    </div>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
