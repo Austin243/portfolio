@@ -6,7 +6,7 @@
     <title>Austin Ellis | About</title>
     <meta
       name="description"
-      content="Austin Ellis - computational materials scientist focused on machine-learning-enabled materials discovery and high-throughput electronic-structure workflows."
+      content="Austin Ellis - computational materials chemist focused on machine-learning-enabled materials discovery and high-throughput electronic-structure workflows."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,59 +19,93 @@
   <body>
     <div class="site-shell">
       <header class="site-header reveal" style="--delay: 0ms;">
-        <nav class="tabs tabs--top" aria-label="Portfolio tabs">
+        <a class="brand" href="index.html">Austin Ellis</a>
+        <div class="header-links" aria-label="Quick header links">
+          <a href="mailto:austin.ellis.386@my.csun.edu">Email</a>
+          <a href="AustinEllisCV_0226.pdf" target="_blank" rel="noopener">CV</a>
+        </div>
+      </header>
+
+      <main class="page">
+        <section class="landing reveal" style="--delay: 50ms;" aria-labelledby="about-intro">
+          <article class="card profile-stack">
+            <img class="avatar" src="profile.png" alt="Portrait of Austin Ellis" loading="eager">
+            <h1 class="hero-name" id="about-intro">Austin Ellis</h1>
+            <p class="hero-tagline">
+              M.S. Chemistry candidate at CSU Northridge
+            </p>
+            <p class="hero-detail">
+              Ph.D. applicant in theoretical and computational materials science
+            </p>
+          </article>
+
+          <article class="card intro-card">
+            <h2>Computational materials chemistry with an ML-first workflow</h2>
+            <p class="lead">
+              I build high-throughput computational pipelines for materials discovery, with an emphasis on 2D materials,
+              high-pressure chemistry, and machine-learning acceleration of electronic-structure methods.
+            </p>
+            <div class="pill-row" aria-label="Research interests">
+              <span class="pill">2D materials</span>
+              <span class="pill">High-pressure chemistry</span>
+              <span class="pill">Machine learning for DFT</span>
+              <span class="pill">HPC automation</span>
+            </div>
+            <nav class="profile-links" aria-label="Profile links">
+              <a href="https://github.com/Austin243" target="_blank" rel="noopener">GitHub</a>
+              <a href="https://www.linkedin.com/in/Austin243" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://orcid.org/0009-0007-1031-132X" target="_blank" rel="noopener">ORCID</a>
+              <a href="https://scholar.google.com/citations?user=Y8mlpekAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+              <a href="mailto:austin.ellis.386@my.csun.edu">Email</a>
+            </nav>
+          </article>
+        </section>
+
+        <nav class="tabs reveal" style="--delay: 100ms;" aria-label="Portfolio tabs">
           <a class="tab is-active" href="index.html" aria-current="page">About</a>
           <a class="tab" href="updates.html">Recent News / Updates</a>
           <a class="tab" href="posters.html">Posters</a>
           <a class="tab" href="slides.html">Slides</a>
           <a class="tab" href="blog.html">Blog</a>
         </nav>
-      </header>
 
-      <main class="page">
-        <section class="hero-center reveal" style="--delay: 70ms;" aria-labelledby="about-intro">
-          <img class="hero-avatar" src="profile.png" alt="Portrait of Austin Ellis" loading="eager">
-          <h1 class="hero-name" id="about-intro">Austin Ellis</h1>
-          <p class="hero-subtitle">M.S. Chemistry candidate at CSU Northridge</p>
-
-          <nav class="icon-links" aria-label="Profile links">
-            <a class="icon-link" href="https://github.com/Austin243" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
-              <span>GH</span>
-            </a>
-            <a class="icon-link" href="https://scholar.google.com/citations?user=Y8mlpekAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar">
-              <span>GS</span>
-            </a>
-            <a class="icon-link" href="https://www.linkedin.com/in/Austin243" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
-              <span>in</span>
-            </a>
-            <a class="icon-link" href="https://orcid.org/0009-0007-1031-132X" target="_blank" rel="noopener" aria-label="ORCID" title="ORCID">
-              <span>ID</span>
-            </a>
-            <a class="icon-link" href="mailto:austin.ellis.386@my.csun.edu" aria-label="Email" title="Email">
-              <span>@</span>
-            </a>
-            <a class="icon-link" href="AustinEllisCV_0226.pdf" target="_blank" rel="noopener" aria-label="CV" title="CV">
-              <span>CV</span>
-            </a>
-          </nav>
-
-          <p class="hero-description">
-            <strong>Computational materials scientist.</strong> I work on machine-learning-guided materials discovery,
-            high-throughput electronic-structure workflows, and pressure-dependent chemistry in complex materials.
+        <section class="panel reveal" style="--delay: 140ms;" aria-labelledby="about-title">
+          <h2 class="panel-title" id="about-title">About Me</h2>
+          <p class="panel-subtitle">
+            Graduate Research Assistant, Miao Lab (CSUN), working at the intersection of computational chemistry,
+            condensed-matter theory, and scientific machine learning.
           </p>
 
-          <div class="interest-links" aria-label="Research interests">
-            <span class="interest-tag">2D materials</span>
-            <span class="interest-tag">High-pressure chemistry</span>
-            <span class="interest-tag">ML for electronic structure</span>
-            <span class="interest-tag">HPC automation</span>
+          <div class="two-col">
+            <article class="info-card reveal" style="--delay: 190ms;">
+              <h3>Current Focus</h3>
+              <p>
+                Designing robust, GPU-enabled workflows for automated electronic-structure calculations and data-driven
+                model development across chemically diverse systems.
+              </p>
+              <ul class="key-list">
+                <li>Template-guided ML for complex superhydride discovery</li>
+                <li>Symmetry-aware prediction of electron localization functions</li>
+                <li>Pressure-driven reactivity and bonding behavior in deep-Earth systems</li>
+              </ul>
+            </article>
+
+            <article class="info-card reveal" style="--delay: 240ms;">
+              <h3>At a Glance</h3>
+              <ul class="key-list">
+                <li><strong>Role:</strong> Graduate Research Assistant, Miao Lab</li>
+                <li><strong>Education:</strong> M.S. Chemistry (2023-2026), B.S. Pharmacological Chemistry (UCSD, 2022)</li>
+                <li><strong>Technical:</strong> Python, PyTorch, high-throughput DFT, HPC administration</li>
+                <li><strong>Location:</strong> Los Angeles, California</li>
+              </ul>
+            </article>
           </div>
         </section>
       </main>
 
       <footer class="site-footer">
         <p>© <span id="year"></span> Austin Ellis</p>
-        <a href="updates.html">Go to updates</a>
+        <a href="updates.html">Go to latest updates</a>
       </footer>
     </div>
 
