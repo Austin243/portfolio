@@ -387,6 +387,11 @@ a:focus-visible {
   gap: 0.6rem;
 }
 
+.updates-gallery--trio {
+  max-width: 840px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .updates-gallery img {
   border-radius: 12px;
   border: 1px solid rgba(22, 34, 50, 0.1);
