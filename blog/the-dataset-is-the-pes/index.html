@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Austin Ellis | The dataset is the PES</title>
+  <meta name="description" content="A blog post on MatPES, data quality, potential energy surfaces, and foundation machine learning interatomic potentials.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500;600&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header reveal" style="--delay: 0ms;">
+      <a class="brand" href="../../index.html">Austin Ellis</a>
+      <div class="header-links" aria-label="Quick header links">
+        <a href="mailto:austin.ellis813@gmail.com">Email</a>
+        <a href="../../AustinEllisCV.pdf" target="_blank" rel="noopener">CV</a>
+      </div>
+    </header>
+
+    <main class="page">
+      <nav class="tabs reveal" style="--delay: 30ms;" aria-label="Portfolio tabs">
+        <a class="tab" href="../../index.html">About</a>
+        <a class="tab" href="../../updates.html">Updates</a>
+        <a class="tab" href="../../publications.html">Publications</a>
+        <a class="tab" href="../../posters.html">Posters</a>
+        <a class="tab" href="../../slides.html">Slides</a>
+        <a class="tab is-active" href="../../blog.html" aria-current="page">Blog</a>
+      </nav>
+
+      <section class="panel article-panel reveal" style="--delay: 80ms;" aria-labelledby="post-title">
+        <p class="article-back-link"><a href="../../blog.html">Back to all blog posts</a></p>
+        <h1 class="panel-title" id="post-title">The dataset is the PES</h1>
+        <p class="post-meta">Austin Ellis | 2026</p>
+
+        <article class="article-content">
+          <h2>Why this paper matters</h2>
+
+          <p>
+            Foundation machine learning interatomic potentials are usually discussed as models. That framing is not wrong, but it hides the most important part of the problem. A potential energy surface is not defined by an architecture. It is defined by the reference calculations, the structures chosen for those calculations, and the parts of configuration space that the training set makes visible.
+          </p>
+
+          <p>
+            Kaplan and coauthors make this point in a very concrete way with MatPES. They introduce a foundational potential energy surface dataset for materials and show that models trained on it can compete with or outperform models trained on much larger datasets. The paper is not just saying that smaller can beat bigger. The more useful message is that the way we sample a potential energy surface matters as much as the number of structures we count (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <p>
+            That is a big deal for materials discovery. We often use machine learning potentials as fast replacements for DFT relaxations or molecular dynamics. But the moment a model is used for dynamics, defects, phonons, surfaces, diffusion, or high pressure pathways, it is no longer enough to know that it can reproduce low energy structures. The model has to know the shape of the surface around and away from those minima.
+          </p>
+
+          <h2>Relaxed structures are not a surface</h2>
+
+          <p>
+            The paper starts from a problem that should be obvious but is easy to ignore. The most common training data for universal MLIPs comes from DFT relaxation trajectories in the Materials Project. Those trajectories are useful, but they were not generated to map potential energy surfaces. They mostly contain structures close to equilibrium. They also mix PBE and PBE+U calculations, and those choices can create inconsistencies in energies, forces, and stresses (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <p>
+            A relaxation trajectory is like watching a structure roll downhill. It tells you something about the valley near the final minimum. It tells you much less about the ridges, saddle regions, distorted local environments, and thermally sampled configurations that appear during real atomistic simulation. A dataset built mostly from relaxations can therefore look large while still being narrow in the places that matter for dynamics.
+          </p>
+
+          <p>
+            This is why I like the name MatPES. The target is not just formation energy. It is the potential energy surface. Energies, forces, and stresses all have to be consistent because together they define the local geometry of that surface. If the energy is right but the forces are wrong, the surface is wrong. If the forces are right near a minimum but wrong during a thermally distorted trajectory, the dynamics are wrong.
+          </p>
+
+          <h2>The main idea is sampling</h2>
+
+          <p>
+            MatPES begins with Materials Project ground state structures, but it does not stop there. The authors generate supercells and run 300 K constant pressure molecular dynamics using a pretrained M3GNet model. This produces about 281 million molecular dynamics snapshots and more than 16 billion atomic environments. They then use a two stage DIRECT sampling procedure to choose representative structures from this enormous configuration space before running expensive single point DFT (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <figure class="blog-figure">
+            <img src="figures/fig-01-matpes-workflow.png" alt="MatPES workflow showing molecular dynamics sampling, encoding, clustering, and single point DFT">
+            <figcaption>
+              Figure 1. The MatPES workflow. The important move is to sample a very large molecular dynamics configuration space and then choose representative structures for high quality single point DFT. Cropped from Kaplan and coauthors (<a href="#ref-1">[1]</a>).
+            </figcaption>
+          </figure>
+
+          <p>
+            The first practical lesson is that the expensive part is not only DFT. The expensive part is choosing which DFT calculations are worth doing. MatPES uses a learned model to explore cheaply, then uses DFT to label a carefully selected subset. That is exactly the kind of tiered strategy that keeps showing up in computational materials discovery. Use the fast model to search broadly. Use the expensive calculation to anchor the result.
+          </p>
+
+          <p>
+            The final version described in the paper contains 434,712 PBE calculations and 387,897 r<sup>2</sup>SCAN calculations. The broader initial pool includes 504,811 equilibrium and non equilibrium structures submitted to stringent single point DFT workflows. Those numbers are large, but they are not the main achievement. The main achievement is that the data are deliberately sampled from a much larger space rather than inherited from whatever structures happened to pass through relaxation workflows (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <h2>Quantity is not the same as coverage</h2>
+
+          <p>
+            Figure 2 is one of the clearest arguments in the paper. MatPES, MPtrj, and OMat24 have different distributions of cohesive energies and force magnitudes. MPtrj is narrow in force because it is dominated by relaxation data near minima. OMat24 samples many higher force configurations, but it undersamples near equilibrium environments. MatPES sits in the middle. It covers near equilibrium structures and meaningful off equilibrium distortions at the same time (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <figure class="blog-figure">
+            <img src="figures/fig-02-dataset-coverage.png" alt="Distributions of cohesive energy and force magnitudes for MatPES, MPtrj, and OMat24">
+            <figcaption>
+              Figure 2. Dataset coverage in cohesive energy and force magnitude. The point is not that one distribution is always best. The point is that a foundation potential needs both the bottom of the valley and the nearby slopes. Cropped from Kaplan and coauthors (<a href="#ref-1">[1]</a>).
+            </figcaption>
+          </figure>
+
+          <p>
+            This is where the paper is strongest. It refuses the lazy version of the data scaling argument. More structures are not automatically better if they repeat the same local environments or emphasize the wrong part of the surface. A million structures can be a small dataset if they all live in the same part of chemical and geometric space. A smaller dataset can be a better dataset if it covers the modes that determine the target applications.
+          </p>
+
+          <p>
+            That lesson is directly relevant to high pressure and low dimensional materials. A compressed hydride, a defected monolayer, or an interface with a reactive adsorbate is not just another equilibrium crystal. The local environment can sit far away from the common structures in a database. If those environments are not sampled, the model has no reason to be reliable there. Coverage has to be defined by the physics of the intended use, not by the size of the download.
+          </p>
+
+          <h2>The reference level is part of the model</h2>
+
+          <p>
+            A second important contribution is the r<sup>2</sup>SCAN portion of the dataset. Most universal MLIP work has relied on PBE because it is cheap and widely used. PBE is a good workhorse, but it can struggle with weaker ionic and van der Waals bonding. The paper argues that r<sup>2</sup>SCAN offers a better description of local bonding and intermediate van der Waals interactions without adding an explicit dispersion correction (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <p>
+            That matters because a foundation potential is not reference free. A PBE potential learns PBE chemistry. An r<sup>2</sup>SCAN potential learns r<sup>2</sup>SCAN chemistry. The architecture does not remove the identity of the functional. It only gives a fast approximation to that functional over a chosen part of configuration space.
+          </p>
+
+          <p>
+            This is a useful reminder for interpreting MLIP results. If a model predicts a phase transition, a diffusion barrier, or a phonon instability, the first question is not only whether the neural network is accurate. It is also which reference surface the model is trying to reproduce. MatPES makes this provenance cleaner by producing consistent PBE and r<sup>2</sup>SCAN labels under well specified workflows.
+          </p>
+
+          <h2>Benchmarks should look like use cases</h2>
+
+          <p>
+            The paper also improves the way the models are judged. The authors do not stop at random test error. They evaluate equilibrium relaxations, formation energies, bulk and shear moduli, heat capacity, off equilibrium forces, molecular dynamics stability, and ionic conductivity. That benchmark set is much closer to how people actually use interatomic potentials (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <p>
+            The equilibrium results are mostly favorable. MatPES trained UMLIPs generally relax structures closer to DFT reference geometries than MPRelax models of the same architecture. Formation energy accuracy is more mixed, which is not surprising. Formation energy can reward memorizing stable crystalline chemistry, while PES quality also depends on forces and distorted environments (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <p>
+            The near equilibrium benchmarks are more revealing. MatPES models improve shear moduli and off equilibrium force predictions, while bulk modulus and heat capacity are more comparable across datasets. That pattern makes sense. Bulk compression near a minimum is well represented in relaxation data. Shear and distorted forces probe directions where a narrow relaxation dataset has less information (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <figure class="blog-figure">
+            <img src="figures/fig-03-near-equilibrium-benchmarks.png" alt="Near equilibrium benchmark errors for MatPES, MPRelax, and OMat24 models">
+            <figcaption>
+              Figure 3. Near equilibrium property benchmarks. The improvements are most meaningful for quantities that depend on the shape of the surface away from the easiest relaxation path. Cropped from Kaplan and coauthors (<a href="#ref-1">[1]</a>).
+            </figcaption>
+          </figure>
+
+          <h2>Dynamics is where the surface gets tested</h2>
+
+          <p>
+            The molecular dynamics benchmark is the part I would pay the most attention to. A model can look fine in static energy tests and still fail when atoms move. The authors use a set of 172 battery materials and heat them from 300 K to 2,100 K. Simulations terminate if the volume explodes or atoms are lost. This is a blunt test, but it is a useful one because unstable dynamics expose bad forces quickly (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <p>
+            The MatPES models are much more stable than comparable MPRelax and OMat24 models. By 1500 K, fewer than 10 percent of the TensorNet MatPES PBE and r<sup>2</sup>SCAN simulations have terminated, while about 55 percent of TensorNet OMat24 PBE and about 65 percent of TensorNet MPF PBE simulations have terminated. The r<sup>2</sup>SCAN MatPES model is especially stable in this test (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <figure class="blog-figure">
+            <img src="figures/fig-04-md-benchmarks.png" alt="Molecular dynamics stability and ionic conductivity benchmarks for MatPES, MPF, and OMat24 models">
+            <figcaption>
+              Figure 4. Molecular dynamics benchmarks on battery materials. The heating curves show stability under motion, and the conductivity plots show whether the model can preserve a transport property across orders of magnitude. Cropped from Kaplan and coauthors (<a href="#ref-1">[1]</a>).
+            </figcaption>
+          </figure>
+
+          <p>
+            The ionic conductivity result is also interesting. TensorNet trained on MatPES reaches an R<sup>2</sup> value of 0.80 against AIMD conductivities, while TensorNet trained on OMat24 reaches 0.81. That looks like a tie until you notice the scale. The paper states that OMat24 is about 250 times larger for this comparison. TensorNet trained on MPF performs much worse, with negative R<sup>2</sup> in the same metric (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <p>
+            This is the paper in one result. Carefully sampled data can compete with brute force scale. That does not mean brute force is useless. It means scale without the right coverage is inefficient. For public science, that distinction matters because most academic groups cannot train on 100 million DFT structures or run enormous models every time they need a practical potential.
+          </p>
+
+          <h2>Open data changes who can participate</h2>
+
+          <p>
+            The open science part of the paper is not cosmetic. The authors point out that TensorNet training on the MatPES PBE dataset takes about 15 minutes per epoch on one Nvidia RTX A6000 GPU, while the same model on OMat24 takes about 20 hours per epoch on sixteen Nvidia A100 GPUs. Those are very different worlds of access (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <p>
+            The paper also makes the workflow more reusable. The DFT settings are implemented as MatPESStaticSet in pymatgen, and the static workflow can be launched through atomate2. That means a group can generate new labels for a specialized domain without inventing a different reference protocol. For foundation potentials, that kind of consistency is not bookkeeping. It is how fine tuning data stays on the same surface (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <p>
+            This is especially important for academic materials science. A closed 100 million structure dataset can be impressive and still be difficult to build on. A smaller open dataset with a clear sampling strategy, consistent labels, and reusable workflows can become a community object.
+          </p>
+
+          <h2>What this does not solve</h2>
+
+          <p>
+            I would not read MatPES as a finished universal dataset. The authors do not claim that either. The dataset is built from 300 K molecular dynamics around Materials Project derived crystals. That is a very broad starting point, but it is still a starting point. It does not automatically cover high temperature liquids, pressure induced phases, charged defects, surfaces, grain boundaries, catalytic transition states, amorphous structures, or the hydrogen networks that appear in high pressure superhydrides (<a href="#ref-1">[1]</a>).
+          </p>
+
+          <p>
+            This limitation is not a weakness of the paper. It is the next design problem. A foundation dataset has to be expandable in a controlled way. MatPES gives a sampling and labeling framework that can be extended to the missing regimes. That is more valuable than pretending the first release already contains every local environment a materials scientist will care about.
+          </p>
+
+          <p>
+            I would also be careful about treating a benchmark win as a trust certificate. A model that is stable for battery materials may still fail for a high pressure hydride, a defected transition metal dichalcogenide, or a surface reaction. The right conclusion is not that MatPES models can be used everywhere without thought. The right conclusion is that the route to trust is becoming more measurable.
+          </p>
+
+          <h2>Why it connects to my work</h2>
+
+          <p>
+            This paper fits naturally with the way I think about computational materials discovery. In my thesis work, machine learning was useful when it was tied to a physically meaningful workflow. For metal superhydrides, the model was not asked to discover everything directly. It helped screen metal templates before expensive hydrogen insertion and DFT validation. The point was to use data to focus first principles calculations, not to replace physical reasoning.
+          </p>
+
+          <p>
+            MatPES does the same thing at the level of the potential energy surface. A cheap learned model is used to explore a huge configuration space. Sampling compresses that space into a tractable set of high value structures. DFT then defines a consistent reference surface. The result is a dataset that is not just a collection of labels, but a deliberate map of where the model should know chemistry.
+          </p>
+
+          <p>
+            There is also a connection to interpretability. In my own work, descriptors like ELF matter because they turn electronic structure into something chemically readable. MatPES is not an interpretability paper in that sense, but it is still about making the object of learning clearer. It asks what part of the potential energy surface has been observed, what reference functional defines that surface, and which benchmarks reveal whether the learned surface is useful.
+          </p>
+
+          <h2>What I take from it</h2>
+
+          <p>
+            The strongest claim of the paper is not that MatPES is the final answer. The strongest claim is that foundation MLIPs need foundation datasets built for potential energy surfaces, not accidental mixtures of relaxation data. That difference changes how the whole field should think about progress.
+          </p>
+
+          <p>
+            Bigger models and bigger datasets will continue to matter. But the paper shows that dataset design can move the needle more efficiently than raw scale. Choosing representative structures, keeping the reference level consistent, including off equilibrium environments, and evaluating models on properties that look like real use cases are not secondary details. They are the scientific content of the model.
+          </p>
+
+          <p>
+            I think the next step is to make this kind of sampling more application aware. A foundation dataset for ordinary inorganic crystals is one thing. A foundation dataset that also knows high pressure chemistry, surfaces, defects, molecular hydrides, low dimensional materials, and transition states is a different object. MatPES gives a credible path toward that object. It makes the dataset feel less like training fuel and more like an experimental design for learning the potential energy surface.
+          </p>
+
+          <h2>References</h2>
+          <ol class="references-list">
+            <li id="ref-1">Kaplan A D, Liu R, Qi J, Ko T W, Deng B, Riebesell J, Ceder G, Persson K A, and Ong S P. A Foundational Potential Energy Surface Dataset for Materials. arXiv 2503.04070. 2025. <a href="https://arxiv.org/pdf/2503.04070" target="_blank" rel="noopener">arXiv pdf</a>.</li>
+            <li id="ref-2">Chen C and Ong S P. A universal graph neural network for accurate and efficient deep learning of interatomic potentials. Nature Computational Science. 2022.</li>
+            <li id="ref-3">Deng B and coauthors. CHGNet as a pretrained universal neural network potential for charge informed atomistic modelling. Nature Machine Intelligence. 2023.</li>
+            <li id="ref-4">Barroso-Luque L and coauthors. Open Materials 2024 OMat24 inorganic materials dataset and models. arXiv. 2024.</li>
+          </ol>
+
+          <p>
+            The figures in this post are cropped from reference <a href="#ref-1">[1]</a> for commentary and discussion.
+          </p>
+        </article>
+
+        <p class="article-back-link article-back-link--bottom"><a href="../../blog.html">Back to all blog posts</a></p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> Austin Ellis</p>
+      <a href="../../blog.html">Back to Blog Index</a>
+    </footer>
+  </div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
