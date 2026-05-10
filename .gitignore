@@ -1,2 +1,4 @@
 .DS_Store
 ._*
+blog/**/README.md
+blog/**/blog-index-entry.html

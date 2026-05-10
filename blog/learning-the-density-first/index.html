@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Austin Ellis | Learning the density first</title>
+  <meta
+    name="description"
+    content="A reflection on image super-resolution inspired electron density prediction, real-space electronic fields, and materials discovery workflows."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500;600&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header reveal" style="--delay: 0ms;">
+      <a class="brand" href="../../index.html">Austin Ellis</a>
+      <div class="header-links" aria-label="Quick header links">
+        <a href="mailto:austin.ellis813@gmail.com">Email</a>
+        <a href="../../AustinEllisCV.pdf" target="_blank" rel="noopener">CV</a>
+      </div>
+    </header>
+
+    <main class="page">
+      <nav class="tabs reveal" style="--delay: 30ms;" aria-label="Portfolio tabs">
+        <a class="tab" href="../../index.html">About</a>
+        <a class="tab" href="../../updates.html">Updates</a>
+        <a class="tab" href="../../publications.html">Publications</a>
+        <a class="tab" href="../../posters.html">Posters</a>
+        <a class="tab" href="../../slides.html">Slides</a>
+        <a class="tab is-active" href="../../blog.html" aria-current="page">Blog</a>
+      </nav>
+
+      <article class="panel article-panel reveal" style="--delay: 80ms;">
+        <p class="article-back-link"><a href="../../blog.html">Back to all blog posts</a></p>
+        <h1 class="panel-title">Learning the density first</h1>
+        <p class="post-meta">Austin Ellis | 2026</p>
+
+        <div class="article-content">
+        <p>
+          Most machine learning in quantum chemistry is still organized around energies. That makes sense. Energies are what we need for structures, forces, barriers, phase stability, and many workflows that feed directly into simulation. But energy is also a compressed target. It is a scalar that hides almost everything a chemist wants to inspect.
+        </p>
+
+        <p>
+          Electron density is different. It is not the full wavefunction, but it is much closer to the object that chemical reasoning actually uses. Bonding, charge transfer, polarization, electrostatics, and localization all leave real-space signatures in the density. The Hohenberg-Kohn theorem gives this statement a formal backbone. For a ground state system, the density determines the external potential and therefore the quantum state up to the usual conditions.
+        </p>
+
+        <p>
+          That is why the paper by Li, Sharir, Yuan, and Chan is more interesting than a simple accuracy benchmark. The paper treats electron density prediction as a 3D image super-resolution problem. Start with a crude superposition of atomic densities on a coarse grid. Pass it through a simple 3D residual network. Recover a high-resolution DFT density. Then, when needed, use a single Kohn-Sham diagonalization to get energies and orbitals from the predicted density [1].
+        </p>
+
+        <p>
+          I think the important point is not that computer vision can be imported into quantum chemistry. The important point is that this approach chooses the density as the learned object. That changes what the model is useful for. It can support property prediction, but it also gives a real-space field that can be inspected, transformed, and connected to chemistry.
+        </p>
+
+        <h2>The input is intentionally crude</h2>
+
+        <p>
+          The model begins from the superposition of atomic densities, or SAD. This is one of the simplest physical guesses one can make. Put neutral spherical atomic densities at the nuclear positions and add them. The result knows where the atoms are. It knows something about atomic size and electron count. It does not know the molecular redistribution that comes from bonding.
+        </p>
+
+        <p>
+          That crudeness is the point. If the input already required a semiempirical quantum calculation, then the model would be built on a calculation that can itself become expensive for large systems. Li and coauthors avoid that. The SAD guess only needs tabulated atoms and coordinates. Its cost scales linearly with molecular size [1].
+        </p>
+
+        <p>
+          The paper also tests an even worse input, which they call atrocious SAD. The density is spatially contracted by modifying the Gaussian exponents, so it keeps atom positions and relative atom sizes but becomes a poor density. Even then, the model recovers almost the same final density accuracy as it does from ordinary SAD [1].
+        </p>
+
+        <p>
+          That result changes how I read the method. The network is not making a delicate correction to a good initial guess. It is using a crude real-space scaffold as a way to encode geometry and chemistry without giving element labels directly. The learned map is doing the hard part.
+        </p>
+
+        <figure class="blog-figure">
+          <img src="figures/41467_2025_60095_Fig5_HTML.png" alt="Model architecture from Li and coauthors">
+          <figcaption>
+            Figure 1. Model architecture from Li, Sharir, Yuan, and Chan [1]. The original image is reproduced unchanged. The network maps a coarse SAD density to a refined density and then upscales the grid.
+          </figcaption>
+        </figure>
+
+        <h2>The accuracy result is strong, but the physical result matters more</h2>
+
+        <p>
+          On QM9, the SAD density has a large error. The model reduces that error by about two orders of magnitude and reaches roughly 0.16% density error on the test set [1]. Starting from atrocious SAD, the input error is even worse, yet the final predicted error is still close to the ordinary SAD result [1].
+        </p>
+
+        <p>
+          The density is not only evaluated as a field. The authors also feed the predicted density into a one-step DFT procedure. They build a Kohn-Sham Hamiltonian from the predicted density, diagonalize it once, and then extract electronic energies and orbital quantities. The electronic energy error is within chemical accuracy, even though the model was trained on density and not energy [1].
+        </p>
+
+        <p>
+          This is the part I find most important. The model is not just producing a pretty density. It is producing a density that is good enough to support a physically meaningful downstream calculation. That is a much higher bar than matching an image-like target. If the predicted field gave good pixel errors but failed when inserted into the Hamiltonian, it would be much less useful.
+        </p>
+
+        <figure class="blog-figure">
+          <img src="figures/41467_2025_60095_Fig1_HTML.png" alt="Energy error distribution for one-step DFT based on predicted density">
+          <figcaption>
+            Figure 2. Energy error distribution from the one-step DFT procedure in the paper [1]. The original image is reproduced unchanged. The key point is that density learning can support energy prediction even when energy is not the training target.
+          </figcaption>
+        </figure>
+
+        <p>
+          There is also a useful practical observation. Starting from the predicted density reduces the number of self-consistent field iterations needed to converge DFT. The paper reports 5.5 fewer iterations on average relative to ordinary SAD and 10.2 fewer relative to atrocious SAD [1]. That is not the same as replacing DFT, but it is a realistic way density prediction can enter existing workflows.
+        </p>
+
+        <h2>The transfer tests are the real paper</h2>
+
+        <p>
+          The QM9 result is impressive, but it is not the most interesting part of the paper. The more useful question is whether a density model can leave the dataset where it was trained.
+        </p>
+
+        <p>
+          The first transfer test uses C7O2H10 isomers and conformations sampled from molecular dynamics. These geometries are less like equilibrium QM9 structures. The zero-shot model gets worse, as it should. But the total energy from one-step DFT still stays within chemical accuracy [1]. With fine tuning on only the first two conformations from each trajectory, the model improves substantially on later conformations [1].
+        </p>
+
+        <p>
+          The water cluster test is also revealing. The model is trained on single gas-phase molecules, then tested on water clusters from 3 to 30 molecules. The density error grows, but the computational cost remains a small fraction of the DFT calculation, and fine tuning on limited water cluster data pushes the 30-water error down to 0.17% or 0.12% depending on the fine-tuning set [1].
+        </p>
+
+        <figure class="blog-figure">
+          <img src="figures/41467_2025_60095_Fig2_HTML.png" alt="Water cluster transfer test from the paper">
+          <figcaption>
+            Figure 3. Zero-shot density prediction and timings on water clusters [1]. The original image is reproduced unchanged. This is where the method starts to look like a practical front end for larger electronic structure problems.
+          </figcaption>
+        </figure>
+
+        <p>
+          The H2 and N2 scans are a small but useful sanity check. These molecules are not well represented in QM9. The density error is larger than in the easier transfer settings, but the one-step DFT potential energy surfaces remain accurate enough to recover the equilibrium bond lengths within the scan spacing of 0.01 angstrom [1].
+        </p>
+
+        <figure class="blog-figure">
+          <img src="figures/41467_2025_60095_Fig3_HTML.png" alt="H2 and N2 potential energy surfaces from predicted densities">
+          <figcaption>
+            Figure 4. Density error and potential energy surfaces for H2 and N2 [1]. The original image is reproduced unchanged. The model can have visible density error while still preserving the energetic shape near equilibrium.
+          </figcaption>
+        </figure>
+
+        <h2>Fine tuning is not an afterthought</h2>
+
+        <p>
+          The strongest transfer example is the microtubule-mediated GTP hydrolysis dataset. This is a much harder system than QM9. It has about 211 atoms on average, a total charge of minus 4, and elements not present in QM9, including phosphorus and magnesium [1].
+        </p>
+
+        <p>
+          The zero-shot model struggles. The average density error is 2.1%, and the element-specific error around magnesium is very large [1]. That failure is useful. It shows that the model did not magically learn chemistry outside its training distribution. It learned enough to be useful, but not enough to be trusted without new data.
+        </p>
+
+        <p>
+          After fine tuning on only 110 structures, which is 8% of the dataset, the test error falls to 0.33% on the remaining data [1]. Training from scratch on the same small set performs much worse. That is the real foundation-model behavior in this paper. The pretrained model is not universal. It is a strong starting point that can be cheaply specialized.
+        </p>
+
+        <figure class="blog-figure">
+          <img src="figures/41467_2025_60095_Fig4_HTML.png" alt="Microtubule GTP hydrolysis density prediction from the paper">
+          <figcaption>
+            Figure 5. Density prediction on a microtubule-mediated GTP hydrolysis model [1]. The original image is reproduced unchanged. The zero-shot model localizes much of the density but fine tuning greatly reduces error around the difficult chemical region.
+          </figcaption>
+        </figure>
+
+        <h2>Why the density target is a useful abstraction</h2>
+
+        <p>
+          Many machine learning models for chemistry make scalar predictions. That is efficient, but it can also hide failure. If a model predicts an energy, we can benchmark the energy, but we often do not know whether the model learned the right electronic reorganization. A density model exposes more of the mechanism.
+        </p>
+
+        <p>
+          In materials discovery, this matters because useful descriptors are often fields. Electron density, ELF, charge-density difference, electrostatic potential, and spin density all contain information that is difficult to compress into a single number. These quantities let us ask chemical questions. Where does charge accumulate. Which voids become electronically active. Which basins connect. Which regions polarize when a defect or surface is introduced.
+        </p>
+
+        <p>
+          This is why the paper feels closely connected to real-space materials descriptors. In my own work, the electron localization function is useful because it turns a complicated electronic calculation into a field that supports chemical reasoning. It can show where interstitial electrons localize, whether a metal lattice provides a chemical template, and whether local basins are likely to matter for stability or reactivity. The Li paper pushes in a similar direction, but with the electron density itself as the learned field.
+        </p>
+
+        <p>
+          The deeper lesson is that field prediction can be more than a shortcut. It can be a way to preserve interpretability while accelerating electronic structure workflows. A scalar property model can be fast and useful, but a learned density can still be inspected. That gives it a different scientific role.
+        </p>
+
+        <h2>What I would be careful about</h2>
+
+        <p>
+          I would not read this paper as saying that simple convolutional networks make symmetry unimportant. The authors are explicit that the model does not enforce the usual equivariances in the same way many molecular graph models do. Instead, the density representation has a useful transformation behavior when the molecule and grid are rotated together, and the training uses rotation augmentation [1].
+        </p>
+
+        <p>
+          That is a reasonable choice for the problems tested here. It may not be enough for every materials problem. Crystals add space-group symmetry, periodic equivalences, and origin choices. Interfaces and defects can create large boxes where a uniform grid becomes expensive. If the target is a periodic field in a solid, I would still want symmetry and periodicity treated as first-class constraints.
+        </p>
+
+        <p>
+          There is also a distinction between predicting a density and replacing electronic structure theory. Energies and orbitals in the paper still require a one-step DFT diagonalization. That step is much cheaper than a full SCF cycle, but it is not free. The paper also predicts pseudopotential valence densities rather than all-electron densities [1]. For many applications this is completely reasonable. For core-level spectroscopy or all-electron bonding analysis, it is not the final answer.
+        </p>
+
+        <p>
+          The most important caveat is the same caveat that shows up in almost every useful materials model. Transfer is not binary. Zero-shot transfer can work surprisingly well inside a related chemical domain, degrade across new elements, and then become strong again after fine tuning. That is not a weakness. It is the operating regime we should expect.
+        </p>
+
+        <h2>Why this matters for materials discovery</h2>
+
+        <p>
+          The paper is about molecules, but the idea is very relevant to materials. If we can learn accurate real-space electronic fields from cheap physical guesses, we get a new layer in the discovery workflow. A model can screen structures not only by predicted energy, but by predicted electronic organization.
+        </p>
+
+        <p>
+          For high pressure and low dimensional materials, that is especially valuable. These systems often depend on subtle charge redistribution, interstitial states, defect localization, and long-range electrostatics. A field model could help decide which candidates deserve expensive DFT, which structures have interesting void chemistry, or which interfaces are likely to polarize in a useful way.
+        </p>
+
+        <p>
+          I also like the possibility of hybrid models. A density model can provide electrostatics and long-range response, while an interatomic potential handles the remaining short-range energetic terms. The paper explicitly points to this kind of direction when discussing water clusters and long-range Coulomb energy [1]. That feels like a more physically natural route than expecting a short-range local model to learn every electronic effect through local messages alone.
+        </p>
+
+        <h2>What I take from it</h2>
+
+        <p>
+          The paper is strong because it makes a simple bet and follows it seriously. The bet is that the electron density can be treated as an image-like object without throwing away its physical meaning. The network does not need a complicated handcrafted chemistry representation. It needs a cheap real-space scaffold, enough data, and a target that contains the electronic structure rather than only its scalar consequences.
+        </p>
+
+        <p>
+          The approach is not a complete replacement for DFT. It is not a universal zero-shot chemistry engine. It is a practical way to learn a physically meaningful field, reuse it across related systems, and fine tune it when the chemistry changes. That is enough to make it important.
+        </p>
+
+        <p>
+          More broadly, I think this is where a lot of useful scientific machine learning will go. Not just faster energies. Not just bigger potentials. Learned fields that preserve the objects chemists already reason with. Density is the natural starting point, but ELF, spin density, polarization, and response fields all belong in the same conversation.
+        </p>
+
+        <h2>References</h2>
+        <ol class="references-list">
+          <li>Li, C., Sharir, O., Yuan, S. and Chan, G. K. L. Image super-resolution inspired electron density prediction. Nature Communications 16, 4811. 2025. doi 10.1038/s41467-025-60095-8.</li>
+          <li>Hohenberg, P. and Kohn, W. Inhomogeneous electron gas. Physical Review 136, B864. 1964.</li>
+          <li>Jorgensen, P. B. and Bhowmik, A. Equivariant graph neural networks for fast electron density estimation of molecules, liquids, and solids. npj Computational Materials 8, 183. 2022.</li>
+          <li>Rackers, J. A., Tecot, L., Geiger, M. and Smidt, T. E. A recipe for cracking the quantum scaling limit with machine learned electron densities. Machine Learning Science and Technology 4, 015027. 2023.</li>
+        </ol>
+
+        <p>
+          Figures 1 through 5 are reproduced unchanged from reference [1]. The article is distributed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+        </p>
+        </div>
+
+        <p class="article-back-link article-back-link--bottom"><a href="../../blog.html">Back to all blog posts</a></p>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> Austin Ellis</p>
+      <a href="../../blog.html">Back to Blog Index</a>
+    </footer>
+  </div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
