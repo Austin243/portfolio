@@ -624,7 +624,7 @@ a:focus-visible {
 
 .research-hero {
   display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(320px, 1.18fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.1rem;
   padding: 1.25rem;
   background: rgba(255, 255, 255, 0.88);
@@ -1111,12 +1111,6 @@ a:focus-visible {
 
   .section-heading .section-kicker {
     font-size: 1.62rem;
-  }
-}
-
-@media (max-width: 620px) {
-  .research-hero {
-    grid-template-columns: 1fr;
   }
 }
 
