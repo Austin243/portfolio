@@ -623,9 +623,8 @@ a:focus-visible {
 }
 
 .research-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 1fr);
-  gap: 1.1rem;
+  display: block;
+  max-width: 760px;
   padding: 1.25rem;
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid rgba(22, 34, 50, 0.11);
@@ -648,7 +647,7 @@ a:focus-visible {
   font-size: clamp(1.45rem, 1.15vw + 1rem, 2rem);
   font-weight: 700;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
+  text-transform: none;
   line-height: 1.1;
 }
 
@@ -1028,10 +1027,6 @@ a:focus-visible {
   }
 
   .two-col {
-    grid-template-columns: 1fr;
-  }
-
-  .research-hero {
     grid-template-columns: 1fr;
   }
 
