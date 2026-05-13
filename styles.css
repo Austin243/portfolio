@@ -671,7 +671,6 @@ a:focus-visible {
   color: var(--text-muted);
 }
 
-.method-row span,
 .methods-grid span {
   display: inline-flex;
   align-items: center;
@@ -893,17 +892,6 @@ a:focus-visible {
   margin: 0;
   color: var(--text-muted);
   line-height: 1.5;
-}
-
-.method-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.method-row span {
-  background: var(--surface-muted);
-  font-size: 0.78rem;
 }
 
 .project-links {
