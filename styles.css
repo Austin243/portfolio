@@ -1031,10 +1031,6 @@ a:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .research-hero {
-    grid-template-columns: 1fr;
-  }
-
   .research-page-title {
     font-size: 2.55rem;
   }
@@ -1123,6 +1119,12 @@ a:focus-visible {
 
   .section-heading .section-kicker {
     font-size: 1.62rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .research-hero {
+    grid-template-columns: 1fr;
   }
 }
 
