@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Austin Ellis | Research</title>
+    <meta
+      name="description"
+      content="Research portfolio for Austin Ellis: electronic structure, high-pressure chemistry, machine learning for DFT, and high-throughput materials discovery workflows."
+    >
+    <link rel="canonical" href="https://austinellis.org/research.html">
+    <meta property="og:title" content="Austin Ellis | Research">
+    <meta
+      property="og:description"
+      content="Computational chemistry for bonding, pressure, and materials discovery."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://austinellis.org/research.html">
+    <meta property="og:image" content="https://austinellis.org/assets/research/research-hero.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Austin Ellis | Research">
+    <meta
+      name="twitter:description"
+      content="Computational chemistry for bonding, pressure, and materials discovery."
+    >
+    <meta name="twitter:image" content="https://austinellis.org/assets/research/research-hero.webp">
+    <link rel="preload" as="image" href="assets/research/research-hero.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500;600&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header reveal" style="--delay: 0ms;">
+        <a class="brand" href="index.html">Austin Ellis</a>
+        <div class="header-links" aria-label="Quick header links">
+          <a href="mailto:austin.ellis813@gmail.com">Email</a>
+          <a href="AustinEllisCV.pdf" target="_blank" rel="noopener">CV</a>
+        </div>
+      </header>
+
+      <main class="page research-page">
+        <nav class="tabs reveal" style="--delay: 30ms;" aria-label="Portfolio tabs">
+          <a class="tab" href="index.html">About</a>
+          <a class="tab is-active" href="research.html" aria-current="page">Research</a>
+          <a class="tab" href="updates.html">Updates</a>
+          <a class="tab" href="publications.html">Publications</a>
+          <a class="tab" href="posters.html">Posters</a>
+          <a class="tab" href="slides.html">Slides</a>
+          <a class="tab" href="blog.html">Blog</a>
+        </nav>
+
+        <section class="research-hero reveal" style="--delay: 80ms;" aria-labelledby="research-title">
+          <div class="research-hero-copy">
+            <p class="section-kicker">Research</p>
+            <h1 id="research-title">Computational chemistry for bonding, pressure, and materials discovery.</h1>
+            <p class="research-subtitle">
+              I study how bonding and electronic structure change under pressure and reduced dimensionality, and how
+              machine learning can accelerate the search for new materials.
+            </p>
+            <p>
+              My work combines first-principles electronic-structure calculations, crystal-structure prediction,
+              high-throughput workflows, and machine learning to understand materials where conventional chemical
+              intuition becomes strained.
+            </p>
+            <div class="research-focus-row" aria-label="Research focus areas">
+              <span>Electronic structure</span>
+              <span>High pressure</span>
+              <span>Structure discovery</span>
+              <span>ML workflows</span>
+            </div>
+          </div>
+
+          <figure class="research-hero-figure">
+            <img
+              src="assets/research/research-hero.webp"
+              alt="Scientific montage showing a compressed crystal, an electron-localization field, and a machine-learning workflow"
+              width="1672"
+              height="941"
+              loading="eager"
+            >
+            <figcaption>
+              From atomic structure to real-space electronic descriptors to materials discovery.
+            </figcaption>
+          </figure>
+
+          <div class="research-map" aria-label="Research map from atomic structures to materials discovery">
+            <a class="map-step" href="#project-superhydrides">
+              <span>Atomic structure</span>
+              <strong>Template discovery</strong>
+            </a>
+            <a class="map-step" href="#project-hydrogen">
+              <span>DFT under pressure</span>
+              <strong>Hydrogen metallization</strong>
+            </a>
+            <a class="map-step" href="#project-elfnet">
+              <span>Real-space fields</span>
+              <strong>ELF prediction</strong>
+            </a>
+            <a class="map-step" href="#project-electrides">
+              <span>Materials insight</span>
+              <strong>2D electrides</strong>
+            </a>
+          </div>
+        </section>
+
+        <section class="research-section reveal" style="--delay: 130ms;" aria-labelledby="themes-title">
+          <div class="section-heading">
+            <p class="section-kicker">Research Themes</p>
+            <h2 id="themes-title">Scientific questions connected by bonding and electronic structure.</h2>
+          </div>
+
+          <div class="theme-grid">
+            <article class="theme-card reveal" style="--delay: 160ms;">
+              <div class="theme-mark" aria-hidden="true">ELF</div>
+              <h3>Real-space electronic structure</h3>
+              <p>Electron localization, ELF prediction, interstitial bonding, and field-based descriptors.</p>
+            </article>
+
+            <article class="theme-card reveal" style="--delay: 190ms;">
+              <div class="theme-mark" aria-hidden="true">H2</div>
+              <h3>High-pressure materials</h3>
+              <p>Superhydrides, molecular hydrogen, pressure-induced bonding, and superconductivity.</p>
+            </article>
+
+            <article class="theme-card reveal" style="--delay: 220ms;">
+              <div class="theme-mark" aria-hidden="true">ML</div>
+              <h3>Data-driven discovery</h3>
+              <p>Chemical templates, high-throughput DFT, ML screening, and structure prioritization.</p>
+            </article>
+
+            <article class="theme-card reveal" style="--delay: 250ms;">
+              <div class="theme-mark" aria-hidden="true">2D</div>
+              <h3>Reduced-dimensional chemistry</h3>
+              <p>2D electrides, TMDCs, vacancies, adsorption, and tunable interstitial electrons.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="research-section reveal" style="--delay: 170ms;" aria-labelledby="projects-title">
+          <div class="section-heading">
+            <p class="section-kicker">Featured Projects</p>
+            <h2 id="projects-title">Artifacts that show the research program forming.</h2>
+          </div>
+
+          <div class="project-grid">
+            <article class="project-card project-card--elf reveal" id="project-elfnet" style="--delay: 210ms;">
+              <figure class="project-media">
+                <img
+                  src="assets/research/elfnet-poster.webp"
+                  alt="Poster thumbnail for symmetry-aware prediction of electron localization functions"
+                  width="1400"
+                  height="2100"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="project-body">
+                <p class="project-kicker">Real-space electronic structure</p>
+                <h3>ELFNet and electronic-structure prediction</h3>
+                <p class="project-summary">
+                  Real-space electronic-structure prediction from superposed atomic densities.
+                </p>
+                <dl class="project-facts">
+                  <div>
+                    <dt>Scientific question</dt>
+                    <dd>Can electron localization be screened before full electronic-structure post-processing?</dd>
+                  </div>
+                  <div>
+                    <dt>Approach</dt>
+                    <dd>Periodic 3D CNNs map superposed atomic density grids to DFT electron localization functions.</dd>
+                  </div>
+                  <div>
+                    <dt>Main idea</dt>
+                    <dd>Fast ELF prediction can expose bonding and interstitial localization early in screening.</dd>
+                  </div>
+                </dl>
+                <div class="method-row" aria-label="ELFNet methods">
+                  <span>PyTorch</span>
+                  <span>3D CNN</span>
+                  <span>Periodic grids</span>
+                  <span>VASP ELF</span>
+                </div>
+                <nav class="project-links" aria-label="ELFNet links">
+                  <a href="https://openreview.net/forum?id=VHX3ubJCuK" target="_blank" rel="noopener">OpenReview</a>
+                  <a href="posters/SeitzELF_3DCNN.pdf" target="_blank" rel="noopener">Poster</a>
+                  <a href="slides/SeitzInvariantELF_APS_2026.pptx" target="_blank" rel="noopener">Slides</a>
+                  <a href="https://github.com/Austin243/ELFNet" target="_blank" rel="noopener">Code</a>
+                </nav>
+              </div>
+            </article>
+
+            <article class="project-card project-card--superhydrides reveal" id="project-superhydrides" style="--delay: 250ms;">
+              <figure class="project-media">
+                <img
+                  src="assets/research/superhydrides-template.webp"
+                  alt="Two-step chemical-template workflow for discovering metal superhydrides"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="project-body">
+                <p class="project-kicker">Chemical-template discovery</p>
+                <h3>Metal superhydrides from chemical templates</h3>
+                <p class="project-summary">
+                  Template-guided machine learning for complex high-pressure hydrides.
+                </p>
+                <dl class="project-facts">
+                  <div>
+                    <dt>Scientific question</dt>
+                    <dd>Can chemical templates reduce the search space for complex high-pressure hydrides?</dd>
+                  </div>
+                  <div>
+                    <dt>Approach</dt>
+                    <dd>Machine-learning screening, convex-hull validation, and first-principles calculations.</dd>
+                  </div>
+                  <div>
+                    <dt>Main idea</dt>
+                    <dd>Localized interstitial electrons can organize metal sublattices into new hydride prototypes.</dd>
+                  </div>
+                </dl>
+                <div class="method-row" aria-label="Superhydride methods">
+                  <span>DFT</span>
+                  <span>Convex hulls</span>
+                  <span>Templates</span>
+                  <span>ML screening</span>
+                </div>
+                <nav class="project-links" aria-label="Superhydrides links">
+                  <a href="https://doi.org/10.1021/jacs.5c11731" target="_blank" rel="noopener">JACS paper</a>
+                  <a href="posters/ML_BatchedSuperhydrides.pdf" target="_blank" rel="noopener">Poster</a>
+                  <a href="https://openreview.net/forum?id=dEtRvi7G5i" target="_blank" rel="noopener">AI4Mat</a>
+                  <a href="blog/when-crystal-prediction-learns-from-its-mistakes/">Related blog</a>
+                </nav>
+              </div>
+            </article>
+
+            <article class="project-card project-card--hydrogen reveal" id="project-hydrogen" style="--delay: 290ms;">
+              <figure class="project-media">
+                <img
+                  src="assets/research/hydrogen-poster.webp"
+                  alt="Poster thumbnail for molecular hydrogen metallization under high pressure"
+                  width="1400"
+                  height="1634"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="project-body">
+                <p class="project-kicker">Pressure-driven bonding</p>
+                <h3>Molecular hydrogen metallization</h3>
+                <p class="project-summary">
+                  Electronic delocalization in compressed molecular hydrogen phases.
+                </p>
+                <dl class="project-facts">
+                  <div>
+                    <dt>Scientific question</dt>
+                    <dd>How does molecular hydrogen move from an insulating molecular solid toward delocalization?</dd>
+                  </div>
+                  <div>
+                    <dt>Approach</dt>
+                    <dd>Electronic structure, band gaps, orbital character, and real-space localization analysis.</dd>
+                  </div>
+                  <div>
+                    <dt>Main idea</dt>
+                    <dd>Pressure can stretch H2 units and push charge into interstitial regions before full dissociation.</dd>
+                  </div>
+                </dl>
+                <div class="method-row" aria-label="Hydrogen metallization methods">
+                  <span>HSE06</span>
+                  <span>Band structure</span>
+                  <span>ELF</span>
+                  <span>Pressure</span>
+                </div>
+                <nav class="project-links" aria-label="Hydrogen metallization links">
+                  <a href="https://doi.org/10.1002/adfm.202415910" target="_blank" rel="noopener">AFM paper</a>
+                  <a href="posters/MolecularHydrogen_Metallization.pdf" target="_blank" rel="noopener">Poster</a>
+                  <a href="slides/Thesis_slides_draft_v4.pptx" target="_blank" rel="noopener">Thesis slides</a>
+                </nav>
+              </div>
+            </article>
+
+            <article class="project-card project-card--electrides reveal" id="project-electrides" style="--delay: 330ms;">
+              <figure class="project-media">
+                <img
+                  src="assets/research/electrides-poster.webp"
+                  alt="Poster thumbnail for tunable electrides on monolayer transition-metal dichalcogenides"
+                  width="1400"
+                  height="1634"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="project-body">
+                <p class="project-kicker">Reduced-dimensional chemistry</p>
+                <h3>Electrides and interstitial electrons in 2D materials</h3>
+                <p class="project-summary">
+                  Vacancy-tuned interstitial electrons in monolayer transition-metal dichalcogenides.
+                </p>
+                <dl class="project-facts">
+                  <div>
+                    <dt>Scientific question</dt>
+                    <dd>Can vacancies and reduced dimensionality stabilize chemically useful interstitial electrons?</dd>
+                  </div>
+                  <div>
+                    <dt>Approach</dt>
+                    <dd>DFT, ELF, vacancy engineering, and adsorption-energy trends across monolayer TMDCs.</dd>
+                  </div>
+                  <div>
+                    <dt>Main idea</dt>
+                    <dd>Localized interstitial electrons can tune surface reactivity and hydrogen-evolution trends.</dd>
+                  </div>
+                </dl>
+                <div class="method-row" aria-label="Electride methods">
+                  <span>TMDCs</span>
+                  <span>Vacancies</span>
+                  <span>ELF</span>
+                  <span>HER</span>
+                </div>
+                <nav class="project-links" aria-label="Electride links">
+                  <a href="https://doi.org/10.1021/acs.jpclett.4c01263" target="_blank" rel="noopener">JPCL paper</a>
+                  <a href="posters/TunableElectride_TMDCs.pdf" target="_blank" rel="noopener">Poster</a>
+                  <a href="slides/Thesis_slides_draft_v4.pptx" target="_blank" rel="noopener">Thesis slides</a>
+                </nav>
+              </div>
+            </article>
+
+            <article class="project-card project-card--wide reveal" id="project-workflows" style="--delay: 370ms;">
+              <figure class="project-media">
+                <img
+                  src="assets/research/workflow-map.webp"
+                  alt="Crystal-structure machine-learning workflow diagram with pretraining, validation, and sampling stages"
+                  width="1316"
+                  height="552"
+                  loading="lazy"
+                >
+              </figure>
+              <div class="project-body">
+                <p class="project-kicker">Reproducible computation</p>
+                <h3>High-throughput DFT and structure-search workflows</h3>
+                <p class="project-summary">
+                  Scalable workflows for structure generation, relaxation, post-processing, and screening.
+                </p>
+                <dl class="project-facts">
+                  <div>
+                    <dt>Scientific question</dt>
+                    <dd>How can structure prediction and electronic-structure analysis be made reproducible at scale?</dd>
+                  </div>
+                  <div>
+                    <dt>Approach</dt>
+                    <dd>Python, Bash, Slurm, VASP, CALYPSO, and PyTorch workflows across local and HPC systems.</dd>
+                  </div>
+                  <div>
+                    <dt>Main idea</dt>
+                    <dd>Reliable automation turns many calculations into a traceable materials-discovery campaign.</dd>
+                  </div>
+                </dl>
+                <div class="method-row" aria-label="Workflow methods">
+                  <span>Python</span>
+                  <span>Slurm</span>
+                  <span>VASP</span>
+                  <span>CALYPSO</span>
+                  <span>PyTorch</span>
+                </div>
+                <nav class="project-links" aria-label="Workflow links">
+                  <a href="https://github.com/Austin243" target="_blank" rel="noopener">GitHub</a>
+                  <a href="blog/the-dataset-is-the-pes/">Blog</a>
+                  <a href="AustinEllisCV.pdf" target="_blank" rel="noopener">CV</a>
+                </nav>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="research-section reveal" style="--delay: 210ms;" aria-labelledby="methods-title">
+          <div class="section-heading">
+            <p class="section-kicker">Methods and Tools</p>
+            <h2 id="methods-title">The computational stack behind the projects.</h2>
+          </div>
+
+          <div class="methods-grid" aria-label="Research methods and tools">
+            <span>DFT</span>
+            <span>VASP</span>
+            <span>CALYPSO</span>
+            <span>AIRSS</span>
+            <span>ELF</span>
+            <span>HSE06</span>
+            <span>r2SCAN</span>
+            <span>PyTorch</span>
+            <span>3D CNNs</span>
+            <span>Slurm</span>
+            <span>Python</span>
+            <span>High-throughput screening</span>
+          </div>
+        </section>
+
+        <section class="research-section reveal" style="--delay: 250ms;" aria-labelledby="artifacts-title">
+          <div class="section-heading">
+            <p class="section-kicker">Selected Research Artifacts</p>
+            <h2 id="artifacts-title">Where the details live.</h2>
+          </div>
+
+          <div class="artifact-grid">
+            <a class="artifact-link" href="publications.html">
+              <strong>Publications</strong>
+              <span>Journal and workshop papers</span>
+            </a>
+            <a class="artifact-link" href="posters.html">
+              <strong>Posters</strong>
+              <span>Conference research summaries</span>
+            </a>
+            <a class="artifact-link" href="slides.html">
+              <strong>Slides</strong>
+              <span>Talks and thesis deck</span>
+            </a>
+            <a class="artifact-link" href="blog.html">
+              <strong>Blog</strong>
+              <span>Short technical write-ups</span>
+            </a>
+            <a class="artifact-link" href="https://github.com/Austin243" target="_blank" rel="noopener">
+              <strong>Code</strong>
+              <span>Public repositories</span>
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>&copy; <span id="year"></span> Austin Ellis</p>
+        <a href="updates.html">Next tab: Updates</a>
+      </footer>
+    </div>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

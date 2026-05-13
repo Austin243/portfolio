@@ -2,54 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://austinellis.org/</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-13</lastmod>
+  </url>
+  <url>
+    <loc>https://austinellis.org/research.html</loc>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/updates.html</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/publications.html</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/posters.html</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/slides.html</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/blog.html</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/blog/introduction/</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/blog/data-and-foundational-mlips/</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/blog/when-foundation-potentials-learn-the-same-chemistry/</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/blog/learning-the-density-first/</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/blog/when-crystal-prediction-learns-from-its-mistakes/</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/blog/the-dataset-is-the-pes/</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
   <url>
     <loc>https://austinellis.org/blog/when-electrons-keep-score/</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-13</lastmod>
   </url>
 </urlset>
