@@ -623,8 +623,9 @@ a:focus-visible {
 }
 
 .research-hero {
-  display: block;
-  max-width: 760px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 1fr);
+  gap: 1.1rem;
   padding: 1.25rem;
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid rgba(22, 34, 50, 0.11);
@@ -1027,6 +1028,10 @@ a:focus-visible {
   }
 
   .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .research-hero {
     grid-template-columns: 1fr;
   }
 
