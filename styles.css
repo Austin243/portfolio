@@ -671,13 +671,6 @@ a:focus-visible {
   color: var(--text-muted);
 }
 
-.research-focus-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.research-focus-row span,
 .method-row span,
 .methods-grid span {
   display: inline-flex;
@@ -714,60 +707,6 @@ a:focus-visible {
   border-top: 1px solid rgba(22, 34, 50, 0.08);
   color: var(--text-muted);
   font-size: 0.9rem;
-}
-
-.research-map {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.7rem;
-  padding-top: 0.2rem;
-}
-
-.map-step {
-  position: relative;
-  display: grid;
-  gap: 0.18rem;
-  min-height: 88px;
-  padding: 0.9rem 1rem;
-  border: 1px solid rgba(18, 102, 109, 0.18);
-  border-radius: var(--radius-md);
-  background:
-    linear-gradient(135deg, rgba(18, 102, 109, 0.08), rgba(198, 107, 61, 0.08)),
-    var(--surface-strong);
-  color: var(--text);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.map-step:hover,
-.map-step:focus-visible {
-  transform: translateY(-2px);
-  border-color: rgba(18, 102, 109, 0.38);
-  box-shadow: 0 12px 24px rgba(18, 34, 50, 0.1);
-}
-
-.map-step:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: -0.47rem;
-  width: 0.38rem;
-  height: 0.38rem;
-  border-top: 2px solid rgba(18, 102, 109, 0.48);
-  border-right: 2px solid rgba(18, 102, 109, 0.48);
-  transform: translateY(-50%) rotate(45deg);
-}
-
-.map-step span {
-  color: var(--text-muted);
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.map-step strong {
-  font-size: 1rem;
-  line-height: 1.25;
 }
 
 .research-section {
@@ -1124,7 +1063,6 @@ a:focus-visible {
     font-size: 2.55rem;
   }
 
-  .research-map,
   .theme-grid,
   .project-grid,
   .artifact-grid {
@@ -1197,19 +1135,10 @@ a:focus-visible {
     font-size: 1rem;
   }
 
-  .research-map,
   .theme-grid,
   .project-grid,
   .artifact-grid {
     grid-template-columns: 1fr;
-  }
-
-  .map-step {
-    min-height: 0;
-  }
-
-  .map-step:not(:last-child)::after {
-    display: none;
   }
 
   .project-card--wide .project-media img {
