@@ -623,7 +623,7 @@ a:focus-visible {
 
 .research-hero {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 1fr);
   gap: 1.1rem;
   padding: 1.25rem;
   background: rgba(255, 255, 255, 0.88);
@@ -693,6 +693,7 @@ a:focus-visible {
 }
 
 .research-hero-figure {
+  align-self: start;
   margin: 0;
   border: 1px solid rgba(22, 34, 50, 0.11);
   border-radius: 18px;
@@ -792,7 +793,7 @@ a:focus-visible {
 .theme-grid {
   display: grid;
   gap: 0.85rem;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .theme-card,
