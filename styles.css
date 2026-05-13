@@ -693,10 +693,9 @@ a:focus-visible {
 }
 
 .research-hero-figure img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
+  width: auto;
+  max-width: 100%;
   height: auto;
-  object-fit: contain;
 }
 
 .research-hero-figure figcaption {
