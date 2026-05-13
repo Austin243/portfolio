@@ -881,6 +881,15 @@ a:focus-visible {
   object-fit: cover;
 }
 
+.project-media--contain {
+  background: #ffffff;
+}
+
+.project-media--contain img {
+  padding: 0.8rem;
+  object-fit: contain;
+}
+
 .project-card--wide .project-media img {
   height: 100%;
   min-height: 390px;
