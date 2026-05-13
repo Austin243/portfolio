@@ -624,7 +624,7 @@ a:focus-visible {
 
 .research-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 1fr);
+  grid-template-columns: minmax(0, 0.82fr) minmax(320px, 1.18fr);
   gap: 1.1rem;
   padding: 1.25rem;
   background: rgba(255, 255, 255, 0.88);
@@ -696,13 +696,6 @@ a:focus-visible {
   width: auto;
   max-width: 100%;
   height: auto;
-}
-
-.research-hero-figure figcaption {
-  padding: 0.62rem 0.78rem 0.7rem;
-  border-top: 1px solid rgba(22, 34, 50, 0.08);
-  color: var(--text-muted);
-  font-size: 0.9rem;
 }
 
 .research-section {
