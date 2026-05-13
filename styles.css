@@ -866,6 +866,7 @@ a:focus-visible {
 .project-media {
   margin: 0;
   min-width: 0;
+  aspect-ratio: 2 / 1;
   background: #f5f8f7;
   border-bottom: 1px solid rgba(22, 34, 50, 0.08);
 }
@@ -877,17 +878,8 @@ a:focus-visible {
 
 .project-media img {
   width: 100%;
-  height: 260px;
+  height: 100%;
   object-fit: cover;
-}
-
-.project-media--contain {
-  background: #ffffff;
-}
-
-.project-media--contain img {
-  padding: 0.8rem;
-  object-fit: contain;
 }
 
 .project-card--wide .project-media img {
@@ -898,7 +890,7 @@ a:focus-visible {
 .project-card--elf .project-media img,
 .project-card--hydrogen .project-media img,
 .project-card--electrides .project-media img {
-  object-position: 50% 18%;
+  object-position: 50% 50%;
 }
 
 .project-card--superhydrides .project-media img {
@@ -1219,7 +1211,6 @@ a:focus-visible {
     display: none;
   }
 
-  .project-media img,
   .project-card--wide .project-media img {
     height: 220px;
   }
