@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Austin Ellis | Technical</title>
+    <title>Austin Ellis | Tech</title>
     <meta
       name="description"
-      content="Technical profile for Austin Ellis: Linux and Slurm HPC administration, scientific software environments, Python, PyTorch, automation, and research computing support."
+      content="Technical profile for Austin Ellis: Linux and Slurm HPC administration, scientific software environments, Python automation, PyTorch workflows, and research computing support."
     >
     <link rel="canonical" href="https://austinellis.org/technical.html">
-    <meta property="og:title" content="Austin Ellis | Technical">
+    <meta property="og:title" content="Austin Ellis | Tech">
     <meta
       property="og:description"
       content="Linux and Slurm HPC administration, scientific software environments, Python, PyTorch, automation, and research computing support."
@@ -17,7 +17,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://austinellis.org/technical.html">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Austin Ellis | Technical">
+    <meta name="twitter:title" content="Austin Ellis | Tech">
     <meta
       name="twitter:description"
       content="Linux and Slurm HPC administration, scientific software environments, Python, PyTorch, automation, and research computing support."
@@ -44,7 +44,7 @@
         <nav class="tabs reveal" style="--delay: 30ms;" aria-label="Portfolio tabs">
           <a class="tab" href="index.html">About</a>
           <a class="tab" href="research.html">Research</a>
-          <a class="tab is-active" href="technical.html" aria-current="page">Technical</a>
+          <a class="tab is-active" href="technical.html" aria-current="page">Tech</a>
           <a class="tab" href="updates.html">Updates</a>
           <a class="tab" href="publications.html">Publications</a>
           <a class="tab" href="posters.html">Posters</a>
@@ -55,230 +55,106 @@
         <section class="technical-hero reveal" style="--delay: 80ms;" aria-labelledby="technical-title">
           <div class="technical-hero-copy">
             <p class="section-kicker">Technical Profile</p>
-            <h1 class="technical-title" id="technical-title">Research computing, scientific software, and HPC operations</h1>
+            <h1 class="technical-title" id="technical-title">HPC systems, scientific software, and research automation</h1>
             <p class="technical-subtitle">
-              I build and maintain Linux computing environments, software stacks, and automation that make research
-              workflows easier to run, debug, and reproduce.
+              Hands-on support for Linux/Slurm clusters, chemistry software stacks, and Python workflows used in
+              computational chemistry research.
             </p>
-            <p>
-              At CSU Northridge, I managed two NSF-funded HPC clusters for the College of Science and Mathematics,
-              supporting Slurm scheduling, Linux administration, software environments, GPU-capable nodes, and day-to-day
-              user troubleshooting.
-            </p>
+            <ul class="technical-facts">
+              <li>
+                <strong>Cluster scope:</strong> managed two NSF-funded CSUN HPC clusters for the College of Science and
+                Mathematics, including Linux access, Slurm queues, shared filesystems, and user support.
+              </li>
+              <li>
+                <strong>Software scope:</strong> maintained Python, Conda, compiler, CUDA, VASP, Quantum ESPRESSO, ASE,
+                pymatgen, PyTorch, and TensorBoard environments.
+              </li>
+              <li>
+                <strong>Automation scope:</strong> wrote Bash and Python tools for job setup, queue checks, log summaries,
+                output validation, filesystem cleanup, and reproducible setup notes.
+              </li>
+            </ul>
             <div class="pill-row" aria-label="Technical strengths">
               <span class="pill">Linux</span>
               <span class="pill">Slurm</span>
               <span class="pill">Python</span>
-              <span class="pill">PyTorch</span>
               <span class="pill">Bash</span>
-              <span class="pill">CUDA environments</span>
+              <span class="pill">PyTorch</span>
+              <span class="pill">CUDA</span>
+              <span class="pill">VASP</span>
               <span class="pill">Git</span>
-              <span class="pill">User support</span>
             </div>
-          </div>
-
-          <figure class="technical-map" aria-label="Research computing stack diagram">
-            <div class="technical-map-title">
-              <span>Research Computing Stack</span>
-              <strong>Operations to analysis</strong>
-            </div>
-            <div class="technical-layers">
-              <div class="technical-layer">
-                <span class="technical-node">Access</span>
-                <strong>Users, groups, SSH, permissions</strong>
-              </div>
-              <div class="technical-layer">
-                <span class="technical-node">Scheduler</span>
-                <strong>Slurm queues, jobs, node state</strong>
-              </div>
-              <div class="technical-layer">
-                <span class="technical-node">Software</span>
-                <strong>Compilers, Python, CUDA, research codes</strong>
-              </div>
-              <div class="technical-layer">
-                <span class="technical-node">Workflows</span>
-                <strong>Scripts, logs, parsing, reproducible runs</strong>
-              </div>
-            </div>
-          </figure>
-        </section>
-
-        <section class="technical-section reveal" style="--delay: 130ms;" aria-labelledby="skills-title">
-          <div class="section-heading">
-            <h2 class="section-kicker" id="skills-title">Core Skills</h2>
-          </div>
-
-          <div class="technical-grid">
-            <article class="technical-card reveal" style="--delay: 170ms;">
-              <h3>HPC systems administration</h3>
-              <p>
-                Operate Linux/Slurm research computing systems, monitor queues and node health, manage access, troubleshoot
-                user issues, and keep shared cluster environments usable for research groups.
-              </p>
-              <div class="skill-tags">
-                <span>Linux</span>
-                <span>Slurm</span>
-                <span>SSH</span>
-                <span>Permissions</span>
-                <span>Queue monitoring</span>
-              </div>
-            </article>
-
-            <article class="technical-card reveal" style="--delay: 210ms;">
-              <h3>Scientific software environments</h3>
-              <p>
-                Install, configure, and debug software stacks for computational chemistry, Python analysis, GPU-enabled
-                workloads, and shared research workflows.
-              </p>
-              <div class="skill-tags">
-                <span>Python</span>
-                <span>CUDA</span>
-                <span>Compilers</span>
-                <span>Conda</span>
-                <span>Research codes</span>
-              </div>
-            </article>
-
-            <article class="technical-card reveal" style="--delay: 250ms;">
-              <h3>Automation and scripting</h3>
-              <p>
-                Write shell and Python tools for job setup, filesystem organization, log inspection, data parsing, and
-                repeatable command-line workflows.
-              </p>
-              <div class="skill-tags">
-                <span>Bash</span>
-                <span>Python</span>
-                <span>Regex</span>
-                <span>CLI tools</span>
-                <span>Git</span>
-              </div>
-            </article>
-
-            <article class="technical-card reveal" style="--delay: 290ms;">
-              <h3>Machine learning workflows</h3>
-              <p>
-                Build and run PyTorch training and inference workflows, manage checkpoints and logs, prepare tensor data,
-                and analyze model outputs on GPU-backed systems.
-              </p>
-              <div class="skill-tags">
-                <span>PyTorch</span>
-                <span>NumPy</span>
-                <span>Pandas</span>
-                <span>GPU runs</span>
-                <span>TensorBoard</span>
-              </div>
-            </article>
           </div>
         </section>
 
-        <section class="technical-section reveal" style="--delay: 170ms;" aria-labelledby="systems-title">
+        <section class="technical-section reveal" style="--delay: 130ms;" aria-labelledby="work-title">
           <div class="section-heading">
-            <h2 class="section-kicker" id="systems-title">Representative Technical Work</h2>
+            <h2 class="section-kicker" id="work-title">Selected Work</h2>
           </div>
 
           <div class="system-grid">
+            <article class="system-card reveal" style="--delay: 170ms;">
+              <p class="project-kicker">HPC administration</p>
+              <h3>Linux and Slurm cluster support</h3>
+              <ul class="technical-points">
+                <li>Created and audited accounts, groups, permissions, and Samba access.</li>
+                <li>Checked node state, active allocations, GPU jobs, and scheduler health from live Slurm output.</li>
+                <li>Handled user-facing debugging for failed jobs, environment problems, and shared storage issues.</li>
+              </ul>
+            </article>
+
             <article class="system-card reveal" style="--delay: 210ms;">
-              <p class="project-kicker">Research computing operations</p>
-              <h3>CSUN HPC cluster administration</h3>
-              <dl class="system-details">
-                <div>
-                  <dt>Scope</dt>
-                  <dd>Managed two NSF-funded HPC clusters for the CSUN College of Science and Mathematics.</dd>
-                </div>
-                <div>
-                  <dt>Work</dt>
-                  <dd>Supported Slurm scheduling, Linux access, shared software environments, node checks, and user troubleshooting.</dd>
-                </div>
-                <div>
-                  <dt>Tools</dt>
-                  <dd>Linux, Slurm, Bash, SSH, CUDA-aware environments, Git, remote administration.</dd>
-                </div>
-              </dl>
+              <p class="project-kicker">Scientific software</p>
+              <h3>Chemistry and ML environments</h3>
+              <ul class="technical-points">
+                <li>Supported compiled chemistry codes and Python tooling across shared systems.</li>
+                <li>Debugged CUDA, Conda, compiler, and package conflicts for GPU-backed training and inference.</li>
+                <li>Kept working setups documented so runs could be repeated by other users.</li>
+              </ul>
             </article>
 
             <article class="system-card reveal" style="--delay: 250ms;">
-              <p class="project-kicker">Software support</p>
-              <h3>Shared scientific computing environments</h3>
-              <dl class="system-details">
-                <div>
-                  <dt>Scope</dt>
-                  <dd>Kept research software usable across shared machines and changing project needs.</dd>
-                </div>
-                <div>
-                  <dt>Work</dt>
-                  <dd>Resolved dependency issues, configured Python environments, supported compiled codes, and documented working setups.</dd>
-                </div>
-                <div>
-                  <dt>Tools</dt>
-                  <dd>Python, Conda, compilers, CUDA, VASP, Quantum ESPRESSO, pymatgen, ASE.</dd>
-                </div>
-              </dl>
-            </article>
-
-            <article class="system-card reveal" style="--delay: 290ms;">
               <p class="project-kicker">Automation</p>
-              <h3>Command-line workflow tooling</h3>
-              <dl class="system-details">
-                <div>
-                  <dt>Scope</dt>
-                  <dd>Built practical scripts around recurring research-computing tasks.</dd>
-                </div>
-                <div>
-                  <dt>Work</dt>
-                  <dd>Automated file setup, queue checks, log summaries, output validation, and data cleanup.</dd>
-                </div>
-                <div>
-                  <dt>Tools</dt>
-                  <dd>Bash, Python, Slurm commands, regular expressions, structured data parsing.</dd>
-                </div>
-              </dl>
+              <h3>Command-line research tooling</h3>
+              <ul class="technical-points">
+                <li>Built scripts for VASP staging, Slurm templates, log parsing, and output collection.</li>
+                <li>Used structured parsers where possible for CIF, POSCAR, CSV, JSON, and TensorBoard data.</li>
+                <li>Summarized campaigns with counts, losses, checkpoints, rates, and ETA estimates from disk and logs.</li>
+              </ul>
             </article>
           </div>
         </section>
 
-        <section class="technical-section reveal" style="--delay: 210ms;" aria-labelledby="tools-title">
+        <section class="technical-section reveal" style="--delay: 170ms;" aria-labelledby="tools-title">
           <div class="section-heading">
-            <h2 class="section-kicker" id="tools-title">Tools Matrix</h2>
+            <h2 class="section-kicker" id="tools-title">Tooling</h2>
           </div>
 
           <div class="tool-matrix" aria-label="Technical tools matrix">
             <div class="tool-row">
-              <strong>Systems administration</strong>
-              <span>Linux, Slurm, SSH, users/groups, permissions, storage, queue monitoring, remote administration</span>
+              <strong>Systems</strong>
+              <span>Linux, Slurm, SSH, users/groups, permissions, storage, Samba, remote administration</span>
             </div>
             <div class="tool-row">
-              <strong>GPU and software environments</strong>
-              <span>NVIDIA/CUDA environments, compilers, Conda, Python packaging, dependency debugging</span>
+              <strong>Programming</strong>
+              <span>Python, Bash, PyTorch, NumPy, Pandas, Matplotlib, TensorBoard, Git, Markdown</span>
             </div>
             <div class="tool-row">
-              <strong>Scientific programming</strong>
-              <span>Python, PyTorch, NumPy, Pandas, Matplotlib, Jupyter, Bash, command-line tooling</span>
+              <strong>Chemistry</strong>
+              <span>VASP, Quantum ESPRESSO, ASE, pymatgen, VESTA, Sumo, CIF/POSCAR parsing</span>
             </div>
             <div class="tool-row">
-              <strong>Chemistry software</strong>
-              <span>VASP, Quantum ESPRESSO, pymatgen, ASE, VESTA, Sumo, structure and output parsing</span>
-            </div>
-            <div class="tool-row">
-              <strong>Documentation and collaboration</strong>
-              <span>Git, GitHub, Markdown, HTML/CSS, reproducible notes, user-facing setup instructions</span>
+              <strong>Infrastructure</strong>
+              <span>Conda, compilers, CUDA environments, package debugging, job scripts, reproducible notes</span>
             </div>
           </div>
         </section>
 
-        <section class="technical-callout reveal" style="--delay: 250ms;" aria-labelledby="callout-title">
-          <div>
-            <h2 id="callout-title">Technical work that keeps research moving</h2>
-            <p>
-              I treat computing infrastructure, software environments, automation, and documentation as part of the
-              research workflow: the system should be reliable enough that the science can stay in focus.
-            </p>
-          </div>
-          <nav class="technical-actions" aria-label="Technical page links">
-            <a class="button-link" href="research.html">View Research</a>
-            <a class="button-link" href="https://github.com/Austin243" target="_blank" rel="noopener">View GitHub</a>
-            <a class="button-link" href="publications.html">View Publications</a>
-          </nav>
-        </section>
+        <nav class="technical-actions reveal" style="--delay: 210ms;" aria-label="Technical page links">
+          <a class="button-link" href="research.html">Research</a>
+          <a class="button-link" href="https://github.com/Austin243" target="_blank" rel="noopener">GitHub</a>
+          <a class="button-link" href="publications.html">Publications</a>
+        </nav>
       </main>
 
       <footer class="site-footer">

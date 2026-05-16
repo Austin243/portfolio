@@ -963,13 +963,10 @@ a:focus-visible {
 }
 
 .technical-page {
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .technical-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
-  gap: 1rem;
   padding: 1.25rem;
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid rgba(22, 34, 50, 0.11);
@@ -981,8 +978,8 @@ a:focus-visible {
 .technical-hero-copy {
   display: grid;
   gap: 0.85rem;
-  align-content: center;
   padding: 0.35rem;
+  max-width: 900px;
 }
 
 .technical-title {
@@ -1006,67 +1003,30 @@ a:focus-visible {
   color: var(--text-muted);
 }
 
-.technical-map {
+.technical-facts {
+  list-style: none;
   margin: 0;
-  min-width: 0;
-  min-height: 390px;
+  padding: 0;
   display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 1rem;
-  padding: 1rem;
-  border: 1px solid rgba(22, 34, 50, 0.11);
-  border-radius: 18px;
-  background:
-    linear-gradient(135deg, rgba(18, 102, 109, 0.12), rgba(198, 107, 61, 0.08)),
-    repeating-linear-gradient(90deg, rgba(18, 102, 109, 0.08) 0 1px, transparent 1px 38px),
-    repeating-linear-gradient(0deg, rgba(18, 102, 109, 0.08) 0 1px, transparent 1px 38px),
-    #f8fbf8;
-  overflow: hidden;
+  gap: 0.65rem;
 }
 
-.technical-map-title {
-  display: grid;
-  gap: 0.1rem;
+.technical-facts li {
+  border-left: 3px solid rgba(18, 102, 109, 0.28);
+  color: var(--text-muted);
+  padding-left: 0.75rem;
 }
 
-.technical-map-title span {
-  color: var(--accent);
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-transform: uppercase;
+.technical-facts strong,
+.technical-points strong {
+  color: var(--text);
 }
 
-.technical-map-title strong {
-  font-size: 1.25rem;
-  line-height: 1.25;
-}
-
-.technical-layers {
-  display: grid;
-  gap: 0.7rem;
-  align-content: center;
-}
-
-.technical-layer {
-  display: grid;
-  gap: 0.28rem;
-  padding: 0.82rem 0.9rem;
-  border: 1px solid rgba(18, 102, 109, 0.2);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 12px 24px rgba(18, 34, 50, 0.08);
-}
-
-.technical-node {
-  color: var(--brand-strong);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.technical-layer strong {
-  font-size: 0.98rem;
-  line-height: 1.35;
+.technical-points {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
 .technical-section {
@@ -1074,24 +1034,14 @@ a:focus-visible {
   gap: 0.9rem;
 }
 
-.technical-grid,
 .system-grid {
   display: grid;
   gap: 1rem;
-}
-
-.technical-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.system-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.technical-card,
 .system-card,
-.tool-matrix,
-.technical-callout {
+.tool-matrix {
   border: 1px solid rgba(22, 34, 50, 0.1);
   background: rgba(255, 255, 255, 0.9);
   border-radius: var(--radius-md);
@@ -1099,7 +1049,6 @@ a:focus-visible {
   backdrop-filter: blur(8px);
 }
 
-.technical-card,
 .system-card {
   display: grid;
   gap: 0.75rem;
@@ -1107,59 +1056,10 @@ a:focus-visible {
   padding: 1rem;
 }
 
-.technical-card h3,
 .system-card h3 {
   margin: 0;
   font-size: 1.18rem;
   line-height: 1.28;
-}
-
-.technical-card p {
-  margin: 0;
-  color: var(--text-muted);
-}
-
-.skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.skill-tags span {
-  display: inline-flex;
-  align-items: center;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(18, 102, 109, 0.2);
-  background: rgba(18, 102, 109, 0.08);
-  color: var(--brand-strong);
-  font-size: 0.78rem;
-  font-weight: 650;
-  line-height: 1.2;
-  padding: 0.28rem 0.62rem;
-}
-
-.system-details {
-  display: grid;
-  gap: 0.65rem;
-  margin: 0;
-}
-
-.system-details div {
-  display: grid;
-  gap: 0.16rem;
-}
-
-.system-details dt {
-  color: var(--text);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.system-details dd {
-  margin: 0;
-  color: var(--text-muted);
-  line-height: 1.5;
 }
 
 .tool-matrix {
@@ -1186,29 +1086,10 @@ a:focus-visible {
   line-height: 1.5;
 }
 
-.technical-callout {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.1rem;
-}
-
-.technical-callout h2 {
-  margin: 0;
-  font-size: clamp(1.2rem, 1vw + 1rem, 1.55rem);
-  line-height: 1.25;
-}
-
-.technical-callout p {
-  margin: 0.45rem 0 0;
-  color: var(--text-muted);
-}
-
 .technical-actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 0.55rem;
 }
 
@@ -1295,10 +1176,6 @@ a:focus-visible {
     font-size: 2.55rem;
   }
 
-  .technical-hero {
-    grid-template-columns: 1fr;
-  }
-
   .theme-grid,
   .project-grid,
   .artifact-grid {
@@ -1383,14 +1260,9 @@ a:focus-visible {
     font-size: 1rem;
   }
 
-  .technical-map {
-    min-height: 0;
-  }
-
   .theme-grid,
   .project-grid,
-  .artifact-grid,
-  .technical-grid {
+  .artifact-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1401,14 +1273,6 @@ a:focus-visible {
 
   .technical-bridge {
     display: grid;
-  }
-
-  .technical-callout {
-    display: grid;
-  }
-
-  .technical-actions {
-    justify-content: flex-start;
   }
 
   .project-card--wide .project-media img {
