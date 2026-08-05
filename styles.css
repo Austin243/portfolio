@@ -1162,10 +1162,10 @@ a:focus-visible {
 .outreach-hero h1 {
   margin: 0;
   max-width: 11ch;
-  font-family: var(--font-brand);
+  font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(2.55rem, 4.8vw, 4.65rem);
   font-weight: 500;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
   line-height: 0.98;
 }
 
@@ -1174,34 +1174,6 @@ a:focus-visible {
   color: var(--text-muted);
   font-size: 1.02rem;
   line-height: 1.58;
-}
-
-.outreach-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.5rem;
-  padding-top: 0.2rem;
-}
-
-.outreach-stat {
-  display: grid;
-  gap: 0.1rem;
-  align-content: start;
-  border-top: 2px solid rgba(18, 102, 109, 0.24);
-  padding-top: 0.55rem;
-}
-
-.outreach-stat strong {
-  color: var(--brand);
-  font-family: var(--font-brand);
-  font-size: 1.65rem;
-  line-height: 1;
-}
-
-.outreach-stat span {
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  line-height: 1.35;
 }
 
 .outreach-hero-media {
@@ -1267,52 +1239,12 @@ a:focus-visible {
   color: var(--text-muted);
 }
 
-.outreach-role-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.85rem;
-}
-
-.outreach-role-card {
-  position: relative;
-  display: grid;
-  gap: 0.55rem;
-  align-content: start;
-  min-height: 285px;
-  border: 1px solid rgba(22, 34, 50, 0.1);
-  border-radius: var(--radius-md);
-  padding: 1.1rem;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 12px 26px rgba(18, 34, 50, 0.08);
-}
-
-.outreach-role-card::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 58%;
-  height: 5px;
-  border-radius: 0 0 0 999px;
-  background: linear-gradient(90deg, rgba(18, 102, 109, 0), rgba(18, 102, 109, 0.72));
-  content: '';
-}
-
-.outreach-role-number {
-  color: rgba(18, 102, 109, 0.28);
-  font-family: var(--font-brand);
-  font-size: 2.4rem;
-  line-height: 1;
-}
-
-.outreach-role-card h3,
 .outreach-event-card h3 {
   margin: 0;
   font-size: 1.22rem;
   line-height: 1.25;
 }
 
-.outreach-role-card > p:last-child,
 .outreach-event-body > p:last-child,
 .outreach-feature-copy > p:not(.project-kicker) {
   margin: 0;
@@ -1579,14 +1511,6 @@ a:focus-visible {
     aspect-ratio: 16 / 9;
   }
 
-  .outreach-role-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .outreach-role-card:last-child {
-    grid-column: 1 / -1;
-    min-height: 0;
-  }
 }
 
 @media (max-width: 720px) {
@@ -1685,23 +1609,10 @@ a:focus-visible {
     font-size: clamp(2.35rem, 12vw, 3.35rem);
   }
 
-  .outreach-stats,
-  .outreach-role-grid,
   .outreach-feature-gallery,
   .outreach-event-grid,
   .outreach-highlights {
     grid-template-columns: 1fr;
-  }
-
-  .outreach-stat {
-    grid-template-columns: 3.1rem minmax(0, 1fr);
-    align-items: baseline;
-  }
-
-  .outreach-role-card,
-  .outreach-role-card:last-child {
-    grid-column: auto;
-    min-height: 0;
   }
 
   .outreach-feature-gallery img {
