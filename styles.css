@@ -812,6 +812,14 @@ a:focus-visible {
   object-position: 50% 50%;
 }
 
+.project-card--elf .project-media {
+  background: #fff;
+}
+
+.project-card--elf .project-media img {
+  object-fit: contain;
+}
+
 .project-card--superhydrides .project-media img {
   object-position: 50% 50%;
 }
