@@ -171,6 +171,7 @@ h1.cl { margin: 0; font-weight: 400; }
 .dash.lg { max-width: 820px; margin-top: 18px; }
 .job h3.repo { margin: 0; font: 700 19px var(--mono); letter-spacing: 0; color: var(--key); }
 .dash.lg li { padding-left: 20px; font-size: 17px; color: var(--ink); }
+.dash.lg + .lede { margin-top: 24px; }
 
 /* OUTCAR */
 .res { display: flex; flex-direction: column; padding: 22px 0 24px; }
