@@ -32,8 +32,8 @@
 
 <nav class="tabs" aria-label="Sections">
 <a href="#incar" class="on" aria-current="true">INCAR</a>
-<a href="#structures">structures/</a>
 <a href="#research">jobs/</a>
+<a href="#structures">structures/</a>
 <a href="#publications">OUTCAR</a>
 <a href="#news">OSZICAR</a>
 <a href="#about">CONTCAR</a>
@@ -43,11 +43,6 @@
 <aside class="side" id="files" aria-label="Project files">
 <nav class="tree" aria-label="File tree">
 <a href="#incar" data-sec="incar" class="on">INCAR<span>about</span></a>
-<a href="#structures" data-sec="structures">structures/<span>viewer</span></a>
-<a class="sub" href="#structures" data-open-tab="0">├─ NaKH12_60GPa/</a>
-<a class="sub" href="#structures" data-open-tab="1">├─ H2_states/</a>
-<a class="sub" href="#structures" data-open-tab="2">├─ MoS2_vacancy/</a>
-<a class="sub" href="#structures" data-open-tab="3">└─ U10H84_I4m/</a>
 <a href="#research" data-sec="research">jobs/<span>research</span></a>
 <a class="sub" href="#job-elfnet">├─ elfnet</a>
 <a class="sub" href="#job-superhydrides">├─ superhydrides</a>
@@ -55,6 +50,11 @@
 <a class="sub" href="#job-tmdc">├─ tmdc-electrides</a>
 <a class="sub" href="#job-nakh12">├─ nakh12</a>
 <a class="sub" href="#job-fe">└─ fe-redox</a>
+<a href="#structures" data-sec="structures">structures/<span>viewer</span></a>
+<a class="sub" href="#structures" data-open-tab="0">├─ NaKH12_60GPa/</a>
+<a class="sub" href="#structures" data-open-tab="1">├─ H2_states/</a>
+<a class="sub" href="#structures" data-open-tab="2">├─ MoS2_vacancy/</a>
+<a class="sub" href="#structures" data-open-tab="3">└─ U10H84_I4m/</a>
 <a href="#publications" data-sec="publications">OUTCAR<span>papers</span></a>
 <a href="#news" data-sec="news">OSZICAR<span>news</span></a>
 <a href="#about" data-sec="about">CONTCAR<span>next</span></a>
@@ -82,7 +82,7 @@
 <div class="cl"><span class="g">4</span><span><span class="key">DEGREE </span> = <span class="val">M.S. Chemistry, CSU Northridge, </span><span class="num">2026</span></span></div>
 <div class="cl"><span class="g">5</span><span><span class="key">GROUP  </span> = <span class="val">Miao Lab</span></span></div>
 <div class="cl"><span class="g">6</span><span><span class="key">FOCUS  </span> = <span class="val">electron localization, electrides, high-pressure hydrides, ML for DFT</span></span></div>
-<div class="cl"><span class="g">7</span><span><span class="key">NEXT   </span> = <span class="val">Ph.D. programs</span>                    <span class="com vv2"># chemistry or materials science</span></span></div>
+<div class="cl"><span class="g">7</span><span><span class="key">NEXT   </span> = <span class="val">Ph.D. program</span>                     <span class="com vv2"># chemistry or materials science</span></span></div>
 <div class="cl"><span class="g">8</span><span><span class="key">LELF   </span> = <span class="okc">.TRUE.</span>                            <span class="com"># always</span></span></div>
 <div class="cl"><span class="g">9</span><span><span class="key">PSTRESS</span> = <span class="num">-500..5000</span>                        <span class="com vv2"># kB: the −50 to 500 GPa range ELFNet covers</span></span></div>
 <div class="cl"><span class="g">10</span><span> </span></div>
@@ -96,6 +96,82 @@
 <a href="https://orcid.org/0009-0007-1031-132X">orcid</a>
 <a href="https://www.linkedin.com/in/Austin243">linkedin</a>
 <a href="AustinEllisCV.pdf">cv.pdf</a>
+</div>
+</div>
+</section>
+
+<section id="research" aria-labelledby="research-h">
+<div class="w">
+<div class="fh"><h2 id="research-h">jobs/</h2><p>Research: six completed jobs, one running, one pending</p></div>
+<p class="prompt" style="margin-top:22px;"><b>austin</b> ~/austin-ellis $ sacct --format=JobName,Partition,State,End</p>
+<div class="table-wrap">
+<table class="sacct">
+<thead><tr><th>JobName</th><th>Partition</th><th>State</th><th>End</th></tr></thead>
+<tbody>
+<tr><td><a href="#job-elfnet">elfnet</a></td><td>J. Mater. Inf.</td><td class="okc">COMPLETED</td><td class="num">2026</td></tr>
+<tr><td><a href="#job-h2">h2-electride</a></td><td>J. Phys. Chem. Lett.</td><td class="okc">COMPLETED</td><td class="num">2026</td></tr>
+<tr><td><a href="#job-fe">fe-redox</a></td><td>Proc. Natl. Acad. Sci.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
+<tr><td><a href="#job-superhydrides">superhydrides</a></td><td>J. Am. Chem. Soc.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
+<tr><td><a href="#job-nakh12">nakh12</a></td><td>Adv. Funct. Mater.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
+<tr><td><a href="#job-tmdc">tmdc-electrides</a></td><td>J. Phys. Chem. Lett.</td><td class="okc">COMPLETED</td><td class="num">2024</td></tr>
+<tr><td>cnms-internship</td><td>ornl</td><td class="key">RUNNING</td><td class="dim">Unknown</td></tr>
+<tr><td>phd</td><td>chem,mse</td><td class="num">PENDING</td><td class="dim">Unknown</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="jobs">
+<article id="job-elfnet" class="job">
+<div class="plate"><img src="assets/deck/img/elfnet-toc.webp" width="1200" height="858" alt="ELFNet workflow: a high-pressure ELF dataset of 326,009 structures, their superposed atomic densities, a periodic 3D convolutional network, and the predicted ELF" loading="lazy" decoding="async"></div>
+<p class="jh"><b>jobs/elfnet</b>  J. Mater. Inf. 2026 · NeurIPS AI4Mat 2025 · APS 2026</p>
+<h3>ELFNet: electron localization from superposed atomic densities</h3>
+<p class="b">A periodic 3D convolutional network maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation.</p>
+<div class="links"><a href="https://www.oaepublish.com/articles/jmi.2026.44">paper</a><a href="https://openreview.net/forum?id=VHX3ubJCuK">workshop</a><a href="https://github.com/Austin243/ELFNet">code</a><a href="posters/SeitzELF_3DCNN.pdf">poster</a><a href="slides/SeitzInvariantELF_APS_2026.pptx">slides</a></div>
+</article>
+<article id="job-superhydrides" class="job">
+<div class="plate"><img src="assets/deck/img/superhydrides.webp" width="1000" height="581" alt="Two-step chemical-template workflow for discovering metal superhydrides" loading="lazy" decoding="async"></div>
+<p class="jh"><b>jobs/superhydrides</b>  J. Am. Chem. Soc. 2025 · NeurIPS AI4Mat 2025</p>
+<h3>Metal superhydrides from chemical templates</h3>
+<p class="b">A template-guided machine-learning workflow found 13 new structural prototypes and 31 stable metal superhydrides, 19 of them with predicted T<sub>c</sub> above 100 K.</p>
+<div class="links"><a href="https://doi.org/10.1021/jacs.5c11731">paper</a><a href="https://openreview.net/forum?id=dEtRvi7G5i">workshop</a><a href="posters/ML_BatchedSuperhydrides.pdf">poster</a><a href="#structures" data-open-tab="3">open U10H84_I4m/</a></div>
+</article>
+<article id="job-h2" class="job">
+<div class="plate"><img src="assets/deck/img/h2-phase-diagram.webp" width="1200" height="600" alt="Pressure–temperature phase diagram of molecular hydrogen with electron localization isosurfaces for phases I to IV" loading="lazy" decoding="async"></div>
+<p class="jh"><b>jobs/h2-electride</b>  J. Phys. Chem. Lett. 2026</p>
+<h3>Emerging electride in molecular hydrogen metallization</h3>
+<p class="b">As solid hydrogen metallizes under pressure, electrons localize in the interstitial regions between H<sub>2</sub> molecules, an electride-like route that sets it apart from other molecular crystals.</p>
+<div class="links"><a href="https://doi.org/10.1021/acs.jpclett.6c01415">paper</a><a href="slides/Thesis_slides_draft_v4.pptx">thesis slides</a><a href="#structures" data-open-tab="1">open H2_states/</a></div>
+</article>
+<article id="job-tmdc" class="job">
+<div class="plate"><img src="assets/deck/img/tmdc-vacancy.webp" width="1200" height="600" alt="Crystal orbital of a monolayer MX2 with a chalcogen vacancy, showing localized interstitial electrons that regulate hydrogen evolution" loading="lazy" decoding="async"></div>
+<p class="jh"><b>jobs/tmdc-electrides</b>  J. Phys. Chem. Lett. 2024</p>
+<h3>Tunable electrides on monolayer TMDCs</h3>
+<p class="b">Chalcogen vacancies strengthen the weak electride character of monolayer transition-metal dichalcogenides to the level of known electrides, and the vacancy states help catalyze hydrogen evolution.</p>
+<div class="links"><a href="https://doi.org/10.1021/acs.jpclett.4c01263">paper</a><a href="posters/TunableElectride_TMDCs.pdf">poster</a><a href="#structures" data-open-tab="2">open MoS2_vacancy/</a></div>
+</article>
+<article id="job-nakh12" class="job">
+<div class="plate"><img src="assets/deck/img/nakh12.webp" width="1200" height="600" alt="Crystal structure of NaKH12 and the energy change with H–H distance" loading="lazy" decoding="async"></div>
+<p class="jh"><b>jobs/nakh12</b>  Adv. Funct. Mater. 2025</p>
+<h3>Superconductivity in molecular hydrides</h3>
+<p class="b">Interstitial electrons act as chemical templates that assemble H<sub>2</sub> units in NaKH<sub>12</sub>, predicted to superconduct up to 245 K at a moderate 60 GPa.</p>
+<div class="links"><a href="https://doi.org/10.1002/adfm.202415910">paper</a><a href="#structures" data-open-tab="0">open NaKH12_60GPa/</a></div>
+</article>
+<article id="job-fe" class="job">
+<div class="plate"><img src="assets/deck/img/iron-redox.webp" width="1200" height="600" alt="Formation-energy convex hulls for iron with silicon, phosphorus, sulfur, germanium, arsenic, and selenium" loading="lazy" decoding="async"></div>
+<p class="jh"><b>jobs/fe-redox</b>  Proc. Natl. Acad. Sci. 2025</p>
+<h3>Iron redox chemistry in deep Earth</h3>
+<p class="b">Large-scale first-principles calculations show iron turning from electron donor to electron acceptor at core pressures, which changes the elements it can pull into Earth’s core.</p>
+<div class="links"><a href="https://doi.org/10.1073/pnas.2414911122">paper</a><a href="https://newsroom.csun.edu/2025/11/18/study-by-csun-prof-upends-understanding-of-what-happens-to-iron-at-earths-core/">newsroom</a></div>
+</article>
+<article class="job talks">
+<p class="jh"><b>slurm-talks.out</b>  posters and talks</p>
+<pre><span class="num">2026-05</span>  M.S. thesis defense, CSUN
+<span class="num">2026-03</span>  talk, APS Global Physics Summit
+<span class="num">2026-01</span>  2 posters, Gordon Research Conf.
+<span class="num">2025-12</span>  2 posters, NeurIPS AI4Mat
+<span class="num">2025   </span>  Sigma Xi talk; CSUN seminar</pre>
+<div class="links" style="margin-top:14px;"><a href="posters.html">all posters and slides →</a></div>
+</article>
 </div>
 </div>
 </section>
@@ -425,82 +501,6 @@
 </div>
 </section>
 
-<section id="research" aria-labelledby="research-h">
-<div class="w">
-<div class="fh"><h2 id="research-h">jobs/</h2><p>Research: six completed jobs, one running, one pending</p></div>
-<p class="prompt" style="margin-top:22px;"><b>austin</b> ~/austin-ellis $ sacct --format=JobName,Partition,State,End</p>
-<div class="table-wrap">
-<table class="sacct">
-<thead><tr><th>JobName</th><th>Partition</th><th>State</th><th>End</th></tr></thead>
-<tbody>
-<tr><td><a href="#job-elfnet">elfnet</a></td><td>J. Mater. Inf.</td><td class="okc">COMPLETED</td><td class="num">2026</td></tr>
-<tr><td><a href="#job-h2">h2-electride</a></td><td>J. Phys. Chem. Lett.</td><td class="okc">COMPLETED</td><td class="num">2026</td></tr>
-<tr><td><a href="#job-fe">fe-redox</a></td><td>Proc. Natl. Acad. Sci.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
-<tr><td><a href="#job-superhydrides">superhydrides</a></td><td>J. Am. Chem. Soc.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
-<tr><td><a href="#job-nakh12">nakh12</a></td><td>Adv. Funct. Mater.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
-<tr><td><a href="#job-tmdc">tmdc-electrides</a></td><td>J. Phys. Chem. Lett.</td><td class="okc">COMPLETED</td><td class="num">2024</td></tr>
-<tr><td>cnms-internship</td><td>ornl</td><td class="key">RUNNING</td><td class="dim">Unknown</td></tr>
-<tr><td>phd</td><td>chem,mse</td><td class="num">PENDING</td><td class="dim">Unknown</td></tr>
-</tbody>
-</table>
-</div>
-
-<div class="jobs">
-<article id="job-elfnet" class="job">
-<div class="plate"><img src="assets/deck/img/elfnet-toc.webp" width="1200" height="858" alt="ELFNet workflow: a high-pressure ELF dataset of 326,009 structures, their superposed atomic densities, a periodic 3D convolutional network, and the predicted ELF" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/elfnet</b>  J. Mater. Inf. 2026 · NeurIPS AI4Mat 2025 · APS 2026</p>
-<h3>ELFNet: electron localization from superposed atomic densities</h3>
-<p class="b">A periodic 3D convolutional network maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation.</p>
-<div class="links"><a href="https://www.oaepublish.com/articles/jmi.2026.44">paper</a><a href="https://openreview.net/forum?id=VHX3ubJCuK">workshop</a><a href="https://github.com/Austin243/ELFNet">code</a><a href="posters/SeitzELF_3DCNN.pdf">poster</a><a href="slides/SeitzInvariantELF_APS_2026.pptx">slides</a></div>
-</article>
-<article id="job-superhydrides" class="job">
-<div class="plate"><img src="assets/deck/img/superhydrides.webp" width="1000" height="581" alt="Two-step chemical-template workflow for discovering metal superhydrides" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/superhydrides</b>  J. Am. Chem. Soc. 2025 · NeurIPS AI4Mat 2025</p>
-<h3>Metal superhydrides from chemical templates</h3>
-<p class="b">A template-guided machine-learning workflow found 13 new structural prototypes and 31 stable metal superhydrides, 19 of them with predicted T<sub>c</sub> above 100 K.</p>
-<div class="links"><a href="https://doi.org/10.1021/jacs.5c11731">paper</a><a href="https://openreview.net/forum?id=dEtRvi7G5i">workshop</a><a href="posters/ML_BatchedSuperhydrides.pdf">poster</a><a href="#structures" data-open-tab="3">open U10H84_I4m/</a></div>
-</article>
-<article id="job-h2" class="job">
-<div class="plate"><img src="assets/deck/img/h2-phase-diagram.webp" width="1200" height="600" alt="Pressure–temperature phase diagram of molecular hydrogen with electron localization isosurfaces for phases I to IV" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/h2-electride</b>  J. Phys. Chem. Lett. 2026</p>
-<h3>Emerging electride in molecular hydrogen metallization</h3>
-<p class="b">As solid hydrogen metallizes under pressure, electrons localize in the interstitial regions between H<sub>2</sub> molecules, an electride-like route that sets it apart from other molecular crystals.</p>
-<div class="links"><a href="https://doi.org/10.1021/acs.jpclett.6c01415">paper</a><a href="slides/Thesis_slides_draft_v4.pptx">thesis slides</a><a href="#structures" data-open-tab="1">open H2_states/</a></div>
-</article>
-<article id="job-tmdc" class="job">
-<div class="plate"><img src="assets/deck/img/tmdc-vacancy.webp" width="1200" height="600" alt="Crystal orbital of a monolayer MX2 with a chalcogen vacancy, showing localized interstitial electrons that regulate hydrogen evolution" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/tmdc-electrides</b>  J. Phys. Chem. Lett. 2024</p>
-<h3>Tunable electrides on monolayer TMDCs</h3>
-<p class="b">Chalcogen vacancies strengthen the weak electride character of monolayer transition-metal dichalcogenides to the level of known electrides, and the vacancy states help catalyze hydrogen evolution.</p>
-<div class="links"><a href="https://doi.org/10.1021/acs.jpclett.4c01263">paper</a><a href="posters/TunableElectride_TMDCs.pdf">poster</a><a href="#structures" data-open-tab="2">open MoS2_vacancy/</a></div>
-</article>
-<article id="job-nakh12" class="job">
-<div class="plate"><img src="assets/deck/img/nakh12.webp" width="1200" height="600" alt="Crystal structure of NaKH12 and the energy change with H–H distance" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/nakh12</b>  Adv. Funct. Mater. 2025</p>
-<h3>Superconductivity in molecular hydrides</h3>
-<p class="b">Interstitial electrons act as chemical templates that assemble H<sub>2</sub> units in NaKH<sub>12</sub>, predicted to superconduct up to 245 K at a moderate 60 GPa.</p>
-<div class="links"><a href="https://doi.org/10.1002/adfm.202415910">paper</a><a href="#structures" data-open-tab="0">open NaKH12_60GPa/</a></div>
-</article>
-<article id="job-fe" class="job">
-<div class="plate"><img src="assets/deck/img/iron-redox.webp" width="1200" height="600" alt="Formation-energy convex hulls for iron with silicon, phosphorus, sulfur, germanium, arsenic, and selenium" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/fe-redox</b>  Proc. Natl. Acad. Sci. 2025</p>
-<h3>Iron redox chemistry in deep Earth</h3>
-<p class="b">Large-scale first-principles calculations show iron turning from electron donor to electron acceptor at core pressures, which changes the elements it can pull into Earth’s core.</p>
-<div class="links"><a href="https://doi.org/10.1073/pnas.2414911122">paper</a><a href="https://newsroom.csun.edu/2025/11/18/study-by-csun-prof-upends-understanding-of-what-happens-to-iron-at-earths-core/">newsroom</a></div>
-</article>
-<article class="job talks">
-<p class="jh"><b>slurm-talks.out</b>  posters and talks</p>
-<pre><span class="num">2026-05</span>  M.S. thesis defense, CSUN
-<span class="num">2026-03</span>  talk, APS Global Physics Summit
-<span class="num">2026-01</span>  2 posters, Gordon Research Conf.
-<span class="num">2025-12</span>  2 posters, NeurIPS AI4Mat
-<span class="num">2025   </span>  Sigma Xi talk; CSUN seminar</pre>
-<div class="links" style="margin-top:14px;"><a href="posters.html">all posters and slides →</a></div>
-</article>
-</div>
-</div>
-</section>
-
 <section id="publications" aria-labelledby="publications-h">
 <div class="w">
 <div class="fh"><h2 id="publications-h">OUTCAR</h2><p>Publications: results, newest first</p></div>
@@ -535,8 +535,8 @@
 <div class="about">
 <div class="ph"><img src="assets/deck/img/portrait.webp" width="720" height="720" alt="Portrait of Austin Ellis" loading="lazy" decoding="async"></div>
 <div>
-<p class="bio">I recently completed my M.S. in Chemistry at CSU Northridge in the Miao Lab and am now a research intern at Oak Ridge National Laboratory’s Center for Nanophase Materials Sciences, while preparing to apply to Ph.D. programs in chemistry or materials science. I am broadly interested in quantum and energy-relevant materials, condensed-phase chemical systems, and structure–property relationships across inorganic and materials chemistry.</p>
-<p class="next"><span class="key">NEXT</span> = <span class="val">Ph.D. programs</span></p>
+<p class="bio">I recently completed my M.S. in Chemistry at CSU Northridge in the Miao Lab and am now a research intern at Oak Ridge National Laboratory’s Center for Nanophase Materials Sciences, while preparing to apply to a Ph.D. program in chemistry or materials science. I am broadly interested in quantum and energy-relevant materials, condensed-phase chemical systems, and structure–property relationships across inorganic and materials chemistry.</p>
+<p class="next"><span class="key">NEXT</span> = <span class="val">Ph.D. program</span></p>
 <p class="mono com" style="margin:6px 0 0;font-size:14px;"># chemistry or materials science</p>
 <dl class="kv">
 <div><dt>EDUCATION</dt><dd>M.S. Chemistry, CSU Northridge, 2026<br><span class="mut">B.S. Pharmacological Chemistry, UC San Diego, 2022</span></dd></div>
