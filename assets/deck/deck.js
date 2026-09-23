@@ -43,6 +43,7 @@
   const SCENES = JSON.parse($('#scene-data').textContent);
   const TABS = [[0, 1], [2, 3, 4, 5], [6], [7, 8]];
   const cv = $('canvas.gl', V), ov = $('canvas.ov', V), stage = $('.vstage', V), pane = $('.vpane', V);
+  const opts = $('.vopts', V), sbar = $('.sbar', V);
   let tab = 0, v = 0, eng = null, shown = -1;
   const cache = {};
   const si = () => { const t = TABS[tab]; return t[Math.min(v, t.length - 1)]; };
@@ -79,9 +80,16 @@
   $$('[data-tab] .vb', V).forEach((b) => b.addEventListener('click', () => { v = Number(b.dataset.v); render(); }));
   $$('[data-open-tab]').forEach((a) => a.addEventListener('click', () => pick(Number(a.dataset.openTab))));
 
-  // header pane: a column beside the view on wide screens, collapsed under it on phones
+  // wide screens: header pane beside the view; phones: pane collapsed under the view.
+  // The state switcher sits on the view when there is room for it, otherwise in the bar above.
   const wide = window.matchMedia('(min-width: 900px)');
-  const syncPane = () => { pane.open = wide.matches; };
+  const placeOpts = () => {
+    const to = wide.matches && stage.clientWidth >= 560 ? stage : sbar;
+    if (opts.parentElement !== to) to.prepend(opts);
+  };
+  const syncPane = () => { pane.open = wide.matches; placeOpts(); };
+  window.addEventListener('resize', placeOpts);
+  if ('ResizeObserver' in window) new ResizeObserver(placeOpts).observe(stage);
   syncPane();
   if (wide.addEventListener) wide.addEventListener('change', syncPane);
 
