@@ -15,6 +15,9 @@
   side.addEventListener('click', (e) => { if (e.target.closest('a')) setDrawer(false); });
   side.addEventListener('keydown', (e) => { if (e.key === 'Escape') { setDrawer(false); filesBtn.focus(); } });
 
+  const tabBar = $('.tabs'), openTab = $('.tabs a.on');
+  if (openTab && openTab.offsetLeft + openTab.offsetWidth > tabBar.clientWidth) tabBar.scrollLeft = openTab.offsetLeft - 16;
+
   // ---------- active file tab and status bar follow the scroll position ----------
   const names = { incar: 'INCAR', structures: 'structures/', research: 'jobs/', publications: 'OUTCAR', news: 'OSZICAR', about: 'CONTCAR' };
   const tabs = $$('.tabs a[href^="#"]'), statusFile = $('.status .file');
