@@ -47,8 +47,7 @@
 <a class="sub" href="#structures" data-open-tab="0">├─ NaKH12_60GPa/</a>
 <a class="sub" href="#structures" data-open-tab="1">├─ H2_states/</a>
 <a class="sub" href="#structures" data-open-tab="2">├─ MoS2_vacancy/</a>
-<a class="sub" href="#structures" data-open-tab="3">├─ U10H84_I4m/</a>
-<a class="sub" href="#structures" data-open-tab="4">└─ Li6Gd6_template/</a>
+<a class="sub" href="#structures" data-open-tab="3">└─ U10H84_I4m/</a>
 <a href="#research" data-sec="research">jobs/<span>research</span></a>
 <a class="sub" href="#job-elfnet">├─ elfnet</a>
 <a class="sub" href="#job-superhydrides">├─ superhydrides</a>
@@ -103,7 +102,7 @@
 
 <section id="structures" aria-labelledby="structures-h">
 <div class="w">
-<div class="fh"><h2 id="structures-h">structures/</h2><p>Five calculations from the research, in 3D: drag to turn them</p></div>
+<div class="fh"><h2 id="structures-h">structures/</h2><p>Four calculations from the research, in 3D: drag to turn them</p></div>
 <p class="prompt" style="margin-top:22px;"><b>austin</b> ~/austin-ellis $ VESTA structures/<span class="vfile">NaKH12_60GPa/ELFCAR</span> &amp;</p>
 <div class="viewer">
 <div class="vbar">
@@ -112,7 +111,6 @@
 <button type="button" role="tab" class="vt" aria-selected="false" aria-controls="viewer-stage" tabindex="-1">H2/PARCHG</button>
 <button type="button" role="tab" class="vt" aria-selected="false" aria-controls="viewer-stage" tabindex="-1">MoS2_vac/ELFCAR</button>
 <button type="button" role="tab" class="vt" aria-selected="false" aria-controls="viewer-stage" tabindex="-1">U10H84.vasp</button>
-<button type="button" role="tab" class="vt" aria-selected="false" aria-controls="viewer-stage" tabindex="-1">Li6Gd6/ELFCAR</button>
 </div>
 <div class="vctl"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
 </div>
@@ -122,7 +120,6 @@
 <div class="vv" role="group" aria-label="Hydrogen state" data-tab="1" hidden><button type="button" class="vb" data-v="0" aria-pressed="true">C2/c · band 15</button><button type="button" class="vb" data-v="1" aria-pressed="false">Ama2 · band 25</button><button type="button" class="vb" data-v="2" aria-pressed="false">P6₃/m · band 9</button><button type="button" class="vb" data-v="3" aria-pressed="false">P6₃/m · band 11</button></div>
 <span class="vlabel" data-tab="2" hidden>MoS₂ · S vacancy</span>
 <div class="vv" role="group" aria-label="Superhydride or metal lattice" data-tab="3" hidden><button type="button" class="vb" data-v="0" aria-pressed="true">U₁₀H₈₄</button><button type="button" class="vb" data-v="1" aria-pressed="false">U₁₀ lattice · ELF</button></div>
-<span class="vlabel" data-tab="4" hidden>Li₆Gd₆ template</span>
 </div>
 <div class="lgd" data-scene="0"><span><i style="background:#FADD3D"></i>Na</span><span><i style="background:#A122F7"></i>K</span><span><i style="background:#FFCCCC"></i>H</span><span><i class="iso"></i>ELF 0.75</span><span>0<b></b>1</span></div>
 <div class="lgd" data-scene="1" hidden><span><i style="background:#FADD3D"></i>Na</span><span><i style="background:#A122F7"></i>K</span><span><i class="iso"></i>ELF 0.55</span><span>0<b></b>1</span></div>
@@ -133,7 +130,6 @@
 <div class="lgd" data-scene="6" hidden><span><i style="background:#B486B0"></i>Mo</span><span><i style="background:#FFFA00"></i>S</span><span><i class="iso"></i>ELF 0.60</span><span>0<b></b>1</span></div>
 <div class="lgd" data-scene="7" hidden><span><i style="background:#7AA2AA"></i>U</span><span><i style="background:#FFCCCC"></i>H</span></div>
 <div class="lgd" data-scene="8" hidden><span><i style="background:#7AA2AA"></i>U</span><span><i class="iso"></i>ELF 0.70</span><span>0<b></b>1</span></div>
-<div class="lgd" data-scene="9" hidden><span><i style="background:#86E074"></i>Li</span><span><i style="background:#C004FF"></i>Gd</span><span><i class="iso"></i>ELF 0.70</span><span>0<b></b>1</span></div>
 </div>
 <div class="vbody">
 <details class="vpane" open>
@@ -396,34 +392,6 @@
 </span><span class="com"># isosurface  ELF = 0.70
 </span><span class="com"># sections    ELF 0 → 1, B-G-R
 </span><span class="com"># region      1 × 1 × 2 cells</span></pre>
-<pre class="pc" data-scene="9" hidden><span class="com">scf
-</span><span class="num">   1.00000000000000
-</span><span class="val">     4.809090    0.000000    0.000000
-</span><span class="val">    -2.404545    4.164794    0.000000
-</span><span class="val">     0.000000    0.000000   11.826300
-</span><span class="key">   Li   Gd
-</span><span class="num">     6     6
-</span><span class="okc">Direct
-</span>   0.000000  0.000000  0.750000
-   0.000000  0.000000  0.250000
-   0.666667  0.333333  0.083330
-   0.666667  0.333333  0.583330
-   0.333333  0.666667  0.416670
-   0.333333  0.666667  0.916670
-   0.000000  0.000000  0.500000
-   0.000000  0.000000  0.000000
-   0.666667  0.333333  0.833330
-   0.666667  0.333333  0.333333
-   0.333333  0.666667  0.166670
-   0.333333  0.666667  0.666667
- 
-<span class="num">   36   36   90
-</span><span class="com">  (116,640 values follow)
-</span> 
-<span class="com"># VESTA 3.5.8 scene li6gd6_dft.vesta
-</span><span class="com"># isosurface  ELF = 0.70
-</span><span class="com"># sections    ELF 0 → 1, B-G-R
-</span><span class="com"># region      2 × 2 × 1 cells</span></pre>
 </div>
 </details>
 <div class="vstage" id="viewer-stage">
@@ -442,7 +410,6 @@
 <div class="vstatus" data-scene="6" hidden><span><span class="key">MoS<sub>2</sub></span> · 2H monolayer, 4×4 supercell · Mo 16, S 31 · ELF grid 108×108×200</span><a href="#job-tmdc">→ jobs/tmdc-electrides</a></div>
 <div class="vstatus" data-scene="7" hidden><span><span class="key">U<sub>10</sub>H<sub>84</sub></span> · I4/m · 200 GPa · U 10, H 84</span><a href="#job-superhydrides">→ jobs/superhydrides</a></div>
 <div class="vstatus" data-scene="8" hidden><span><span class="key">U<sub>10</sub></span> metal lattice · I4/m · U 10 · ELF grid 60×60×40</span><a href="#job-superhydrides">→ jobs/superhydrides</a></div>
-<div class="vstatus" data-scene="9" hidden><span><span class="key">Li<sub>6</sub>Gd<sub>6</sub></span> · metal template on the LaH<sub>6</sub> R-3c lattice · 200 GPa · DFT ELF</span><a href="#job-elfnet">→ jobs/elfnet</a></div>
 </div>
 <p class="vcap" data-scene="0">NaKH<sub>12</sub> at 60 GPa. Yellow ELF isosurfaces wrap each H<sub>2</sub> unit; six of them sit on the faces of every small Na<sub>4</sub>K<sub>4</sub> cube, bonds pointing at its center.</p>
 <p class="vcap" data-scene="1" hidden>The same cell with the hydrogen taken out. An interstitial ELF basin sits at the center of each small Na<sub>4</sub>K<sub>4</sub> cube: the site the six H<sub>2</sub> units gather around in NaKH<sub>12</sub>.</p>
@@ -453,9 +420,8 @@
 <p class="vcap" data-scene="6" hidden>A MoS<sub>2</sub> monolayer with one sulfur removed at the center of the flake. Every S carries a lone-pair ELF basin; at the vacancy a smaller basin with no atom inside sits where the sulfur was: the electride-like vacancy state.</p>
 <p class="vcap" data-scene="7" hidden>U<sub>10</sub>H<sub>84</sub> (I4/m, 200 GPa), one of the superhydrides from the template-guided search, with its hydrogen cage network.</p>
 <p class="vcap" data-scene="8" hidden>The bare U<sub>10</sub> metal lattice, step one of the two-step search, with its ELF isosurface. Same view and scale as U<sub>10</sub>H<sub>84</sub>.</p>
-<p class="vcap" data-scene="9" hidden>DFT ELF of Li<sub>6</sub>Gd<sub>6</sub>, a metal template on the LaH<sub>6</sub> (R-3c) lattice at 200 GPa and one of the reference structures behind ELFNet.</p>
 <p class="foot"># drawn live from each calculation’s own ELFCAR or PARCHG grid in <a href="https://doi.org/10.1107/S0021889811038970">VESTA</a>’s colors, radii and section palette; the opening view matches the native VESTA render</p>
-<script type="application/json" id="scene-data">[{"src": "assets/deck/structures/nakh12_60GPa.json", "file": "NaKH12_60GPa/ELFCAR", "label": "Interactive 3D view: NaKH12 cell at 60 GPa with ELF isosurfaces around each H2 unit"}, {"src": "assets/deck/structures/nak_sublattice.json", "file": "NaK_sublattice/ELFCAR", "label": "Interactive 3D view: Na-K sublattice with interstitial ELF basins at the centers of the small Na4K4 cubes"}, {"src": "assets/deck/structures/h2_c2c_b15.json", "file": "H2_states/C2c-12/PARCHG.0015.0001", "label": "Rotating C2/c solid hydrogen with the band-15 state running in channels between the H2 molecules"}, {"src": "assets/deck/structures/h2_ama2_b25.json", "file": "H2_states/Ama2_425GPa/PARCHG.0025.ALLK", "label": "Rotating Ama2 solid hydrogen with the band-25 state in the interstitial space between molecular layers"}, {"src": "assets/deck/structures/h2_p63m_b9.json", "file": "H2_states/P63m_325GPa/PARCHG.0009.ALLK", "label": "Rotating P6_3/m solid hydrogen with the band-9 state in columns along c"}, {"src": "assets/deck/structures/h2_p63m_b11.json", "file": "H2_states/P63m_325GPa/PARCHG.0011.ALLK", "label": "Rotating P6_3/m solid hydrogen with the band-11 state in interstitial pockets"}, {"src": "assets/deck/structures/mos2_vacancy.json", "file": "MoS2_vacancy/ELFCAR_441", "label": "Interactive 3D view: MoS2 monolayer flake with one sulfur vacancy at its center"}, {"src": "assets/deck/structures/u10h84_structure.json", "file": "U10H84_I4m.vasp", "label": "Interactive 3D view: U10H84 superhydride cell with its hydrogen cage network"}, {"src": "assets/deck/structures/u10_template.json", "file": "U10_template/ELFCAR_U10.vasp", "label": "Interactive 3D view: bare U10 metal lattice with its ELF isosurface"}, {"src": "assets/deck/structures/li6gd6_dft.json", "file": "Li6Gd6_template/ELFCAR", "label": "Interactive 3D view: Li6Gd6 metal template with its DFT ELF isosurface"}]</script>
+<script type="application/json" id="scene-data">[{"src": "assets/deck/structures/nakh12_60GPa.json", "file": "NaKH12_60GPa/ELFCAR", "label": "Interactive 3D view: NaKH12 cell at 60 GPa with ELF isosurfaces around each H2 unit"}, {"src": "assets/deck/structures/nak_sublattice.json", "file": "NaK_sublattice/ELFCAR", "label": "Interactive 3D view: Na-K sublattice with interstitial ELF basins at the centers of the small Na4K4 cubes"}, {"src": "assets/deck/structures/h2_c2c_b15.json", "file": "H2_states/C2c-12/PARCHG.0015.0001", "label": "Rotating C2/c solid hydrogen with the band-15 state running in channels between the H2 molecules"}, {"src": "assets/deck/structures/h2_ama2_b25.json", "file": "H2_states/Ama2_425GPa/PARCHG.0025.ALLK", "label": "Rotating Ama2 solid hydrogen with the band-25 state in the interstitial space between molecular layers"}, {"src": "assets/deck/structures/h2_p63m_b9.json", "file": "H2_states/P63m_325GPa/PARCHG.0009.ALLK", "label": "Rotating P6_3/m solid hydrogen with the band-9 state in columns along c"}, {"src": "assets/deck/structures/h2_p63m_b11.json", "file": "H2_states/P63m_325GPa/PARCHG.0011.ALLK", "label": "Rotating P6_3/m solid hydrogen with the band-11 state in interstitial pockets"}, {"src": "assets/deck/structures/mos2_vacancy.json", "file": "MoS2_vacancy/ELFCAR_441", "label": "Interactive 3D view: MoS2 monolayer flake with one sulfur vacancy at its center"}, {"src": "assets/deck/structures/u10h84_structure.json", "file": "U10H84_I4m.vasp", "label": "Interactive 3D view: U10H84 superhydride cell with its hydrogen cage network"}, {"src": "assets/deck/structures/u10_template.json", "file": "U10_template/ELFCAR_U10.vasp", "label": "Interactive 3D view: bare U10 metal lattice with its ELF isosurface"}]</script>
 </div>
 </section>
 
@@ -479,31 +445,14 @@
 </table>
 </div>
 
-<article id="job-elfnet" class="lead-job">
-<figure>
-<div class="plate"><img src="assets/deck/img/jmi-fig4.webp" width="1200" height="801" alt="Predicted and DFT electron localization functions for AuGa and Ca, with global maxima marked" loading="lazy" decoding="async"></div>
-<figcaption>ELFCAR, predicted vs DFT: AuGa and Ca. J. Mater. Inf. 2026, Fig. 4 (CC BY 4.0).</figcaption>
-</figure>
-<div class="job">
+<div class="jobs">
+<article id="job-elfnet" class="job">
+<div class="plate"><img src="assets/deck/img/elfnet-toc.webp" width="1200" height="858" alt="ELFNet workflow: a high-pressure ELF dataset of 326,009 structures, their superposed atomic densities, a periodic 3D convolutional network, and the predicted ELF" loading="lazy" decoding="async"></div>
 <p class="jh"><b>jobs/elfnet</b>  J. Mater. Inf. 2026 · NeurIPS AI4Mat 2025 · APS 2026</p>
 <h3>ELFNet: electron localization from superposed atomic densities</h3>
 <p class="b">A periodic 3D convolutional network maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation.</p>
-<div class="facts"><span class="com">structures</span>  <span class="num">326,009</span> converged, <span class="num">89</span> elements
-<span class="com">pressure  </span>  <span class="num">−50</span> to <span class="num">500</span> GPa
-<span class="com">model     </span>  periodic full-grid 3D CNN
-<span class="com">speed     </span>  ~<span class="num">350×</span> less elapsed time than VASP ELF</div>
-<div class="links" style="margin-top:16px;">
-<a href="https://www.oaepublish.com/articles/jmi.2026.44">paper</a>
-<a href="https://openreview.net/forum?id=VHX3ubJCuK">workshop</a>
-<a href="https://github.com/Austin243/ELFNet">code</a>
-<a href="posters/SeitzELF_3DCNN.pdf">poster</a>
-<a href="slides/SeitzInvariantELF_APS_2026.pptx">slides</a>
-<a href="#structures" data-open-tab="4">open Li6Gd6_template/</a>
-</div>
-</div>
+<div class="links"><a href="https://www.oaepublish.com/articles/jmi.2026.44">paper</a><a href="https://openreview.net/forum?id=VHX3ubJCuK">workshop</a><a href="https://github.com/Austin243/ELFNet">code</a><a href="posters/SeitzELF_3DCNN.pdf">poster</a><a href="slides/SeitzInvariantELF_APS_2026.pptx">slides</a></div>
 </article>
-
-<div class="jobs">
 <article id="job-superhydrides" class="job">
 <div class="plate"><img src="assets/deck/img/superhydrides.webp" width="1000" height="581" alt="Two-step chemical-template workflow for discovering metal superhydrides" loading="lazy" decoding="async"></div>
 <p class="jh"><b>jobs/superhydrides</b>  J. Am. Chem. Soc. 2025 · NeurIPS AI4Mat 2025</p>

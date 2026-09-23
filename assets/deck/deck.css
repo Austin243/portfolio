@@ -113,14 +113,6 @@ h1.cl { margin: 0; font-weight: 400; }
 .sacct td { padding: 9px 16px 9px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
 .plate { display: block; background: #FFFFFF; border-radius: 2px; overflow: hidden; }
 .plate img { display: block; width: 100%; height: 100%; object-fit: contain; }
-.lead-job { display: grid; grid-template-columns: 480px minmax(0, 1fr); gap: 48px; align-items: start; margin-top: 56px; }
-.lead-job figure { margin: 0; display: flex; flex-direction: column; gap: 10px; }
-.lead-job .plate { height: 321px; padding: 12px; }
-.lead-job figcaption { font: 12px/1.5 var(--mono); color: var(--dim); }
-.lead-job .job { margin-top: -16px; }
-.lead-job h3 { font-size: 32px; }
-.lead-job .b { font-size: 16.5px; }
-.facts { margin-top: 16px; padding: 12px 16px; background: var(--panel); border: 1px solid var(--line); font: 14px/1.75 var(--mono); white-space: pre; overflow-x: auto; }
 .jobs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 40px; margin-top: 56px; }
 .job { display: flex; flex-direction: column; }
 .job .plate { height: 200px; padding: 10px; }
@@ -174,9 +166,6 @@ h1.cl { margin: 0; font-weight: 400; }
   main { grid-column: 1; grid-row: 3; }
   .status { grid-row: 4; }
   section { padding: 44px 32px 56px; }
-  .lead-job { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-  .lead-job .plate { width: 100%; max-width: 560px; height: auto; aspect-ratio: 1.5; }
-  .lead-job .job { margin-top: 0; }
 }
 
 /* ---------- small screens ---------- */
@@ -210,7 +199,6 @@ h1.cl { margin: 0; font-weight: 400; }
   section { padding: 32px 20px 44px; }
   .fh h2 { font-size: 20px; }
   .prompt { font-size: 14px; }
-  .job h3, .lead-job h3 { font-size: 24px; }
   .res h3 { font-size: 18px; }
   .sacct { font-size: 13.5px; }
   .about .ph { width: 160px; height: 190px; }

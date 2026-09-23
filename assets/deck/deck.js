@@ -38,7 +38,7 @@
   const V = $('#structures');
   if (!V) return;
   const SCENES = JSON.parse($('#scene-data').textContent);
-  const TABS = [[0, 1], [2, 3, 4, 5], [6], [7, 8], [9]];
+  const TABS = [[0, 1], [2, 3, 4, 5], [6], [7, 8]];
   const cv = $('canvas.gl', V), ov = $('canvas.ov', V), stage = $('.vstage', V), pane = $('.vpane', V);
   let tab = 0, v = 0, eng = null, shown = -1;
   const cache = {};
