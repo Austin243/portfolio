@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Technical profile · Austin Ellis</title>
-<meta name="description" content="Technical profile of Austin Ellis: HPC cluster administration, scientific software environments, and research automation.">
+<title>HPC and code · Austin Ellis</title>
+<meta name="description" content="The cluster work Austin Ellis used to do by hand at CSUN, and some of his code on GitHub: ReactionFlow, ELFNet, ElecTrace, and more.">
 <link rel="canonical" href="https://austinellis.org/technical.html">
 <meta name="theme-color" content="#141311">
-<meta property="og:title" content="Technical profile · Austin Ellis">
-<meta property="og:description" content="Technical profile of Austin Ellis: HPC cluster administration, scientific software environments, and research automation.">
+<meta property="og:title" content="HPC and code · Austin Ellis">
+<meta property="og:description" content="The cluster work Austin Ellis used to do by hand at CSUN, and some of his code on GitHub: ReactionFlow, ELFNet, ElecTrace, and more.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://austinellis.org/technical.html">
 <meta name="twitter:card" content="summary">
@@ -49,8 +49,7 @@
 <a href="posters.html">talks/<span>posters, slides</span></a>
 <a href="teaching.html">outreach/<span>teaching</span></a>
 <a href="technical.html" class="on" aria-current="page">hpc/<span>technical</span></a>
-<a class="sub" href="#selected-work" data-sec="selected-work">├─ selected-work/</a>
-<a class="sub" href="#tooling" data-sec="tooling">└─ tooling/</a>
+<a class="sub" href="#code" data-sec="code">└─ code/</a>
 <a href="AustinEllisCV.pdf" class="cvl">CV.pdf ↗</a>
 </nav>
 <h2>REMOTES</h2>
@@ -67,52 +66,60 @@
 <main>
 <section id="hpc" aria-labelledby="hpc-h">
 <div class="w">
-<div class="fh"><h1 id="hpc-h">hpc/</h1><p>Technical profile</p></div>
+<div class="fh"><h1 id="hpc-h">hpc/</h1><p>Clusters, scripts, and code</p></div>
 <p class="prompt"><b>austin</b> ~/austin-ellis $ cat hpc/README</p>
-<h2 class="big">HPC systems, scientific software, and research automation</h2>
-<p class="lede">Hands-on support for Linux/Slurm clusters, chemistry software stacks, and Python workflows used in computational chemistry research.</p>
-<dl class="kv k3">
-<div><dt>CLUSTERS</dt><dd>Managed two NSF-funded CSUN HPC clusters for the College of Science and Mathematics, including Linux access, Slurm queues, shared filesystems, and user support.</dd></div>
-<div><dt>SOFTWARE</dt><dd>Maintained Python, Conda, compiler, CUDA, VASP, Quantum ESPRESSO, ASE, pymatgen, PyTorch, and TensorBoard environments.</dd></div>
-<div><dt>AUTOMATION</dt><dd>Wrote Bash and Python tools for job setup, queue checks, log summaries, output validation, filesystem cleanup, and reproducible setup notes.</dd></div>
-</dl>
+<h2 class="big">Things I used to do by hand</h2>
+<p class="lede">For a while I ran two NSF-funded research clusters for CSUN’s College of Science and Mathematics. This is what that involved, back before I could text a chatbot from my phone and have it all done before I got out of bed.</p>
+<ul class="dash lg">
+<li>making accounts and groups, fixing permissions, and setting up Samba shares</li>
+<li>keeping an eye on Slurm queues, node states, and GPU jobs</li>
+<li>figuring out why someone’s job died (usually the environment, sometimes the disk)</li>
+<li>building and repairing Python, Conda, CUDA, and compiler setups for VASP, Quantum ESPRESSO, ASE, pymatgen, and PyTorch</li>
+<li>writing Bash and Python scripts to set up VASP jobs, fill in Slurm templates, parse logs, and collect outputs</li>
+<li>cleaning up shared disks when they filled up</li>
+<li>writing down how everything was set up, so the next person could rerun it</li>
+</ul>
 <p class="prompt" style="margin-top:32px;"><b>austin</b> ~/austin-ellis $ module list</p>
-<p class="mods"><span>Linux</span> <span>Slurm</span> <span>Python</span> <span>Bash</span> <span>PyTorch</span> <span>CUDA</span> <span>VASP</span> <span>Git</span></p>
+<p class="mods"><span>Linux</span> <span>Slurm</span> <span>SSH</span> <span>Samba</span> <span>Bash</span> <span>Python</span> <span>Conda</span> <span>CUDA</span> <span>PyTorch</span> <span>NumPy</span> <span>pandas</span> <span>Matplotlib</span> <span>VASP</span> <span>Quantum ESPRESSO</span> <span>ASE</span> <span>pymatgen</span> <span>VESTA</span> <span>Git</span></p>
 </div>
 </section>
 
-<section id="selected-work" aria-labelledby="work-h">
+<section id="code" aria-labelledby="code-h">
 <div class="w">
-<div class="fh"><h2 id="work-h">selected-work/</h2><p>Cluster administration, software, and automation</p></div>
-<div class="cols3">
+<div class="fh"><h2 id="code-h">code/</h2><p>Some of my code on GitHub</p></div>
+<p class="prompt"><b>austin</b> ~/austin-ellis $ gh repo list Austin243</p>
+<div class="jobs">
 <article class="job talks">
-<p class="jh"><b>clusters/</b>  HPC administration</p>
-<h3>Linux and Slurm cluster support</h3>
-<ul class="dash"><li>Created and audited accounts, groups, permissions, and Samba access.</li><li>Checked node state, active allocations, GPU jobs, and scheduler health from live Slurm output.</li><li>Handled user-facing debugging for failed jobs, environment problems, and shared storage issues.</li></ul>
+<h3 class="repo">ReactionFlow</h3>
+<p class="b">Watches molecular dynamics runs for bonds breaking or forming. When a change sticks, it pauses the run, finds the reaction path with NEB, checks the transition state, then picks the trajectory back up exactly where it left off.</p>
+<div class="links"><a href="https://github.com/Austin243/ReactionFlow">github ↗</a></div>
 </article>
 <article class="job talks">
-<p class="jh"><b>envs/</b>  Scientific software</p>
-<h3>Chemistry and ML environments</h3>
-<ul class="dash"><li>Supported compiled chemistry codes and Python tooling across shared systems.</li><li>Debugged CUDA, Conda, compiler, and package conflicts for GPU-backed training and inference.</li><li>Kept working setups documented so runs could be repeated by other users.</li></ul>
+<h3 class="repo">ELFNet</h3>
+<p class="b">Predicts a crystal’s electron localization function from its superposed atomic densities. Inference and training code, with the whole dataset on Zenodo.</p>
+<div class="links"><a href="https://github.com/Austin243/ELFNet">github ↗</a><a href="index.html#job-elfnet">→ jobs/elfnet</a></div>
 </article>
 <article class="job talks">
-<p class="jh"><b>scripts/</b>  Automation</p>
-<h3>Command-line research tooling</h3>
-<ul class="dash"><li>Built scripts for VASP staging, Slurm templates, log parsing, and output collection.</li><li>Used structured parsers where possible for CIF, POSCAR, CSV, JSON, and TensorBoard data.</li><li>Summarized campaigns with counts, losses, checkpoints, rates, and ETA estimates from disk and logs.</li></ul>
+<h3 class="repo">ElecTrace</h3>
+<p class="b">Follows Bader charges, ELF and QTAIM topology, and LOBSTER bonding frame by frame along a VASP NEB path or a pressure series, matching atoms and features from one frame to the next.</p>
+<div class="links"><a href="https://github.com/Austin243/ElecTrace">github ↗</a></div>
+</article>
+<article class="job talks">
+<h3 class="repo">layer-toolkit</h3>
+<p class="b">Builds layered VASP inputs from Materials Project prototypes, sets up the relax and SCF runs, and pulls out ELF hotspots and bonding afterward.</p>
+<div class="links"><a href="https://github.com/Austin243/layer-toolkit">github ↗</a></div>
+</article>
+<article class="job talks">
+<h3 class="repo">calypso-setup</h3>
+<p class="b">Writes the boilerplate for a CALYPSO + VASP structure search: POTCARs, INCARs, input.dat, and job scripts, with a lot of options for 2D searches.</p>
+<div class="links"><a href="https://github.com/Austin243/calypso-setup">github ↗</a></div>
+</article>
+<article class="job talks">
+<h3 class="repo">ani-1xnr-npt-driver</h3>
+<p class="b">An experimental PyTorch MD driver for running the ANI-1xnr potential at constant pressure, with restarts, HDF5 trajectories, and a TorchANI patch for stresses.</p>
+<div class="links"><a href="https://github.com/Austin243/ani-1xnr-npt-driver">github ↗</a></div>
 </article>
 </div>
-</div>
-</section>
-
-<section id="tooling" aria-labelledby="tooling-h">
-<div class="w">
-<div class="fh"><h2 id="tooling-h">tooling/</h2><p>What I reach for</p></div>
-<dl class="kv">
-<div><dt>SYSTEMS</dt><dd>Linux, Slurm, SSH, users and groups, permissions, storage, Samba, remote administration</dd></div>
-<div><dt>PROGRAMMING</dt><dd>Python, Bash, PyTorch, NumPy, Pandas, Matplotlib, TensorBoard, Git, Markdown</dd></div>
-<div><dt>CHEMISTRY</dt><dd>VASP, Quantum ESPRESSO, ASE, pymatgen, VESTA, Sumo, CIF and POSCAR parsing</dd></div>
-<div><dt>INFRASTRUCTURE</dt><dd>Conda, compilers, CUDA environments, package debugging, job scripts, reproducible notes</dd></div>
-</dl>
 </div>
 </section>
 </main>
