@@ -109,20 +109,22 @@
 
 <section id="research" aria-labelledby="research-h">
 <div class="w">
-<div class="fh"><h2 id="research-h">jobs/</h2><p>Research: six completed jobs, one running, one pending</p></div>
-<p class="prompt" style="margin-top:22px;"><b>austin</b> ~/austin-ellis $ sacct --format=JobName,Partition,State,End</p>
+<div class="fh"><h2 id="research-h">jobs/</h2><p>Research: six completed, one running, three pending</p></div>
+<p class="prompt" style="margin-top:22px;"><b>austin</b> ~/austin-ellis $ sacct -X --format=JobID,JobName,Comment,Partition,State,End</p>
 <div class="table-wrap">
 <table class="sacct">
-<thead><tr><th>JobName</th><th>Partition</th><th>State</th><th>End</th></tr></thead>
+<thead><tr><th>JobID</th><th>JobName</th><th>Comment</th><th>Partition</th><th>State</th><th>End</th></tr></thead>
 <tbody>
-<tr><td><a href="#job-elfnet">elfnet</a></td><td>J. Mater. Inf.</td><td class="okc">COMPLETED</td><td class="num">2026</td></tr>
-<tr><td><a href="#job-h2">h2-electride</a></td><td>J. Phys. Chem. Lett.</td><td class="okc">COMPLETED</td><td class="num">2026</td></tr>
-<tr><td><a href="#job-fe">fe-redox</a></td><td>Proc. Natl. Acad. Sci.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
-<tr><td><a href="#job-superhydrides">superhydrides</a></td><td>J. Am. Chem. Soc.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
-<tr><td><a href="#job-nakh12">nakh12</a></td><td>Adv. Funct. Mater.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
-<tr><td><a href="#job-tmdc">tmdc-electrides</a></td><td>J. Phys. Chem. Lett.</td><td class="okc">COMPLETED</td><td class="num">2024</td></tr>
-<tr><td>cnms-internship</td><td>ornl</td><td class="key">RUNNING</td><td class="dim">Unknown</td></tr>
-<tr><td>phd</td><td>fall_2027</td><td class="num">PENDING</td><td class="dim">Unknown</td></tr>
+<tr><td>2023_1</td><td>csun-ms</td><td><a href="#job-tmdc">tmdc-electrides</a></td><td>J. Phys. Chem. Lett.</td><td class="okc">COMPLETED</td><td class="num">2024</td></tr>
+<tr><td>2023_2</td><td>csun-ms</td><td><a href="#job-nakh12">nakh12</a></td><td>Adv. Funct. Mater.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
+<tr><td>2023_3</td><td>csun-ms</td><td><a href="#job-superhydrides">superhydrides</a></td><td>J. Am. Chem. Soc.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
+<tr><td>2023_4</td><td>csun-ms</td><td><a href="#job-fe">fe-redox</a></td><td>Proc. Natl. Acad. Sci.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
+<tr><td>2023_5</td><td>csun-ms</td><td><a href="#job-h2">h2-electride</a></td><td>J. Phys. Chem. Lett.</td><td class="okc">COMPLETED</td><td class="num">2026</td></tr>
+<tr><td>2023_6</td><td>csun-ms</td><td><a href="#job-elfnet">elfnet</a></td><td>J. Mater. Inf.</td><td class="okc">COMPLETED</td><td class="num">2026</td></tr>
+<tr><td>2023_7</td><td>csun-ms</td><td>cs-core-reactivity</td><td>in_prep</td><td class="key">RUNNING</td><td class="dim">Unknown</td></tr>
+<tr><td>2026_1</td><td>cnms-internship</td><td>polymerization</td><td>in_prep</td><td class="num">PENDING</td><td class="dim">Unknown</td></tr>
+<tr><td>2026_2</td><td>cnms-internship</td><td>mlip-benchmark</td><td>in_prep</td><td class="num">PENDING</td><td class="dim">Unknown</td></tr>
+<tr><td>2027</td><td>phd</td><td></td><td>fall_2027</td><td class="num">PENDING</td><td class="dim">Unknown</td></tr>
 </tbody>
 </table>
 </div>
