@@ -3,6 +3,26 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
+  // ---------- light / dark theme: dark unless the visitor picks light ----------
+  const root = document.documentElement;
+  const themeBtns = $$('[data-theme-set]'), themeMeta = $('meta[name="theme-color"]');
+  const setTheme = (t) => {
+    root.dataset.theme = t;
+    themeBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.themeSet === t)));
+    if (themeMeta) themeMeta.content = getComputedStyle(root).getPropertyValue('--bg').trim();
+  };
+  themeBtns.forEach((b) => b.addEventListener('click', () => {
+    try { localStorage.setItem('theme', b.dataset.themeSet); } catch (e) {}
+    setTheme(b.dataset.themeSet);
+  }));
+  setTheme(root.dataset.theme === 'light' ? 'light' : 'dark');
+
+  // ---------- links that leave the site, and PDFs and slides, open in a new tab ----------
+  $$('a[href]').forEach((a) => {
+    if (!/^https?:$/.test(a.protocol)) return;
+    if (a.origin !== location.origin || /\.(pdf|pptx)$/i.test(a.pathname)) { a.target = '_blank'; a.rel = 'noopener'; }
+  });
+
   // ---------- file tree as a drawer on narrow screens ----------
   const side = $('.side'), scrim = $('.scrim'), filesBtn = $('.brand .files');
   const setDrawer = (open) => {
