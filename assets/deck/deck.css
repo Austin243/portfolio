@@ -8,8 +8,17 @@
   --top: 52px; --foot: 30px;
   color-scheme: dark;
 }
-/* light theme: the Terminal "Novel" colors. Dark is the default; an inline script in each page's head
-   applies a visitor's saved choice before the page draws. */
+/* light theme: the Terminal "Novel" colors. An inline script in each page's head sets data-theme from
+   the visitor's saved choice or their system setting; the media query covers visits without JavaScript. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #DFDBC4; --panel: #D7D3BC; --bar: #DBD7C0; --well: #E8E5D2; --hi: #CAC6B1; --line: #C8C4AD; --line2: #B9B59E;
+    --ink: #4D2F2D; --mut: #5F4C45; --dim: #5C5347; --gut: #767262; --cur: #74635B;
+    --key: #7A5200; --val: #1A5A75; --num: #983C0E; --ok: #2E6A39; --com: #645B4D; --onkey: #FAF7EA;
+    --float: rgba(223, 219, 196, .94); --hover: rgba(77, 47, 45, .08); --shade: rgba(60, 40, 30, .25); --scrim: rgba(45, 30, 28, .35);
+    color-scheme: light;
+  }
+}
 :root[data-theme="light"] {
   --bg: #DFDBC4; --panel: #D7D3BC; --bar: #DBD7C0; --well: #E8E5D2; --hi: #CAC6B1; --line: #C8C4AD; --line2: #B9B59E;
   --ink: #4D2F2D; --mut: #5F4C45; --dim: #5C5347; --gut: #767262; --cur: #74635B;

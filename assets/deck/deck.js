@@ -3,9 +3,10 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-  // ---------- light / dark theme: dark unless the visitor picks light ----------
-  const root = document.documentElement;
+  // ---------- light / dark theme: follows the system setting until the visitor picks one ----------
+  const root = document.documentElement, osLight = window.matchMedia('(prefers-color-scheme: light)');
   const themeBtns = $$('[data-theme-set]'), themeMeta = $('meta[name="theme-color"]');
+  const saved = () => { try { return localStorage.getItem('theme'); } catch (e) { return null; } };
   const setTheme = (t) => {
     root.dataset.theme = t;
     themeBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.themeSet === t)));
@@ -15,6 +16,8 @@
     try { localStorage.setItem('theme', b.dataset.themeSet); } catch (e) {}
     setTheme(b.dataset.themeSet);
   }));
+  const followOS = () => { const s = saved(); if (s !== 'light' && s !== 'dark') setTheme(osLight.matches ? 'light' : 'dark'); };
+  if (osLight.addEventListener) osLight.addEventListener('change', followOS);
   setTheme(root.dataset.theme === 'light' ? 'light' : 'dark');
 
   // ---------- links that leave the site, and PDFs and slides, open in a new tab ----------
