@@ -39,7 +39,7 @@
   if (openTab && openTab.offsetLeft + openTab.offsetWidth > tabBar.clientWidth) tabBar.scrollLeft = openTab.offsetLeft - 16;
 
   // ---------- active file tab and status bar follow the scroll position ----------
-  const names = { incar: 'INCAR', structures: 'structures/', research: 'jobs/', publications: 'OUTCAR', news: 'OSZICAR', about: 'CONTCAR' };
+  const names = { incar: 'INCAR', structures: 'structures/', research: 'jobs/', news: 'OSZICAR', about: 'CONTCAR' };
   const tabs = $$('.tabs a[href^="#"]'), statusFile = $('.status .file');
   const setActive = (id) => {
     tabs.forEach((a) => {
