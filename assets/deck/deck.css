@@ -224,6 +224,10 @@ section:last-child { border-bottom: 0; }
 .kv dt { font: 12.5px var(--mono); color: var(--key); }
 .kv dd { margin: 6px 0 0; font-size: 15.5px; line-height: 1.55; }
 
+@media (min-width: 1100px) and (max-width: 1299px) {
+  .tabs a { padding: 0 13px; }
+}
+
 /* ---------- tablet: file tree becomes a drawer ---------- */
 @media (max-width: 1099px) {
   .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr) auto; }
