@@ -8,17 +8,8 @@
   --top: 52px; --foot: 30px;
   color-scheme: dark;
 }
-/* light theme: the Terminal "Novel" colors. An inline script in each page's head sets data-theme from
-   the visitor's saved choice or their system setting; the media query covers visits without JavaScript. */
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    --bg: #DFDBC4; --panel: #D7D3BC; --bar: #DBD7C0; --well: #E8E5D2; --hi: #CAC6B1; --line: #C8C4AD; --line2: #B9B59E;
-    --ink: #4D2F2D; --mut: #5F4C45; --dim: #5C5347; --gut: #767262; --cur: #74635B;
-    --key: #7A5200; --val: #1A5A75; --num: #983C0E; --ok: #2E6A39; --com: #645B4D; --onkey: #FAF7EA;
-    --float: rgba(223, 219, 196, .94); --hover: rgba(77, 47, 45, .08); --shade: rgba(60, 40, 30, .25); --scrim: rgba(45, 30, 28, .35);
-    color-scheme: light;
-  }
-}
+/* light theme: the Terminal "Novel" colors. Dark is the default; an inline script in each page's head
+   applies a visitor's saved choice before the page draws. */
 :root[data-theme="light"] {
   --bg: #DFDBC4; --panel: #D7D3BC; --bar: #DBD7C0; --well: #E8E5D2; --hi: #CAC6B1; --line: #C8C4AD; --line2: #B9B59E;
   --ink: #4D2F2D; --mut: #5F4C45; --dim: #5C5347; --gut: #767262; --cur: #74635B;
@@ -102,6 +93,12 @@ section:last-child { border-bottom: 0; }
 @keyframes blink { 50% { opacity: 0; } }
 
 /* structures viewer */
+.vgroup + .vgroup { margin-top: 64px; }
+.vh { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 14px; margin-top: 30px; }
+.vh h3 { margin: 0; font: 700 18px var(--mono); color: var(--key); }
+.vh h3 .dim { font-weight: 400; }
+.vh p { margin: 0; font-size: 15px; color: var(--mut); }
+.vh + .prompt { margin-top: 12px; }
 .viewer { margin-top: 14px; border: 1px solid var(--line2); border-radius: 4px; overflow: hidden; background: var(--panel); }
 .vbar { display: flex; align-items: stretch; justify-content: space-between; min-height: 48px; border-bottom: 1px solid var(--line2); }
 .vtabs { display: flex; overflow-x: auto; scrollbar-width: none; }
