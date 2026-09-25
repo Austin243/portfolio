@@ -54,7 +54,7 @@
 <a class="sub" href="#job-fe">└─ fe-redox</a>
 <a href="#structures" data-sec="structures">structures/<span>visuals</span></a>
 <a class="sub" href="#electrides">├─ electrides/</a>
-<a class="sub" href="#templates">└─ templates/</a>
+<a class="sub" href="#superhydrides">└─ superhydrides/</a>
 <a href="#publications" data-sec="publications">OUTCAR<span>papers</span></a>
 <a href="#news" data-sec="news">OSZICAR<span>news</span></a>
 <a href="#about" data-sec="about">CONTCAR<span>next</span></a>
@@ -140,7 +140,7 @@
 <p class="jh"><b>jobs/superhydrides</b>  J. Am. Chem. Soc. 2025 · NeurIPS AI4Mat 2025</p>
 <h3>Metal superhydrides from chemical templates</h3>
 <p class="b">A template-guided machine-learning workflow found 13 new structural prototypes and 31 stable metal superhydrides, 19 of them with predicted T<sub>c</sub> above 100 K.</p>
-<div class="links"><a href="https://doi.org/10.1021/jacs.5c11731">paper</a><a href="https://openreview.net/forum?id=dEtRvi7G5i">workshop</a><a href="posters/ML_BatchedSuperhydrides.pdf">poster</a><a href="#templates" data-open-tab="templates:1">open U10H84_I4m/</a></div>
+<div class="links"><a href="https://doi.org/10.1021/jacs.5c11731">paper</a><a href="https://openreview.net/forum?id=dEtRvi7G5i">workshop</a><a href="posters/ML_BatchedSuperhydrides.pdf">poster</a><a href="#superhydrides" data-open-tab="superhydrides:1">open U10H84_I4m/</a></div>
 </article>
 <article id="job-h2" class="job">
 <div class="plate"><img src="assets/deck/img/h2-phase-diagram.webp" width="1200" height="600" alt="Pressure–temperature phase diagram of molecular hydrogen with electron localization isosurfaces for phases I to IV" loading="lazy" decoding="async"></div>
@@ -161,7 +161,7 @@
 <p class="jh"><b>jobs/nakh12</b>  Adv. Funct. Mater. 2025</p>
 <h3>Superconductivity in molecular hydrides</h3>
 <p class="b">Interstitial electrons act as chemical templates that assemble H<sub>2</sub> units in NaKH<sub>12</sub>, predicted to superconduct up to 245 K at a moderate 60 GPa.</p>
-<div class="links"><a href="https://doi.org/10.1002/adfm.202415910">paper</a><a href="#templates" data-open-tab="templates:0">open NaKH12_60GPa/</a></div>
+<div class="links"><a href="https://doi.org/10.1002/adfm.202415910">paper</a><a href="#superhydrides" data-open-tab="superhydrides:0">open NaKH12_60GPa/</a></div>
 </article>
 <article id="job-fe" class="job">
 <div class="plate"><img src="assets/deck/img/iron-redox.webp" width="1200" height="600" alt="Formation-energy convex hulls for iron with silicon, phosphorus, sulfur, germanium, arsenic, and selenium" loading="lazy" decoding="async"></div>
@@ -387,14 +387,14 @@
 <p class="vcap" data-scene="4" hidden>P6<sub>3</sub>/m hydrogen, band 9 at A (Fig. 3c): interstitial maxima stacked in columns along <i>c</i>, between the H<sub>2</sub> molecules.</p>
 <p class="vcap" data-scene="5" hidden>P6<sub>3</sub>/m hydrogen, band 11 at A (Fig. 3d): the next state up also gathers in the interstitial pockets instead of on the H–H bonds.</p>
 </div>
-<div class="vgroup" id="templates" data-tabs="[[0, 1], [7, 8]]">
-<div class="vh"><h3><span class="dim">structures/</span>templates/</h3><p>Chemical templates for superhydrides</p></div>
-<p class="prompt"><b>austin</b> ~/austin-ellis $ VESTA structures/templates/<span class="vfile">NaKH12_60GPa/ELFCAR</span> &amp;</p>
+<div class="vgroup" id="superhydrides" data-tabs="[[0, 1], [7, 8]]">
+<div class="vh"><h3><span class="dim">structures/</span>superhydrides/</h3><p>Chemical templates for superhydrides</p></div>
+<p class="prompt"><b>austin</b> ~/austin-ellis $ VESTA structures/superhydrides/<span class="vfile">NaKH12_60GPa/ELFCAR</span> &amp;</p>
 <div class="viewer">
 <div class="vbar">
 <div class="vtabs" role="tablist" aria-label="Chemical templates for superhydrides calculations">
-<button type="button" role="tab" class="vt" aria-selected="true" aria-controls="stage-templates">NaKH12/ELFCAR</button>
-<button type="button" role="tab" class="vt" aria-selected="false" aria-controls="stage-templates" tabindex="-1">U10H84.vasp</button>
+<button type="button" role="tab" class="vt" aria-selected="true" aria-controls="stage-superhydrides">NaKH12/ELFCAR</button>
+<button type="button" role="tab" class="vt" aria-selected="false" aria-controls="stage-superhydrides" tabindex="-1">U10H84.vasp</button>
 </div>
 <div class="vctl"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
 </div>
@@ -521,7 +521,7 @@
 </span><span class="com"># region      1 × 1 × 2 cells</span></pre>
 </div>
 </details>
-<div class="vstage" id="stage-templates">
+<div class="vstage" id="stage-superhydrides">
 <canvas class="gl" tabindex="0" role="img" aria-label="Interactive 3D view: NaKH12 cell at 60 GPa with ELF isosurfaces around each H2 unit"></canvas>
 <canvas class="ov" aria-hidden="true"></canvas>
 <noscript><p style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;color:#6B665C;font:13px var(--mono);">the 3D viewer needs JavaScript</p></noscript>

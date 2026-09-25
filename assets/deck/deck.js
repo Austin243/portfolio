@@ -57,7 +57,7 @@
     $$('main section[id]').forEach((s) => io.observe(s));
   }
 
-  // ---------- structures viewers: one per group (electrides/, templates/) ----------
+  // ---------- structures viewers: one per group (electrides/, superhydrides/) ----------
   const sceneData = $('#scene-data');
   if (!sceneData) return;
   const SCENES = JSON.parse(sceneData.textContent);
