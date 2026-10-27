@@ -195,6 +195,8 @@ section:last-child { border-bottom: 0; }
 .shots.two { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 600px; }
 .shots img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 2px; background: var(--well); }
 .shots img.fig { object-fit: contain; padding: 6px; background: #FFFFFF; }
+.shots.cover { grid-template-columns: minmax(0, 260px); }
+.shots.cover img { aspect-ratio: 1 / 1.414; }
 .kv.k3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .mods { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
 .mods span { padding: 3px 10px; border: 1px solid var(--line2); border-radius: 3px; font: 13px var(--mono); color: var(--val); }
