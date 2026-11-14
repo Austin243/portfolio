@@ -46,23 +46,24 @@ const VestaGL = class {
     const PREC = '#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n';
     const VH = 'uniform mat3 uM; uniform vec3 uC; uniform vec3 uS; uniform float uR; varying float vFog;\n' +
       'vec4 project(vec3 w){ vec3 q = uM * (w - uC); float t = clamp((uR - q.z) / (2.0 * uR), 0.0, 1.0);\n' +
-      ' vFog = 0.42 * smoothstep(0.35, 1.0, t); return vec4(q.x * uS.x, q.y * uS.y, -q.z * uS.z, 1.0); }\n';
-    const LIT = 'vec3 shade(vec3 n, vec3 col, float spec){ vec3 L = normalize(vec3(-0.35, 0.45, 0.82)); vec3 H = normalize(L + vec3(0.0, 0.0, 1.0));\n' +
-      ' float d = max(dot(n, L), 0.0); float s = pow(max(dot(n, H), 0.0), 42.0); return col * (0.30 + 0.70 * d) + vec3(spec * s); }\n';
+      ' vFog = 0.14 * smoothstep(0.4, 1.0, t); return vec4(q.x * uS.x, q.y * uS.y, -q.z * uS.z, 1.0); }\n';
+    const LIT = 'vec3 shade(vec3 n, vec3 col, float spec){ vec3 L = normalize(vec3(-0.22, 0.30, 0.93)); vec3 H = normalize(L + vec3(0.0, 0.0, 1.0));\n' +
+      ' float d = max(dot(n, L), 0.0); float s = pow(max(dot(n, H), 0.0), 26.0); float rim = smoothstep(0.0, 0.55, n.z);\n' +
+      ' return col * (0.36 + 0.64 * d) * (0.72 + 0.28 * rim) + vec3(spec * s); }\n';
     this.ballP = this._prog('attribute vec3 aPos; uniform vec3 uPos; uniform float uRad; varying vec3 vN;\n' + VH +
       'void main(){ vN = uM * aPos; gl_Position = project(uPos + aPos * uRad); }',
       PREC + 'varying vec3 vN; varying float vFog; uniform vec3 uColor;\n' + LIT +
-      'void main(){ gl_FragColor = vec4(mix(shade(normalize(vN), uColor, 0.55), vec3(1.0), vFog), 1.0); }');
+      'void main(){ gl_FragColor = vec4(mix(shade(normalize(vN), uColor, 0.14), vec3(1.0), vFog), 1.0); }');
     this.stickP = this._prog('attribute vec3 aPos; uniform vec3 uA; uniform vec3 uB; uniform vec3 uU; uniform vec3 uV; varying vec3 vN;\n' + VH +
       'void main(){ vec3 r = uU * aPos.x + uV * aPos.y; vN = uM * normalize(r); gl_Position = project(uA + (uB - uA) * aPos.z + r); }',
       PREC + 'varying vec3 vN; varying float vFog; uniform vec3 uColor;\n' + LIT +
-      'void main(){ gl_FragColor = vec4(mix(shade(normalize(vN), uColor, 0.45), vec3(1.0), vFog), 1.0); }');
+      'void main(){ gl_FragColor = vec4(mix(shade(normalize(vN), uColor, 0.10), vec3(1.0), vFog), 1.0); }');
     this.isoP = this._prog('attribute vec3 aPos; attribute vec3 aNrm; uniform vec3 uOff; varying vec3 vN; varying vec3 vW;\n' + VH +
       'void main(){ vec3 w = aPos + uOff; vW = w; vN = uM * aNrm; gl_Position = project(w); }',
       PREC + 'varying vec3 vN; varying vec3 vW; varying float vFog; uniform vec4 uPl[8]; uniform int uNp; uniform vec3 uColor; uniform float uAlpha;\n' + LIT +
       'void main(){ for (int i = 0; i < 8; i++) { if (i >= uNp) break; if (dot(uPl[i].xyz, vW) > uPl[i].w + 0.002) discard; }\n' +
       ' vec3 n = normalize(vN); if (n.z < 0.0) n = -n;\n' +
-      ' gl_FragColor = vec4(mix(shade(n, uColor, 0.35), vec3(1.0), vFog), uAlpha); }');
+      ' gl_FragColor = vec4(mix(shade(n, uColor, 0.06), vec3(1.0), vFog), uAlpha); }');
     this.secP = this._prog('attribute vec3 aPos; attribute vec2 aUV; varying vec2 vUV;\n' + VH +
       'void main(){ vUV = aUV; gl_Position = project(aPos); }',
       PREC + 'varying vec2 vUV; varying float vFog; uniform sampler2D uTex; uniform float uIso;\n' +
@@ -71,9 +72,9 @@ const VestaGL = class {
       ' if (t < 0.5) return mix(vec3(0.0, 1.0, 1.0), vec3(0.0, 1.0, 0.0), (t - 0.25) / 0.25);\n' +
       ' if (t < 0.75) return mix(vec3(0.0, 1.0, 0.0), vec3(1.0, 1.0, 0.0), (t - 0.5) / 0.25);\n' +
       ' return mix(vec3(1.0, 1.0, 0.0), vec3(1.0, 0.0, 0.0), (t - 0.75) / 0.25); }\n' +
-      'void main(){ float v = texture2D(uTex, vUV).r; if (v < uIso) discard; gl_FragColor = vec4(mix(cmap(v), vec3(1.0), vFog), 1.0); }');
+      'void main(){ float v = texture2D(uTex, vUV).r; if (v < uIso) discard; gl_FragColor = vec4(mix(mix(cmap(v), vec3(1.0), 0.14), vec3(1.0), vFog), 1.0); }');
     this.lineP = this._prog('attribute vec3 aPos;\n' + VH + 'void main(){ vec4 p = project(aPos); p.z -= 0.003; gl_Position = p; }',
-      PREC + 'varying float vFog; void main(){ gl_FragColor = vec4(mix(vec3(0.08), vec3(1.0), vFog), 1.0); }');
+      PREC + 'varying float vFog; void main(){ gl_FragColor = vec4(mix(vec3(0.22), vec3(1.0), vFog), 1.0); }');
     // unit icosphere (level 3) and a 24-sided open cylinder
     const t = (1 + Math.sqrt(5)) / 2;
     let v = [[-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0], [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t], [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]];
@@ -168,7 +169,8 @@ const VestaGL = class {
         }
       }
       mesh.iso = { buf: this._buf(new Float32Array(out)), n: out.length / 6 };
-      // colored sections on every face of the drawing region (value >= iso), sampled from the field
+      // colored sections on every face of the drawing region (value >= iso), sampled from the field;
+      // a face listed in fullFaces shows its whole section, like a full lattice plane in VESTA
       const sample = (p) => {
         const f = [Li[0][0] * p[0] + Li[1][0] * p[1] + Li[2][0] * p[2], Li[0][1] * p[0] + Li[1][1] * p[1] + Li[2][1] * p[2], Li[0][2] * p[0] + Li[1][2] * p[1] + Li[2][2] * p[2]];
         const x = [0, 1, 2].map((a) => (f[a] - g.origin[a]) / g.step[a]);
@@ -176,7 +178,7 @@ const VestaGL = class {
         return (1 - u) * (1 - v) * (1 - w) * at(i0, j0, k0) + u * (1 - v) * (1 - w) * at(i0 + 1, j0, k0) + (1 - u) * v * (1 - w) * at(i0, j0 + 1, k0) + u * v * (1 - w) * at(i0 + 1, j0 + 1, k0) +
           (1 - u) * (1 - v) * w * at(i0, j0, k0 + 1) + u * (1 - v) * w * at(i0 + 1, j0, k0 + 1) + (1 - u) * v * w * at(i0, j0 + 1, k0 + 1) + u * v * w * at(i0 + 1, j0 + 1, k0 + 1);
       };
-      for (const poly of d.faces) {
+      d.faces.forEach((poly, fi) => {
         const o = poly[0], e1 = [poly[1][0] - o[0], poly[1][1] - o[1], poly[1][2] - o[2]], l1 = Math.hypot(e1[0], e1[1], e1[2]);
         const U = e1.map((x) => x / l1), e2 = [poly[2][0] - o[0], poly[2][1] - o[1], poly[2][2] - o[2]];
         let N = [U[1] * e2[2] - U[2] * e2[1], U[2] * e2[0] - U[0] * e2[2], U[0] * e2[1] - U[1] * e2[0]];
@@ -200,8 +202,8 @@ const VestaGL = class {
           const p = poly[q];
           tri.push(p[0], p[1], p[2], (uv[q][0] - u0) / (u1 - u0), (uv[q][1] - v0) / (v1 - v0));
         }
-        mesh.secs.push({ tex: T, buf: this._buf(new Float32Array(tri)), n: tri.length / 5 });
-      }
+        mesh.secs.push({ tex: T, buf: this._buf(new Float32Array(tri)), n: tri.length / 5, full: (d.fullFaces || []).indexOf(fi) >= 0 });
+      });
     }
     this.meshes[d.id] = mesh;
     this.mesh = mesh;
@@ -301,10 +303,10 @@ const VestaGL = class {
     // colored sections on the region faces
     if (this.mesh.secs.length) {
       P = use(this.secP);
-      gl.uniform1f(P.loc.uIso, d.iso); gl.uniform1i(P.loc.uTex, 0); gl.activeTexture(gl.TEXTURE0);
+      gl.uniform1i(P.loc.uTex, 0); gl.activeTexture(gl.TEXTURE0);
       gl.enableVertexAttribArray(P.loc.aPos); gl.enableVertexAttribArray(P.loc.aUV);
       for (const q of this.mesh.secs) {
-        gl.bindTexture(gl.TEXTURE_2D, q.tex); gl.bindBuffer(gl.ARRAY_BUFFER, q.buf);
+        gl.uniform1f(P.loc.uIso, q.full ? 0 : d.iso); gl.bindTexture(gl.TEXTURE_2D, q.tex); gl.bindBuffer(gl.ARRAY_BUFFER, q.buf);
         gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 20, 0); gl.vertexAttribPointer(P.loc.aUV, 2, gl.FLOAT, false, 20, 12);
         gl.drawArrays(gl.TRIANGLES, 0, q.n);
       }
@@ -322,13 +324,16 @@ const VestaGL = class {
       const pl = new Float32Array(32);
       d.planes.slice(0, 8).forEach((q, i) => pl.set(q, i * 4));
       gl.uniform4fv(P.loc.uPl, pl); gl.uniform1i(P.loc.uNp, Math.min(8, d.planes.length));
-      gl.uniform3f(P.loc.uColor, 1.0, 1.0, 0.0); gl.uniform1f(P.loc.uAlpha, 0.55);
+      gl.uniform3f(P.loc.uColor, 0.98, 0.83, 0.22); gl.uniform1f(P.loc.uAlpha, 0.7);
       gl.bindBuffer(gl.ARRAY_BUFFER, this.mesh.iso.buf);
       gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 24, 0);
       gl.enableVertexAttribArray(P.loc.aNrm); gl.vertexAttribPointer(P.loc.aNrm, 3, gl.FLOAT, false, 24, 12);
-      gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(false);
+      gl.colorMask(false, false, false, false);
       for (const t of d.translations) { gl.uniform3fv(P.loc.uOff, t); gl.drawArrays(gl.TRIANGLES, 0, this.mesh.iso.n); }
-      gl.depthMask(true); gl.disable(gl.BLEND);
+      gl.colorMask(true, true, true, true);
+      gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(false); gl.depthFunc(gl.LEQUAL);
+      for (const t of d.translations) { gl.uniform3fv(P.loc.uOff, t); gl.drawArrays(gl.TRIANGLES, 0, this.mesh.iso.n); }
+      gl.depthFunc(gl.LESS); gl.depthMask(true); gl.disable(gl.BLEND);
       gl.disableVertexAttribArray(P.loc.aNrm);
     }
     this._overlay();
@@ -350,10 +355,10 @@ const VestaGL = class {
     }
     const d = this.d, M = this.M;
     if (d.marker) {
-      // dashed ring in the layer plane around the vacancy, and its label
-      const c = d.axes[2], lc = Math.hypot(c[0], c[1], c[2]), n = c.map((x) => x / lc);
-      let u = [n[1], -n[0], 0]; const lu = Math.hypot(u[0], u[1], u[2]) || 1; u = u.map((x) => x / lu);
-      const v = [n[1] * u[2] - n[2] * u[1], n[2] * u[0] - n[0] * u[2], n[0] * u[1] - n[1] * u[0]], r = 1.3, P = d.marker.pos;
+      // the marker's label on a short leader; a scene that gives a radius (and the ring's normal) also gets a dashed ring
+      const c = d.marker.normal || d.axes[2], lc = Math.hypot(c[0], c[1], c[2]), n = c.map((x) => x / lc);
+      let u = Math.abs(n[2]) < 0.9 ? [n[1], -n[0], 0] : [0, n[2], -n[1]]; const lu = Math.hypot(u[0], u[1], u[2]) || 1; u = u.map((x) => x / lu);
+      const v = [n[1] * u[2] - n[2] * u[1], n[2] * u[0] - n[0] * u[2], n[0] * u[1] - n[1] * u[0]], r = d.marker.r || 0, P = d.marker.pos;
       ctx.save(); ctx.strokeStyle = 'rgba(20,19,17,0.85)'; ctx.lineWidth = 1.25; ctx.setLineDash([4, 3]); ctx.beginPath();
       let top = null;
       for (let k = 0; k <= 48; k++) {
@@ -369,9 +374,9 @@ const VestaGL = class {
       ctx.fillStyle = '#141311'; ctx.fillText(d.marker.label, tx + 4, ty);
       ctx.restore();
     }
-    // a/b/c triad (VESTA colors), drawn back to front
+    // a/b/c triad (VESTA colors), drawn back to front; scenes without a lattice (molecules, slab models) turn it off
     const O = [this.triX, H - this.triY], len = 24, cols = ['#D7261E', '#1E9E3A', '#2750D8'], labs = ['a', 'b', 'c'];
-    const ax = d.axes.map((q, k) => {
+    const ax = (d.triad === false ? [] : d.axes).map((q, k) => {
       const l = Math.hypot(q[0], q[1], q[2]), e = q.map((x) => x / l);
       return { k: k, x: M[0][0] * e[0] + M[0][1] * e[1] + M[0][2] * e[2], y: -(M[1][0] * e[0] + M[1][1] * e[1] + M[1][2] * e[2]), z: M[2][0] * e[0] + M[2][1] * e[1] + M[2][2] * e[2] };
     }).sort((p, q) => p.z - q.z);

@@ -57,10 +57,13 @@
     $$('main section[id]').forEach((s) => io.observe(s));
   }
 
-  // ---------- structures viewers: one per group (electrides/, superhydrides/) ----------
+  // ---------- structures viewers: one per group (electrides/, superhydrides/, ml/, ...) ----------
   const sceneData = $('#scene-data');
   if (!sceneData) return;
   const SCENES = JSON.parse(sceneData.textContent);
+  // calmer element colors than the VESTA defaults stored in the older scene files (the legends in index.html match)
+  const PALETTE = { H: [0.855, 0.878, 0.91], S: [0.851, 0.706, 0.227], Na: [0.694, 0.643, 0.784] };
+  const tint = (d) => { d.species.forEach((sp) => { if (PALETTE[sp.el]) sp.rgb = PALETTE[sp.el]; }); return d; };
   // wide screens: header pane beside the view; phones: pane collapsed under the view
   const wide = window.matchMedia('(min-width: 900px)');
   $$('.vgroup').forEach((V) => {
@@ -77,13 +80,16 @@
       if (cache[s]) { eng.setScene(cache[s]); return; }
       if (eng.status !== 'nogl') { eng.status = 'loading'; eng.dirty = true; }
       fetch(SCENES[s].src).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }).then((d) => {
-        cache[s] = d;
+        cache[s] = tint(d);
         if (shown === s) eng.setScene(d);
       }).catch(() => { if (shown === s && eng.status !== 'nogl') { eng.status = 'error'; eng.dirty = true; } });
     }
     function render() {
       const s = si();
       $$('.vt', V).forEach((b, i) => { b.setAttribute('aria-selected', String(i === tab)); b.tabIndex = i === tab ? 0 : -1; });
+      // on a narrow screen the tab bar scrolls sideways: keep the open tab in sight
+      const bar = $('.vtabs', V), barBox = bar.getBoundingClientRect(), on = $$('.vt', V)[tab].getBoundingClientRect();
+      if (on.left < barBox.left || on.right > barBox.right) bar.scrollLeft += on.left - barBox.left - 16;
       $$('[data-tab]', V).forEach((el) => { el.hidden = Number(el.dataset.tab) !== tab; });
       $$('[data-tab] .vb', V).forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.v) === v)));
       $$('[data-scene]', V).forEach((el) => { el.hidden = Number(el.dataset.scene) !== s; });
@@ -122,7 +128,7 @@
       const coarse = window.matchMedia('(pointer: coarse)').matches;
       eng.hint = coarse ? 'drag to rotate · pinch to zoom' : 'drag to rotate · ⌘/ctrl-scroll to zoom';
       const small = r.width < 520;
-      eng.triX = small ? 34 : 40; eng.triY = small ? 32 : 38; eng.readY = small ? 20 : 24;
+      eng.triX = small ? 44 : 48; eng.triY = small ? 32 : 38; eng.readY = small ? 20 : 24;
       eng.attach(undefined, ov);
       eng.attach(cv);
       if ('ResizeObserver' in window) {
