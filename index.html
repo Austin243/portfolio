@@ -30,6 +30,8 @@
 <script src="assets/preprint.js" defer></script>
 <script src="assets/wisp-plane.js" defer></script>
 <script src="assets/scheme.js" defer></script>
+<script src="assets/elfnet-plane.js" defer></script>
+<script src="assets/scheme-elfnet.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#top">Skip to content</a>
@@ -130,7 +132,7 @@ austinellis.org</a>
 <h4><a href="https://www.oaepublish.com/articles/jmi.2026.44">ELFNet: electron localization from superposed atomic densities</a></h4>
 <p class="ref-au"><b>A. Ellis</b>, S. Ellis, M. Miao</p>
 <p class="ref-sum">A periodic 3D convolutional network maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation.</p>
-<p class="ref-links"><a href="https://www.oaepublish.com/articles/jmi.2026.44">Paper</a><a href="https://openreview.net/forum?id=VHX3ubJCuK">Workshop paper</a><a href="https://github.com/Austin243/ELFNet">Code</a><a href="posters/SeitzELF_3DCNN.pdf">Poster</a><a href="slides/ellis-aps-2026.pdf">Slides</a><a class="figlink" href="#fig-elfnet" data-fig="fig-elfnet:0:0">Fig. 2 <span>3D</span></a></p>
+<p class="ref-links"><a href="https://www.oaepublish.com/articles/jmi.2026.44">Paper</a><a href="https://openreview.net/forum?id=VHX3ubJCuK">Workshop paper</a><a href="https://github.com/Austin243/ELFNet">Code</a><a href="posters/SeitzELF_3DCNN.pdf">Poster</a><a href="slides/ellis-aps-2026.pdf">Slides</a><a class="figlink" href="#scheme-2">Scheme 2 <span>steps</span></a><a class="figlink" href="#fig-elfnet" data-fig="fig-elfnet:0:0">Fig. 2 <span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b class="first">First author.</b> I designed, trained, and tested the network.</p>
@@ -339,8 +341,9 @@ austinellis.org</a>
 <!-- 2.2 ELFNet -->
 <div class="sub" id="elfnet">
 <div class="sub-head"><span class="sub-n">2.2</span><h3>ELFNet</h3>
-<p>A periodic 3D convolutional network that maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation <a class="cite" href="#ref-elfnet" data-ref="elfnet">[1]</a>.</p></div>
-<figure class="fig" id="fig-elfnet"></figure>
+<p>A periodic 3D convolutional network that maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation <a class="cite" href="#ref-elfnet" data-ref="elfnet">[1]</a>. Scheme 2 steps through how it works, and Figure 2 puts its prediction next to the DFT calculation.</p></div>
+<figure class="fig scheme" id="scheme-2"></figure>
+<figure class="fig wide" id="fig-elfnet"></figure>
 </div>
 
 <!-- 2.3 the other projects -->

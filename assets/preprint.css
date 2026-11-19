@@ -289,6 +289,21 @@ h1 { margin: 20px 0 0 -3px; font: 400 clamp(54px, 6.5vw, 94px)/.95 var(--serif);
 [data-theme="dark"] .lg-ring { border-color: #3FB5BB; }
 .lg-q { width: 11px; height: 11px; margin: 0 3px; border: 2px solid #A87611; border-radius: 50%; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(217, 154, 27, .3); }
 .legend .lg-diff b { background: linear-gradient(90deg, #FFFFFF, #F2B632, #A8221C); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .14); }
+/* Scheme 2: the strip of the network's blocks on the picture, and its legend marks */
+.sch-net { position: absolute; top: 12px; left: 12px; z-index: 2; display: flex; align-items: center; gap: 2px; max-width: calc(100% - 24px); padding: 7px 9px; background: rgba(255, 255, 255, .94); border: 1px solid #E2DED2; border-radius: 8px; box-shadow: 0 1px 2px rgba(26, 25, 21, .05), 0 8px 24px rgba(26, 25, 21, .09); }
+.sch-net .b { margin: 0 4px; font: 600 10px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: #B3AFA5; transition: color .15s; }
+.sch-net .b.on { color: #1A1915; }
+.sch-net i { flex: none; width: 7px; height: 16px; border-radius: 2px; background: #E7E9EE; transition: background .15s; }
+.sch-net i.at { width: 7px; margin: 0 3px 0 1px; border-radius: 50%; height: 7px; }
+.sch-net i.rb.on { background: #6F9BD8; }
+.sch-net i.at.on { background: #EFAE3A; }
+.sch-stage.narrow .sch-net { top: 8px; left: 8px; padding: 5px 6px; gap: 1px; }
+.sch-stage.narrow .sch-net .b { display: none; }
+.sch-stage.narrow .sch-net i { width: 5px; height: 12px; }
+.sch-stage.narrow .sch-net i.at { width: 5px; height: 5px; margin: 0 2px 0 1px; }
+.lg-k { width: 13px; height: 13px; border: 1.6px solid #DE6828; border-radius: 2px; background: rgba(222, 104, 40, .2); }
+.lg-h { width: 10px; height: 10px; margin: 0 2px; border: 1.8px solid var(--ink); background: #FFFFFF; }
+.legend .lg-sad b { background: linear-gradient(90deg, #FFFFFF, #7FA6D6, #2660B2); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .14); }
 .legend .lg-elf b { background: linear-gradient(90deg, #4242FF, #42FFFF, #42FF42, #FFFF42, #FF4242); }
 .sch-stage .hint { right: 12px; bottom: 14px; padding: 5px 7px; border-radius: 5px; background: rgba(255, 255, 255, .9); }
 

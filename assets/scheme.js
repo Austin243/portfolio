@@ -385,7 +385,7 @@
     raf = 0;
     const dt = Math.min(64, now - (last || now)); last = now;
     let busy = dragging;
-    if (st.started && st.t < 1) { st.t = Math.min(1, (now - st.t0) / STEPS[st.step].dur); busy = true; }   // until the first step starts the plate stays empty
+    if (st.started && st.t < 1) { st.t = Math.max(0, Math.min(1, (now - st.t0) / STEPS[st.step].dur)); busy = true; }   // until the first step starts the plate stays empty
     // the flip follows its target a little behind, so the arrows turn and the map changes together
     const target = st.step >= 4 ? (st.step === 4 && st.t < 0.12 && !st.touchedFlip ? 0 : st.flipTo) : 0;
     if (Math.abs(st.flip - target) > 0.001) { const d = dt / 700; st.flip += Math.max(-d, Math.min(d, target - st.flip)); busy = true; } else st.flip = target;
@@ -470,7 +470,7 @@
   if ('IntersectionObserver' in window) {
     const near = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { near.disconnect(); wake(); } }, { rootMargin: '500px 0px' });
     near.observe(stage);
-    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); if (!reduced) go(0, true); } }, { threshold: 0.35 });
+    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); if (!reduced && !st.started) go(0, true); } }, { threshold: 0.35 });   // not if a step was already picked
     io.observe(stage);
   } else { wake(); go(0, true); }
 })();

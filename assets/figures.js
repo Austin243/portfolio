@@ -140,8 +140,11 @@
         mnpd_wisp_down: '<b>MnPd</b> · spin down · WISP and DFT · both on a 28×28×28 grid',
         mnpd_wisp_up: '<b>MnPd</b> · spin up · WISP and DFT · both on a 28×28×28 grid',
         sc5cl8_wisp: '<b>Sc<sub>5</sub>Cl<sub>8</sub></b> · electride · WISP with moments from the geometry, and DFT · both on a 30×84×84 grid' } },
-    { id: 'fig-elfnet', title: 'ELF predicted by ELFNet.', panels: [
-      { name: 'CaH<sub>6</sub>', states: [['cah6_ca_elfnet', 'Ca lattice · ELFNet'], ['cah6_ca_dft', 'Ca lattice · DFT'], ['cah6_cage', 'CaH₆']] }] },
+    { id: 'fig-elfnet', title: 'ELFNet next to DFT. Turn either view and the other follows.', pair: ['ELFNet', 'DFT'], panels: [
+      { name: 'CaH<sub>6</sub>', states: [['cah6_ca_elfnet', 'cah6_ca_dft', 'Ca lattice']] }],
+      caps: {
+        cah6_ca_elfnet: 'The calcium lattice of CaH<sub>6</sub>, with the hydrogen left out of the calculation. ELFNet predicts its ELF from superposed atomic densities; the other view is the DFT calculation. In both, the yellow surface encloses the sites where the hydrogens sit in CaH<sub>6</sub>, drawn as small spheres.' },
+      specs: { cah6_ca_elfnet: 'Ca lattice of <b>CaH<sub>6</sub></b> · ELFNet on a 32×32×32 grid, DFT on 28×28×28' } },
     { id: 'fig-electrides', title: 'Electrides in 2D and under pressure.', panels: [
       { name: 'MoS<sub>2</sub> vacancy', states: [['mos2_vacancy', 'MoS₂ · S vacancy']] },
       { name: 'Solid H<sub>2</sub>', states: [['h2_c2c_b15', 'C2/c · band 15'], ['h2_ama2_b25', 'Ama2 · band 25'], ['h2_p63m_b9', 'P6₃/m · band 9'], ['h2_p63m_b11', 'P6₃/m · band 11']] },
