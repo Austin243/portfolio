@@ -6,1185 +6,452 @@
 <title>Austin Ellis · computational chemistry</title>
 <meta name="description" content="Austin Ellis uses first-principles calculations, atomistic simulation, and machine learning to understand how bonding and reactivity shape materials, from high-pressure hydrides and electrides to reaction pathways and kinetics.">
 <link rel="canonical" href="https://austinellis.org/">
-<meta name="theme-color" content="#141311">
-<script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark'})();</script>
 <meta property="og:title" content="Austin Ellis · computational chemistry">
 <meta property="og:description" content="Electronic structure, materials discovery, machine learning, high pressure, and electrides, with interactive 3D structures from the research.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://austinellis.org/">
-<meta property="og:image" content="https://austinellis.org/assets/deck/img/og-nakh12.png">
+<meta property="og:image" content="https://austinellis.org/assets/img/og-nakh12.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="NaKH12 at 60 GPa: sodium, potassium and hydrogen atoms with yellow ELF isosurfaces around each H2 unit">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://austinellis.org/assets/deck/img/og-nakh12.png">
+<meta name="twitter:image" content="https://austinellis.org/assets/img/og-nakh12.png">
 <meta name="twitter:title" content="Austin Ellis · computational chemistry">
 <meta name="twitter:description" content="Electronic structure, materials discovery, machine learning, high pressure, and electrides.">
+<meta name="theme-color" content="#FAF9F5">
+<script>(function(){var t;try{t=localStorage.getItem('lp-theme')}catch(e){}document.documentElement.dataset.theme=t==='dark'?'dark':'light'})();</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cg fill='%231A1915'%3E%3Ccircle cx='4' cy='4' r='2.8'/%3E%3Ccircle cx='16' cy='4' r='2.8'/%3E%3Ccircle cx='4' cy='16' r='2.8'/%3E%3Ccircle cx='16' cy='16' r='2.8'/%3E%3C/g%3E%3Ccircle cx='10' cy='10' r='2.4' fill='%23C9670F'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&amp;family=JetBrains+Mono:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deck/deck.css">
-<script src="assets/deck/vesta-gl.js" defer></script>
-<script src="assets/deck/deck.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&amp;family=JetBrains+Mono:wght@400..600&amp;family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/preprint.css">
+<script src="assets/vesta-gl.js" defer></script>
+<script src="assets/figures.js" defer></script>
+<script src="assets/preprint.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#incar">Skip to content</a>
-<div class="app">
+<a class="skip" href="#top">Skip to content</a>
 
-<div class="brand">
-<p>AUSTIN-ELLIS/</p>
-<div class="theme" role="group" aria-label="Color theme"><button type="button" data-theme-set="light" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M19.07 4.93 17.3 6.7M6.7 17.3l-1.77 1.77"/></svg></button><button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.93 13.6A8.5 8.5 0 1 1 10.4 4.07a7 7 0 0 0 9.53 9.53z"/></svg></button></div>
-<button type="button" class="files" aria-expanded="false" aria-controls="files">files ▾</button>
-</div>
-
-<nav class="tabs" aria-label="Sections">
-<a href="#incar" class="on" aria-current="true">home<small>INCAR</small></a>
-<a href="#research">research<small>jobs/</small></a>
-<a href="#structures">visuals<small>structures/</small></a>
-<a href="#news">news<small>OSZICAR</small></a>
-<a href="#about">about<small>CONTCAR</small></a>
-<a href="posters.html">talks<small>talks/</small></a>
-<a href="teaching.html">outreach<small>outreach/</small></a>
-<a href="technical.html">HPC &amp; code<small>hpc/</small></a>
-<a href="AustinEllisCV.pdf" class="cv">CV.pdf ↗</a>
+<header class="bar">
+<div class="bar-in">
+<a class="brand" href="#top" aria-label="austinellis.org, top of page">
+<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><g fill="currentColor"><circle cx="4" cy="4" r="2.6"/><circle cx="16" cy="4" r="2.6"/><circle cx="4" cy="16" r="2.6"/><circle cx="16" cy="16" r="2.6"/></g><circle cx="10" cy="10" r="2.3" fill="var(--mark)"/></svg>
+austinellis.org</a>
+<nav class="nav" aria-label="Sections">
+<a href="#research">Research</a>
+<a href="#figures">Figures</a>
+<a href="#news">News</a>
+<a href="#about">About</a>
+<a href="posters.html">Talks</a>
+<a href="teaching.html">Outreach</a>
+<a href="technical.html">HPC &amp; code</a>
 </nav>
+<a class="cv" href="AustinEllisCV.pdf">CV <span aria-hidden="true">↗</span></a>
+<button type="button" class="theme" aria-label="Dark page" aria-pressed="false">
+<svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M19.07 4.93 17.3 6.7M6.7 17.3l-1.77 1.77"/></svg>
+<svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.93 13.6A8.5 8.5 0 1 1 10.4 4.07a7 7 0 0 0 9.53 9.53z"/></svg>
+</button>
+</div>
+</header>
 
-<aside class="side" id="files" aria-label="Project files">
-<nav class="tree" aria-label="File tree">
-<a href="#incar" data-sec="incar" class="on">home<span>INCAR</span></a>
-<a href="#research" data-sec="research">research<span>jobs/</span></a>
-<a class="sub" href="#job-elfnet">├─ elfnet</a>
-<a class="sub" href="#job-superhydrides">├─ superhydrides</a>
-<a class="sub" href="#job-h2">├─ h2-electride</a>
-<a class="sub" href="#job-tmdc">├─ tmdc-electrides</a>
-<a class="sub" href="#job-nakh12">├─ nakh12</a>
-<a class="sub" href="#job-fe">├─ fe-redox</a>
-<a class="sub" href="#job-wisp">├─ wisp</a>
-<a class="sub" href="#job-polymerization">├─ polymerization</a>
-<a class="sub" href="#job-mlip">├─ mlip-benchmark</a>
-<a class="sub" href="#job-cs-core">├─ cs-core-reactivity</a>
-<a class="sub" href="#job-tmd-vacancies">├─ tmd-vacancies</a>
-<a class="sub" href="#job-oligomerization">├─ oligomerization</a>
-<a class="sub" href="#job-cs-polyoxides">└─ cs-polyoxides</a>
-<a href="#structures" data-sec="structures">visuals<span>structures/</span></a>
-<a class="sub" href="#electrides">├─ electrides/</a>
-<a class="sub" href="#superhydrides">├─ superhydrides/</a>
-<a class="sub" href="#ml">├─ ml/</a>
-<a class="sub" href="#high-pressure">├─ high-pressure/</a>
-<a class="sub" href="#reactions">└─ reactions/</a>
-<a href="#news" data-sec="news">news<span>OSZICAR</span></a>
-<a href="#about" data-sec="about">about<span>CONTCAR</span></a>
-<a href="posters.html">talks<span>talks/</span></a>
-<a href="teaching.html">outreach<span>outreach/</span></a>
-<a href="technical.html">HPC &amp; code<span>hpc/</span></a>
-</nav>
-</aside>
-<div class="scrim"></div>
+<main class="page" id="top">
 
-<main>
-<section id="incar" aria-label="About Austin Ellis">
-<div class="w">
-<p class="prompt"><b>austin</b> ~/austin-ellis $ whoami</p>
-<h1 class="who">Austin Ellis</h1>
-<p class="prompt"><b>austin</b> ~/austin-ellis $ cat INCAR</p>
-<div class="incar">
-<div class="cl rule"><span class="g">1</span><span class="com">########################################</span></div>
-<div class="cl"><span class="g">2</span><span class="com"># INCAR: who is running this calculation</span></div>
-<div class="cl rule"><span class="g">3</span><span class="com">########################################</span></div>
-<div class="cl"><span class="g">4</span><span><span class="key">ROLE  </span> = <span class="val">Research intern, ORNL Center for Nanophase Materials Sciences</span></span></div>
-<div class="cl"><span class="g">5</span><span><span class="key">DEGREE</span> = <span class="val">M.S. Chemistry, CSU Northridge, </span><span class="num">2026</span></span></div>
-<div class="cl"><span class="g">6</span><span><span class="key">FOCUS </span> = <span class="val">electronic structure, materials discovery, machine learning, high pressure, electrides</span></span></div>
-<div class="cl"><span class="g">7</span><span><span class="key">NEXT  </span> = <span class="val">Ph.D. program</span></span></div>
-<div class="cl"><span class="g">8</span><span> </span></div>
-<div class="cl rule"><span class="g">9</span><span class="com">########################################</span></div>
-<div class="cl"><span class="g">10</span><span class="com"># in plain words</span></div>
-<div class="cl rule"><span class="g">11</span><span class="com">########################################</span></div>
-</div>
-<p class="plain">I use first-principles calculations, atomistic simulation, and machine learning to understand how bonding and reactivity shape materials. My projects span superconducting hydrides and electrides under high pressure, defects in 2D materials, and neural networks that predict electronic structure. At Oak Ridge National Laboratory, I’m building automated workflows that use machine-learned interatomic potentials to discover reaction pathways and model their kinetics.<span class="cursor" aria-hidden="true"></span></p>
-<div class="links incar-links">
-<a href="mailto:austin.ellis813@gmail.com">email</a>
-<a href="https://github.com/Austin243">github</a>
-<a href="https://scholar.google.com/citations?user=Y8mlpekAAAAJ&amp;hl=en">scholar</a>
-<a href="https://orcid.org/0009-0007-1031-132X">orcid</a>
-<a href="https://www.linkedin.com/in/Austin243">linkedin</a>
-<a href="AustinEllisCV.pdf">cv.pdf</a>
-</div>
-</div>
-</section>
-
-<section id="research" aria-labelledby="research-h">
-<div class="w">
-<div class="fh"><h2 id="research-h">jobs/</h2><p>Research and papers: six published, two preprints, five in progress, one pending</p></div>
-<p class="prompt" style="margin-top:22px;"><b>austin</b> ~/austin-ellis $ sacct -X --format=JobID,JobName,Comment,Partition,State,End</p>
-<div class="table-wrap">
-<table class="sacct">
-<thead><tr><th>JobID</th><th>JobName</th><th>Comment</th><th>Partition</th><th>State</th><th>End</th></tr></thead>
-<tbody>
-<tr><td>2023_1</td><td>csun-ms</td><td><a href="#job-tmdc">tmdc-electrides</a></td><td>J. Phys. Chem. Lett.</td><td class="okc">COMPLETED</td><td class="num">2024</td></tr>
-<tr><td>2023_2</td><td>csun-ms</td><td><a href="#job-nakh12">nakh12</a></td><td>Adv. Funct. Mater.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
-<tr><td>2023_3</td><td>csun-ms</td><td><a href="#job-superhydrides">superhydrides</a></td><td>J. Am. Chem. Soc.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
-<tr><td>2023_4</td><td>csun-ms</td><td><a href="#job-fe">fe-redox</a></td><td>Proc. Natl. Acad. Sci.</td><td class="okc">COMPLETED</td><td class="num">2025</td></tr>
-<tr><td>2023_5</td><td>csun-ms</td><td><a href="#job-h2">h2-electride</a></td><td>J. Phys. Chem. Lett.</td><td class="okc">COMPLETED</td><td class="num">2026</td></tr>
-<tr><td>2023_6</td><td>csun-ms</td><td><a href="#job-elfnet">elfnet</a></td><td>J. Mater. Inf.</td><td class="okc">COMPLETED</td><td class="num">2026</td></tr>
-<tr><td>2023_7</td><td>csun-ms</td><td><a href="#job-cs-core">cs-core-reactivity</a></td><td>arXiv</td><td class="okc">COMPLETING</td><td class="num">2026</td></tr>
-<tr><td>2023_8</td><td>csun-ms</td><td><a href="#job-cs-polyoxides">cs-polyoxides</a></td><td>draft</td><td class="key">RUNNING</td><td class="dim">Unknown</td></tr>
-<tr><td>2026_1</td><td>cnms-internship</td><td><a href="#job-polymerization">polymerization</a></td><td>in_prep</td><td class="key">RUNNING</td><td class="dim">Unknown</td></tr>
-<tr><td>2026_2</td><td>cnms-internship</td><td><a href="#job-mlip">mlip-benchmark</a></td><td>draft</td><td class="key">RUNNING</td><td class="dim">Unknown</td></tr>
-<tr><td>2026_3</td><td>cnms-internship</td><td><a href="#job-wisp">wisp</a></td><td>ChemRxiv</td><td class="okc">COMPLETING</td><td class="num">2026</td></tr>
-<tr><td>2026_4</td><td>cnms-internship</td><td><a href="#job-oligomerization">oligomerization</a></td><td>in_prep</td><td class="key">RUNNING</td><td class="dim">Unknown</td></tr>
-<tr><td>2026_5</td><td>cnms-internship</td><td><a href="#job-tmd-vacancies">tmd-vacancies</a></td><td>draft</td><td class="key">RUNNING</td><td class="dim">Unknown</td></tr>
-<tr><td>2027</td><td>phd</td><td></td><td>fall_2027</td><td class="num">PENDING</td><td class="dim">Unknown</td></tr>
-</tbody>
-</table>
-</div>
-
-<div class="jobs">
-<article id="job-elfnet" class="job">
-<div class="plate"><img src="assets/deck/img/elfnet-toc.webp" width="1200" height="858" alt="ELFNet workflow: a high-pressure ELF dataset of 326,009 structures, their superposed atomic densities, a periodic 3D convolutional network, and the predicted ELF" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/elfnet</b>  J. Mater. Inf. 2026 · NeurIPS AI4Mat 2025 · APS 2026</p>
-<h3>ELFNet: electron localization from superposed atomic densities</h3>
-<p class="au"><b>A. Ellis</b>, S. Ellis, M. Miao</p>
-<p class="role"><span>my role</span><b class="first">First author.</b> I designed, trained, and tested the network.</p>
-<p class="b">A periodic 3D convolutional network maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation.</p>
-<div class="links"><a href="https://www.oaepublish.com/articles/jmi.2026.44">paper</a><a href="https://openreview.net/forum?id=VHX3ubJCuK">workshop</a><a href="https://github.com/Austin243/ELFNet">code</a><a href="posters/SeitzELF_3DCNN.pdf">poster</a><a href="slides/ellis-aps-2026.pdf">slides</a><a href="#ml" data-open-tab="ml:0">open CaH6/</a></div>
-</article>
-<article id="job-superhydrides" class="job">
-<div class="plate"><img src="assets/deck/img/superhydrides.webp" width="1000" height="581" alt="Two-step chemical-template workflow for discovering metal superhydrides" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/superhydrides</b>  J. Am. Chem. Soc. 2025 · NeurIPS AI4Mat 2025</p>
-<h3>Metal superhydrides from chemical templates</h3>
-<p class="au">Y. Sun, <b>A. Ellis</b>, X. Chen, M. Miao</p>
-<p class="role"><span>my role</span><b>2nd of 4 authors.</b> I helped build the training set and ran the template-guided CALYPSO searches and stability screening.</p>
-<p class="b">A template-guided machine-learning workflow found 13 new structural prototypes and 31 stable metal superhydrides, 19 of them with predicted T<sub>c</sub> above 100 K.</p>
-<div class="links"><a href="https://doi.org/10.1021/jacs.5c11731">paper</a><a href="https://openreview.net/forum?id=dEtRvi7G5i">workshop</a><a href="posters/ML_BatchedSuperhydrides.pdf">poster</a><a href="#superhydrides" data-open-tab="superhydrides:1">open U10H84_I4m/</a></div>
-</article>
-<article id="job-h2" class="job">
-<div class="plate"><img src="assets/deck/img/h2-phase-diagram.webp" width="1200" height="600" alt="Pressure–temperature phase diagram of molecular hydrogen with electron localization isosurfaces for phases I to IV" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/h2-electride</b>  J. Phys. Chem. Lett. 2026</p>
-<h3>Emerging electride in molecular hydrogen metallization</h3>
-<p class="au"><b>A. Ellis</b>, S. Ellis, A. Pandit, M. Miao</p>
-<p class="role"><span>my role</span><b class="first">First author.</b> I ran the PBE and HSE06 calculations and the analysis of the interstitial states.</p>
-<p class="b">As solid hydrogen metallizes under pressure, electrons localize in the interstitial regions between H<sub>2</sub> molecules, an electride-like route that sets it apart from other molecular crystals.</p>
-<div class="links"><a href="https://doi.org/10.1021/acs.jpclett.6c01415">paper</a><a href="slides/ellis-thesis-defense-2026.pdf">thesis slides</a><a href="#electrides" data-open-tab="electrides:1">open H2_states/</a></div>
-</article>
-<article id="job-tmdc" class="job">
-<div class="plate"><img src="assets/deck/img/tmdc-vacancy.webp" width="1200" height="600" alt="Crystal orbital of a monolayer MX2 with a chalcogen vacancy, showing localized interstitial electrons that regulate hydrogen evolution" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/tmdc-electrides</b>  J. Phys. Chem. Lett. 2024</p>
-<h3>Tunable electrides on monolayer TMDCs</h3>
-<p class="au">Y. Sun, <b>A. Ellis</b>, S. Diaz, W. Li, M. Miao</p>
-<p class="role"><span>my role</span><b>2nd of 5 authors.</b> I analyzed the vacancy states with ELF, charge-density differences, and band structures, and helped with the H-adsorption calculations.</p>
-<p class="b">Chalcogen vacancies strengthen the weak electride character of monolayer transition-metal dichalcogenides to the level of known electrides, and the vacancy states help catalyze hydrogen evolution.</p>
-<div class="links"><a href="https://doi.org/10.1021/acs.jpclett.4c01263">paper</a><a href="posters/TunableElectride_TMDCs.pdf">poster</a><a href="#electrides" data-open-tab="electrides:0">open MoS2_vacancy/</a></div>
-</article>
-<article id="job-nakh12" class="job">
-<div class="plate"><img src="assets/deck/img/nakh12.webp" width="1200" height="600" alt="Crystal structure of NaKH12 and the energy change with H–H distance" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/nakh12</b>  Adv. Funct. Mater. 2025</p>
-<h3>Superconductivity in molecular hydrides</h3>
-<p class="au">W. Zhao, <b>A. Ellis</b>, D. Duan, H. Wang, Q. Jiang, M. Du, T. Cui, M. Miao</p>
-<p class="role"><span>my role</span><b>2nd of 8 authors.</b> I did the band-structure, density-of-states, crystal-orbital, and ELF analyses.</p>
-<p class="b">Interstitial electrons act as chemical templates that assemble H<sub>2</sub> units in NaKH<sub>12</sub>, predicted to superconduct up to 245 K at a moderate 60 GPa.</p>
-<div class="links"><a href="https://doi.org/10.1002/adfm.202415910">paper</a><a href="#superhydrides" data-open-tab="superhydrides:0">open NaKH12_60GPa/</a></div>
-</article>
-<article id="job-fe" class="job">
-<div class="plate"><img src="assets/deck/img/iron-redox.webp" width="1200" height="600" alt="Formation-energy convex hulls for iron with silicon, phosphorus, sulfur, germanium, arsenic, and selenium" loading="lazy" decoding="async"></div>
-<p class="jh"><b>jobs/fe-redox</b>  Proc. Natl. Acad. Sci. 2025</p>
-<h3>Iron redox chemistry in deep Earth</h3>
-<p class="au">X. Wang, X. Feng, J. Li, Y. Lv, <b>A. Ellis</b>, S. Scott, A. Pandit, D. Khodagholian, R. J. Hemley, M. G. Jackson, F. J. Spera, S. A. T. Redfern, M. Miao</p>
-<p class="role"><span>my role</span><b>5th of 13 authors.</b> I mapped phase stability across Fe–p-block compounds with CALYPSO searches and HSE06 convex hulls, and ran the Bader charge analysis.</p>
-<p class="b">Large-scale first-principles calculations show iron turning from electron donor to electron acceptor at core pressures, which changes the elements it can pull into Earth’s core.</p>
-<div class="links"><a href="https://doi.org/10.1073/pnas.2414911122">paper</a><a href="https://newsroom.csun.edu/2025/11/18/study-by-csun-prof-upends-understanding-of-what-happens-to-iron-at-earths-core/">newsroom</a><a href="#high-pressure" data-open-tab="high-pressure:0">open Fe-I/</a></div>
-</article>
-<article id="job-wisp" class="job talks">
-<p class="jh"><b>jobs/wisp</b>  ChemRxiv 2026 · preprint</p>
-<h3>WISP: learning spin-resolved electron localization from atomic environments</h3>
-<p class="au"><b>A. Ellis</b></p>
-<p class="role"><span>my role</span><b class="first">Sole author.</b></p>
-<p class="b">A network that predicts the electron localization function of both spin channels at any point in a crystal, from the atomic structure and the magnetic moments on the atoms. On 21,922 held-out structures the mean absolute error is 0.011 per channel on the ELF scale of 0 to 1.</p>
-<div class="links"><a href="https://doi.org/10.26434/chemrxiv.15011092/v1">preprint</a><a href="#ml" data-open-tab="ml:1">open MnPd/</a><a href="#ml" data-open-tab="ml:2">open Sc5Cl8/</a></div>
-</article>
-<article id="job-polymerization" class="job talks">
-<p class="jh"><b>jobs/polymerization</b>  manuscript in preparation</p>
-<h3>Mapping acetonitrile polymerization under pressure with ReactionFlow</h3>
-<p class="au"><b>A. Ellis</b>, S. Bagchi, M. Goswami, J. Jakowski, J. Huang, P. Ganesh, I. Ivanov</p>
-<p class="role"><span>my role</span><b class="first">First author.</b></p>
-<p class="b">Compressed crystalline acetonitrile polymerizes through hydrogen transfers and C–C additions. ReactionFlow picks these steps out of molecular dynamics, and DFT checks their barriers.</p>
-<div class="links"><a href="https://github.com/Austin243/ReactionFlow">code</a><a href="#reactions" data-open-tab="reactions:0">open ACN_35GPa/</a></div>
-</article>
-<article id="job-mlip" class="job talks">
-<p class="jh"><b>jobs/mlip-benchmark</b>  manuscript · draft available upon request</p>
-<h3>Accuracy and limits of pretrained interatomic potentials across molecular reaction pathways</h3>
-<p class="au"><b>A. Ellis</b>, R. Morelock, S. Bagchi, A. M. dos Santos, M. Goswami, J. Jakowski, J. Huang, P. Ganesh, I. Ivanov</p>
-<p class="role"><span>my role</span><b class="first">First author.</b></p>
-<p class="b">Fifteen pretrained machine-learned interatomic potentials compared with DFT energies, forces, and barriers along 9,017 gas-phase reactions.</p>
-<div class="links"><a href="https://github.com/Austin243/dorts9k-mlip-benchmark">code</a></div>
-</article>
-<article id="job-cs-core" class="job talks">
-<p class="jh"><b>jobs/cs-core-reactivity</b>  arXiv 2026 · preprint</p>
-<h3>Core reactivity in Cs–Ba–O ternary system under pressure</h3>
-<p class="au">S. Ellis, <b>A. Ellis</b>, L. Wyke, C. Taylor, M. Miao</p>
-<p class="role"><span>my role</span><b>2nd of 5 authors.</b></p>
-<p class="b">High pressure can bring the Cs 5p core electrons into covalent bonding. Structure searches in the Cs–Ba–O system at 150 and 250 GPa put CsBa<sub>3</sub>O<sub>8</sub> and CsBaO<sub>4</sub> on the convex hull at 250 GPa, with mild Cs 5p–O 2p bonding and O<sub>2</sub> units still intact. Cs<sub>2</sub>BaO<sub>3</sub> bonds more strongly but is metastable.</p>
-<div class="links"><a href="https://arxiv.org/abs/2611.06009">preprint</a></div>
-</article>
-<article id="job-tmd-vacancies" class="job talks">
-<p class="jh"><b>jobs/tmd-vacancies</b>  manuscript · draft available upon request</p>
-<h3>Statistical prediction of vacancy thermodynamics and stress coupling in chalcogen-alloyed TMDs</h3>
-<p class="au">J. Jeffries, <b>A. Ellis</b>, S. Ellis, E. Martinez, E. Zarkadoula</p>
-<p class="role"><span>my role</span><b>2nd of 5 authors.</b></p>
-<p class="b">A statistical prediction of how chalcogen vacancies form in alloyed transition-metal dichalcogenides, and of how their energies respond to stress.</p>
-<div class="links"><a href="#electrides" data-open-tab="electrides:2">open TaS2_vacancy/</a></div>
-</article>
-<article id="job-oligomerization" class="job talks">
-<p class="jh"><b>jobs/oligomerization</b>  manuscript in preparation</p>
-<h3>Stimulus-directed oligomerization and polymerization of acetonitrile</h3>
-<p class="au">I. N. Ivanov, <b>A. Ellis</b>, P. Christakopoulos, A. Puretsky, C. Rouleau, J. Huang, J. Jakowski, M. Goswami, P. Ganesh, B. Sumpter</p>
-<p class="role"><span>my role</span><b>2nd of 10 authors.</b></p>
-<p class="b">How the choice of stimulus directs acetonitrile toward oligomers or polymers.</p>
-<div class="links"><a href="#reactions" data-open-tab="reactions:1">open Na100/</a></div>
-</article>
-<article id="job-cs-polyoxides" class="job talks">
-<p class="jh"><b>jobs/cs-polyoxides</b>  manuscript · draft available upon request</p>
-<h3>Abnormal behavior of Cs polyoxides under high pressure</h3>
-<p class="au">Y. Sun, S. Ellis, D. Khodagholian, L. Wyke, <b>A. Ellis</b>, P. C. Müller, B. N. Schüpp, R. Nelson, R. Dronskowski, M. Miao</p>
-<p class="role"><span>my role</span><b>5th of 10 authors.</b></p>
-<p class="b">First-principles structure searches show the polyoxygen units of Cs–O compounds breaking down under pressure, as the Cs core electrons start to take part in bonding.</p>
-<div class="links"><a href="posters/Cs_polyoxide_CoreReactivity.pdf">poster</a><a href="#high-pressure" data-open-tab="high-pressure:1">open CsO_150GPa/</a></div>
-</article>
-<article class="job talks">
-<p class="jh"><b>slurm-talks.out</b>  posters and talks</p>
-<pre><span class="num">2026-10</span>  poster, ORNL NEAT Science Symposium
-<span class="num">2026-09</span>  invited talk, NTI group meeting, CNMS
-<span class="num">2026-08</span>  talk, ORNL Neutron Scattering Division
-<span class="num">2026-08</span>  poster, CNMS User Meeting
-<span class="num">2026-07</span>  poster, ORNL NEAT initiative
-<span class="num">2026-05</span>  M.S. thesis defense, CSUN
-<span class="num">2026-04</span>  talk, CSUNposium
-<span class="num">2026-03</span>  talk, APS Global Physics Summit
-<span class="num">2026-01</span>  2 posters, Gordon Research Conf.
-<span class="num">2025-12</span>  2 posters, NeurIPS AI4Mat
-<span class="num">2025   </span>  Sigma Xi talk; CSUN seminar
-<span class="num">2023-06</span>  talk, CECAM workshop, Lausanne</pre>
-<div class="links" style="margin-top:14px;"><a href="posters.html">all talks and posters →</a></div>
-</article>
-</div>
-</div>
-</section>
-
-<section id="structures" aria-labelledby="structures-h">
-<div class="w">
-<div class="fh"><h2 id="structures-h">structures/</h2><p>Fun visuals from some projects</p></div>
-<div class="vgroup" id="electrides" data-tabs="[[6], [2, 3, 4, 5], [18]]">
-<div class="vh"><h3><span class="dim">structures/</span>electrides/</h3><p>2D and under pressure</p></div>
-<p class="prompt"><b>austin</b> ~/austin-ellis $ VESTA structures/electrides/<span class="vfile">MoS2_vacancy/ELFCAR_441</span> &amp;</p>
-<div class="viewer">
-<div class="vbar">
-<div class="vtabs" role="tablist" aria-label="2D and under pressure calculations">
-<button type="button" role="tab" class="vt" aria-selected="true" aria-controls="stage-electrides">MoS2_vac/ELFCAR</button>
-<button type="button" role="tab" class="vt" aria-selected="false" aria-controls="stage-electrides" tabindex="-1">H2/PARCHG</button>
-<button type="button" role="tab" class="vt" aria-selected="false" aria-controls="stage-electrides" tabindex="-1">TaS2_vac/POSCAR</button>
-</div>
-<div class="vctl"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
-</div>
-<div class="sbar">
-<div class="vopts">
-<span class="vlabel" data-tab="0">MoS₂ · S vacancy</span>
-<div class="vv" role="group" aria-label="Hydrogen state" data-tab="1" hidden><button type="button" class="vb" data-v="0" aria-pressed="true">C2/c · band 15</button><button type="button" class="vb" data-v="1" aria-pressed="false">Ama2 · band 25</button><button type="button" class="vb" data-v="2" aria-pressed="false">P6₃/m · band 9</button><button type="button" class="vb" data-v="3" aria-pressed="false">P6₃/m · band 11</button></div>
-<span class="vlabel" data-tab="2" hidden>TaS₂ · S vacancy</span>
-</div>
-<div class="lgd" data-scene="6"><span><i style="background:#B486B0"></i>Mo</span><span><i style="background:#D9B43A"></i>S</span><span><i class="iso"></i>ELF 0.60</span><span>0<b></b>1</span></div>
-<div class="lgd" data-scene="2" hidden><span><i style="background:#DAE0E8"></i>H</span><span><i class="iso"></i>2⟨ρ⟩</span><span>0<b></b>3⟨ρ⟩</span></div>
-<div class="lgd" data-scene="3" hidden><span><i style="background:#DAE0E8"></i>H</span><span><i class="iso"></i>2⟨ρ⟩</span><span>0<b></b>3⟨ρ⟩</span></div>
-<div class="lgd" data-scene="4" hidden><span><i style="background:#DAE0E8"></i>H</span><span><i class="iso"></i>2⟨ρ⟩</span><span>0<b></b>3⟨ρ⟩</span></div>
-<div class="lgd" data-scene="5" hidden><span><i style="background:#DAE0E8"></i>H</span><span><i class="iso"></i>1.5⟨ρ⟩</span><span>0<b></b>3⟨ρ⟩</span></div>
-<div class="lgd" data-scene="18" hidden><span><i style="background:#D9B43A"></i>S</span><span><i style="background:#6F8FB5"></i>Ta</span></div>
-</div>
-<div class="vbody">
-<details class="vpane" open>
-<summary>$ head&nbsp;<span class="vfile">MoS2_vacancy/ELFCAR_441</span></summary>
-<div class="inner" tabindex="0" role="region" aria-label="File header and VESTA settings">
-<pre class="pc" data-scene="6"><span class="com">scf
-</span><span class="num">   1.00000000000000
-</span><span class="val">    12.589023   -0.000000    0.000000
-</span><span class="val">    -6.294512   10.902414    0.000000
-</span><span class="val">     0.000000    0.000000   24.942065
-</span><span class="key">   Mo   S
-</span><span class="num">    16    31
-</span><span class="okc">Direct
-</span>  0.084274  0.167635  0.500859
-  0.086214  0.418107  0.499328
-  0.084274  0.666639  0.500859
-  0.083333  0.916667  0.501453
-  0.333361  0.167635  0.500859
-  0.336095  0.422190  0.497662
-  0.336095  0.663905  0.497662
-  0.333361  0.915726  0.500859
-  0.582838  0.166419  0.500406
-  0.581893  0.418107  0.499328
-  0.577810  0.663905  0.497662
-  0.581893  0.913786  0.499328
-<span class="com">  … 35 more positions
-</span> 
-<span class="num">  108  108  200
-</span><span class="com">  (2,332,800 values follow)
-</span> 
-<span class="com"># VESTA 3.5.8 scene mos2_vacancy.vesta
-</span><span class="com"># isosurface  ELF = 0.60
-</span><span class="com"># sections    ELF 0 → 1, B-G-R
-</span><span class="com"># region      hexagonal flake, 6 Å apothem,
-</span><span class="com">#             centred on the vacancy</span></pre>
-<pre class="pc" data-scene="2" hidden><span class="com">C2c12_300GPa_PBE_fatband
-</span><span class="num">   1.00000000000000
-</span><span class="val">     4.939000    0.000000    0.000000
-</span><span class="val">     0.000000    2.811000    0.000000
-</span><span class="val">    -3.282370    0.000000    2.521383
-</span><span class="key">   H
-</span><span class="num">    24
-</span><span class="okc">Direct
-</span>  0.226000  0.067200  0.246400
-  0.726000  0.567200  0.246400
-  0.774000  0.067200  0.253600
-  0.274000  0.567200  0.253600
-  0.774000  0.932800  0.753600
-  0.274000  0.432800  0.753600
-  0.226000  0.932800  0.746400
-  0.726000  0.432800  0.746400
-  0.344300  0.195800  0.222700
-  0.844300  0.695800  0.222700
-  0.655700  0.195800  0.277300
-  0.155700  0.695800  0.277300
-<span class="com">  … 12 more positions
-</span> 
-<span class="num">   64   36   56
-</span><span class="com">  (129,024 values follow)
-</span> 
-<span class="com"># VESTA 3.5.8 scene h2_c2c_b15.vesta
-</span><span class="com"># field       band 15 at Γ, scaled to its cell mean
-</span><span class="com"># isosurface  ρ = 2⟨ρ⟩
-</span><span class="com"># sections    0 → 3⟨ρ⟩, B-G-R
-</span><span class="com"># region      2 × 3 × 2 of (a+c, b, c)</span></pre>
-<pre class="pc" data-scene="3" hidden><span class="com">scf
-</span><span class="num">   1.00000000000000
-</span><span class="val">     4.796022    0.000000    0.000000
-</span><span class="val">     0.000000    4.679341    0.000000
-</span><span class="val">     0.000000    0.000000    2.693860
-</span><span class="key">   H
-</span><span class="num">    48
-</span><span class="okc">Direct
-</span>  0.998954  0.269437  0.317259
-  0.998954  0.769437  0.817259
-  0.001046  0.730563  0.317259
-  0.001046  0.230563  0.817259
-  0.501046  0.269437  0.317259
-  0.501046  0.769437  0.817259
-  0.498954  0.730563  0.317259
-  0.498954  0.230563  0.817259
-  0.016047  0.371559  0.948133
-  0.016047  0.871559  0.448133
-  0.983953  0.628441  0.948133
-  0.983953  0.128441  0.448133
-<span class="com">  … 36 more positions
-</span> 
-<span class="num">  100   96   56
-</span><span class="com">  (537,600 values follow)
-</span> 
-<span class="com"># VESTA 3.5.8 scene h2_ama2_b25.vesta
-</span><span class="com"># field       band 25 at R, scaled to its cell mean
-</span><span class="com"># isosurface  ρ = 2⟨ρ⟩
-</span><span class="com"># sections    0 → 3⟨ρ⟩, B-G-R
-</span><span class="com"># region      1 × 1 × 2 cells</span></pre>
-<pre class="pc" data-scene="4" hidden><span class="com">P63m_325GPa_PBE_A_parchg
-</span><span class="num">   1.00000000000000
-</span><span class="val">     3.220273    0.000001   -0.000011
-</span><span class="val">    -1.610136    2.788838    0.000002
-</span><span class="val">    -0.000008   -0.000003    2.523312
-</span><span class="key">   H
-</span><span class="num">    16
-</span><span class="okc">Direct
-</span>  0.080285  0.398827  0.249964
-  0.681460  0.080286  0.749999
-  0.601172  0.681459  0.250034
-  0.919715  0.601173  0.750036
-  0.318540  0.919714  0.250001
-  0.398828  0.318541  0.749966
-  0.195092  0.253717  0.250030
-  0.941376  0.195091  0.750013
-  0.746283  0.941375  0.249983
-  0.804908  0.746283  0.749970
-  0.058624  0.804909  0.249987
-  0.253717  0.058625  0.750017
-<span class="com">  … 4 more positions
-</span> 
-<span class="num">   48   48   32
-</span><span class="com">  (73,728 values follow)
-</span> 
-<span class="com"># VESTA 3.5.8 scene h2_p63m_b9.vesta
-</span><span class="com"># field       band 9 at A, scaled to its cell mean
-</span><span class="com"># isosurface  ρ = 2⟨ρ⟩
-</span><span class="com"># sections    0 → 3⟨ρ⟩, B-G-R
-</span><span class="com"># region      2 × 2 × 3 cells</span></pre>
-<pre class="pc" data-scene="5" hidden><span class="com">P63m_325GPa_PBE_A_parchg
-</span><span class="num">   1.00000000000000
-</span><span class="val">     3.220273    0.000001   -0.000011
-</span><span class="val">    -1.610136    2.788838    0.000002
-</span><span class="val">    -0.000008   -0.000003    2.523312
-</span><span class="key">   H
-</span><span class="num">    16
-</span><span class="okc">Direct
-</span>  0.080285  0.398827  0.249964
-  0.681460  0.080286  0.749999
-  0.601172  0.681459  0.250034
-  0.919715  0.601173  0.750036
-  0.318540  0.919714  0.250001
-  0.398828  0.318541  0.749966
-  0.195092  0.253717  0.250030
-  0.941376  0.195091  0.750013
-  0.746283  0.941375  0.249983
-  0.804908  0.746283  0.749970
-  0.058624  0.804909  0.249987
-  0.253717  0.058625  0.750017
-<span class="com">  … 4 more positions
-</span> 
-<span class="num">   48   48   32
-</span><span class="com">  (73,728 values follow)
-</span> 
-<span class="com"># VESTA 3.5.8 scene h2_p63m_b11.vesta
-</span><span class="com"># field       band 11 at A, scaled to its cell mean
-</span><span class="com"># isosurface  ρ = 1.5⟨ρ⟩
-</span><span class="com"># sections    0 → 3⟨ρ⟩, B-G-R
-</span><span class="com"># region      2 × 2 × 3 cells</span></pre>
-<pre class="pc" data-scene="18" hidden><span class="com">S  Ta
-</span><span class="num">   1.00000000000000
-</span><span class="val">     13.399793    0.000000    0.000000
-</span><span class="val">     -6.699897   11.604561    0.000000
-</span><span class="val">      0.000000    0.000000   83.190000
-</span><span class="key">   S   Ta
-</span><span class="num">   31   16
-</span><span class="okc">Direct
-</span>  0.417104  0.085042  0.481196
-  0.666492  0.082983  0.481750
-  0.917939  0.085042  0.481196
-  0.164958  0.332061  0.481196
-  0.417104  0.332061  0.481196
-  0.664389  0.332194  0.481347
-  0.917806  0.332194  0.481347
-  0.167017  0.583508  0.481750
-  0.417691  0.585382  0.481040
-  0.666492  0.583508  0.481750
-  0.917806  0.585611  0.481347
-  0.164958  0.832896  0.481196
-<span class="com">  … 35 more positions
-</span> 
-<span class="com"># region      4 × 4 supercell, one sheet
-</span><span class="com"># vacancy     one S, lower layer
-</span><span class="com"># view        from below</span></pre>
-</div>
-</details>
-<div class="vstage" id="stage-electrides">
-<canvas class="gl" tabindex="0" role="img" aria-label="Interactive 3D view: MoS2 monolayer flake with one sulfur vacancy at its center"></canvas>
-<canvas class="ov" aria-hidden="true"></canvas>
-<noscript><p style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;color:#6B665C;font:13px var(--mono);">the 3D viewer needs JavaScript</p></noscript>
-</div>
-</div>
-<div class="vctl2"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
-<div class="vstatus" data-scene="6"><span><span class="key">MoS<sub>2</sub></span> · 2H monolayer, 4×4 supercell · Mo 16, S 31 · ELF grid 108×108×200</span><a href="#job-tmdc">→ jobs/tmdc-electrides</a></div>
-<div class="vstatus" data-scene="2" hidden><span><span class="key">H<sub>2</sub></span> · C2/c-12 · band 15 at Γ, the LUMO · Fig. 3a</span><a href="#job-h2">→ jobs/h2-electride</a></div>
-<div class="vstatus" data-scene="3" hidden><span><span class="key">H<sub>2</sub></span> · Ama2 · 425 GPa · band 25 at R · Fig. 3b</span><a href="#job-h2">→ jobs/h2-electride</a></div>
-<div class="vstatus" data-scene="4" hidden><span><span class="key">H<sub>2</sub></span> · P6<sub>3</sub>/m · 325 GPa · band 9 at A · Fig. 3c</span><a href="#job-h2">→ jobs/h2-electride</a></div>
-<div class="vstatus" data-scene="5" hidden><span><span class="key">H<sub>2</sub></span> · P6<sub>3</sub>/m · 325 GPa · band 11 at A · Fig. 3d</span><a href="#job-h2">→ jobs/h2-electride</a></div>
-<div class="vstatus" data-scene="18" hidden><span><span class="key">TaS<sub>2</sub></span> · monolayer, 4×4 supercell · Ta 16, S 31</span><a href="#job-tmd-vacancies">→ jobs/tmd-vacancies</a></div>
-</div>
-<p class="vcap" data-scene="6">A MoS<sub>2</sub> monolayer with one sulfur removed at the center of the flake. Every S carries a lone-pair ELF basin; at the vacancy a smaller basin with no atom inside sits where the sulfur was: the electride-like vacancy state.</p>
-<p class="vcap" data-scene="2" hidden>C2/c-12 solid hydrogen, band 15 at Γ (Fig. 3a of the paper). The lowest conduction state runs in continuous channels between the H<sub>2</sub> molecules: electrons moving into the interstitial space as the gap closes.</p>
-<p class="vcap" data-scene="3" hidden>Ama2 hydrogen at 425 GPa, band 25 at R (Fig. 3b). Compression pushes this state out of the H–H bonds and into the interstitial space between the molecular layers.</p>
-<p class="vcap" data-scene="4" hidden>P6<sub>3</sub>/m hydrogen, band 9 at A (Fig. 3c): interstitial maxima stacked in columns along <i>c</i>, between the H<sub>2</sub> molecules.</p>
-<p class="vcap" data-scene="5" hidden>P6<sub>3</sub>/m hydrogen, band 11 at A (Fig. 3d): the next state up also gathers in the interstitial pockets instead of on the H–H bonds.</p>
-<p class="vcap" data-scene="18" hidden>A TaS<sub>2</sub> sheet with one sulfur missing from the lower layer, seen from below. The sulfur above the gap has sunk toward the tantalum plane.</p>
-</div>
-<div class="vgroup" id="superhydrides" data-tabs="[[0, 1], [7, 8]]">
-<div class="vh"><h3><span class="dim">structures/</span>superhydrides/</h3><p>Chemical templates for superhydrides</p></div>
-<p class="prompt"><b>austin</b> ~/austin-ellis $ VESTA structures/superhydrides/<span class="vfile">NaKH12_60GPa/ELFCAR</span> &amp;</p>
-<div class="viewer">
-<div class="vbar">
-<div class="vtabs" role="tablist" aria-label="Chemical templates for superhydrides calculations">
-<button type="button" role="tab" class="vt" aria-selected="true" aria-controls="stage-superhydrides">NaKH12/ELFCAR</button>
-<button type="button" role="tab" class="vt" aria-selected="false" aria-controls="stage-superhydrides" tabindex="-1">U10H84.vasp</button>
-</div>
-<div class="vctl"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
-</div>
-<div class="sbar">
-<div class="vopts">
-<div class="vv" role="group" aria-label="Full hydride or metal sublattice" data-tab="0"><button type="button" class="vb" data-v="0" aria-pressed="true">NaKH12</button><button type="button" class="vb" data-v="1" aria-pressed="false">Na–K only</button></div>
-<div class="vv" role="group" aria-label="Superhydride or metal lattice" data-tab="1" hidden><button type="button" class="vb" data-v="0" aria-pressed="true">U₁₀H₈₄</button><button type="button" class="vb" data-v="1" aria-pressed="false">U₁₀ lattice · ELF</button></div>
-</div>
-<div class="lgd" data-scene="0"><span><i style="background:#B1A4C8"></i>Na</span><span><i style="background:#A122F7"></i>K</span><span><i style="background:#DAE0E8"></i>H</span><span><i class="iso"></i>ELF 0.75</span><span>0<b></b>1</span></div>
-<div class="lgd" data-scene="1" hidden><span><i style="background:#B1A4C8"></i>Na</span><span><i style="background:#A122F7"></i>K</span><span><i class="iso"></i>ELF 0.55</span><span>0<b></b>1</span></div>
-<div class="lgd" data-scene="7" hidden><span><i style="background:#7AA2AA"></i>U</span><span><i style="background:#DAE0E8"></i>H</span></div>
-<div class="lgd" data-scene="8" hidden><span><i style="background:#7AA2AA"></i>U</span><span><i class="iso"></i>ELF 0.50</span><span>0<b></b>1</span></div>
-</div>
-<div class="vbody">
-<details class="vpane" open>
-<summary>$ head&nbsp;<span class="vfile">NaKH12_60GPa/ELFCAR</span></summary>
-<div class="inner" tabindex="0" role="region" aria-label="File header and VESTA settings">
-<pre class="pc" data-scene="0"><span class="com">scf
-</span><span class="num">   1.00000000000000
-</span><span class="val">     6.083404    0.000000    0.000000
-</span><span class="val">     0.000000    6.083404    0.000000
-</span><span class="val">     0.000000    0.000000    6.083404
-</span><span class="key">   H    K    Na
-</span><span class="num">    48     4     4
-</span><span class="okc">Direct
-</span>  0.429349  0.750000  0.750000
-  0.250000  0.250000  0.929349
-  0.070651  0.250000  0.750000
-  0.250000  0.750000  0.570651
-  0.250000  0.929349  0.750000
-  0.250000  0.250000  0.570651
-  0.250000  0.070651  0.750000
-  0.250000  0.750000  0.929349
-  0.070651  0.750000  0.750000
-  0.250000  0.570651  0.750000
-  0.429349  0.250000  0.750000
-  0.250000  0.429349  0.750000
-<span class="com">  … 44 more positions
-</span> 
-<span class="num">   54   54   54
-</span><span class="com">  (157,464 values follow)
-</span> 
-<span class="com"># VESTA 3.5.8 scene nakh12_60GPa.vesta
-</span><span class="com"># isosurface  ELF = 0.75
-</span><span class="com"># sections    ELF 0 → 1, B-G-R
-</span><span class="com"># region      1 × 1 × 1 cell
-</span><span class="com"># radii       Na 1.25 Å, K 1.50 Å</span></pre>
-<pre class="pc" data-scene="1" hidden><span class="com">scf
-</span><span class="num">   1.00000000000000
-</span><span class="val">     6.082837    0.000000    0.000000
-</span><span class="val">     0.000000    6.082837    0.000000
-</span><span class="val">     0.000000    0.000000    6.082837
-</span><span class="key">   K    Na
-</span><span class="num">     4     4
-</span><span class="okc">Direct
-</span>  0.500000  0.000000  0.000000
-  0.500000  0.500000  0.500000
-  0.000000  0.000000  0.500000
-  0.000000  0.500000  0.000000
-  0.000000  0.000000  0.000000
-  0.000000  0.500000  0.500000
-  0.500000  0.000000  0.500000
-  0.500000  0.500000  0.000000
- 
-<span class="num">   54   54   54
-</span><span class="com">  (157,464 values follow)
-</span> 
-<span class="com"># VESTA 3.5.8 scene nak_sublattice.vesta
-</span><span class="com"># isosurface  ELF = 0.55
-</span><span class="com"># sections    ELF 0 → 1, B-G-R
-</span><span class="com"># region      1 × 1 × 1 cell
-</span><span class="com"># radii       Na 1.25 Å, K 1.50 Å</span></pre>
-<pre class="pc" data-scene="7" hidden><span class="com">Pa10H84_I4m_200GPa
-</span><span class="num">   1.00000000000000
-</span><span class="val">     7.3252971927448902   -0.0000000002934098    0.0000000000000000
-</span><span class="val">     0.0000000002934098    7.3252971927448893   -0.0000000000000000
-</span><span class="val">    -0.0000000000000000    0.0000000000000000    4.6482720658846830
-</span><span class="key">   H    U
-</span><span class="num">    84    10
-</span><span class="okc">Direct
-</span>  0.6043816623181978  0.5527704859944376  0.1315448655588674
-  0.3956183376818020  0.4472294830055636  0.8684551714411322
-  0.3956183376818020  0.4472294830055636  0.1315448655588674
-  0.6043816623181978  0.5527704859944376  0.8684551714411322
-  0.4472294830055636  0.6043816623181978  0.1315448655588674
-  0.5527704859944376  0.3956183376818020  0.8684551714411322
-  0.5527704859944376  0.3956183376818020  0.1315448655588674
-  0.4472294830055636  0.6043816623181978  0.8684551714411322
-  0.1043816623181980  0.0527704459944340  0.6315448785588649
-  0.8956183066818032  0.9472294830055634  0.3684551464411336
-  0.8956183066818032  0.9472294830055634  0.6315448785588649
-  0.1043816623181980  0.0527704459944340  0.3684551464411336
-<span class="com">  … 82 more positions
-</span> 
-<span class="com"># VESTA 3.5.8 scene u10h84_structure.vesta
-</span><span class="com"># model       ball-and-stick
-</span><span class="com"># bonds       H–H ≤ 1.35 Å
-</span><span class="com"># region      1 × 1 × 2 cells</span></pre>
-<pre class="pc" data-scene="8" hidden><span class="com">scf
-</span><span class="num">   1.00000000000000
-</span><span class="val">     7.487900    0.000000    0.000000
-</span><span class="val">     0.000000    7.487900    0.000000
-</span><span class="val">     0.000000    0.000000    4.680100
-</span><span class="key">   U
-</span><span class="num">    10
-</span><span class="okc">Direct
-</span>   0.400540  0.200430  0.000000
-   0.900540  0.700430  0.500000
-   0.799570  0.400540  0.000000
-   0.299570  0.900540  0.500000
-   0.599460  0.799570  0.000000
-   0.099460  0.299570  0.500000
-   0.200430  0.599460  0.000000
-   0.700430  0.099460  0.500000
-   0.000000  0.000000  0.000000
-   0.500000  0.500000  0.500000
- 
-<span class="num">   60   60   40
-</span><span class="com">  (144,000 values follow)
-</span> 
-<span class="com"># VESTA 3.5.8 scene u10_template.vesta
-</span><span class="com"># isosurface  ELF = 0.50
-</span><span class="com"># sections    ELF 0 → 1, B-G-R
-</span><span class="com"># region      1 × 1 × 2 cells</span></pre>
-</div>
-</details>
-<div class="vstage" id="stage-superhydrides">
-<canvas class="gl" tabindex="0" role="img" aria-label="Interactive 3D view: NaKH12 cell at 60 GPa with ELF isosurfaces around each H2 unit"></canvas>
-<canvas class="ov" aria-hidden="true"></canvas>
-<noscript><p style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;color:#6B665C;font:13px var(--mono);">the 3D viewer needs JavaScript</p></noscript>
-</div>
-</div>
-<div class="vctl2"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
-<div class="vstatus" data-scene="0"><span><span class="key">NaKH<sub>12</sub></span> · Fm-3m · 60 GPa · Na 4, K 4, H 48 · ELF grid 54×54×54</span><a href="#job-nakh12">→ jobs/nakh12</a></div>
-<div class="vstatus" data-scene="1" hidden><span><span class="key">(NaK)H<sub>0</sub></span> sublattice · 60 GPa cell · Na 4, K 4 · ELF grid 54×54×54</span><a href="#job-nakh12">→ jobs/nakh12</a></div>
-<div class="vstatus" data-scene="7" hidden><span><span class="key">U<sub>10</sub>H<sub>84</sub></span> · I4/m · 200 GPa · U 10, H 84</span><a href="#job-superhydrides">→ jobs/superhydrides</a></div>
-<div class="vstatus" data-scene="8" hidden><span><span class="key">U<sub>10</sub></span> metal lattice · I4/m · U 10 · ELF grid 60×60×40</span><a href="#job-superhydrides">→ jobs/superhydrides</a></div>
-</div>
-<p class="vcap" data-scene="0">NaKH<sub>12</sub> at 60 GPa. Yellow ELF isosurfaces wrap each H<sub>2</sub> unit; six of them sit on the faces of every small Na<sub>4</sub>K<sub>4</sub> cube, bonds pointing at its center.</p>
-<p class="vcap" data-scene="1" hidden>The same cell with the hydrogen taken out. An interstitial ELF basin sits at the center of each small Na<sub>4</sub>K<sub>4</sub> cube: the site the six H<sub>2</sub> units gather around in NaKH<sub>12</sub>.</p>
-<p class="vcap" data-scene="7" hidden>U<sub>10</sub>H<sub>84</sub> (I4/m, 200 GPa), one of the superhydrides from the template-guided search, with its hydrogen cage network.</p>
-<p class="vcap" data-scene="8" hidden>The bare U<sub>10</sub> metal lattice, step one of the two-step search. At ELF 0.50 the isosurface shows the interstitial basins between the U atoms as well as the shell around each atom. Same view and scale as U<sub>10</sub>H<sub>84</sub>.</p>
-</div>
-<div class="vgroup" id="ml" data-tabs="[[9, 10, 11], [12, 13, 14, 15], [16, 17]]">
-<div class="vh"><h3><span class="dim">structures/</span>ml/</h3><p>ELF predicted by ELFNet and WISP</p></div>
-<p class="prompt"><b>austin</b> ~/austin-ellis $ VESTA structures/ml/<span class="vfile">CaH6/ELFCAR_Ca_ELFNet</span> &amp;</p>
-<div class="viewer">
-<div class="vbar">
-<div class="vtabs" role="tablist" aria-label="ELF predicted by ELFNet and WISP calculations">
-<button type="button" role="tab" class="vt" aria-selected="true" aria-controls="stage-ml">CaH6/ELFCAR</button>
-<button type="button" role="tab" class="vt" aria-selected="false" aria-controls="stage-ml" tabindex="-1">MnPd/ELFCAR</button>
-<button type="button" role="tab" class="vt" aria-selected="false" aria-controls="stage-ml" tabindex="-1">Sc5Cl8/ELFCAR</button>
-</div>
-<div class="vctl"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
-</div>
-<div class="sbar">
-<div class="vopts">
-<div class="vv" role="group" aria-label="Calcium lattice or the full hydride" data-tab="0"><button type="button" class="vb" data-v="0" aria-pressed="true">Ca lattice · ELFNet</button><button type="button" class="vb" data-v="1" aria-pressed="false">Ca lattice · DFT</button><button type="button" class="vb" data-v="2" aria-pressed="false">CaH₆</button></div>
-<div class="vv" role="group" aria-label="Spin channel and method" data-tab="1" hidden><button type="button" class="vb" data-v="0" aria-pressed="true">WISP · spin down</button><button type="button" class="vb" data-v="1" aria-pressed="false">WISP · spin up</button><button type="button" class="vb" data-v="2" aria-pressed="false">DFT · spin down</button><button type="button" class="vb" data-v="3" aria-pressed="false">DFT · spin up</button></div>
-<div class="vv" role="group" aria-label="Method" data-tab="2" hidden><button type="button" class="vb" data-v="0" aria-pressed="true">WISP</button><button type="button" class="vb" data-v="1" aria-pressed="false">DFT</button></div>
-</div>
-<div class="lgd" data-scene="9"><span><i style="background:#5E93B8"></i>Ca</span><span><i style="background:#DAE0E8"></i>H</span><span><i class="iso"></i>ELF 0.45</span><span>0<b></b>0.71</span></div>
-<div class="lgd" data-scene="10" hidden><span><i style="background:#5E93B8"></i>Ca</span><span><i style="background:#DAE0E8"></i>H</span><span><i class="iso"></i>ELF 0.45</span><span>0<b></b>0.71</span></div>
-<div class="lgd" data-scene="11" hidden><span><i style="background:#5E93B8"></i>Ca</span><span><i style="background:#DAE0E8"></i>H</span></div>
-<div class="lgd" data-scene="12" hidden><span><i style="background:#A0489C"></i>Mn</span><span><i style="background:#B4B8B2"></i>Pd</span><span><i class="iso"></i>ELF 0.30</span><span>0<b></b>0.45</span></div>
-<div class="lgd" data-scene="13" hidden><span><i style="background:#A0489C"></i>Mn</span><span><i style="background:#B4B8B2"></i>Pd</span><span><i class="iso"></i>ELF 0.30</span><span>0<b></b>0.45</span></div>
-<div class="lgd" data-scene="14" hidden><span><i style="background:#A0489C"></i>Mn</span><span><i style="background:#B4B8B2"></i>Pd</span><span><i class="iso"></i>ELF 0.30</span><span>0<b></b>0.45</span></div>
-<div class="lgd" data-scene="15" hidden><span><i style="background:#A0489C"></i>Mn</span><span><i style="background:#B4B8B2"></i>Pd</span><span><i class="iso"></i>ELF 0.30</span><span>0<b></b>0.45</span></div>
-<div class="lgd" data-scene="16" hidden><span><i style="background:#B58AC6"></i>Sc</span><span><i style="background:#5DB870"></i>Cl</span><span><i class="iso"></i>ELF 0.70</span><span>0<b></b>1</span></div>
-<div class="lgd" data-scene="17" hidden><span><i style="background:#B58AC6"></i>Sc</span><span><i style="background:#5DB870"></i>Cl</span><span><i class="iso"></i>ELF 0.70</span><span>0<b></b>1</span></div>
-</div>
-<div class="vbody">
-<details class="vpane" open>
-<summary>$ head&nbsp;<span class="vfile">CaH6/ELFCAR_Ca_ELFNet</span></summary>
-<div class="inner" tabindex="0" role="region" aria-label="File header and VESTA settings">
-<pre class="pc" data-scene="9"><span class="com">CaH6 sites on the Ca template
-</span><span class="num">   1.00000000000000
-</span><span class="val">      3.403440    0.000000    0.000000
-</span><span class="val">     -0.000000    3.403440    0.000000
-</span><span class="val">      0.000000    0.000000    3.403440
-</span><span class="key">   Ca   H
-</span><span class="num">   2   12
-</span><span class="okc">Direct
-</span>  0.000000  0.000000  0.000000
-  0.500000  0.500000  0.500000
-  0.250000  0.500000  0.000000
-  0.750000  0.500000  0.000000
-  0.500000  0.250000  0.000000
-  0.500000  0.750000  0.000000
-  0.000000  0.250000  0.500000
-  0.000000  0.750000  0.500000
-  0.000000  0.500000  0.250000
-  0.000000  0.500000  0.750000
-  0.250000  0.000000  0.500000
-  0.750000  0.000000  0.500000
-  0.500000  0.000000  0.250000
-  0.500000  0.000000  0.750000
- 
-<span class="num">  32  32  32
-</span><span class="com">  (32,768 values follow)
-</span> 
-<span class="com"># field       ELF predicted by ELFNet
-</span><span class="com">#             (no hydrogen included)
-</span><span class="com"># isosurface  ELF = 0.45
-</span><span class="com"># sections    ELF 0 → 0.71, B-G-R
-</span><span class="com"># region      1 cell</span></pre>
-<pre class="pc" data-scene="10" hidden><span class="com">CaH6 sites on the Ca template
-</span><span class="num">   1.00000000000000
-</span><span class="val">      3.403440    0.000000    0.000000
-</span><span class="val">     -0.000000    3.403440    0.000000
-</span><span class="val">      0.000000    0.000000    3.403440
-</span><span class="key">   Ca   H
-</span><span class="num">   2   12
-</span><span class="okc">Direct
-</span>  0.000000  0.000000  0.000000
-  0.500000  0.500000  0.500000
-  0.250000  0.500000  0.000000
-  0.750000  0.500000  0.000000
-  0.500000  0.250000  0.000000
-  0.500000  0.750000  0.000000
-  0.000000  0.250000  0.500000
-  0.000000  0.750000  0.500000
-  0.000000  0.500000  0.250000
-  0.000000  0.500000  0.750000
-  0.250000  0.000000  0.500000
-  0.750000  0.000000  0.500000
-  0.500000  0.000000  0.250000
-  0.500000  0.000000  0.750000
- 
-<span class="num">  28  28  28
-</span><span class="com">  (21,952 values follow)
-</span> 
-<span class="com"># field       ELF from DFT
-</span><span class="com">#             (no hydrogen included)
-</span><span class="com"># isosurface  ELF = 0.45
-</span><span class="com"># sections    ELF 0 → 0.71, B-G-R
-</span><span class="com"># region      1 cell</span></pre>
-<pre class="pc" data-scene="11" hidden><span class="com">CaH6 sites on the Ca template
-</span><span class="num">   1.00000000000000
-</span><span class="val">      3.403440    0.000000    0.000000
-</span><span class="val">     -0.000000    3.403440    0.000000
-</span><span class="val">      0.000000    0.000000    3.403440
-</span><span class="key">   Ca   H
-</span><span class="num">   2   12
-</span><span class="okc">Direct
-</span>  0.000000  0.000000  0.000000
-  0.500000  0.500000  0.500000
-  0.250000  0.500000  0.000000
-  0.750000  0.500000  0.000000
-  0.500000  0.250000  0.000000
-  0.500000  0.750000  0.000000
-  0.000000  0.250000  0.500000
-  0.000000  0.750000  0.500000
-  0.000000  0.500000  0.250000
-  0.000000  0.500000  0.750000
-  0.250000  0.000000  0.500000
-  0.750000  0.000000  0.500000
-  0.500000  0.000000  0.250000
-  0.500000  0.000000  0.750000
- 
-<span class="com"># region      1 cell
-</span><span class="com"># bonds       H–H up to 1.3 Å</span></pre>
-<pre class="pc" data-scene="12" hidden><span class="com">MnPd  mp-1902
-</span><span class="num">   1.00000000000000
-</span><span class="val">      3.110125    0.000000    0.000000
-</span><span class="val">      0.000000    3.110125    0.000000
-</span><span class="val">      0.000000    0.000000    3.110125
-</span><span class="key">   Mn   Pd
-</span><span class="num">   1   1
-</span><span class="okc">Direct
-</span>  0.000000  0.000000  0.000000
-  0.500000  0.500000  0.500000
- 
-<span class="num">  28  28  28   × 2 spin channels
-</span><span class="com">  (21,952 values follow)
-</span> 
-<span class="com"># field       spin-down ELF, WISP
-</span><span class="com"># moments     Mn 3.95, Pd 0.31 μB
-</span><span class="com"># isosurface  ELF = 0.30
-</span><span class="com"># sections    ELF 0 → 0.45, B-G-R
-</span><span class="com"># region      half a cell, cut at b = 0.5</span></pre>
-<pre class="pc" data-scene="13" hidden><span class="com">MnPd  mp-1902
-</span><span class="num">   1.00000000000000
-</span><span class="val">      3.110125    0.000000    0.000000
-</span><span class="val">      0.000000    3.110125    0.000000
-</span><span class="val">      0.000000    0.000000    3.110125
-</span><span class="key">   Mn   Pd
-</span><span class="num">   1   1
-</span><span class="okc">Direct
-</span>  0.000000  0.000000  0.000000
-  0.500000  0.500000  0.500000
- 
-<span class="num">  28  28  28   × 2 spin channels
-</span><span class="com">  (21,952 values follow)
-</span> 
-<span class="com"># field       spin-up ELF, WISP
-</span><span class="com"># moments     Mn 3.95, Pd 0.31 μB
-</span><span class="com"># isosurface  ELF = 0.30
-</span><span class="com"># sections    ELF 0 → 0.45, B-G-R
-</span><span class="com"># region      half a cell, cut at b = 0.5</span></pre>
-<pre class="pc" data-scene="14" hidden><span class="com">MnPd  mp-1902
-</span><span class="num">   1.00000000000000
-</span><span class="val">      3.110125    0.000000    0.000000
-</span><span class="val">      0.000000    3.110125    0.000000
-</span><span class="val">      0.000000    0.000000    3.110125
-</span><span class="key">   Mn   Pd
-</span><span class="num">   1   1
-</span><span class="okc">Direct
-</span>  0.000000  0.000000  0.000000
-  0.500000  0.500000  0.500000
- 
-<span class="num">  28  28  28   × 2 spin channels
-</span><span class="com">  (21,952 values follow)
-</span> 
-<span class="com"># field       spin-down ELF, DFT
-</span><span class="com"># moments     Mn 3.95, Pd 0.31 μB
-</span><span class="com"># isosurface  ELF = 0.30
-</span><span class="com"># sections    ELF 0 → 0.45, B-G-R
-</span><span class="com"># region      half a cell, cut at b = 0.5</span></pre>
-<pre class="pc" data-scene="15" hidden><span class="com">MnPd  mp-1902
-</span><span class="num">   1.00000000000000
-</span><span class="val">      3.110125    0.000000    0.000000
-</span><span class="val">      0.000000    3.110125    0.000000
-</span><span class="val">      0.000000    0.000000    3.110125
-</span><span class="key">   Mn   Pd
-</span><span class="num">   1   1
-</span><span class="okc">Direct
-</span>  0.000000  0.000000  0.000000
-  0.500000  0.500000  0.500000
- 
-<span class="num">  28  28  28   × 2 spin channels
-</span><span class="com">  (21,952 values follow)
-</span> 
-<span class="com"># field       spin-up ELF, DFT
-</span><span class="com"># moments     Mn 3.95, Pd 0.31 μB
-</span><span class="com"># isosurface  ELF = 0.30
-</span><span class="com"># sections    ELF 0 → 0.45, B-G-R
-</span><span class="com"># region      half a cell, cut at b = 0.5</span></pre>
-<pre class="pc" data-scene="16" hidden><span class="com">Sc5Cl8  mp-542449
-</span><span class="num">   1.00000000000000
-</span><span class="val">      3.507162    0.001333    0.665304
-</span><span class="val">      1.651030    9.327444    0.887435
-</span><span class="val">     -0.030616   -0.576538    9.716608
-</span><span class="key">   Sc   Cl
-</span><span class="num">   5   8
-</span><span class="okc">Direct
-</span>  0.000000  0.000000  0.000000
-  0.512874  0.321990  0.653712
-  0.487126  0.678010  0.346288
-  0.117578  0.388273  0.376595
-  0.882422  0.611727  0.623405
-  0.691594  0.189231  0.428658
-  0.308406  0.810769  0.571342
-  0.367242  0.152401  0.112899
-  0.632758  0.847599  0.887101
-  0.671541  0.465677  0.190068
-  0.328459  0.534323  0.809932
-  0.974803  0.831954  0.216411
-<span class="com">  … 1 more positions
-</span> 
-<span class="num">  30  84  84   × 2 spin channels
-</span><span class="com">  (211,680 values follow)
-</span> 
-<span class="com"># field       channel-averaged ELF, WISP
-</span><span class="com"># isosurface  ELF = 0.70
-</span><span class="com"># sections    ELF 0 → 1, B-G-R
-</span><span class="com"># region      half a cell, cut at a = 0.5
-</span><span class="com"># moments     predicted from the geometry</span></pre>
-<pre class="pc" data-scene="17" hidden><span class="com">Sc5Cl8  mp-542449
-</span><span class="num">   1.00000000000000
-</span><span class="val">      3.507162    0.001333    0.665304
-</span><span class="val">      1.651030    9.327444    0.887435
-</span><span class="val">     -0.030616   -0.576538    9.716608
-</span><span class="key">   Sc   Cl
-</span><span class="num">   5   8
-</span><span class="okc">Direct
-</span>  0.000000  0.000000  0.000000
-  0.512874  0.321990  0.653712
-  0.487126  0.678010  0.346288
-  0.117578  0.388273  0.376595
-  0.882422  0.611727  0.623405
-  0.691594  0.189231  0.428658
-  0.308406  0.810769  0.571342
-  0.367242  0.152401  0.112899
-  0.632758  0.847599  0.887101
-  0.671541  0.465677  0.190068
-  0.328459  0.534323  0.809932
-  0.974803  0.831954  0.216411
-<span class="com">  … 1 more positions
-</span> 
-<span class="num">  30  84  84   × 2 spin channels
-</span><span class="com">  (211,680 values follow)
-</span> 
-<span class="com"># field       channel-averaged ELF, DFT
-</span><span class="com"># isosurface  ELF = 0.70
-</span><span class="com"># sections    ELF 0 → 1, B-G-R
-</span><span class="com"># region      half a cell, cut at a = 0.5</span></pre>
-</div>
-</details>
-<div class="vstage" id="stage-ml">
-<canvas class="gl" tabindex="0" role="img" aria-label="Interactive 3D view: ELF of the calcium lattice of CaH6 predicted by ELFNet, with the hydrogen sites marked"></canvas>
-<canvas class="ov" aria-hidden="true"></canvas>
-<noscript><p style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;color:#6B665C;font:13px var(--mono);">the 3D viewer needs JavaScript</p></noscript>
-</div>
-</div>
-<div class="vctl2"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
-<div class="vstatus" data-scene="9"><span>Ca lattice of <span class="key">CaH<sub>6</sub></span> · ELF from ELFNet · grid 32×32×32</span><a href="#job-elfnet">→ jobs/elfnet</a></div>
-<div class="vstatus" data-scene="10" hidden><span>Ca lattice of <span class="key">CaH<sub>6</sub></span> · ELF from DFT · grid 28×28×28</span><a href="#job-elfnet">→ jobs/elfnet</a></div>
-<div class="vstatus" data-scene="11" hidden><span><span class="key">CaH<sub>6</sub></span> · Im-3m · Ca 2, H 12</span><a href="#job-elfnet">→ jobs/elfnet</a></div>
-<div class="vstatus" data-scene="12" hidden><span><span class="key">MnPd</span> · spin down · WISP · grid 28×28×28</span><a href="#job-wisp">→ jobs/wisp</a></div>
-<div class="vstatus" data-scene="13" hidden><span><span class="key">MnPd</span> · spin up · WISP · grid 28×28×28</span><a href="#job-wisp">→ jobs/wisp</a></div>
-<div class="vstatus" data-scene="14" hidden><span><span class="key">MnPd</span> · spin down · DFT · grid 28×28×28</span><a href="#job-wisp">→ jobs/wisp</a></div>
-<div class="vstatus" data-scene="15" hidden><span><span class="key">MnPd</span> · spin up · DFT · grid 28×28×28</span><a href="#job-wisp">→ jobs/wisp</a></div>
-<div class="vstatus" data-scene="16" hidden><span><span class="key">Sc<sub>5</sub>Cl<sub>8</sub></span> · electride · WISP, moments from the geometry · grid 30×84×84</span><a href="#job-wisp">→ jobs/wisp</a></div>
-<div class="vstatus" data-scene="17" hidden><span><span class="key">Sc<sub>5</sub>Cl<sub>8</sub></span> · electride · DFT · grid 30×84×84</span><a href="#job-wisp">→ jobs/wisp</a></div>
-</div>
-<p class="vcap" data-scene="9">The calcium lattice of CaH<sub>6</sub>, with the hydrogen left out of the calculation. ELFNet predicts this ELF from superposed atomic densities, and the yellow surface encloses the sites where the hydrogens sit in CaH<sub>6</sub>, drawn as small spheres.</p>
-<p class="vcap" data-scene="10" hidden>The DFT ELF of the same lattice, for comparison. It is highest at the hydrogen sites.</p>
-<p class="vcap" data-scene="11" hidden>The full CaH<sub>6</sub> structure, a superhydride. Its hydrogens form a cage of squares and hexagons around each calcium.</p>
-<p class="vcap" data-scene="12" hidden>MnPd, spin-down channel, predicted by WISP from the structure and the magnetic moments on the atoms. At ELF 0.30 a large region surrounds the Pd atom.</p>
-<p class="vcap" data-scene="13" hidden>The spin-up channel from WISP at the same isovalue. The large region around Pd is absent, and that difference between the two channels is what WISP has to get right.</p>
-<p class="vcap" data-scene="14" hidden>The spin-down channel from DFT, for comparison (Fig. 2b of the preprint).</p>
-<p class="vcap" data-scene="15" hidden>The spin-up channel from DFT, for comparison (Fig. 2b of the preprint).</p>
-<p class="vcap" data-scene="16" hidden>Sc<sub>5</sub>Cl<sub>8</sub>, a known electride, from WISP with only the geometry as input. Besides the shells around the atoms, the ELF reaches 0.83 at the center of the cut face, 2.2 Å from the nearest atom: the interstitial maximum of the electride.</p>
-<p class="vcap" data-scene="17" hidden>The same view from DFT, for comparison (Fig. 5 of the preprint). The interstitial maximum is 0.83 here as well.</p>
-</div>
-<div class="vgroup" id="high-pressure" data-tabs="[[19, 20], [21, 22]]">
-<div class="vh"><h3><span class="dim">structures/</span>high-pressure/</h3><p>Iron and cesium compounds</p></div>
-<p class="prompt"><b>austin</b> ~/austin-ellis $ VESTA structures/high-pressure/<span class="vfile">Fe-I/FeI2_0GPa.vasp</span> &amp;</p>
-<div class="viewer">
-<div class="vbar">
-<div class="vtabs" role="tablist" aria-label="Iron and cesium compounds calculations">
-<button type="button" role="tab" class="vt" aria-selected="true" aria-controls="stage-high-pressure">Fe-I/POSCAR</button>
-<button type="button" role="tab" class="vt" aria-selected="false" aria-controls="stage-high-pressure" tabindex="-1">CsO/CONTCAR</button>
-</div>
-<div class="vctl"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
-</div>
-<div class="sbar">
-<div class="vopts">
-<div class="vv" role="group" aria-label="Compound and pressure" data-tab="0"><button type="button" class="vb" data-v="0" aria-pressed="true">FeI₂ · 0 GPa</button><button type="button" class="vb" data-v="1" aria-pressed="false">Fe₃I · 300 GPa</button></div>
-<div class="vv" role="group" aria-label="Pressure" data-tab="1" hidden><button type="button" class="vb" data-v="0" aria-pressed="true">CsO · 150 GPa</button><button type="button" class="vb" data-v="1" aria-pressed="false">CsO · 250 GPa</button></div>
-</div>
-<div class="lgd" data-scene="19"><span><i style="background:#C4762B"></i>Fe</span><span><i style="background:#7D3AB8"></i>I</span></div>
-<div class="lgd" data-scene="20" hidden><span><i style="background:#C4762B"></i>Fe</span><span><i style="background:#7D3AB8"></i>I</span></div>
-<div class="lgd" data-scene="21" hidden><span><i style="background:#2FA39A"></i>Cs</span><span><i style="background:#D6402E"></i>O</span></div>
-<div class="lgd" data-scene="22" hidden><span><i style="background:#D6402E"></i>O</span><span><i style="background:#2FA39A"></i>Cs</span></div>
-</div>
-<div class="vbody">
-<details class="vpane" open>
-<summary>$ head&nbsp;<span class="vfile">Fe-I/FeI2_0GPa.vasp</span></summary>
-<div class="inner" tabindex="0" role="region" aria-label="File header and VESTA settings">
-<pre class="pc" data-scene="19"><span class="com">Fe1 I2
-</span><span class="num">   1.00000000000000
-</span><span class="val">      4.016759    0.000000   -0.000000
-</span><span class="val">     -2.008380    3.478616    0.000000
-</span><span class="val">     -0.000000   -0.000000    7.444104
-</span><span class="key">   Fe   I
-</span><span class="num">   1   2
-</span><span class="okc">Direct
-</span> -0.000000  0.000000 -0.000000
-  0.333333  0.666667  0.216454
-  0.666667  0.333333  0.783546
- 
-<span class="com"># region      3 × 3 × 2 cells
-</span><span class="com"># bonds       Fe–I up to 3.0 Å</span></pre>
-<pre class="pc" data-scene="20" hidden><span class="com">1:Pm-3m(221)
-</span><span class="num">   1.00000000000000
-</span><span class="val">      3.157641   -0.000000   -0.000000
-</span><span class="val">     -0.000000    3.157641    0.000000
-</span><span class="val">      0.000000    0.000000    3.157641
-</span><span class="key">   Fe   I
-</span><span class="num">   3   1
-</span><span class="okc">Direct
-</span> -0.000000  0.500000  0.500000
-  0.500000 -0.000000  0.500000
-  0.500000  0.500000  0.000000
-  0.000000 -0.000000  0.000000
- 
-<span class="com"># region      2 × 2 × 2 cells</span></pre>
-<pre class="pc" data-scene="21" hidden><span class="com">CONTCAR_290
-</span><span class="num">   1.00000000000000
-</span><span class="val">      4.160187    0.000000    0.000000
-</span><span class="val">     -2.080094    3.602828    0.000000
-</span><span class="val">     -0.000000    0.000000    5.998209
-</span><span class="key">   Cs   O
-</span><span class="num">   4   4
-</span><span class="okc">Direct
-</span>  0.666667  0.333333  0.750000
-  0.333333  0.666667  0.250000
-  0.000000 -0.000000 -0.000000
- -0.000000 -0.000000  0.500000
-  0.333333  0.666667  0.867567
-  0.666667  0.333333  0.132433
-  0.666667  0.333333  0.367567
-  0.333333  0.666667  0.632433
- 
-<span class="com"># region      2 × 2 × 2 cells
-</span><span class="com"># bonds       O–O up to 1.7 Å</span></pre>
-<pre class="pc" data-scene="22" hidden><span class="com">8:R-3m(166)
-</span><span class="num">   1.00000000000000
-</span><span class="val">      2.011168   -1.161147    2.744058
-</span><span class="val">      0.000000    2.322295    2.744059
-</span><span class="val">     -2.011168   -1.161147    2.744058
-</span><span class="key">   Cs   O
-</span><span class="num">   2   2
-</span><span class="okc">Direct
-</span> -0.000000 -0.000000  0.000000
-  0.500000  0.500000  0.500000
-  0.234438  0.234438  0.234438
-  0.765562  0.765562  0.765562
- 
-<span class="com"># drawn       hexagonal setting, 2 × 2 × 1
-</span><span class="com"># bonds       Cs–O up to 2.05 Å</span></pre>
-</div>
-</details>
-<div class="vstage" id="stage-high-pressure">
-<canvas class="gl" tabindex="0" role="img" aria-label="Interactive 3D view: layered FeI2 at ambient pressure"></canvas>
-<canvas class="ov" aria-hidden="true"></canvas>
-<noscript><p style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;color:#6B665C;font:13px var(--mono);">the 3D viewer needs JavaScript</p></noscript>
-</div>
-</div>
-<div class="vctl2"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
-<div class="vstatus" data-scene="19"><span><span class="key">FeI<sub>2</sub></span> · P-3m1 · 0 GPa · Fe 1, I 2</span><a href="#job-fe">→ jobs/fe-redox</a></div>
-<div class="vstatus" data-scene="20" hidden><span><span class="key">Fe<sub>3</sub>I</span> · Pm-3m · 300 GPa · Fe 3, I 1</span><a href="#job-fe">→ jobs/fe-redox</a></div>
-<div class="vstatus" data-scene="21" hidden><span><span class="key">CsO</span> · P6<sub>3</sub>/mmc · 150 GPa · Cs 4, O 4</span><a href="#job-cs-polyoxides">→ jobs/cs-polyoxides</a></div>
-<div class="vstatus" data-scene="22" hidden><span><span class="key">CsO</span> · R-3m · 250 GPa · Cs 2, O 2</span><a href="#job-cs-polyoxides">→ jobs/cs-polyoxides</a></div>
-</div>
-<p class="vcap" data-scene="19">FeI<sub>2</sub> at ambient pressure, from the set of iron and p-block structures behind the paper: sheets of iron between layers of iodine.</p>
-<p class="vcap" data-scene="20" hidden>Fe<sub>3</sub>I at 300 GPa, from the same set: a cubic structure with iodine at the corners of the cell and iron on its faces.</p>
-<p class="vcap" data-scene="21" hidden>CsO at 150 GPa. The oxygens sit in pairs, 1.41 Å apart.</p>
-<p class="vcap" data-scene="22" hidden>CsO at 250 GPa, past the transition near 221 GPa. The pairs have come apart, and each oxygen now sits 1.93 Å from a cesium.</p>
-</div>
-<div class="vgroup" id="reactions" data-tabs="[[23], [24, 25]]">
-<div class="vh"><h3><span class="dim">structures/</span>reactions/</h3><p>Acetonitrile under pressure and on sodium</p></div>
-<p class="prompt"><b>austin</b> ~/austin-ellis $ VESTA structures/reactions/<span class="vfile">ACN_35GPa/CONTCAR</span> &amp;</p>
-<div class="viewer">
-<div class="vbar">
-<div class="vtabs" role="tablist" aria-label="Acetonitrile under pressure and on sodium calculations">
-<button type="button" role="tab" class="vt" aria-selected="true" aria-controls="stage-reactions">ACN_35GPa/CONTCAR</button>
-<button type="button" role="tab" class="vt" aria-selected="false" aria-controls="stage-reactions" tabindex="-1">Na100/xyz</button>
-</div>
-<div class="vctl"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
-</div>
-<div class="sbar">
-<div class="vopts">
-<span class="vlabel" data-tab="0">CH₃CN · 35 GPa</span>
-<div class="vv" role="group" aria-label="Ring product" data-tab="1" hidden><button type="button" class="vb" data-v="0" aria-pressed="true">Aminopyrimidine</button><button type="button" class="vb" data-v="1" aria-pressed="false">Triazine</button></div>
-</div>
-<div class="lgd" data-scene="23"><span><i style="background:#3A444F"></i>C</span><span><i style="background:#DAE0E8"></i>H</span><span><i style="background:#3157BB"></i>N</span><span><i style="background:#BCC2C8"></i>unreacted</span></div>
-<div class="lgd" data-scene="24" hidden><span><i style="background:#3A444F"></i>C</span><span><i style="background:#3157BB"></i>N</span><span><i style="background:#DAE0E8"></i>H</span><span><i style="background:#B1A4C8"></i>Na</span></div>
-<div class="lgd" data-scene="25" hidden><span><i style="background:#3A444F"></i>C</span><span><i style="background:#3157BB"></i>N</span><span><i style="background:#DAE0E8"></i>H</span><span><i style="background:#B1A4C8"></i>Na</span></div>
-</div>
-<div class="vbody">
-<details class="vpane" open>
-<summary>$ head&nbsp;<span class="vfile">ACN_35GPa/CONTCAR</span></summary>
-<div class="inner" tabindex="0" role="region" aria-label="File header and VESTA settings">
-<pre class="pc" data-scene="23"><span class="com">C  H  N
-</span><span class="num">   1.00000000000000
-</span><span class="val">      9.339321    0.000000    0.000000
-</span><span class="val">      0.054916   13.092645    0.000000
-</span><span class="val">     -0.019215    0.053993   12.778178
-</span><span class="key">   C   H   N
-</span><span class="num">   96   144   48
-</span><span class="okc">Direct
-</span>  0.001850  0.009301  0.063695
-  0.250287  0.176067  0.063657
-  0.000183  0.324904  0.312278
-  0.250795  0.158120  0.313322
-  0.001832  0.008200  0.563036
-  0.250508  0.175851  0.564262
-  0.998933  0.328145  0.813804
-  0.250496  0.158689  0.814234
-  0.998792  0.345323  0.062493
-  0.247266  0.514329  0.059596
-  0.999352  0.659880  0.315665
-  0.249767  0.491317  0.311827
-<span class="com">  … 276 more positions
-</span> 
-<span class="com"># region      1 cell, molecules kept whole
-</span><span class="com"># full color  the three linked molecules
-</span><span class="com"># faded       unreacted CH3CN</span></pre>
-<pre class="pc" data-scene="24" hidden><span class="num">40
-</span><span class="com">4-amino-2,6-dimethylpyrimidine on Na(100)
-</span>C    -1.2490    2.1950    1.3830
-C    -0.6260    1.0210    0.6680
-C    -1.1200   -0.2800    0.8070
-C    -0.4510   -1.3070    0.1130
-C     2.2090    0.5310   -1.6500
-C     1.0210    0.2480   -0.7560
-N     0.4510    1.2920   -0.1240
-N    -0.8530   -2.6490    0.2390
-N     0.6180   -1.0530   -0.6810
-H    -2.0660    1.8790    2.0480
-H    -1.6380    2.9230    0.6510
-H    -0.4810    2.7180    1.9760
-<span class="com">  … 28 more atoms
-</span> 
-<span class="com"># surface     Na(100) slab, 22 Na atoms</span></pre>
-<pre class="pc" data-scene="25" hidden><span class="num">40
-</span><span class="com">2,4,6-trimethyl-1,3,5-triazine on Na(100)
-</span>C    -2.3020   -0.5810    1.5480
-C    -1.0850   -0.3060    0.7010
-C     2.5710   -0.5810    1.0370
-C     1.1980   -0.3300    0.4580
-C    -0.2500    1.3490   -2.4870
-C    -0.1240    0.5700   -1.1980
-N    -1.2640    0.2860   -0.5120
-N     0.1230   -0.6610    1.2200
-N     1.1320    0.2540   -0.7690
-H    -3.1890   -0.0820    1.1370
-H    -2.4940   -1.6720    1.6110
-H    -2.1240   -0.2520    2.5840
-<span class="com">  … 28 more atoms
-</span> 
-<span class="com"># surface     Na(100) slab, 22 Na atoms</span></pre>
-</div>
-</details>
-<div class="vstage" id="stage-reactions">
-<canvas class="gl" tabindex="0" role="img" aria-label="Interactive 3D view: crystalline acetonitrile at 35 GPa with three molecules linked together"></canvas>
-<canvas class="ov" aria-hidden="true"></canvas>
-<noscript><p style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;color:#6B665C;font:13px var(--mono);">the 3D viewer needs JavaScript</p></noscript>
-</div>
-</div>
-<div class="vctl2"><button type="button" class="tg" data-act="out" aria-label="Zoom out">−</button><button type="button" class="tg" data-act="in" aria-label="Zoom in">+</button><button type="button" class="tg" data-act="reset">reset view</button></div>
-<div class="vstatus" data-scene="23"><span><span class="key">CH<sub>3</sub>CN</span> · 35 GPa · C 96, H 144, N 48</span><a href="#job-polymerization">→ jobs/polymerization</a></div>
-<div class="vstatus" data-scene="24" hidden><span><span class="key">Na(100)</span> · 4-amino-2,6-dimethylpyrimidine · C 6, N 3, H 9</span><a href="#job-oligomerization">→ jobs/oligomerization</a></div>
-<div class="vstatus" data-scene="25" hidden><span><span class="key">Na(100)</span> · 2,4,6-trimethyl-1,3,5-triazine · C 6, N 3, H 9</span><a href="#job-oligomerization">→ jobs/oligomerization</a></div>
-</div>
-<p class="vcap" data-scene="23">Crystalline acetonitrile at 35 GPa, 48 molecules in the cell. Three of them have linked into one unit, drawn in full color; the rest are faded.</p>
-<p class="vcap" data-scene="24" hidden>4-Amino-2,6-dimethylpyrimidine on a sodium (100) surface: three acetonitrile molecules joined into one ring. This is the product seen in experiment.</p>
-<p class="vcap" data-scene="25" hidden>The triazine, the other ring that three acetonitrile molecules can close into, on the same surface.</p>
-</div>
-<script type="application/json" id="scene-data">[{"src": "assets/deck/structures/nakh12_60GPa.json", "file": "NaKH12_60GPa/ELFCAR", "label": "Interactive 3D view: NaKH12 cell at 60 GPa with ELF isosurfaces around each H2 unit"}, {"src": "assets/deck/structures/nak_sublattice.json", "file": "NaK_sublattice/ELFCAR", "label": "Interactive 3D view: Na-K sublattice with interstitial ELF basins at the centers of the small Na4K4 cubes"}, {"src": "assets/deck/structures/h2_c2c_b15.json", "file": "H2_states/C2c-12/PARCHG.0015.0001", "label": "Rotating C2/c solid hydrogen with the band-15 state running in channels between the H2 molecules"}, {"src": "assets/deck/structures/h2_ama2_b25.json", "file": "H2_states/Ama2_425GPa/PARCHG.0025.ALLK", "label": "Rotating Ama2 solid hydrogen with the band-25 state in the interstitial space between molecular layers"}, {"src": "assets/deck/structures/h2_p63m_b9.json", "file": "H2_states/P63m_325GPa/PARCHG.0009.ALLK", "label": "Rotating P6_3/m solid hydrogen with the band-9 state in columns along c"}, {"src": "assets/deck/structures/h2_p63m_b11.json", "file": "H2_states/P63m_325GPa/PARCHG.0011.ALLK", "label": "Rotating P6_3/m solid hydrogen with the band-11 state in interstitial pockets"}, {"src": "assets/deck/structures/mos2_vacancy.json", "file": "MoS2_vacancy/ELFCAR_441", "label": "Interactive 3D view: MoS2 monolayer flake with one sulfur vacancy at its center"}, {"src": "assets/deck/structures/u10h84_structure.json", "file": "U10H84_I4m.vasp", "label": "Interactive 3D view: U10H84 superhydride cell with its hydrogen cage network"}, {"src": "assets/deck/structures/u10_template.json", "file": "U10_template/ELFCAR_U10.vasp", "label": "Interactive 3D view: bare U10 metal lattice with its ELF isosurface"}, {"src": "assets/deck/structures/cah6_ca_elfnet.json", "file": "CaH6/ELFCAR_Ca_ELFNet", "label": "Interactive 3D view: ELF of the calcium lattice of CaH6 predicted by ELFNet, with the hydrogen sites marked"}, {"src": "assets/deck/structures/cah6_ca_dft.json", "file": "CaH6/ELFCAR_Ca_DFT", "label": "Interactive 3D view: ELF of the calcium lattice of CaH6 from DFT, with the hydrogen sites marked"}, {"src": "assets/deck/structures/cah6_cage.json", "file": "CaH6/POSCAR", "label": "Interactive 3D view: the hydrogen cage of CaH6 around its calcium atoms"}, {"src": "assets/deck/structures/mnpd_wisp_down.json", "file": "MnPd/ELFCAR_down_WISP", "label": "Interactive 3D view: spin-down ELF of MnPd predicted by WISP"}, {"src": "assets/deck/structures/mnpd_wisp_up.json", "file": "MnPd/ELFCAR_up_WISP", "label": "Interactive 3D view: spin-up ELF of MnPd predicted by WISP"}, {"src": "assets/deck/structures/mnpd_dft_down.json", "file": "MnPd/ELFCAR_down_DFT", "label": "Interactive 3D view: spin-down ELF of MnPd from DFT"}, {"src": "assets/deck/structures/mnpd_dft_up.json", "file": "MnPd/ELFCAR_up_DFT", "label": "Interactive 3D view: spin-up ELF of MnPd from DFT"}, {"src": "assets/deck/structures/sc5cl8_wisp.json", "file": "Sc5Cl8/ELFCAR_WISP", "label": "Interactive 3D view: ELF of the electride Sc5Cl8 predicted by WISP, with its interstitial maximum marked"}, {"src": "assets/deck/structures/sc5cl8_dft.json", "file": "Sc5Cl8/ELFCAR_DFT", "label": "Interactive 3D view: ELF of the electride Sc5Cl8 from DFT, with its interstitial maximum marked"}, {"src": "assets/deck/structures/tas2_vacancy.json", "file": "TaS2_vacancy/POSCAR", "label": "Interactive 3D view: TaS2 monolayer with one sulfur vacancy, seen from below"}, {"src": "assets/deck/structures/fei2_0gpa.json", "file": "Fe-I/FeI2_0GPa.vasp", "label": "Interactive 3D view: layered FeI2 at ambient pressure"}, {"src": "assets/deck/structures/fe3i_300gpa.json", "file": "Fe-I/Fe3I_300GPa.vasp", "label": "Interactive 3D view: cubic Fe3I at 300 GPa"}, {"src": "assets/deck/structures/cso_p63mmc_150gpa.json", "file": "CsO_150GPa/CONTCAR", "label": "Interactive 3D view: CsO at 150 GPa with its oxygens in pairs"}, {"src": "assets/deck/structures/cso_r3m_250gpa.json", "file": "CsO_250GPa/CONTCAR", "label": "Interactive 3D view: CsO at 250 GPa with the oxygen pairs broken up"}, {"src": "assets/deck/structures/acn_m4_35gpa.json", "file": "ACN_35GPa/CONTCAR", "label": "Interactive 3D view: crystalline acetonitrile at 35 GPa with three molecules linked together"}, {"src": "assets/deck/structures/na100_aminopyrimidine.json", "file": "Na100/aminopyrimidine.xyz", "label": "Interactive 3D view: 4-amino-2,6-dimethylpyrimidine on a sodium (100) surface"}, {"src": "assets/deck/structures/na100_triazine.json", "file": "Na100/triazine.xyz", "label": "Interactive 3D view: trimethyltriazine on a sodium (100) surface"}]</script>
-</div>
-</section>
-
-<section id="news" aria-labelledby="news-h">
-<div class="w">
-<div class="fh"><h2 id="news-h">OSZICAR</h2><p>News: the step-by-step log</p><a href="updates.html" class="more">all updates →</a></div>
-<div class="ol head" aria-hidden="true"><span style="text-align:right;">N</span><span>DATE</span><span>EVENT</span></div>
-<div class="ol"><span class="n">12</span><span class="d">2026-10</span><p>Our ELFNet paper was selected for the front cover of the <em>Journal of Materials Informatics</em>, Volume 6, Issue 3.</p></div>
-<div class="ol"><span class="n">11</span><span class="d">2026-10</span><p>Took part in the Open Scientific Intelligence (OSI) Hackathon with an ORNL team. We built <em>Electride Detectives</em>, a swarm of LLM agents that reason about what makes a material an electride.</p></div>
-<div class="ol"><span class="n">10</span><span class="d">2026-09</span><p>Published my first-author ELFNet paper, <em>Prediction of Electron Localization Functions from Superposed Atomic Densities for Accelerated Superhydride Discovery</em>, in the <em>Journal of Materials Informatics</em>.</p></div>
-<div class="ol"><span class="n">9</span><span class="d">2026-08</span><p>Attended my first CNMS User Meeting at Oak Ridge and presented a poster on my internship work.</p></div>
-<div class="ol"><span class="n">8</span><span class="d">2026-07</span><p>Published my first-author paper, <em>Emerging Electride Behavior and Metallization in Molecular Hydrogen under High Pressure</em>, in <em>The Journal of Physical Chemistry Letters</em>.</p></div>
-<div class="ol"><span class="n">7</span><span class="d">2026-05</span><p>Started a research internship at Oak Ridge National Laboratory’s Center for Nanophase Materials Sciences.</p></div>
-<div class="ol"><span class="n">6</span><span class="d">2026-05</span><p>Defended my M.S. thesis, <em>From New Chemistry to New Materials: Computational and Data-Driven Discovery</em>, at CSU Northridge.</p></div>
-<div class="ol"><span class="n">5</span><span class="d">2026-03</span><p>Talk at the APS Global Physics Summit in Denver on predicting electron localization functions with a 3D CNN, supported by a DCOMP travel award.</p></div>
-<div class="ol"><span class="n">4</span><span class="d">2026-02</span><p>Led the semester’s first Chemistry and Biochemistry Journal Club meeting, on <em>Metallic Oxides and the Overlooked Role of Bandwidth</em>.</p></div>
-<div class="ol"><span class="n">3</span><span class="d">2026-01</span><p>Two posters at the Gordon Research Conference on Multifunctional Materials and Structures, Ventura.</p></div>
-<div class="ol"><span class="n">2</span><span class="d">2025-12</span><p>NeurIPS AI4Mat 2025, San Diego: two posters and a travel grant.</p></div>
-<div class="ol"><span class="n">1</span><span class="d">2025-11</span><p>CSUN Newsroom featured our work on the pressure-driven redox reversal of iron in Earth’s core.</p></div>
-</div>
-</section>
-
-<section id="about" aria-labelledby="about-h">
-<div class="w">
-<div class="fh"><h2 id="about-h">CONTCAR</h2><p>About: the structure to continue from</p></div>
-<div class="about">
-<div class="ph"><img src="assets/deck/img/portrait.webp" width="720" height="720" alt="Portrait of Austin Ellis" loading="lazy" decoding="async"></div>
+<!-- ================= title block ================= -->
+<div class="hero">
+<p class="stamp" aria-hidden="true">austinellis.org:v12&nbsp;&nbsp;[living preprint]&nbsp;&nbsp;19 Nov 2026</p>
+<div class="row">
 <div>
-<p class="bio">I’m preparing to apply to a Ph.D. program. I’m broadly interested in quantum and energy-relevant materials, condensed-phase chemical systems, and structure–property relationships across inorganic and materials chemistry.</p>
-<dl class="kv">
-<div><dt>EDUCATION</dt><dd>M.S. Chemistry, CSU Northridge, 2026<br><span class="mut">B.S. Pharmacological Chemistry, UC San Diego, 2022</span></dd></div>
-<div><dt>HONORS</dt><dd>SESAPS Travel Award, 2026<br>College of Science and Mathematics Dean’s Scholarship, CSUN, 2026<br>APS DCOMP Travel Award, 2026<br>Associated Students Travel Award, CSUN, 2026<br>Second place, Sigma Xi Research Symposium, CSUN, 2025<br>AI4Mat-NeurIPS Travel Grant, 2025</dd></div>
-<div><dt>OUTREACH</dt><dd class="mut">Co-founder and vice president of CSUN’s first Chemistry and Biochemistry Journal Club; CSUNposium and CSUN Science Day. <a href="teaching.html">more →</a></dd></div>
-<div><dt>HPC</dt><dd class="mut">Managed two NSF-funded CSUN clusters: Linux, Slurm, and the chemistry and ML stacks on them. <a href="technical.html">hpc/ and code →</a></dd></div>
+<p class="kicker"><i></i>Living preprint<span>·</span>Last revised 19 November 2026</p>
+<h1>Austin Ellis</h1>
+<p class="affil">Research intern, Center for Nanophase Materials Sciences,<br> Oak Ridge National Laboratory</p>
+
+<div class="abstract">
+<div class="abs-head"><p class="label">Abstract</p><button type="button" class="src" aria-pressed="false">view as INCAR</button></div>
+<div class="lineno" aria-hidden="true"></div>
+<p class="abs-text">I use first-principles calculations, atomistic simulation, and machine learning to understand how bonding and reactivity shape materials. My projects span superconducting hydrides and electrides under high pressure, defects in 2D materials, and neural networks that predict electronic structure. At Oak Ridge National Laboratory, I’m building automated workflows that use machine-learned interatomic potentials to discover reaction pathways and model their kinetics.</p>
+<div class="incar" hidden>
+<div><span>1</span><span class="com">########################################</span></div>
+<div><span>2</span><span class="com"># INCAR: who is running this calculation</span></div>
+<div><span>3</span><span class="com">########################################</span></div>
+<div><span>4</span><span class="v"><span class="key">ROLE  </span> = <span class="val">Research intern, ORNL Center for Nanophase Materials Sciences</span></span></div>
+<div><span>5</span><span class="v"><span class="key">DEGREE</span> = <span class="val">M.S. Chemistry, CSU Northridge, </span><span class="num">2026</span></span></div>
+<div><span>6</span><span class="v"><span class="key">FOCUS </span> = <span class="val">electronic structure, materials discovery, machine learning, high pressure, electrides</span></span></div>
+<div><span>7</span><span class="v"><span class="key">NEXT  </span> = <span class="val">Ph.D. program</span></span></div>
+</div>
+<p class="keywords"><span class="label">Keywords</span><span>electronic structure · materials discovery · machine learning · high pressure · electrides</span></p>
+</div>
+
+<p class="contacts">
+<a class="primary" href="AustinEllisCV.pdf">CV <span aria-hidden="true">↗</span></a>
+<a href="https://scholar.google.com/citations?user=Y8mlpekAAAAJ&amp;hl=en">Google Scholar</a>
+<a href="https://github.com/Austin243">GitHub</a>
+<a href="https://orcid.org/0009-0007-1031-132X">ORCID</a>
+<a href="https://www.linkedin.com/in/Austin243">LinkedIn</a>
+<a href="mailto:austin.ellis813@gmail.com">Email</a>
+</p>
+</div>
+
+<figure class="ga" id="ga"><noscript><p class="cap">The 3D figures on this page need JavaScript.</p></noscript></figure>
+</div>
+
+<dl class="meta">
+<div><dt>Education</dt><dd>M.S. Chemistry, CSU Northridge, 2026 <span>B.S. Pharmacological Chemistry, UC San Diego, 2022</span></dd></div>
+<div><dt>Advisors</dt><dd>Maosheng Miao <span>CSU Northridge</span></dd><dd style="margin-top:8px">Jingsong Huang, Ilia Ivanov, Soumendu Bagchi, Jacek Jakowski <span>Oak Ridge National Laboratory</span></dd></div>
+<div><dt>Work</dt><dd><b>6</b> papers · <b>3</b> preprints · <b>4</b> manuscripts <span>5 as first or sole author</span></dd></div>
+<div><dt>Next</dt><dd>Ph.D. program, fall 2027</dd></div>
 </dl>
 </div>
+
+<!-- ================= 1 research ================= -->
+<section class="sec" id="research" aria-labelledby="research-h">
+<div class="sec-head"><span class="sec-n">1</span><h2 id="research-h">Research</h2>
+<p class="sec-sub">Six papers, three preprints, and four manuscripts. The note with each one says what I did.</p></div>
+
+<div class="filters" role="group" aria-label="Filter the list">
+<span class="label">Show</span>
+<button type="button" data-f="all" aria-pressed="true">All <small></small></button>
+<button type="button" data-f="first" aria-pressed="false">First author <small></small></button>
+<button type="button" data-f="ml" aria-pressed="false">Machine learning <small></small></button>
+<button type="button" data-f="electrides" aria-pressed="false">Electrides &amp; 2D <small></small></button>
+<button type="button" data-f="superhydrides" aria-pressed="false">Superhydrides <small></small></button>
+<button type="button" data-f="pressure" aria-pressed="false">High pressure <small></small></button>
+<button type="button" data-f="reactions" aria-pressed="false">Reactions <small></small></button>
 </div>
+
+<div class="refs">
+<h3 class="group">Papers <small></small></h3>
+
+<article class="ref" id="ref-elfnet" data-tags="first ml superhydrides">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k"><i>J. Mater. Inf.</i> <b>2026</b>, 6, 45 <span class="tag hot">Front cover</span></p>
+<h4><a href="https://www.oaepublish.com/articles/jmi.2026.44">ELFNet: electron localization from superposed atomic densities</a></h4>
+<p class="ref-au"><b>A. Ellis</b>, S. Ellis, M. Miao</p>
+<p class="ref-sum">A periodic 3D convolutional network maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation.</p>
+<p class="ref-links"><a href="https://www.oaepublish.com/articles/jmi.2026.44">Paper</a><a href="https://openreview.net/forum?id=VHX3ubJCuK">Workshop paper</a><a href="https://github.com/Austin243/ELFNet">Code</a><a href="posters/SeitzELF_3DCNN.pdf">Poster</a><a href="slides/ellis-aps-2026.pdf">Slides</a><a class="figlink" href="#fig-1" data-fig="fig-1:0:0">Fig. 1a <span>3D</span></a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b class="first">First author.</b> I designed, trained, and tested the network.</p>
+<a class="thumb" href="https://www.oaepublish.com/articles/jmi.2026.44"><img src="assets/img/elfnet-toc.webp" width="1200" height="858" alt="ELFNet workflow: a high-pressure ELF dataset of 326,009 structures, their superposed atomic densities, a periodic 3D convolutional network, and the predicted ELF" loading="lazy" decoding="async"></a>
+</aside>
+</article>
+
+<article class="ref" id="ref-h2" data-tags="first electrides pressure">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k"><i>J. Phys. Chem. Lett.</i> <b>2026</b>, 17 (29), 8198–8205</p>
+<h4><a href="https://doi.org/10.1021/acs.jpclett.6c01415">Emerging electride in molecular hydrogen metallization</a></h4>
+<p class="ref-au"><b>A. Ellis</b>, S. Ellis, A. Pandit, M. Miao</p>
+<p class="ref-sum">As solid hydrogen metallizes under pressure, electrons localize in the interstitial regions between H<sub>2</sub> molecules, an electride-like route that sets it apart from other molecular crystals.</p>
+<p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.6c01415">Paper</a><a href="slides/ellis-thesis-defense-2026.pdf">Thesis slides</a><a class="figlink" href="#fig-2" data-fig="fig-2:1:0">Fig. 2b <span>3D</span></a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b class="first">First author.</b> I ran the PBE and HSE06 calculations and the analysis of the interstitial states.</p>
+<a class="thumb" href="https://doi.org/10.1021/acs.jpclett.6c01415"><img src="assets/img/h2-phase-diagram.webp" width="1200" height="600" alt="Pressure–temperature phase diagram of molecular hydrogen with electron localization isosurfaces for phases I to IV" loading="lazy" decoding="async"></a>
+</aside>
+</article>
+
+<article class="ref" id="ref-fe" data-tags="pressure">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k"><i>Proc. Natl. Acad. Sci. U.S.A.</i> <b>2025</b>, 122, e2414911122</p>
+<h4><a href="https://doi.org/10.1073/pnas.2414911122">Iron redox chemistry in deep Earth</a></h4>
+<p class="ref-au">X. Wang, X. Feng, J. Li, Y. Lv, <b>A. Ellis</b>, S. Scott, A. Pandit, D. Khodagholian, R. J. Hemley, M. G. Jackson, F. J. Spera, S. A. T. Redfern, M. Miao</p>
+<p class="ref-sum">Large-scale first-principles calculations show iron turning from electron donor to electron acceptor at core pressures, which changes the elements it can pull into Earth’s core.</p>
+<p class="ref-links"><a href="https://doi.org/10.1073/pnas.2414911122">Paper</a><a href="https://newsroom.csun.edu/2025/11/18/study-by-csun-prof-upends-understanding-of-what-happens-to-iron-at-earths-core/">CSUN Newsroom</a><a class="figlink" href="#fig-4" data-fig="fig-4:0:0">Fig. 4a <span>3D</span></a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b>5th of 13 authors.</b> I mapped phase stability across Fe–p-block compounds with CALYPSO searches and HSE06 convex hulls, and ran the Bader charge analysis.</p>
+<a class="thumb" href="https://doi.org/10.1073/pnas.2414911122"><img src="assets/img/iron-redox.webp" width="1200" height="600" alt="Formation-energy convex hulls for iron with silicon, phosphorus, sulfur, germanium, arsenic, and selenium" loading="lazy" decoding="async"></a>
+</aside>
+</article>
+
+<article class="ref" id="ref-superhydrides" data-tags="superhydrides ml">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k"><i>J. Am. Chem. Soc.</i> <b>2025</b>, 147 (44), 40407–40419</p>
+<h4><a href="https://doi.org/10.1021/jacs.5c11731">Metal superhydrides from chemical templates</a></h4>
+<p class="ref-au">Y. Sun, <b>A. Ellis</b>, X. Chen, M. Miao</p>
+<p class="ref-sum">A template-guided machine-learning workflow found 13 new structural prototypes and 31 stable metal superhydrides, 19 of them with predicted T<sub>c</sub> above 100 K.</p>
+<p class="ref-links"><a href="https://doi.org/10.1021/jacs.5c11731">Paper</a><a href="https://openreview.net/forum?id=dEtRvi7G5i">Workshop paper</a><a href="posters/ML_BatchedSuperhydrides.pdf">Poster</a><a class="figlink" href="#fig-3" data-fig="fig-3:1:0">Fig. 3b <span>3D</span></a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b>2nd of 4 authors.</b> I helped build the training set and ran the template-guided CALYPSO searches and stability screening.</p>
+<a class="thumb" href="https://doi.org/10.1021/jacs.5c11731"><img src="assets/img/superhydrides.webp" width="1000" height="581" alt="Two-step chemical-template workflow for discovering metal superhydrides" loading="lazy" decoding="async"></a>
+</aside>
+</article>
+
+<article class="ref" id="ref-nakh12" data-tags="superhydrides pressure">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k"><i>Adv. Funct. Mater.</i> <b>2025</b>, 35, 2415910</p>
+<h4><a href="https://doi.org/10.1002/adfm.202415910">Superconductivity in molecular hydrides</a></h4>
+<p class="ref-au">W. Zhao, <b>A. Ellis</b>, D. Duan, H. Wang, Q. Jiang, M. Du, T. Cui, M. Miao</p>
+<p class="ref-sum">Interstitial electrons act as chemical templates that assemble H<sub>2</sub> units in NaKH<sub>12</sub>, predicted to superconduct up to 245 K at a moderate 60 GPa.</p>
+<p class="ref-links"><a href="https://doi.org/10.1002/adfm.202415910">Paper</a><a class="figlink" href="#fig-3" data-fig="fig-3:0:0">Fig. 3a <span>3D</span></a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b>2nd of 8 authors.</b> I did the band-structure, density-of-states, crystal-orbital, and ELF analyses.</p>
+<a class="thumb" href="https://doi.org/10.1002/adfm.202415910"><img src="assets/img/nakh12.webp" width="1200" height="600" alt="Crystal structure of NaKH12 and the energy change with H–H distance" loading="lazy" decoding="async"></a>
+</aside>
+</article>
+
+<article class="ref" id="ref-tmdc" data-tags="electrides">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k"><i>J. Phys. Chem. Lett.</i> <b>2024</b>, 15 (23), 6174–6182</p>
+<h4><a href="https://doi.org/10.1021/acs.jpclett.4c01263">Tunable electrides on monolayer TMDCs</a></h4>
+<p class="ref-au">Y. Sun, <b>A. Ellis</b>, S. Diaz, W. Li, M. Miao</p>
+<p class="ref-sum">Chalcogen vacancies strengthen the weak electride character of monolayer transition-metal dichalcogenides to the level of known electrides, and the vacancy states help catalyze hydrogen evolution.</p>
+<p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.4c01263">Paper</a><a href="posters/TunableElectride_TMDCs.pdf">Poster</a><a class="figlink" href="#fig-2" data-fig="fig-2:0:0">Fig. 2a <span>3D</span></a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b>2nd of 5 authors.</b> I analyzed the vacancy states with ELF, charge-density differences, and band structures, and helped with the H-adsorption calculations.</p>
+<a class="thumb" href="https://doi.org/10.1021/acs.jpclett.4c01263"><img src="assets/img/tmdc-vacancy.webp" width="1200" height="600" alt="Crystal orbital of a monolayer MX2 with a chalcogen vacancy, showing localized interstitial electrons that regulate hydrogen evolution" loading="lazy" decoding="async"></a>
+</aside>
+</article>
+</div>
+
+<div class="refs">
+<h3 class="group">Preprints <small></small></h3>
+
+<article class="ref" id="ref-cs-polyoxides" data-tags="pressure">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k"><i>arXiv</i> <b>2026</b>, 2110.07865 <span class="tag">Preprint</span></p>
+<h4><a href="https://arxiv.org/abs/2110.07865">A practical route to demonstrating core reactivity in Cs polyoxides under pressure</a></h4>
+<p class="ref-au">Y. Sun, S. Ellis, D. Khodagholian, L. Wyke, <b>A. Ellis</b>, P. C. Müller, B. N. Schüpp, R. Nelson, R. Dronskowski, M. Miao</p>
+<p class="ref-sum">First-principles structure searches show the polyoxygen units of Cs–O compounds breaking down under pressure, as the Cs core electrons start to take part in bonding.</p>
+<p class="ref-links"><a href="https://arxiv.org/abs/2110.07865">Preprint</a><a href="posters/Cs_polyoxide_CoreReactivity.pdf">Poster</a><a class="figlink" href="#fig-4" data-fig="fig-4:1:0">Fig. 4b <span>3D</span></a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b>5th of 10 authors.</b></p>
+</aside>
+</article>
+
+<article class="ref" id="ref-cs-core" data-tags="pressure">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k"><i>arXiv</i> <b>2026</b>, 2611.06009 <span class="tag">Preprint</span></p>
+<h4><a href="https://arxiv.org/abs/2611.06009">Core reactivity in Cs–Ba–O ternary system under pressure</a></h4>
+<p class="ref-au">S. Ellis, <b>A. Ellis</b>, L. Wyke, C. Taylor, M. Miao</p>
+<p class="ref-sum">High pressure can bring the Cs 5p core electrons into covalent bonding. Structure searches in the Cs–Ba–O system at 150 and 250 GPa put CsBa<sub>3</sub>O<sub>8</sub> and CsBaO<sub>4</sub> on the convex hull at 250 GPa, with mild Cs 5p–O 2p bonding and O<sub>2</sub> units still intact. Cs<sub>2</sub>BaO<sub>3</sub> bonds more strongly but is metastable.</p>
+<p class="ref-links"><a href="https://arxiv.org/abs/2611.06009">Preprint</a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b>2nd of 5 authors.</b></p>
+</aside>
+</article>
+
+<article class="ref" id="ref-wisp" data-tags="first ml">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k"><i>ChemRxiv</i> <b>2026</b> <span class="tag">Preprint</span></p>
+<h4><a href="https://doi.org/10.26434/chemrxiv.15011092/v1">WISP: learning spin-resolved electron localization from atomic environments</a></h4>
+<p class="ref-au"><b>A. Ellis</b></p>
+<p class="ref-sum">A network that predicts the electron localization function of both spin channels at any point in a crystal, from the atomic structure and the magnetic moments on the atoms. On 21,922 held-out structures the mean absolute error is 0.011 per channel on the ELF scale of 0 to 1.</p>
+<p class="ref-links"><a href="https://doi.org/10.26434/chemrxiv.15011092/v1">Preprint</a><a class="figlink" href="#fig-1" data-fig="fig-1:1:0">Fig. 1b <span>3D</span></a><a class="figlink" href="#fig-1" data-fig="fig-1:2:0">Fig. 1c <span>3D</span></a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b class="first">Sole author.</b></p>
+</aside>
+</article>
+</div>
+
+<div class="refs">
+<h3 class="group">Manuscripts <small></small></h3>
+
+<article class="ref" id="ref-polymerization" data-tags="first reactions pressure">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k">Manuscript in preparation</p>
+<h4>Mapping acetonitrile polymerization under pressure with ReactionFlow</h4>
+<p class="ref-au"><b>A. Ellis</b>, S. Bagchi, M. Goswami, J. Jakowski, J. Huang, P. Ganesh, I. Ivanov</p>
+<p class="ref-sum">Compressed crystalline acetonitrile polymerizes through hydrogen transfers and <span style="white-space:nowrap">C–C</span> additions. ReactionFlow picks these steps out of molecular dynamics, and DFT checks their barriers.</p>
+<p class="ref-links"><a href="https://github.com/Austin243/ReactionFlow">Code</a><a class="figlink" href="#fig-5" data-fig="fig-5:0:0">Fig. 5a <span>3D</span></a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b class="first">First author.</b></p>
+</aside>
+</article>
+
+<article class="ref" id="ref-tmd-vacancies" data-tags="electrides">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k">Manuscript · draft available upon request</p>
+<h4>Statistical prediction of vacancy thermodynamics and stress coupling in chalcogen-alloyed TMDs</h4>
+<p class="ref-au">J. Jeffries, <b>A. Ellis</b>, S. Ellis, E. Martinez, E. Zarkadoula</p>
+<p class="ref-sum">A statistical prediction of how chalcogen vacancies form in alloyed transition-metal dichalcogenides, and of how their energies respond to stress.</p>
+<p class="ref-links"><a class="figlink" href="#fig-2" data-fig="fig-2:2:0">Fig. 2c <span>3D</span></a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b>2nd of 5 authors.</b></p>
+</aside>
+</article>
+
+<article class="ref" id="ref-mlip" data-tags="first ml reactions">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k">Manuscript · draft available upon request</p>
+<h4>Accuracy and limits of pretrained interatomic potentials across molecular reaction pathways</h4>
+<p class="ref-au"><b>A. Ellis</b>, R. Morelock, S. Bagchi, A. M. dos Santos, M. Goswami, J. Jakowski, J. Huang, P. Ganesh, I. Ivanov</p>
+<p class="ref-sum">Fifteen pretrained machine-learned interatomic potentials compared with DFT energies, forces, and barriers along 9,017 gas-phase reactions.</p>
+<p class="ref-links"><a href="https://github.com/Austin243/dorts9k-mlip-benchmark">Code</a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b class="first">First author.</b></p>
+</aside>
+</article>
+
+<article class="ref" id="ref-oligomerization" data-tags="reactions">
+<div>
+<span class="ref-n"></span>
+<p class="ref-k">Manuscript in preparation</p>
+<h4>Stimulus-directed oligomerization and polymerization of acetonitrile</h4>
+<p class="ref-au">I. N. Ivanov, <b>A. Ellis</b>, P. Christakopoulos, A. Puretsky, C. Rouleau, J. Huang, J. Jakowski, M. Goswami, P. Ganesh, B. Sumpter</p>
+<p class="ref-sum">How the choice of stimulus directs acetonitrile toward oligomers or polymers.</p>
+<p class="ref-links"><a class="figlink" href="#fig-5" data-fig="fig-5:1:0">Fig. 5b <span>3D</span></a></p>
+</div>
+<aside class="ref-side">
+<p class="note"><span class="label">My role</span><b>2nd of 10 authors.</b></p>
+</aside>
+</article>
+</div>
+<p class="empty" hidden>Nothing in the list matches that filter.</p>
+</section>
+
+<!-- ================= 2 figures ================= -->
+<section class="sec" id="figures" aria-labelledby="figures-h">
+<div class="sec-head"><span class="sec-n">2</span><h2 id="figures-h">Figures</h2>
+<p class="sec-sub">Structures and electron densities from my projects. Drag a figure to rotate it, pinch or ⌘/ctrl-scroll to zoom, and move the slider to change the isosurface.</p></div>
+<noscript><p class="sec-sub">The 3D figures need JavaScript.</p></noscript>
+<figure class="fig" id="fig-1"></figure>
+<figure class="fig" id="fig-2"></figure>
+<figure class="fig" id="fig-3"></figure>
+<figure class="fig" id="fig-4"></figure>
+<figure class="fig" id="fig-5"></figure>
+</section>
+
+<!-- ================= 3 news ================= -->
+<section class="sec" id="news" aria-labelledby="news-h">
+<div class="sec-head"><span class="sec-n">3</span><h2 id="news-h">News</h2>
+<p class="sec-sub">The revision history of this page. <a class="more" href="updates.html">All updates, with photos →</a></p></div>
+<div class="row">
+<ol class="news" reversed>
+<li><a class="v" href="updates.html#v12">v12</a><time datetime="2026-10">Oct 2026</time><p>Our ELFNet paper was selected for the front cover of the <em>Journal of Materials Informatics</em>, Volume 6, Issue 3.</p></li>
+<li><a class="v" href="updates.html#v11">v11</a><time datetime="2026-10">Oct 2026</time><p>Took part in the Open Scientific Intelligence (OSI) Hackathon with an ORNL team. We built <em>Electride Detectives</em>, a swarm of LLM agents that reason about what makes a material an electride.</p></li>
+<li><a class="v" href="updates.html#v10">v10</a><time datetime="2026-09">Sep 2026</time><p>Published my first-author ELFNet paper, <em>Prediction of Electron Localization Functions from Superposed Atomic Densities for Accelerated Superhydride Discovery</em>, in the <em>Journal of Materials Informatics</em>.</p></li>
+<li><a class="v" href="updates.html#v9">v9</a><time datetime="2026-08">Aug 2026</time><p>Attended my first CNMS User Meeting at Oak Ridge and presented a poster on my internship work.</p></li>
+<li><a class="v" href="updates.html#v8">v8</a><time datetime="2026-07">Jul 2026</time><p>Published my first-author paper, <em>Emerging Electride Behavior and Metallization in Molecular Hydrogen under High Pressure</em>, in <em>The Journal of Physical Chemistry Letters</em>.</p></li>
+<li><a class="v" href="updates.html#v7">v7</a><time datetime="2026-05">May 2026</time><p>Started a research internship at Oak Ridge National Laboratory’s Center for Nanophase Materials Sciences.</p></li>
+<li><a class="v" href="updates.html#v6">v6</a><time datetime="2026-05">May 2026</time><p>Defended my M.S. thesis, <em>From New Chemistry to New Materials: Computational and Data-Driven Discovery</em>, at CSU Northridge.</p></li>
+<li><a class="v" href="updates.html#v5">v5</a><time datetime="2026-03">Mar 2026</time><p>Talk at the APS Global Physics Summit in Denver on predicting electron localization functions with a 3D CNN, supported by a DCOMP travel award.</p></li>
+<li><a class="v" href="updates.html#v4">v4</a><time datetime="2026-02">Feb 2026</time><p>Led the semester’s first Chemistry and Biochemistry Journal Club meeting, on <em>Metallic Oxides and the Overlooked Role of Bandwidth</em>.</p></li>
+<li><a class="v" href="updates.html#v3">v3</a><time datetime="2026-01">Jan 2026</time><p>Two posters at the Gordon Research Conference on Multifunctional Materials and Structures, Ventura.</p></li>
+<li><a class="v" href="updates.html#v2">v2</a><time datetime="2025-12">Dec 2025</time><p>NeurIPS AI4Mat 2025, San Diego: two posters and a travel grant.</p></li>
+<li><a class="v" href="updates.html#v1">v1</a><time datetime="2025-11">Nov 2025</time><p>CSUN Newsroom featured our work on the pressure-driven redox reversal of iron in Earth’s core.</p></li>
+</ol>
+<aside>
+<figure class="mfig">
+<a href="https://www.oaepublish.com/volumes/jmi.2052"><img src="assets/img/jmi-cover-6-3.webp" width="800" height="1131" alt="Front cover of the Journal of Materials Informatics, Volume 6, Issue 3, showing the ELFNet paper" loading="lazy" decoding="async"></a>
+<figcaption><b>v12</b> · The front cover of the <em>Journal of Materials Informatics</em>, Volume 6, Issue 3, September 2026 <a class="cite" href="#ref-elfnet" data-ref="elfnet"></a>.</figcaption>
+</figure>
+</aside>
 </div>
 </section>
-</main>
 
-<footer class="status">
-<span>© 2026 Austin Ellis</span>
-<span><span class="file">INCAR</span><span class="pos"> · UTF-8 · LF · Ln 4, Col 10</span></span>
-</footer>
+<!-- ================= 4 about ================= -->
+<section class="sec" id="about" aria-labelledby="about-h">
+<div class="sec-head"><span class="sec-n">4</span><h2 id="about-h">About</h2></div>
+<div class="row">
+<div>
+<div class="bio">
+<img src="assets/img/portrait.webp" width="720" height="720" alt="Portrait of Austin Ellis" loading="lazy" decoding="async">
+<p>I’m preparing to apply to a Ph.D. program. I’m broadly interested in quantum and energy-relevant materials, condensed-phase chemical systems, and structure–property relationships across inorganic and materials chemistry.</p>
 </div>
+<div class="facts">
+<h3>Education</h3>
+<ul class="plain">
+<li>M.S. Chemistry, CSU Northridge <time>2026</time></li>
+<li>B.S. Pharmacological Chemistry, UC San Diego <time>2022</time></li>
+</ul>
+</div>
+</div>
+<aside>
+<div class="side-block">
+<h3>Honors</h3>
+<ul class="plain">
+<li>MDRI Horizon Award, OSI Hackathon <time>2026</time></li>
+<li>SESAPS Travel Award <time>2026</time></li>
+<li>College of Science and Mathematics Dean’s Scholarship, CSUN <time>2026</time></li>
+<li>APS DCOMP Travel Award <time>2026</time></li>
+<li>Associated Students Travel Award, CSUN <time>2026</time></li>
+<li>Second place, Sigma Xi Research Symposium, CSUN <time>2025</time></li>
+<li>AI4Mat-NeurIPS Travel Grant <time>2025</time></li>
+</ul>
+</div>
+<div class="side-block">
+<h3>Contact</h3>
+<p class="links"><a href="mailto:austin.ellis813@gmail.com">Email</a><a href="https://github.com/Austin243">GitHub</a><a href="https://scholar.google.com/citations?user=Y8mlpekAAAAJ&amp;hl=en">Google Scholar</a><a href="https://orcid.org/0009-0007-1031-132X">ORCID</a><a href="https://www.linkedin.com/in/Austin243">LinkedIn</a><a href="AustinEllisCV.pdf">CV</a></p>
+</div>
+</aside>
+</div>
+</section>
+
+<!-- ================= 5 talks, outreach, code ================= -->
+<section class="sec" id="talks" aria-labelledby="talks-h">
+<div class="sec-head"><span class="sec-n">5</span><h2 id="talks-h">Talks, outreach, and code</h2></div>
+<div class="row">
+<div>
+<table class="bt">
+<caption><b>Table 1</b><span class="pipe"> | </span>Posters and talks.</caption>
+<thead><tr><th scope="col">Date</th><th scope="col">Kind</th><th scope="col">Where</th></tr></thead>
+<tbody>
+<tr><td>Oct 2026</td><td>Poster</td><td>ORNL NEAT Science Symposium</td></tr>
+<tr><td>Sep 2026</td><td>Invited talk</td><td>NTI group meeting, CNMS</td></tr>
+<tr><td>Aug 2026</td><td>Talk</td><td>ORNL Neutron Scattering Division</td></tr>
+<tr><td>Aug 2026</td><td>Poster</td><td>CNMS User Meeting</td></tr>
+<tr><td>Jul 2026</td><td>Poster</td><td>ORNL NEAT initiative</td></tr>
+<tr><td>May 2026</td><td>Defense</td><td>M.S. thesis defense, CSUN</td></tr>
+<tr><td>Apr 2026</td><td>Talk</td><td>CSUNposium</td></tr>
+<tr><td>Mar 2026</td><td>Talk</td><td>APS Global Physics Summit</td></tr>
+<tr><td>Jan 2026</td><td>2 posters</td><td>Gordon Research Conference</td></tr>
+<tr><td>Dec 2025</td><td>2 posters</td><td>NeurIPS AI4Mat</td></tr>
+<tr><td>2025</td><td>Talks</td><td>Sigma Xi talk; CSUN seminar</td></tr>
+<tr><td>Jun 2023</td><td>Talk</td><td>CECAM workshop, Lausanne</td></tr>
+</tbody>
+</table>
+<p class="after-table"><a href="posters.html">All talks and posters, with slides →</a></p>
+</div>
+<aside>
+<div class="side-block" id="outreach">
+<h3>Outreach</h3>
+<p>Co-founder and vice president of CSUN’s first Chemistry and Biochemistry Journal Club; CSUNposium and CSUN Science Day.</p>
+<p class="links"><a href="teaching.html">More →</a></p>
+</div>
+<div class="side-block" id="code">
+<h3>HPC and code</h3>
+<p>Managed two NSF-funded CSUN clusters: Linux, Slurm, and the chemistry and ML stacks on them.</p>
+<p class="links"><a href="https://github.com/Austin243/ReactionFlow">ReactionFlow</a><a href="https://github.com/Austin243/ELFNet">ELFNet</a><a href="https://github.com/Austin243/ElecTrace">ElecTrace</a><a href="https://github.com/Austin243/layer-toolkit">layer-toolkit</a><a href="https://github.com/Austin243/calypso-setup">calypso-setup</a></p>
+<p class="links"><a href="technical.html">HPC and code →</a></p>
+</div>
+</aside>
+</div>
+</section>
+
+<footer class="foot">
+<p>© 2026 Austin Ellis</p>
+<p class="colophon">Set in Newsreader, Inter, and JetBrains Mono.</p>
+<nav aria-label="Contact">
+<a href="mailto:austin.ellis813@gmail.com">Email</a>
+<a href="https://github.com/Austin243">GitHub</a>
+<a href="https://scholar.google.com/citations?user=Y8mlpekAAAAJ&amp;hl=en">Google Scholar</a>
+<a href="https://orcid.org/0009-0007-1031-132X">ORCID</a>
+<a href="https://www.linkedin.com/in/Austin243">LinkedIn</a>
+<a href="#top">Back to top ↑</a>
+</nav>
+</footer>
+
+</main>
 </body>
 </html>

@@ -6,77 +6,64 @@
 <title>HPC and code · Austin Ellis</title>
 <meta name="description" content="The cluster work Austin Ellis used to do by hand at CSUN, and some of his code on GitHub: ReactionFlow, ELFNet, ElecTrace, and more.">
 <link rel="canonical" href="https://austinellis.org/technical.html">
-<meta name="theme-color" content="#141311">
-<script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark'})();</script>
 <meta property="og:title" content="HPC and code · Austin Ellis">
 <meta property="og:description" content="The cluster work Austin Ellis used to do by hand at CSUN, and some of his code on GitHub: ReactionFlow, ELFNet, ElecTrace, and more.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://austinellis.org/technical.html">
-<meta property="og:image" content="https://austinellis.org/assets/deck/img/og-nakh12.png">
+<meta property="og:image" content="https://austinellis.org/assets/img/og-nakh12.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="NaKH12 at 60 GPa: sodium, potassium and hydrogen atoms with yellow ELF isosurfaces around each H2 unit">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://austinellis.org/assets/deck/img/og-nakh12.png">
+<meta name="twitter:image" content="https://austinellis.org/assets/img/og-nakh12.png">
+<meta name="theme-color" content="#FAF9F5">
+<script>(function(){var t;try{t=localStorage.getItem('lp-theme')}catch(e){}document.documentElement.dataset.theme=t==='dark'?'dark':'light'})();</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cg fill='%231A1915'%3E%3Ccircle cx='4' cy='4' r='2.8'/%3E%3Ccircle cx='16' cy='4' r='2.8'/%3E%3Ccircle cx='4' cy='16' r='2.8'/%3E%3Ccircle cx='16' cy='16' r='2.8'/%3E%3C/g%3E%3Ccircle cx='10' cy='10' r='2.4' fill='%23C9670F'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&amp;family=JetBrains+Mono:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/deck/deck.css">
-<script src="assets/deck/deck.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&amp;family=JetBrains+Mono:wght@400..600&amp;family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/preprint.css">
+<script src="assets/preprint.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#hpc">Skip to content</a>
-<div class="app">
+<a class="skip" href="#top">Skip to content</a>
 
-<div class="brand">
-<p><a href="index.html">AUSTIN-ELLIS/</a></p>
-<div class="theme" role="group" aria-label="Color theme"><button type="button" data-theme-set="light" aria-label="Light theme" title="Light theme"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M19.07 4.93 17.3 6.7M6.7 17.3l-1.77 1.77"/></svg></button><button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.93 13.6A8.5 8.5 0 1 1 10.4 4.07a7 7 0 0 0 9.53 9.53z"/></svg></button></div>
-<button type="button" class="files" aria-expanded="false" aria-controls="files">files ▾</button>
-</div>
-
-<nav class="tabs" aria-label="Files">
-<a href="index.html#incar">home<small>INCAR</small></a>
-<a href="index.html#research">research<small>jobs/</small></a>
-<a href="index.html#structures">visuals<small>structures/</small></a>
-<a href="updates.html">news<small>OSZICAR</small></a>
-<a href="index.html#about">about<small>CONTCAR</small></a>
-<a href="posters.html">talks<small>talks/</small></a>
-<a href="teaching.html">outreach<small>outreach/</small></a>
-<a href="technical.html" class="on" aria-current="page">HPC &amp; code<small>hpc/</small></a>
-<a href="AustinEllisCV.pdf" class="cv">CV.pdf ↗</a>
+<header class="bar">
+<div class="bar-in">
+<a class="brand" href="index.html" aria-label="austinellis.org, home">
+<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><g fill="currentColor"><circle cx="4" cy="4" r="2.6"/><circle cx="16" cy="4" r="2.6"/><circle cx="4" cy="16" r="2.6"/><circle cx="16" cy="16" r="2.6"/></g><circle cx="10" cy="10" r="2.3" fill="var(--mark)"/></svg>
+austinellis.org</a>
+<nav class="nav" aria-label="Site">
+<a href="index.html#research">Research</a>
+<a href="index.html#figures">Figures</a>
+<a href="updates.html">News</a>
+<a href="index.html#about">About</a>
+<a href="posters.html">Talks</a>
+<a href="teaching.html">Outreach</a>
+<a href="technical.html" class="on" aria-current="page">HPC &amp; code</a>
 </nav>
-
-<aside class="side" id="files" aria-label="Project files">
-<nav class="tree" aria-label="File tree">
-<a href="index.html#incar">home<span>INCAR</span></a>
-<a href="index.html#research">research<span>jobs/</span></a>
-<a href="index.html#structures">visuals<span>structures/</span></a>
-<a href="updates.html">news<span>OSZICAR</span></a>
-<a href="index.html#about">about<span>CONTCAR</span></a>
-<a href="posters.html">talks<span>talks/</span></a>
-<a href="teaching.html">outreach<span>outreach/</span></a>
-<a href="technical.html" class="on" aria-current="page">HPC &amp; code<span>hpc/</span></a>
-<a class="sub" href="#code" data-sec="code">└─ code/</a>
-</nav>
-<h2>REMOTES</h2>
-<div class="remotes">
-<p><span>github</span><a href="https://github.com/Austin243">Austin243</a></p>
-<p><span>scholar</span><a href="https://scholar.google.com/citations?user=Y8mlpekAAAAJ&amp;hl=en">Google Scholar</a></p>
-<p><span>orcid</span><a href="https://orcid.org/0009-0007-1031-132X">0009-0007-1031-132X</a></p>
-<p><span>linkedin</span><a href="https://www.linkedin.com/in/Austin243">Austin243</a></p>
-<p><span>email</span><a href="mailto:austin.ellis813@gmail.com">austin.ellis813@gmail.com</a></p>
+<a class="cv" href="AustinEllisCV.pdf">CV <span aria-hidden="true">↗</span></a>
+<button type="button" class="theme" aria-label="Dark page" aria-pressed="false">
+<svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M19.07 4.93 17.3 6.7M6.7 17.3l-1.77 1.77"/></svg>
+<svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.93 13.6A8.5 8.5 0 1 1 10.4 4.07a7 7 0 0 0 9.53 9.53z"/></svg>
+</button>
 </div>
-</aside>
-<div class="scrim"></div>
+</header>
 
-<main>
-<section id="hpc" aria-labelledby="hpc-h">
-<div class="w">
-<div class="fh"><h1 id="hpc-h">hpc/</h1><p>Clusters, scripts, and code</p></div>
-<p class="prompt"><b>austin</b> ~/austin-ellis $ cat hpc/README</p>
-<h2 class="big">Things I used to do by hand</h2>
+<main class="page" id="top">
+
+<div class="phead">
+<p class="kicker"><i></i>Living preprint<span>·</span>Supplement S3</p>
+<h1>Things I used to do by hand</h1>
 <p class="lede">For a while I ran two NSF-funded research clusters for CSUN’s College of Science and Mathematics. This is what that involved, back before I could text a chatbot from my phone and have it all done before I got out of bed.</p>
-<ul class="dash lg">
+</div>
+
+<!-- ================= S3.1 clusters ================= -->
+<section class="sec" id="hpc" aria-labelledby="hpc-h">
+<div class="sec-head"><span class="sec-n">S3.1</span><h2 id="hpc-h">Clusters</h2></div>
+<div class="row">
+<div>
+<ul class="dash">
 <li>making accounts and groups, fixing permissions, and setting up Samba shares</li>
 <li>keeping an eye on Slurm queues, node states, and GPU jobs</li>
 <li>figuring out why someone’s job died (usually the environment, sometimes the disk)</li>
@@ -86,55 +73,82 @@
 <li>writing down how everything was set up, so the next person could rerun it</li>
 </ul>
 <p class="lede">Since starting at ORNL, I’ve set up packages to run on several DOE supercomputers, including Perlmutter and Frontier.</p>
-<p class="prompt" style="margin-top:32px;"><b>austin</b> ~/austin-ellis $ module list</p>
-<p class="mods"><span>Linux</span> <span>Slurm</span> <span>SSH</span> <span>Samba</span> <span>Bash</span> <span>Python</span> <span>Conda</span> <span>CUDA</span> <span>PyTorch</span> <span>NumPy</span> <span>pandas</span> <span>Matplotlib</span> <span>VASP</span> <span>Quantum ESPRESSO</span> <span>ASE</span> <span>pymatgen</span> <span>VESTA</span> <span>Git</span></p>
+</div>
+<aside>
+<div class="side-block">
+<h3>Tools</h3>
+<p class="chips"><span>Linux</span><span>Slurm</span><span>SSH</span><span>Samba</span><span>Bash</span><span>Python</span><span>Conda</span><span>CUDA</span><span>PyTorch</span><span>NumPy</span><span>pandas</span><span>Matplotlib</span><span>VASP</span><span>Quantum ESPRESSO</span><span>ASE</span><span>pymatgen</span><span>VESTA</span><span>Git</span></p>
+</div>
+</aside>
 </div>
 </section>
 
-<section id="code" aria-labelledby="code-h">
-<div class="w">
-<div class="fh"><h2 id="code-h">code/</h2><p>Some of my code on GitHub</p></div>
-<p class="prompt"><b>austin</b> ~/austin-ellis $ gh repo list Austin243</p>
-<div class="jobs">
-<article class="job talks">
-<h3 class="repo">ReactionFlow</h3>
-<p class="b">Watches molecular dynamics runs for bonds breaking or forming. When a change sticks, it pauses the run, finds the reaction path with NEB, checks the transition state, then picks the trajectory back up exactly where it left off.</p>
-<div class="links"><a href="https://github.com/Austin243/ReactionFlow">github ↗</a></div>
+<!-- ================= S3.2 code ================= -->
+<section class="sec" id="code" aria-labelledby="code-h">
+<div class="sec-head"><span class="sec-n">S3.2</span><h2 id="code-h">Code</h2>
+<p class="sec-sub">Some of my code on GitHub.</p></div>
+<div class="row">
+<div class="log">
+
+<article class="entry repo">
+<h3>ReactionFlow</h3>
+<p>Watches molecular dynamics runs for bonds breaking or forming. When a change sticks, it pauses the run, finds the reaction path with NEB, checks the transition state, then picks the trajectory back up exactly where it left off.</p>
+<p class="ref-links"><a href="https://github.com/Austin243/ReactionFlow">GitHub</a></p>
 </article>
-<article class="job talks">
-<h3 class="repo">ELFNet</h3>
-<p class="b">Predicts a crystal’s electron localization function from its superposed atomic densities. Inference and training code, with the whole dataset on Zenodo.</p>
-<div class="links"><a href="https://github.com/Austin243/ELFNet">github ↗</a><a href="index.html#job-elfnet">→ jobs/elfnet</a></div>
+
+<article class="entry repo">
+<h3>ELFNet</h3>
+<p>Predicts a crystal’s electron localization function from its superposed atomic densities. Inference and training code, with the whole dataset on Zenodo.</p>
+<p class="ref-links"><a href="https://github.com/Austin243/ELFNet">GitHub</a><a href="index.html#ref-elfnet">Paper →</a></p>
 </article>
-<article class="job talks">
-<h3 class="repo">ElecTrace</h3>
-<p class="b">Follows Bader charges, ELF and QTAIM topology, and LOBSTER bonding frame by frame along a VASP NEB path or a pressure series, matching atoms and features from one frame to the next.</p>
-<div class="links"><a href="https://github.com/Austin243/ElecTrace">github ↗</a></div>
+
+<article class="entry repo">
+<h3>ElecTrace</h3>
+<p>Follows Bader charges, ELF and QTAIM topology, and LOBSTER bonding frame by frame along a VASP NEB path or a pressure series, matching atoms and features from one frame to the next.</p>
+<p class="ref-links"><a href="https://github.com/Austin243/ElecTrace">GitHub</a></p>
 </article>
-<article class="job talks">
-<h3 class="repo">layer-toolkit</h3>
-<p class="b">Builds layered VASP inputs from Materials Project prototypes, sets up the relax and SCF runs, and pulls out ELF hotspots and bonding afterward.</p>
-<div class="links"><a href="https://github.com/Austin243/layer-toolkit">github ↗</a></div>
+
+<article class="entry repo">
+<h3>layer-toolkit</h3>
+<p>Builds layered VASP inputs from Materials Project prototypes, sets up the relax and SCF runs, and pulls out ELF hotspots and bonding afterward.</p>
+<p class="ref-links"><a href="https://github.com/Austin243/layer-toolkit">GitHub</a></p>
 </article>
-<article class="job talks">
-<h3 class="repo">calypso-setup</h3>
-<p class="b">Writes the boilerplate for a CALYPSO + VASP structure search: POTCARs, INCARs, input.dat, and job scripts, with a lot of options for 2D searches.</p>
-<div class="links"><a href="https://github.com/Austin243/calypso-setup">github ↗</a></div>
+
+<article class="entry repo">
+<h3>calypso-setup</h3>
+<p>Writes the boilerplate for a CALYPSO + VASP structure search: POTCARs, INCARs, input.dat, and job scripts, with a lot of options for 2D searches.</p>
+<p class="ref-links"><a href="https://github.com/Austin243/calypso-setup">GitHub</a></p>
 </article>
-<article class="job talks">
-<h3 class="repo">ani-1xnr-npt-driver</h3>
-<p class="b">An experimental PyTorch MD driver for running the ANI-1xnr potential at constant pressure, with restarts, HDF5 trajectories, and a TorchANI patch for stresses.</p>
-<div class="links"><a href="https://github.com/Austin243/ani-1xnr-npt-driver">github ↗</a></div>
+
+<article class="entry repo">
+<h3>ani-1xnr-npt-driver</h3>
+<p>An experimental PyTorch MD driver for running the ANI-1xnr potential at constant pressure, with restarts, HDF5 trajectories, and a TorchANI patch for stresses.</p>
+<p class="ref-links"><a href="https://github.com/Austin243/ani-1xnr-npt-driver">GitHub</a></p>
 </article>
+
 </div>
+<aside>
+<div class="side-block">
+<h3>On GitHub</h3>
+<p class="links"><a href="https://github.com/Austin243">github.com/Austin243</a></p>
+</div>
+</aside>
 </div>
 </section>
-</main>
 
-<footer class="status">
-<span>© 2026 Austin Ellis</span>
-<span><span class="file">hpc/</span><span class="pos"> · UTF-8 · LF</span></span>
+<footer class="foot">
+<p>© 2026 Austin Ellis</p>
+<p class="colophon">Set in Newsreader, Inter, and JetBrains Mono.</p>
+<nav aria-label="Contact">
+<a href="mailto:austin.ellis813@gmail.com">Email</a>
+<a href="https://github.com/Austin243">GitHub</a>
+<a href="https://scholar.google.com/citations?user=Y8mlpekAAAAJ&amp;hl=en">Google Scholar</a>
+<a href="https://orcid.org/0009-0007-1031-132X">ORCID</a>
+<a href="https://www.linkedin.com/in/Austin243">LinkedIn</a>
+<a href="#top">Back to top ↑</a>
+</nav>
 </footer>
-</div>
+
+</main>
 </body>
 </html>
