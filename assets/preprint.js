@@ -54,6 +54,7 @@
     const n = $('.ref-n', r); if (n) n.textContent = '[' + (i + 1) + ']';
   });
   const cite = (key) => (refN[key] ? '<a class="cite" href="#ref-' + key + '" data-ref="' + key + '">[' + refN[key] + ']</a>' : '');
+  window.LP_CITE = cite;   // Scheme 1 (assets/scheme.js) cites the list the same way
   $$('a.cite[data-ref]').forEach((a) => { if (refN[a.dataset.ref]) a.textContent = '[' + refN[a.dataset.ref] + ']'; });
   $$('.refs').forEach((g) => { const c = $('.group small', g); if (c) c.textContent = String($$('.ref', g).length); });
   // arriving from another page at one entry (a paper in the list, a news item): mark it
@@ -136,6 +137,7 @@
   const SC = window.LP_SCENES || {}, viewers = {}, engines = [];
   window.LP_ENGINES = engines;   // for checking the page from the console
   const coarse = window.matchMedia('(pointer: coarse)').matches;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const L = 'abcdefgh';
   const level = (f, v) => (f.name ? f.name + ' ' : '') + (v * f.max).toFixed(f.max > 1 ? 1 : 2) + f.unit;
 
@@ -148,8 +150,9 @@
         '<div class="fig-bar"><div class="panels" role="tablist" aria-label="Panels of Figure ' + opt.n + '">' +
         fig.panels.map((p, i) => '<button type="button" role="tab" aria-selected="' + (i === 0) + '" tabindex="' + (i ? -1 : 0) + '"><b>' + L[i] + '</b><span>' + p.name + '</span></button>').join('') +
         '</div><div class="zoom"><button type="button" data-act="out" aria-label="Zoom out">−</button><button type="button" data-act="in" aria-label="Zoom in">+</button><button type="button" data-act="reset" aria-label="Reset the view">Reset</button></div></div>') +
-      '<div class="stage"><canvas class="gl" tabindex="0" role="img"></canvas><canvas class="ov" aria-hidden="true"></canvas>' +
-      '<div class="states" role="group" aria-label="State shown"></div><p class="hint">' + (coarse ? 'drag to rotate · pinch to zoom' : 'drag to rotate') + '</p></div></div>' +
+      '<div class="stage' + (fig.split ? ' split' : '') + '"><canvas class="gl" tabindex="0" role="img"></canvas><canvas class="ov" aria-hidden="true"></canvas>' +
+      (fig.split ? '<span class="side-in">Atoms in</span><div class="wipe" role="slider" tabindex="0" aria-label="Line between the atoms that go in and the electrons that come out" aria-valuemin="0" aria-valuemax="100"><i></i><b></b></div>' : '') +
+      '<div class="states" role="group" aria-label="State shown"></div><p class="hint">' + (fig.split ? 'drag the line · drag to rotate' : coarse ? 'drag to rotate · pinch to zoom' : 'drag to rotate') + '</p></div></div>' +
       '<figcaption class="fig-side">' +
       (opt.compact ? '' : '<p class="fig-title"><b>Figure ' + opt.n + '</b><span class="pipe">|</span>' + fig.title + '</p>') +
       '<p class="cap"></p><div class="legend"></div>' +
@@ -179,22 +182,30 @@
       }
       isoText(d.iso);
     };
+    let wipe = null;
+    const put = (id) => {
+      // on the input side of a wipe only the atoms the scene was given are drawn
+      eng.given = SC[id].given ? mine[id].species.map((sp) => SC[id].given.indexOf(sp.el) >= 0) : null;
+      eng.setScene(mine[id]); syncIso();
+      if (wipe) wipe.ready();
+    };
     const show = (id) => {
       if (!eng || id === shown) return;
       shown = id;
-      if (mine[id]) { eng.setScene(mine[id]); syncIso(); return; }
+      if (mine[id]) { put(id); return; }
       if (eng.status !== 'nogl') { eng.status = 'loading'; eng.dirty = true; }
       loadScene(id, (d) => {
         if (!mine[id]) mine[id] = Object.assign({}, d, { iso0: d.iso });
-        if (shown === id) { eng.setScene(mine[id]); syncIso(); }
+        if (shown === id) put(id);
       }, () => { if (shown === id && eng.status !== 'nogl') { eng.status = 'error'; eng.dirty = true; } });
     };
     const render = () => {
       const panel = fig.panels[p], id = cur(), sc = SC[id];
       tabs.forEach((b, i) => { b.setAttribute('aria-selected', String(i === p)); b.tabIndex = i === p ? 0 : -1; });
       statesEl.hidden = panel.states.length < 2;
-      statesEl.innerHTML = panel.states.length < 2 ? '' : panel.states.map((st, i) => '<button type="button" data-s="' + i + '" aria-pressed="' + (i === s) + '">' + st[1] + '</button>').join('');
-      capEl.innerHTML = (opt.compact ? '<b>Graphical abstract</b><span class="pipe"> | </span>' : many ? '<b>' + L[p] + '</b>, ' : '') + sc.cap + ' ' + cite(sc.ref);
+      statesEl.innerHTML = panel.states.length < 2 ? '' : (fig.split ? '<span class="side-out">Electrons out, from</span>' : '') +
+        panel.states.map((st, i) => '<button type="button" data-s="' + i + '" aria-pressed="' + (i === s) + '">' + st[1] + '</button>').join('');
+      capEl.innerHTML = (opt.compact ? '<b>Graphical abstract</b><span class="pipe"> | </span>' : many ? '<b>' + L[p] + '</b>, ' : '') + ((fig.caps && fig.caps[id]) || sc.cap) + ' ' + cite(sc.ref) + (fig.more && fig.more[id] ? ' ' + fig.more[id] : '');
       legendEl.innerHTML = sc.legend.map((e) => '<span><i style="background:' + e[1] + '"></i>' + e[0] + '</span>').join('') +
         (sc.field ? '<span><i class="iso"></i><span class="isoval"></span></span><span>0<b></b>' + (sc.field.max > 1 ? sc.field.max + sc.field.unit : sc.field.max) + '</span>' : '');
       if (specEl) specEl.innerHTML = sc.spec;
@@ -230,10 +241,63 @@
       if (a === 'in') eng.zoomBy(1.25); else if (a === 'out') eng.zoomBy(0.8); else reset();
     }));
 
+    // A wipe (the graphical abstract): a line across the stage, the atoms that go in on its left and the field that
+    // comes out on its right. It starts at the right edge and sweeps in once, when the scene is ready and in view.
+    const wipeEl = $('.wipe', host), sideIn = $('.side-in', host);
+    if (wipeEl) {
+      let at = 1, raf = 0, entered = false, loaded = false, seen = !('IntersectionObserver' in window), room = 0.3;
+      // the "atoms in" label gives way when the line comes close; how close is measured once and again when the stage resizes
+      const measure = () => { if (sideIn && stage.clientWidth > 0) room = (sideIn.offsetWidth + 34) / stage.clientWidth; };
+      const place = (v) => {
+        at = v;
+        wipeEl.style.left = (v * 100) + '%';
+        wipeEl.setAttribute('aria-valuenow', String(Math.round(v * 100)));
+        if (sideIn) sideIn.style.opacity = v > room ? '' : '0';
+        if (eng) { eng.split = v; eng.dirty = true; }
+      };
+      const clamp = (v) => Math.max(0.04, Math.min(0.96, v));
+      const stop = () => { if (raf) cancelAnimationFrame(raf); raf = 0; entered = true; };
+      const enter = () => {
+        if (entered || !loaded || !seen) return;
+        entered = true;
+        if (reduced) { place(fig.split); return; }
+        const t0 = performance.now() + 500, dur = 1600;
+        const tick = (now) => {
+          const u = Math.max(0, Math.min(1, (now - t0) / dur));
+          place(1 + (fig.split - 1) * (1 - Math.pow(1 - u, 3)));
+          raf = u < 1 ? requestAnimationFrame(tick) : 0;
+        };
+        raf = requestAnimationFrame(tick);
+      };
+      wipe = { at: () => at, ready: () => { loaded = true; enter(); } };
+      if (!seen) {
+        const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); seen = true; enter(); } }, { threshold: 0.45 });
+        io.observe(stage);
+      }
+      const drag = (e) => { const r = stage.getBoundingClientRect(); place(clamp((e.clientX - r.left) / r.width)); };
+      wipeEl.addEventListener('pointerdown', (e) => {
+        stop(); e.preventDefault();
+        try { wipeEl.setPointerCapture(e.pointerId); } catch (err) {}
+        wipeEl.classList.add('on'); stage.classList.add('touched'); drag(e);
+      });
+      wipeEl.addEventListener('pointermove', (e) => { if (wipeEl.classList.contains('on')) drag(e); });
+      const end = () => wipeEl.classList.remove('on');
+      wipeEl.addEventListener('pointerup', end); wipeEl.addEventListener('pointercancel', end);
+      wipeEl.addEventListener('keydown', (e) => {
+        const k = e.key === 'ArrowLeft' ? -0.04 : e.key === 'ArrowRight' ? 0.04 : e.key === 'Home' ? -1 : e.key === 'End' ? 1 : 0;
+        if (!k) return;
+        e.preventDefault(); stop(); place(clamp(at + k));
+      });
+      measure();
+      if ('ResizeObserver' in window) new ResizeObserver(() => { measure(); place(at); }).observe(stage);
+      place(1);
+    }
+
     // WebGL starts when the figure is about to scroll into view
     const start = () => {
       if (eng) return;
       eng = new VestaGL(Math.max(1, stage.clientWidth), Math.max(1, stage.clientHeight));
+      if (wipe) eng.split = wipe.at();
       eng.hint = ''; eng.triX = 38; eng.triY = 32; eng.readY = 22;
       eng.attach(undefined, ov);
       eng.attach(cv);

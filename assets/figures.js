@@ -11,11 +11,11 @@
 
   window.LP_SCENES = {
     // machine learning
-    cah6_ca_elfnet: { ref: 'elfnet', field: ELF(0.71), legend: el('Ca', 'H'),
+    cah6_ca_elfnet: { ref: 'elfnet', field: ELF(0.71), legend: el('Ca', 'H'), given: ['Ca'],
       spec: 'Ca lattice of <b>CaH<sub>6</sub></b> · ELF from ELFNet · grid 32×32×32',
       label: 'Interactive 3D view: ELF of the calcium lattice of CaH6 predicted by ELFNet, with the hydrogen sites marked',
       cap: 'The calcium lattice of CaH<sub>6</sub>, with the hydrogen left out of the calculation. ELFNet predicts this ELF from superposed atomic densities, and the yellow surface encloses the sites where the hydrogens sit in CaH<sub>6</sub>, drawn as small spheres.' },
-    cah6_ca_dft: { ref: 'elfnet', field: ELF(0.71), legend: el('Ca', 'H'),
+    cah6_ca_dft: { ref: 'elfnet', field: ELF(0.71), legend: el('Ca', 'H'), given: ['Ca'],
       spec: 'Ca lattice of <b>CaH<sub>6</sub></b> · ELF from DFT · grid 28×28×28',
       label: 'Interactive 3D view: ELF of the calcium lattice of CaH6 from DFT, with the hydrogen sites marked',
       cap: 'The DFT ELF of the same lattice, for comparison. It is highest at the hydrogen sites.' },
@@ -146,6 +146,12 @@
       { name: 'On Na(100)', states: [['na100_aminopyrimidine', 'Aminopyrimidine'], ['na100_triazine', 'Triazine']] }] }
   ];
 
-  // the graphical abstract beside the abstract: one system, two states
-  window.LP_HERO = { id: 'ga', panels: [{ name: 'NaKH<sub>12</sub>', states: [['nakh12_60GPa', 'NaKH₁₂'], ['nak_sublattice', 'Na–K only']] }] };
+  // The graphical abstract beside the abstract: one scene with a line wiped across it. Left of the line are the atoms
+  // the calculation starts from (the scene's `given` species), right of it the electron localization that comes out.
+  window.LP_HERO = { id: 'ga', split: 0.46, panels: [{ name: 'CaH<sub>6</sub>', states: [['cah6_ca_elfnet', 'ELFNet'], ['cah6_ca_dft', 'DFT']] }],
+    caps: {
+      cah6_ca_elfnet: 'Atoms in, electrons out. Left of the line are the atoms ELFNet starts from: the calcium lattice of CaH<sub>6</sub>, with no hydrogen in it. Right of the line is the electron localization it predicts. The yellow surface closes around the sites where the hydrogens sit in CaH<sub>6</sub>, drawn as small spheres.',
+      cah6_ca_dft: 'The same lattice with the DFT calculation right of the line, for comparison. Its ELF is highest at the hydrogen sites.' },
+    // said after the citation, so the reference stays with the sentence it belongs to
+    more: { cah6_ca_elfnet: '<a href="#scheme-1">Scheme 1</a> walks through how WISP, a later network, makes this kind of prediction.' } };
 })();

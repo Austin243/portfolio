@@ -309,69 +309,81 @@ const VestaGL = class {
     const S = new Float32Array([2 * s / this.W, 2 * s / this.H, 1 / (d.radius * 1.25)]);
     const M = this.M, col = new Float32Array([M[0][0], M[1][0], M[2][0], M[0][1], M[1][1], M[2][1], M[0][2], M[1][2], M[2][2]]);
     const use = (P) => { gl.useProgram(P.p); gl.uniformMatrix3fv(P.loc.uM, false, col); gl.uniform3fv(P.loc.uC, d.center); gl.uniform3fv(P.loc.uS, S); gl.uniform1f(P.loc.uR, d.radius); return P; };
-    // atoms
-    let P = use(this.ballP);
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.ball.buf); gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 0, 0);
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ball.idx);
-    for (const a of d.atoms) {
-      const sp = d.species[a[3]];
-      gl.uniform3f(P.loc.uPos, a[0], a[1], a[2]); gl.uniform1f(P.loc.uRad, sp.r); gl.uniform3fv(P.loc.uColor, sp.rgb);
-      gl.drawElements(gl.TRIANGLES, this.ball.n, gl.UNSIGNED_SHORT, 0);
-    }
-    // bonds: two halves in the atoms' colors
-    if (d.bonds.length) {
-      P = use(this.stickP);
-      gl.bindBuffer(gl.ARRAY_BUFFER, this.stick.buf); gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 0, 0);
-      for (const b of d.bonds) {
-        const A = d.atoms[b[0]], B = d.atoms[b[1]], m = [(A[0] + B[0]) / 2, (A[1] + B[1]) / 2, (A[2] + B[2]) / 2];
-        const dv = [B[0] - A[0], B[1] - A[1], B[2] - A[2]], l = Math.hypot(dv[0], dv[1], dv[2]), u0 = dv.map((x) => x / l);
-        const ref = Math.abs(u0[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0];
-        let u = [u0[1] * ref[2] - u0[2] * ref[1], u0[2] * ref[0] - u0[0] * ref[2], u0[0] * ref[1] - u0[1] * ref[0]];
-        const lu = Math.hypot(u[0], u[1], u[2]); u = u.map((x) => x / lu * d.bondR);
-        const w = [u0[1] * u[2] - u0[2] * u[1], u0[2] * u[0] - u0[0] * u[2], u0[0] * u[1] - u0[1] * u[0]];
-        gl.uniform3fv(P.loc.uU, u); gl.uniform3fv(P.loc.uV, w);
-        for (const h of [[A, 0], [B, 1]]) {
-          gl.uniform3f(P.loc.uA, h[0][0], h[0][1], h[0][2]); gl.uniform3fv(P.loc.uB, m); gl.uniform3fv(P.loc.uColor, d.species[d.atoms[b[h[1]]][3]].rgb);
-          gl.drawArrays(gl.TRIANGLES, 0, this.stick.n);
+    // One pass draws the whole scene. With a split (a line wiped across the picture) there are two passes:
+    // left of the line only the atoms the scene is given (this.given, by species) and the cell, right of it everything.
+    const pw = this.cv.width, ph = this.cv.height;
+    const cut = this.split == null ? null : Math.round(pw * Math.max(0, Math.min(1, this.split)));
+    if (cut !== null) gl.enable(gl.SCISSOR_TEST);
+    for (const pass of cut === null ? [[true, 0, pw]] : [[false, 0, cut], [true, cut, pw - cut]]) {
+      const full = pass[0];
+      if (pass[2] <= 0) continue;
+      if (cut !== null) gl.scissor(pass[1], 0, pass[2], ph);
+      // atoms
+      let P = use(this.ballP);
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.ball.buf); gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ball.idx);
+      for (const a of d.atoms) {
+        if (!full && this.given && !this.given[a[3]]) continue;
+        const sp = d.species[a[3]];
+        gl.uniform3f(P.loc.uPos, a[0], a[1], a[2]); gl.uniform1f(P.loc.uRad, sp.r); gl.uniform3fv(P.loc.uColor, sp.rgb);
+        gl.drawElements(gl.TRIANGLES, this.ball.n, gl.UNSIGNED_SHORT, 0);
+      }
+      // bonds: two halves in the atoms' colors
+      if (full && d.bonds.length) {
+        P = use(this.stickP);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.stick.buf); gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 0, 0);
+        for (const b of d.bonds) {
+          const A = d.atoms[b[0]], B = d.atoms[b[1]], m = [(A[0] + B[0]) / 2, (A[1] + B[1]) / 2, (A[2] + B[2]) / 2];
+          const dv = [B[0] - A[0], B[1] - A[1], B[2] - A[2]], l = Math.hypot(dv[0], dv[1], dv[2]), u0 = dv.map((x) => x / l);
+          const ref = Math.abs(u0[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0];
+          let u = [u0[1] * ref[2] - u0[2] * ref[1], u0[2] * ref[0] - u0[0] * ref[2], u0[0] * ref[1] - u0[1] * ref[0]];
+          const lu = Math.hypot(u[0], u[1], u[2]); u = u.map((x) => x / lu * d.bondR);
+          const w = [u0[1] * u[2] - u0[2] * u[1], u0[2] * u[0] - u0[0] * u[2], u0[0] * u[1] - u0[1] * u[0]];
+          gl.uniform3fv(P.loc.uU, u); gl.uniform3fv(P.loc.uV, w);
+          for (const h of [[A, 0], [B, 1]]) {
+            gl.uniform3f(P.loc.uA, h[0][0], h[0][1], h[0][2]); gl.uniform3fv(P.loc.uB, m); gl.uniform3fv(P.loc.uColor, d.species[d.atoms[b[h[1]]][3]].rgb);
+            gl.drawArrays(gl.TRIANGLES, 0, this.stick.n);
+          }
         }
       }
-    }
-    // colored sections on the region faces
-    if (this.mesh.secs.length) {
-      P = use(this.secP);
-      gl.uniform1i(P.loc.uTex, 0); gl.activeTexture(gl.TEXTURE0);
-      gl.enableVertexAttribArray(P.loc.aPos); gl.enableVertexAttribArray(P.loc.aUV);
-      for (const q of this.mesh.secs) {
-        gl.uniform1f(P.loc.uIso, q.full ? 0 : d.iso); gl.bindTexture(gl.TEXTURE_2D, q.tex); gl.bindBuffer(gl.ARRAY_BUFFER, q.buf);
-        gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 20, 0); gl.vertexAttribPointer(P.loc.aUV, 2, gl.FLOAT, false, 20, 12);
-        gl.drawArrays(gl.TRIANGLES, 0, q.n);
+      // colored sections on the region faces
+      if (full && this.mesh.secs.length) {
+        P = use(this.secP);
+        gl.uniform1i(P.loc.uTex, 0); gl.activeTexture(gl.TEXTURE0);
+        gl.enableVertexAttribArray(P.loc.aPos); gl.enableVertexAttribArray(P.loc.aUV);
+        for (const q of this.mesh.secs) {
+          gl.uniform1f(P.loc.uIso, q.full ? 0 : d.iso); gl.bindTexture(gl.TEXTURE_2D, q.tex); gl.bindBuffer(gl.ARRAY_BUFFER, q.buf);
+          gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 20, 0); gl.vertexAttribPointer(P.loc.aUV, 2, gl.FLOAT, false, 20, 12);
+          gl.drawArrays(gl.TRIANGLES, 0, q.n);
+        }
+        gl.disableVertexAttribArray(P.loc.aUV);
       }
-      gl.disableVertexAttribArray(P.loc.aUV);
+      // unit cell
+      if (this.mesh.lines) {
+        P = use(this.lineP);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.mesh.lines.buf); gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 0, 0);
+        gl.drawArrays(gl.LINES, 0, this.mesh.lines.n);
+      }
+      // translucent yellow isosurface, tiled over the region and clipped to it
+      if (full && this.mesh.iso && this.mesh.iso.n) {
+        P = use(this.isoP);
+        const pl = new Float32Array(32);
+        d.planes.slice(0, 8).forEach((q, i) => pl.set(q, i * 4));
+        gl.uniform4fv(P.loc.uPl, pl); gl.uniform1i(P.loc.uNp, Math.min(8, d.planes.length));
+        gl.uniform3f(P.loc.uColor, 0.98, 0.83, 0.22); gl.uniform1f(P.loc.uAlpha, 0.7);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.mesh.iso.buf);
+        gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 24, 0);
+        gl.enableVertexAttribArray(P.loc.aNrm); gl.vertexAttribPointer(P.loc.aNrm, 3, gl.FLOAT, false, 24, 12);
+        gl.colorMask(false, false, false, false);
+        for (const t of d.translations) { gl.uniform3fv(P.loc.uOff, t); gl.drawArrays(gl.TRIANGLES, 0, this.mesh.iso.n); }
+        gl.colorMask(true, true, true, true);
+        gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(false); gl.depthFunc(gl.LEQUAL);
+        for (const t of d.translations) { gl.uniform3fv(P.loc.uOff, t); gl.drawArrays(gl.TRIANGLES, 0, this.mesh.iso.n); }
+        gl.depthFunc(gl.LESS); gl.depthMask(true); gl.disable(gl.BLEND);
+        gl.disableVertexAttribArray(P.loc.aNrm);
+      }
     }
-    // unit cell
-    if (this.mesh.lines) {
-      P = use(this.lineP);
-      gl.bindBuffer(gl.ARRAY_BUFFER, this.mesh.lines.buf); gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 0, 0);
-      gl.drawArrays(gl.LINES, 0, this.mesh.lines.n);
-    }
-    // translucent yellow isosurface, tiled over the region and clipped to it
-    if (this.mesh.iso && this.mesh.iso.n) {
-      P = use(this.isoP);
-      const pl = new Float32Array(32);
-      d.planes.slice(0, 8).forEach((q, i) => pl.set(q, i * 4));
-      gl.uniform4fv(P.loc.uPl, pl); gl.uniform1i(P.loc.uNp, Math.min(8, d.planes.length));
-      gl.uniform3f(P.loc.uColor, 0.98, 0.83, 0.22); gl.uniform1f(P.loc.uAlpha, 0.7);
-      gl.bindBuffer(gl.ARRAY_BUFFER, this.mesh.iso.buf);
-      gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 24, 0);
-      gl.enableVertexAttribArray(P.loc.aNrm); gl.vertexAttribPointer(P.loc.aNrm, 3, gl.FLOAT, false, 24, 12);
-      gl.colorMask(false, false, false, false);
-      for (const t of d.translations) { gl.uniform3fv(P.loc.uOff, t); gl.drawArrays(gl.TRIANGLES, 0, this.mesh.iso.n); }
-      gl.colorMask(true, true, true, true);
-      gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(false); gl.depthFunc(gl.LEQUAL);
-      for (const t of d.translations) { gl.uniform3fv(P.loc.uOff, t); gl.drawArrays(gl.TRIANGLES, 0, this.mesh.iso.n); }
-      gl.depthFunc(gl.LESS); gl.depthMask(true); gl.disable(gl.BLEND);
-      gl.disableVertexAttribArray(P.loc.aNrm);
-    }
+    if (cut !== null) gl.disable(gl.SCISSOR_TEST);
     this._overlay();
   }
   _project(p) {
