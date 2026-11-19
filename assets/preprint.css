@@ -213,6 +213,28 @@ h1 { margin: 20px 0 0 -3px; font: 400 clamp(54px, 6.5vw, 94px)/.95 var(--serif);
 .spec { max-width: 400px; margin: 16px 0 0; font: 400 11.5px/1.65 var(--mono); color: var(--ink-3); }
 .spec b { font-weight: 500; color: var(--ink-2); }
 
+/* the parts of the Figures section (2.1, 2.2, 2.3) */
+.sub + .sub { margin-top: 88px; }
+.sub-head { position: relative; margin-bottom: 28px; padding-top: 26px; border-top: 1px solid var(--rule); }
+.sec-head + noscript + .sub .sub-head, .sec-head + .sub .sub-head { padding-top: 0; border-top: 0; }
+.sub-n { position: absolute; left: calc(-1 * var(--gutter)); top: 35px; font: 500 13px/1 var(--mono); color: var(--mark); }
+.sec-head + noscript + .sub .sub-n, .sec-head + .sub .sub-n { top: 9px; }
+.sub-head h3 { margin: 0; font: 500 29px/1.15 var(--serif); font-optical-sizing: auto; letter-spacing: -.014em; }
+.sub-head p { max-width: var(--main); margin: 9px 0 0; font: 400 15.5px/1.55 var(--sans); color: var(--ink-2); }
+/* a figure across both columns: two views side by side that turn together, the caption under them */
+.fig.wide { display: block; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.pair .stage { aspect-ratio: 1.24; min-height: 0; }
+.pair .side-in { font-weight: 600; color: #1A1915; }
+.fig.wide .fig-side { display: grid; grid-template-columns: minmax(0, var(--main)) minmax(280px, var(--side)); column-gap: var(--gap); align-items: start; padding-top: 18px; }
+.fig.wide .fig-title, .fig.wide .cap { max-width: none; }
+.fig.wide .legend { margin-top: 4px; padding-top: 0; border-top: 0; }
+/* the states of a pair sit in the bar above it, outside the white plates, so they follow the page's theme */
+.states.in-bar { position: static; flex-direction: row; margin-right: auto; padding: 3px; background: transparent; border-color: var(--rule-2); box-shadow: none; }
+.states.in-bar button { padding: 5px 11px; color: var(--ink-2); }
+.states.in-bar button:hover { background: var(--hover); }
+.states.in-bar button[aria-pressed="true"] { background: var(--sel); color: var(--on-sel); }
+
 /* ---------- Scheme 1: one picture that changes step by step ---------- */
 .steps { display: flex; align-items: center; min-height: 36px; margin: 0 0 10px; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
 .steps::-webkit-scrollbar { display: none; }
@@ -390,7 +412,8 @@ table.bt.two td:nth-child(2) { width: auto; color: var(--ink-2); white-space: no
   .nav a { padding: 12px 9px; border-radius: 0; }
   .nav a:hover { background: none; }
   .nav a.on::after { left: 9px; right: 9px; bottom: 0; }
-  .row, .ref, .fig, .ga { grid-template-columns: minmax(0, 1fr) minmax(200px, 250px); }
+  .row, .ref, .fig, .ga, .fig.wide .fig-side { grid-template-columns: minmax(0, 1fr) minmax(200px, 250px); }
+  .sub-n, .sec-head + noscript + .sub .sub-n, .sec-head + .sub .sub-n { position: static; display: block; margin-bottom: 10px; }
   .hero { padding-top: 48px; }
   .hero > .row { display: block; }
   .hero > .row > div { max-width: var(--main); }
@@ -413,7 +436,10 @@ table.bt.two td:nth-child(2) { width: auto; color: var(--ink-2); white-space: no
 /* narrow: one column; notes, captions and thumbnails sit under what they describe */
 @media (max-width: 819px) {
   .page { max-width: 720px; }
-  .row, .ref, .fig, .ga { display: block; }
+  .row, .ref, .fig, .ga, .fig.wide .fig-side { display: block; }
+  .fig.wide .fig-side { padding-top: 14px; }
+  .fig.wide .legend { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--rule); }
+  .sub + .sub { margin-top: 72px; }
   .ga .stage { aspect-ratio: 1 / .82; }
   .ga figcaption { margin-top: 12px; }
   .ref-side { display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: 18px; align-items: start; margin-top: 18px; padding: 2px 0 2px 14px; border-left: 2px solid var(--rule); }
@@ -449,6 +475,10 @@ table.bt.two td:nth-child(2) { width: auto; color: var(--ink-2); white-space: no
   .ref-side { grid-template-columns: 1fr; }
   .ref-side .thumb { max-width: 240px; }
   .stage { aspect-ratio: auto; height: clamp(300px, 86vw, 460px); }
+  .pair { grid-template-columns: 1fr; gap: 10px; }
+  .pair .stage { height: auto; aspect-ratio: 1.3; }
+  .sub-head h3 { font-size: 25px; }
+  .fig-bar { flex-wrap: wrap; }
   .ga .stage { aspect-ratio: 1 / .95; height: auto; }
   .states { top: 8px; left: 8px; }
   .stage.split .states { left: auto; right: 8px; }

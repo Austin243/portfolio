@@ -141,29 +141,44 @@
   const L = 'abcdefgh';
   const level = (f, v) => (f.name ? f.name + ' ' : '') + (v * f.max).toFixed(f.max > 1 ? 1 : 2) + f.unit;
 
+  // A figure is one 3D view, or with fig.pair two of them side by side (a prediction next to its reference) that turn
+  // and zoom together. A state of a panel is [scene, name], or for a pair [left scene, right scene, name].
   function makeViewer(host, fig, opt) {
     if (!host || typeof VestaGL === 'undefined') return null;
-    const many = fig.panels.length > 1;
+    const many = fig.panels.length > 1, pair = fig.pair || null;
+    const stageHTML = (k) =>
+      '<div class="stage' + (fig.split ? ' split' : '') + '"><canvas class="gl" tabindex="0" role="img"></canvas><canvas class="ov" aria-hidden="true"></canvas>' +
+      (fig.split ? '<span class="side-in">Atoms in</span><div class="wipe" role="slider" tabindex="0" aria-label="Line between the atoms that go in and the electrons that come out" aria-valuemin="0" aria-valuemax="100"><i></i><b></b></div>' : '') +
+      (pair ? '<span class="side-in">' + pair[k] + '</span>' : '<div class="states" role="group" aria-label="State shown"></div>') +
+      '<p class="hint">' + (fig.split ? 'drag the line · drag to rotate' : pair ? 'drag either view · both turn' : coarse ? 'drag to rotate · pinch to zoom' : 'drag to rotate') + '</p></div>';
     host.innerHTML =
       '<div class="fig-main">' +
       (opt.compact ? '' :
         '<div class="fig-bar"><div class="panels" role="tablist" aria-label="Panels of Figure ' + opt.n + '">' +
-        fig.panels.map((p, i) => '<button type="button" role="tab" aria-selected="' + (i === 0) + '" tabindex="' + (i ? -1 : 0) + '"><b>' + L[i] + '</b><span>' + p.name + '</span></button>').join('') +
-        '</div><div class="zoom"><button type="button" data-act="out" aria-label="Zoom out">−</button><button type="button" data-act="in" aria-label="Zoom in">+</button><button type="button" data-act="reset" aria-label="Reset the view">Reset</button></div></div>') +
-      '<div class="stage' + (fig.split ? ' split' : '') + '"><canvas class="gl" tabindex="0" role="img"></canvas><canvas class="ov" aria-hidden="true"></canvas>' +
-      (fig.split ? '<span class="side-in">Atoms in</span><div class="wipe" role="slider" tabindex="0" aria-label="Line between the atoms that go in and the electrons that come out" aria-valuemin="0" aria-valuemax="100"><i></i><b></b></div>' : '') +
-      '<div class="states" role="group" aria-label="State shown"></div><p class="hint">' + (fig.split ? 'drag the line · drag to rotate' : coarse ? 'drag to rotate · pinch to zoom' : 'drag to rotate') + '</p></div></div>' +
-      '<figcaption class="fig-side">' +
+        (many ? fig.panels.map((p, i) => '<button type="button" role="tab" aria-selected="' + (i === 0) + '" tabindex="' + (i ? -1 : 0) + '"><b>' + L[i] + '</b><span>' + p.name + '</span></button>').join('') : '') +
+        '</div>' + (pair ? '<div class="states in-bar" role="group" aria-label="State shown"></div>' : '') +
+        '<div class="zoom"><button type="button" data-act="out" aria-label="Zoom out">−</button><button type="button" data-act="in" aria-label="Zoom in">+</button><button type="button" data-act="reset" aria-label="Reset the view">Reset</button></div></div>') +
+      (pair ? '<div class="pair">' + stageHTML(0) + stageHTML(1) + '</div>' : stageHTML(0)) + '</div>' +
+      '<figcaption class="fig-side">' + (pair ? '<div>' : '') +
       (opt.compact ? '' : '<p class="fig-title"><b>Figure ' + opt.n + '</b><span class="pipe">|</span>' + fig.title + '</p>') +
-      '<p class="cap"></p><div class="legend"></div>' +
+      '<p class="cap"></p>' + (pair ? '</div><div>' : '') + '<div class="legend"></div>' +
       (opt.compact ? '' : '<label class="iso-row" hidden><span>Isosurface level</span><input type="range" step="0.01" disabled><output></output></label><p class="spec"></p>') +
-      '</figcaption>';
-    const stage = $('.stage', host), cv = $('canvas.gl', host), ov = $('canvas.ov', host);
+      (pair ? '</div>' : '') + '</figcaption>';
+    const stages = $$('.stage', host), stage = stages[0];
+    const sides = stages.map((el) => ({ stage: el, cv: $('canvas.gl', el), ov: $('canvas.ov', el), eng: null, shown: null }));
     const tabs = $$('.panels button', host), statesEl = $('.states', host), capEl = $('.cap', host), legendEl = $('.legend', host);
     const specEl = $('.spec', host), isoRow = $('.iso-row', host), range = isoRow ? $('input', isoRow) : null, out = isoRow ? $('output', isoRow) : null;
-    let p = 0, s = 0, eng = null, shown = null, pending = null;
+    let p = 0, s = 0, pending = null, cam = null;
     const mine = {};   // this figure's own copy of each scene, so its isosurface level is its own
-    const cur = () => { const st = fig.panels[p].states; return st[Math.min(s, st.length - 1)][0]; };
+    const state = () => { const st = fig.panels[p].states; return st[Math.min(s, st.length - 1)]; };
+    const ids = () => (pair ? state().slice(0, 2) : [state()[0]]);   // the scene of each view
+    const cur = () => state()[0];                                    // the scene the caption, legend and slider describe
+    // the two views of a pair share one camera: when one is turned or zoomed the other follows
+    const follow = (from) => {
+      if (!pair || !from.eng || !from.eng.M) return;
+      cam = { M: from.eng.M.map((r) => r.slice()), zoom: from.eng.zoom };
+      for (const sd of sides) if (sd !== from && sd.eng && sd.eng.M) { sd.eng.M = cam.M.map((r) => r.slice()); sd.eng.zoom = cam.zoom; sd.eng.dirty = true; }
+    };
 
     const isoText = (v) => {
       const f = SC[cur()].field, t = $('.isoval', legendEl);
@@ -183,37 +198,52 @@
       isoText(d.iso);
     };
     let wipe = null;
-    const put = (id) => {
+    const put = (sd, id) => {
+      const eng = sd.eng, d = mine[id], lead = mine[cur()];
       // on the input side of a wipe only the atoms the scene was given are drawn
-      eng.given = SC[id].given ? mine[id].species.map((sp) => SC[id].given.indexOf(sp.el) >= 0) : null;
-      eng.setScene(mine[id]); syncIso();
+      eng.given = SC[id].given ? d.species.map((sp) => SC[id].given.indexOf(sp.el) >= 0) : null;
+      eng.setScene(d);
+      if (pair) {
+        // the view that arrives second takes the level and the camera of the one already on screen
+        if (lead && lead !== d && d.grid && Math.abs(lead.iso - d.iso) > 1e-9) eng.setIso(lead.iso);
+        if (cam) { eng.M = cam.M.map((r) => r.slice()); eng.zoom = cam.zoom; eng.dirty = true; }
+      }
+      syncIso();
       if (wipe) wipe.ready();
     };
-    const show = (id) => {
-      if (!eng || id === shown) return;
-      shown = id;
-      if (mine[id]) { put(id); return; }
-      if (eng.status !== 'nogl') { eng.status = 'loading'; eng.dirty = true; }
-      loadScene(id, (d) => {
-        if (!mine[id]) mine[id] = Object.assign({}, d, { iso0: d.iso });
-        if (shown === id) put(id);
-      }, () => { if (shown === id && eng.status !== 'nogl') { eng.status = 'error'; eng.dirty = true; } });
+    const show = () => {
+      const want = ids();
+      sides.forEach((sd, k) => {
+        const id = want[k], eng = sd.eng;
+        if (!eng || id === sd.shown) return;
+        sd.shown = id;
+        if (mine[id]) { put(sd, id); return; }
+        if (eng.status !== 'nogl') { eng.status = 'loading'; eng.dirty = true; }
+        loadScene(id, (d) => {
+          if (!mine[id]) mine[id] = Object.assign({}, d, { iso0: d.iso });
+          if (sd.shown === id) put(sd, id);
+        }, () => { if (sd.shown === id && eng.status !== 'nogl') { eng.status = 'error'; eng.dirty = true; } });
+      });
     };
     const render = () => {
-      const panel = fig.panels[p], id = cur(), sc = SC[id];
+      const panel = fig.panels[p], id = cur(), sc = SC[id], want = ids();
       tabs.forEach((b, i) => { b.setAttribute('aria-selected', String(i === p)); b.tabIndex = i === p ? 0 : -1; });
       statesEl.hidden = panel.states.length < 2;
       statesEl.innerHTML = panel.states.length < 2 ? '' : (fig.split ? '<span class="side-out">Electrons out, from</span>' : '') +
-        panel.states.map((st, i) => '<button type="button" data-s="' + i + '" aria-pressed="' + (i === s) + '">' + st[1] + '</button>').join('');
+        panel.states.map((st, i) => '<button type="button" data-s="' + i + '" aria-pressed="' + (i === s) + '">' + st[st.length - 1] + '</button>').join('');
       capEl.innerHTML = (opt.compact ? '<b>Graphical abstract</b><span class="pipe"> | </span>' : many ? '<b>' + L[p] + '</b>, ' : '') + ((fig.caps && fig.caps[id]) || sc.cap) + ' ' + cite(sc.ref) + (fig.more && fig.more[id] ? ' ' + fig.more[id] : '');
       legendEl.innerHTML = sc.legend.map((e) => '<span><i style="background:' + e[1] + '"></i>' + e[0] + '</span>').join('') +
         (sc.field ? '<span><i class="iso"></i><span class="isoval"></span></span><span>0<b></b>' + (sc.field.max > 1 ? sc.field.max + sc.field.unit : sc.field.max) + '</span>' : '');
-      if (specEl) specEl.innerHTML = sc.spec;
-      cv.setAttribute('aria-label', sc.label);
+      if (specEl) specEl.innerHTML = (fig.specs && fig.specs[id]) || sc.spec;
+      sides.forEach((sd, k) => sd.cv.setAttribute('aria-label', SC[want[k]].label));
       syncIso();
-      show(id);
+      show();
     };
-    const pick = (panel, state) => { p = Math.max(0, Math.min(fig.panels.length - 1, panel || 0)); s = state || 0; render(); };
+    const pick = (panel, st) => {
+      const to = Math.max(0, Math.min(fig.panels.length - 1, panel || 0));
+      if (to !== p) cam = null;   // another structure starts from its own view
+      p = to; s = st || 0; render();
+    };
 
     tabs.forEach((b, i) => {
       b.addEventListener('click', () => pick(i, 0));
@@ -223,22 +253,24 @@
       });
     });
     statesEl.addEventListener('click', (e) => { const b = e.target.closest('button[data-s]'); if (b) { s = Number(b.dataset.s); render(); } });
+    // every view that has its scene on screen
+    const live = (fn) => { const want = ids(); sides.forEach((sd, k) => { if (sd.eng && sd.shown === want[k] && mine[want[k]]) fn(sd, mine[want[k]]); }); };
     if (range) range.addEventListener('input', () => {
       const v = Number(range.value), d = mine[cur()]; if (!d) return;
       isoText(v); range.setAttribute('aria-valuetext', level(SC[cur()].field, v));
-      if (pending === null) requestAnimationFrame(() => { const x = pending; pending = null; if (eng && shown === cur()) eng.setIso(x); });
+      if (pending === null) requestAnimationFrame(() => { const x = pending; pending = null; live((sd, sc) => { if (sc.grid) sd.eng.setIso(x); }); });
       pending = v;
     });
     const reset = () => {
-      if (!eng) return;
-      const d = mine[cur()];
-      eng.resetView();
-      if (d && d.grid && d.iso !== d.iso0) { eng.setIso(d.iso0); syncIso(); }
+      cam = null;
+      live((sd, d) => { sd.eng.resetView(); if (d.grid && d.iso !== d.iso0) sd.eng.setIso(d.iso0); });
+      syncIso();
     };
     $$('[data-act]', host).forEach((b) => b.addEventListener('click', () => {
-      if (!eng) return;
       const a = b.dataset.act;
-      if (a === 'in') eng.zoomBy(1.25); else if (a === 'out') eng.zoomBy(0.8); else reset();
+      if (a === 'reset') { reset(); return; }
+      sides.forEach((sd) => { if (sd.eng) sd.eng.zoomBy(a === 'in' ? 1.25 : 0.8); });
+      follow(sides[0]);
     }));
 
     // A wipe (the graphical abstract): a line across the stage, the atoms that go in on its left and the field that
@@ -253,7 +285,7 @@
         wipeEl.style.left = (v * 100) + '%';
         wipeEl.setAttribute('aria-valuenow', String(Math.round(v * 100)));
         if (sideIn) sideIn.style.opacity = v > room ? '' : '0';
-        if (eng) { eng.split = v; eng.dirty = true; }
+        if (sides[0].eng) { sides[0].eng.split = v; sides[0].eng.dirty = true; }
       };
       const clamp = (v) => Math.max(0.04, Math.min(0.96, v));
       const stop = () => { if (raf) cancelAnimationFrame(raf); raf = 0; entered = true; };
@@ -295,22 +327,24 @@
 
     // WebGL starts when the figure is about to scroll into view
     const start = () => {
-      if (eng) return;
-      eng = new VestaGL(Math.max(1, stage.clientWidth), Math.max(1, stage.clientHeight));
-      if (wipe) eng.split = wipe.at();
-      eng.hint = ''; eng.triX = 38; eng.triY = 32; eng.readY = 22;
-      eng.attach(undefined, ov);
-      eng.attach(cv);
-      if ('ResizeObserver' in window) new ResizeObserver(() => { if (stage.clientWidth > 0 && stage.clientHeight > 0) eng.resize(stage.clientWidth, stage.clientHeight); }).observe(stage);
-      cv.addEventListener('pointerdown', (e) => { stage.classList.add('touched'); eng.down(e); });
-      cv.addEventListener('pointermove', (e) => eng.move(e));
-      cv.addEventListener('pointerup', (e) => eng.up(e));
-      cv.addEventListener('pointercancel', (e) => eng.up(e));
-      cv.addEventListener('dblclick', reset);
-      cv.addEventListener('keydown', (e) => { if (eng.key(e)) e.preventDefault(); });
-      cv.addEventListener('wheel', (e) => { if (e.ctrlKey || e.metaKey) { e.preventDefault(); eng.zoomBy(Math.exp(-e.deltaY * 0.01)); } }, { passive: false });
-      engines.push(eng);
-      show(cur());
+      if (sides[0].eng) return;
+      sides.forEach((sd) => {
+        const eng = sd.eng = new VestaGL(Math.max(1, sd.stage.clientWidth), Math.max(1, sd.stage.clientHeight)), cv = sd.cv;
+        if (wipe) eng.split = wipe.at();
+        eng.hint = ''; eng.triX = 38; eng.triY = 32; eng.readY = 22;
+        eng.attach(undefined, sd.ov);
+        eng.attach(cv);
+        if ('ResizeObserver' in window) new ResizeObserver(() => { if (sd.stage.clientWidth > 0 && sd.stage.clientHeight > 0) eng.resize(sd.stage.clientWidth, sd.stage.clientHeight); }).observe(sd.stage);
+        cv.addEventListener('pointerdown', (e) => { stages.forEach((el) => el.classList.add('touched')); eng.down(e); });
+        cv.addEventListener('pointermove', (e) => { eng.move(e); if (eng.ptr.size) follow(sd); });
+        cv.addEventListener('pointerup', (e) => eng.up(e));
+        cv.addEventListener('pointercancel', (e) => eng.up(e));
+        cv.addEventListener('dblclick', reset);
+        cv.addEventListener('keydown', (e) => { if (eng.key(e)) { e.preventDefault(); follow(sd); } });
+        cv.addEventListener('wheel', (e) => { if (e.ctrlKey || e.metaKey) { e.preventDefault(); eng.zoomBy(Math.exp(-e.deltaY * 0.01)); follow(sd); } }, { passive: false });
+        engines.push(eng);
+      });
+      show();
     };
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); start(); } }, { rootMargin: '300px 0px' });
@@ -323,11 +357,13 @@
   (window.LP_FIGS || []).forEach((f, i) => { viewers[f.id] = makeViewer(document.getElementById(f.id), f, { n: i + 1 }); });
   if (window.LP_HERO) viewers.ga = makeViewer(document.getElementById('ga'), window.LP_HERO, { compact: true });
 
-  // "Fig. 2b" in the list opens that panel of the figure
-  $$('a[data-fig]').forEach((a) => a.addEventListener('click', () => {
-    const q = a.dataset.fig.split(':'), v = viewers[q[0]];
-    if (v) v.pick(Number(q[1] || 0), Number(q[2] || 0));
-  }));
+  // "Fig. 3b" in the list opens that panel of the figure. The number and letter are written from the order of the
+  // figures, so the links stay right when a figure is added or moved.
+  $$('a[data-fig]').forEach((a) => {
+    const q = a.dataset.fig.split(':'), k = (window.LP_FIGS || []).findIndex((f) => f.id === q[0]), t = a.firstChild;
+    if (k >= 0 && t && t.nodeType === 3) t.nodeValue = 'Fig. ' + (k + 1) + (window.LP_FIGS[k].panels.length > 1 ? L[Number(q[1] || 0)] : '') + ' ';
+    a.addEventListener('click', () => { const v = viewers[q[0]]; if (v) v.pick(Number(q[1] || 0), Number(q[2] || 0)); });
+  });
 
   const loop = () => {
     requestAnimationFrame(loop);

@@ -55,6 +55,7 @@
   };
 
   // ---------- page elements ----------
+  const figN = (window.LP_FIGS || []).findIndex((f) => f.id === 'fig-wisp') + 1;   // the number of the 3D figure that follows the scheme
   const STEPS = [
     { name: 'Structure', dur: 1900,
       text: 'WISP is given a crystal: which atoms it has, where they sit, the cell, and the magnetic moment on each atom. This is MnPd, cut along a plane that holds both atoms. The arrows are the moments, ' + D.moments[0].toFixed(2) + ' μ<sub>B</sub> on Mn and ' + D.moments[1].toFixed(2) + ' μ<sub>B</sub> on Pd.',
@@ -72,7 +73,7 @@
       text: 'For the other spin channel, the same network runs again with every moment reversed. Reversing the moments swaps the two channels exactly, because of how the network is built, so it never has to learn that. In MnPd the spin-down channel has a large region around Pd that the spin-up channel lacks.',
       alt: 'The moment arrows turn over and the map changes to the spin-down channel, which has a large region around each palladium atom.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.',
+      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.' + (figN ? ' <a href="#fig-wisp">Figure ' + figN + '</a> has the same comparison in 3D.' : ''),
       alt: 'The same map with a line across it: the WISP prediction on the left and the DFT calculation on the right. The two sides match.' }
   ];
   host.innerHTML =

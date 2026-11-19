@@ -125,23 +125,34 @@
       cap: 'The triazine, the other ring that three acetonitrile molecules can close into, on the same surface.' }
   };
 
-  // a figure is a row of panels (a, b, c); a panel can hold several states of the same system
+  // A figure is a row of panels (a, b, c); a panel can hold several states of the same system. The figures are numbered
+  // in this order, and the page puts each one where its id is (see the three parts of the Figures section in index.html).
+  // A figure with `pair` shows two views side by side that turn together; its states name a left and a right scene.
   window.LP_FIGS = [
-    { id: 'fig-1', title: 'ELF predicted by ELFNet and WISP.', panels: [
-      { name: 'CaH<sub>6</sub>', states: [['cah6_ca_elfnet', 'Ca lattice · ELFNet'], ['cah6_ca_dft', 'Ca lattice · DFT'], ['cah6_cage', 'CaH₆']] },
-      { name: 'MnPd', states: [['mnpd_wisp_down', 'WISP · spin down'], ['mnpd_wisp_up', 'WISP · spin up'], ['mnpd_dft_down', 'DFT · spin down'], ['mnpd_dft_up', 'DFT · spin up']] },
-      { name: 'Sc<sub>5</sub>Cl<sub>8</sub>', states: [['sc5cl8_wisp', 'WISP'], ['sc5cl8_dft', 'DFT']] }] },
-    { id: 'fig-2', title: 'Electrides in 2D and under pressure.', panels: [
+    { id: 'fig-wisp', title: 'WISP next to DFT. Turn either view and the other follows.', pair: ['WISP', 'DFT'], panels: [
+      { name: 'MnPd', states: [['mnpd_wisp_down', 'mnpd_dft_down', 'Spin down'], ['mnpd_wisp_up', 'mnpd_dft_up', 'Spin up']] },
+      { name: 'Sc<sub>5</sub>Cl<sub>8</sub>', states: [['sc5cl8_wisp', 'sc5cl8_dft', 'Sc₅Cl₈']] }],
+      caps: {
+        mnpd_wisp_down: 'MnPd, spin-down channel. WISP predicts it from the structure and the magnetic moments on the atoms; the other view is the DFT calculation. At ELF 0.30 a large region surrounds the Pd atom in both.',
+        mnpd_wisp_up: 'The spin-up channel at the same isovalue. The large region around Pd is absent in both views, and that difference between the two channels is what WISP has to get right.',
+        sc5cl8_wisp: 'Sc<sub>5</sub>Cl<sub>8</sub>, a known electride. WISP had only the geometry as input. Besides the shells around the atoms, the ELF reaches 0.83 at the center of the cut face, 2.2 Å from the nearest atom, in the prediction and in DFT alike: the interstitial maximum of the electride.' },
+      specs: {
+        mnpd_wisp_down: '<b>MnPd</b> · spin down · WISP and DFT · both on a 28×28×28 grid',
+        mnpd_wisp_up: '<b>MnPd</b> · spin up · WISP and DFT · both on a 28×28×28 grid',
+        sc5cl8_wisp: '<b>Sc<sub>5</sub>Cl<sub>8</sub></b> · electride · WISP with moments from the geometry, and DFT · both on a 30×84×84 grid' } },
+    { id: 'fig-elfnet', title: 'ELF predicted by ELFNet.', panels: [
+      { name: 'CaH<sub>6</sub>', states: [['cah6_ca_elfnet', 'Ca lattice · ELFNet'], ['cah6_ca_dft', 'Ca lattice · DFT'], ['cah6_cage', 'CaH₆']] }] },
+    { id: 'fig-electrides', title: 'Electrides in 2D and under pressure.', panels: [
       { name: 'MoS<sub>2</sub> vacancy', states: [['mos2_vacancy', 'MoS₂ · S vacancy']] },
       { name: 'Solid H<sub>2</sub>', states: [['h2_c2c_b15', 'C2/c · band 15'], ['h2_ama2_b25', 'Ama2 · band 25'], ['h2_p63m_b9', 'P6₃/m · band 9'], ['h2_p63m_b11', 'P6₃/m · band 11']] },
       { name: 'TaS<sub>2</sub> vacancy', states: [['tas2_vacancy', 'TaS₂ · S vacancy']] }] },
-    { id: 'fig-3', title: 'Chemical templates for superhydrides.', panels: [
+    { id: 'fig-superhydrides', title: 'Chemical templates for superhydrides.', panels: [
       { name: 'NaKH<sub>12</sub>', states: [['nakh12_60GPa', 'NaKH₁₂'], ['nak_sublattice', 'Na–K only']] },
       { name: 'U<sub>10</sub>H<sub>84</sub>', states: [['u10h84_structure', 'U₁₀H₈₄'], ['u10_template', 'U₁₀ lattice · ELF']] }] },
-    { id: 'fig-4', title: 'Iron and cesium compounds under pressure.', panels: [
+    { id: 'fig-pressure', title: 'Iron and cesium compounds under pressure.', panels: [
       { name: 'Fe–I', states: [['fei2_0gpa', 'FeI₂ · 0 GPa'], ['fe3i_300gpa', 'Fe₃I · 300 GPa']] },
       { name: 'CsO', states: [['cso_p63mmc_150gpa', 'CsO · 150 GPa'], ['cso_r3m_250gpa', 'CsO · 250 GPa']] }] },
-    { id: 'fig-5', title: 'Acetonitrile under pressure and on sodium.', panels: [
+    { id: 'fig-reactions', title: 'Acetonitrile under pressure and on sodium.', panels: [
       { name: 'CH<sub>3</sub>CN, 35 GPa', states: [['acn_m4_35gpa', 'CH₃CN · 35 GPa']] },
       { name: 'On Na(100)', states: [['na100_aminopyrimidine', 'Aminopyrimidine'], ['na100_triazine', 'Triazine']] }] }
   ];
