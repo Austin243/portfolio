@@ -24,10 +24,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&amp;family=JetBrains+Mono:wght@400..600&amp;family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/preprint.css">
+<link rel="stylesheet" href="assets/site.css">
 <script src="assets/vesta-gl.js" defer></script>
 <script src="assets/figures.js" defer></script>
-<script src="assets/preprint.js" defer></script>
+<script src="assets/site.js" defer></script>
 <script src="assets/wisp-plane.js" defer></script>
 <script src="assets/stage3d.js" defer></script>
 <script src="assets/scheme-base.js" defer></script>
@@ -64,30 +64,12 @@ austinellis.org</a>
 
 <main class="page" id="top">
 
-<!-- ================= title block ================= -->
+<!-- ================= top ================= -->
 <div class="hero">
-<p class="stamp" aria-hidden="true">austinellis.org:v12&nbsp;&nbsp;[living preprint]&nbsp;&nbsp;19 Nov 2026</p>
-<div class="row">
-<div>
-<p class="kicker"><i></i>Living preprint<span>·</span>Last revised 19 November 2026</p>
+<div class="hero-text">
 <h1>Austin Ellis</h1>
 <p class="affil">Research intern, Center for Nanophase Materials Sciences,<br> Oak Ridge National Laboratory</p>
-
-<div class="abstract">
-<div class="abs-head"><p class="label">Abstract</p><button type="button" class="src" aria-pressed="false">view as INCAR</button></div>
-<div class="lineno" aria-hidden="true"></div>
-<p class="abs-text">I use first-principles calculations, atomistic simulation, and machine learning to understand how bonding and reactivity shape materials. My projects span superconducting hydrides and electrides under high pressure, defects in 2D materials, and neural networks that predict electronic structure. At Oak Ridge National Laboratory, I’m building automated workflows that use machine-learned interatomic potentials to discover reaction pathways and model their kinetics.</p>
-<div class="incar" hidden>
-<div><span>1</span><span class="com">########################################</span></div>
-<div><span>2</span><span class="com"># INCAR: who is running this calculation</span></div>
-<div><span>3</span><span class="com">########################################</span></div>
-<div><span>4</span><span class="v"><span class="key">ROLE  </span> = <span class="val">Research intern, ORNL Center for Nanophase Materials Sciences</span></span></div>
-<div><span>5</span><span class="v"><span class="key">DEGREE</span> = <span class="val">M.S. Chemistry, CSU Northridge, </span><span class="num">2026</span></span></div>
-<div><span>6</span><span class="v"><span class="key">FOCUS </span> = <span class="val">electronic structure, materials discovery, machine learning, high pressure, electrides</span></span></div>
-<div><span>7</span><span class="v"><span class="key">NEXT  </span> = <span class="val">Ph.D. program</span></span></div>
-</div>
-<p class="keywords"><span class="label">Keywords</span><span>electronic structure · materials discovery · machine learning · high pressure · electrides</span></p>
-</div>
+<p class="intro">I use first-principles calculations, atomistic simulation, and machine learning to understand how bonding and reactivity shape materials. My projects span superconducting hydrides and electrides under high pressure, defects in 2D materials, and neural networks that predict electronic structure. At Oak Ridge National Laboratory, I’m building automated workflows that use machine-learned interatomic potentials to discover reaction pathways and model their kinetics.</p>
 
 <p class="contacts">
 <a class="primary" href="AustinEllisCV.pdf">CV <span aria-hidden="true">↗</span></a>
@@ -99,20 +81,29 @@ austinellis.org</a>
 </p>
 </div>
 
-<figure class="ga" id="ga"><noscript><p class="cap">The 3D figures on this page need JavaScript.</p></noscript></figure>
-</div>
-
 <dl class="meta">
 <div><dt>Education</dt><dd>M.S. Chemistry, CSU Northridge, 2026 <span>B.S. Pharmacological Chemistry, UC San Diego, 2022</span></dd></div>
 <div><dt>Advisors</dt><dd>Maosheng Miao <span>CSU Northridge</span></dd><dd style="margin-top:8px">Jingsong Huang, Ilia Ivanov, Soumendu Bagchi, Jacek Jakowski <span>Oak Ridge National Laboratory</span></dd></div>
 <div><dt>Work</dt><dd><b>6</b> papers · <b>3</b> preprints · <b>4</b> manuscripts <span>5 as first or sole author</span></dd></div>
 <div><dt>Next</dt><dd>Ph.D. program, fall 2027</dd></div>
 </dl>
+
+<figure class="glance" id="glance">
+<div class="glance-grid">
+<a href="#fig-elfnet" data-fig="fig-elfnet:0:0"><img src="assets/img/glance/elfnet.webp" width="480" height="480" alt="Calcium lattice of CaH6 with the electron localization predicted by ELFNet as a yellow surface" decoding="async"><span>ELFNet</span></a>
+<a href="#fig-wisp" data-fig="fig-wisp:0:0"><img src="assets/img/glance/wisp.webp" width="480" height="480" alt="Unit cell of MnPd with the spin-down electron localization predicted by WISP" decoding="async"><span>WISP</span></a>
+<a href="#fig-superhydrides" data-fig="fig-superhydrides:0:0"><img src="assets/img/glance/superhydrides.webp" width="480" height="480" alt="NaKH12 at 60 GPa with electron localization around each H2 unit" decoding="async"><span>Superhydrides</span></a>
+<a href="#fig-electrides" data-fig="fig-electrides:0:0"><img src="assets/img/glance/electrides.webp" width="480" height="480" alt="Monolayer MoS2 with a sulfur vacancy and the electron localization around it" decoding="async"><span>Electrides</span></a>
+<a href="#fig-pressure" data-fig="fig-pressure:0:1"><img src="assets/img/glance/pressure.webp" width="480" height="480" alt="Crystal structure of Fe3I at 300 GPa" decoding="async"><span>High pressure</span></a>
+<a href="#fig-reactions" data-fig="fig-reactions:0:0"><img src="assets/img/glance/reactions.webp" width="480" height="480" alt="Crystalline acetonitrile at 35 GPa with three molecules linked into a chain" decoding="async"><span>Reactions</span></a>
+</div>
+<figcaption class="cap">Structures from my projects. Pick one to turn it in 3D.</figcaption>
+</figure>
 </div>
 
-<!-- ================= 1 research ================= -->
+<!-- ================= research ================= -->
 <section class="sec" id="research" aria-labelledby="research-h">
-<div class="sec-head"><span class="sec-n">1</span><h2 id="research-h">Research</h2>
+<div class="sec-head"><h2 id="research-h">Research</h2>
 <p class="sec-sub">Six papers, three preprints, and four manuscripts. The note with each one says what I did.</p></div>
 
 <div class="filters" role="group" aria-label="Filter the list">
@@ -131,12 +122,11 @@ austinellis.org</a>
 
 <article class="ref" id="ref-elfnet" data-tags="first ml superhydrides">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k"><i>J. Mater. Inf.</i> <b>2026</b>, 6, 45 <span class="tag hot">Front cover</span></p>
 <h4><a href="https://www.oaepublish.com/articles/jmi.2026.44">ELFNet: electron localization from superposed atomic densities</a></h4>
 <p class="ref-au"><b>A. Ellis</b>, S. Ellis, M. Miao</p>
 <p class="ref-sum">A periodic 3D convolutional network maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation.</p>
-<p class="ref-links"><a href="https://www.oaepublish.com/articles/jmi.2026.44">Paper</a><a href="https://openreview.net/forum?id=VHX3ubJCuK">Workshop paper</a><a href="https://github.com/Austin243/ELFNet">Code</a><a href="posters/SeitzELF_3DCNN.pdf">Poster</a><a href="slides/ellis-aps-2026.pdf">Slides</a><a class="figlink" href="#scheme-2">Scheme 2 <span>steps</span></a><a class="figlink" href="#fig-elfnet" data-fig="fig-elfnet:0:0">Fig. 2 <span>3D</span></a></p>
+<p class="ref-links"><a href="https://www.oaepublish.com/articles/jmi.2026.44">Paper</a><a href="https://openreview.net/forum?id=VHX3ubJCuK">Workshop paper</a><a href="https://github.com/Austin243/ELFNet">Code</a><a href="posters/SeitzELF_3DCNN.pdf">Poster</a><a href="slides/ellis-aps-2026.pdf">Slides</a><a class="figlink" href="#scheme-2"><b>How it works</b><span>steps</span></a><a class="figlink" href="#fig-elfnet" data-fig="fig-elfnet:0:0"><b>CaH<sub>6</sub></b><span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b class="first">First author.</b> I designed, trained, and tested the network.</p>
@@ -146,12 +136,11 @@ austinellis.org</a>
 
 <article class="ref" id="ref-h2" data-tags="first electrides pressure">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k"><i>J. Phys. Chem. Lett.</i> <b>2026</b>, 17 (29), 8198–8205</p>
 <h4><a href="https://doi.org/10.1021/acs.jpclett.6c01415">Emerging electride in molecular hydrogen metallization</a></h4>
 <p class="ref-au"><b>A. Ellis</b>, S. Ellis, A. Pandit, M. Miao</p>
 <p class="ref-sum">As solid hydrogen metallizes under pressure, electrons localize in the interstitial regions between H<sub>2</sub> molecules, an electride-like route that sets it apart from other molecular crystals.</p>
-<p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.6c01415">Paper</a><a href="slides/ellis-thesis-defense-2026.pdf">Thesis slides</a><a class="figlink" href="#fig-electrides" data-fig="fig-electrides:1:0">Fig. 3b <span>3D</span></a></p>
+<p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.6c01415">Paper</a><a href="slides/ellis-thesis-defense-2026.pdf">Thesis slides</a><a class="figlink" href="#fig-electrides" data-fig="fig-electrides:1:0"><b>Solid H<sub>2</sub></b><span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b class="first">First author.</b> I ran the PBE and HSE06 calculations and the analysis of the interstitial states.</p>
@@ -161,12 +150,11 @@ austinellis.org</a>
 
 <article class="ref" id="ref-fe" data-tags="pressure">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k"><i>Proc. Natl. Acad. Sci. U.S.A.</i> <b>2025</b>, 122, e2414911122</p>
 <h4><a href="https://doi.org/10.1073/pnas.2414911122">Iron redox chemistry in deep Earth</a></h4>
 <p class="ref-au">X. Wang, X. Feng, J. Li, Y. Lv, <b>A. Ellis</b>, S. Scott, A. Pandit, D. Khodagholian, R. J. Hemley, M. G. Jackson, F. J. Spera, S. A. T. Redfern, M. Miao</p>
 <p class="ref-sum">Large-scale first-principles calculations show iron turning from electron donor to electron acceptor at core pressures, which changes the elements it can pull into Earth’s core.</p>
-<p class="ref-links"><a href="https://doi.org/10.1073/pnas.2414911122">Paper</a><a href="https://newsroom.csun.edu/2025/11/18/study-by-csun-prof-upends-understanding-of-what-happens-to-iron-at-earths-core/">CSUN Newsroom</a><a class="figlink" href="#fig-pressure" data-fig="fig-pressure:0:0">Fig. 5a <span>3D</span></a></p>
+<p class="ref-links"><a href="https://doi.org/10.1073/pnas.2414911122">Paper</a><a href="https://newsroom.csun.edu/2025/11/18/study-by-csun-prof-upends-understanding-of-what-happens-to-iron-at-earths-core/">CSUN Newsroom</a><a class="figlink" href="#fig-pressure" data-fig="fig-pressure:0:0"><b>Fe–I</b><span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b>5th of 13 authors.</b> I mapped phase stability across Fe–p-block compounds with CALYPSO searches and HSE06 convex hulls, and ran the Bader charge analysis.</p>
@@ -176,12 +164,11 @@ austinellis.org</a>
 
 <article class="ref" id="ref-superhydrides" data-tags="superhydrides ml">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k"><i>J. Am. Chem. Soc.</i> <b>2025</b>, 147 (44), 40407–40419</p>
 <h4><a href="https://doi.org/10.1021/jacs.5c11731">Metal superhydrides from chemical templates</a></h4>
 <p class="ref-au">Y. Sun, <b>A. Ellis</b>, X. Chen, M. Miao</p>
 <p class="ref-sum">A template-guided machine-learning workflow found 13 new structural prototypes and 31 stable metal superhydrides, 19 of them with predicted T<sub>c</sub> above 100 K.</p>
-<p class="ref-links"><a href="https://doi.org/10.1021/jacs.5c11731">Paper</a><a href="https://openreview.net/forum?id=dEtRvi7G5i">Workshop paper</a><a href="posters/ML_BatchedSuperhydrides.pdf">Poster</a><a class="figlink" href="#fig-superhydrides" data-fig="fig-superhydrides:1:0">Fig. 4b <span>3D</span></a></p>
+<p class="ref-links"><a href="https://doi.org/10.1021/jacs.5c11731">Paper</a><a href="https://openreview.net/forum?id=dEtRvi7G5i">Workshop paper</a><a href="posters/ML_BatchedSuperhydrides.pdf">Poster</a><a class="figlink" href="#fig-superhydrides" data-fig="fig-superhydrides:1:0"><b>U<sub>10</sub>H<sub>84</sub></b><span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b>2nd of 4 authors.</b> I helped build the training set and ran the template-guided CALYPSO searches and stability screening.</p>
@@ -191,12 +178,11 @@ austinellis.org</a>
 
 <article class="ref" id="ref-nakh12" data-tags="superhydrides pressure">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k"><i>Adv. Funct. Mater.</i> <b>2025</b>, 35, 2415910</p>
 <h4><a href="https://doi.org/10.1002/adfm.202415910">Superconductivity in molecular hydrides</a></h4>
 <p class="ref-au">W. Zhao, <b>A. Ellis</b>, D. Duan, H. Wang, Q. Jiang, M. Du, T. Cui, M. Miao</p>
 <p class="ref-sum">Interstitial electrons act as chemical templates that assemble H<sub>2</sub> units in NaKH<sub>12</sub>, predicted to superconduct up to 245 K at a moderate 60 GPa.</p>
-<p class="ref-links"><a href="https://doi.org/10.1002/adfm.202415910">Paper</a><a class="figlink" href="#fig-superhydrides" data-fig="fig-superhydrides:0:0">Fig. 4a <span>3D</span></a></p>
+<p class="ref-links"><a href="https://doi.org/10.1002/adfm.202415910">Paper</a><a class="figlink" href="#fig-superhydrides" data-fig="fig-superhydrides:0:0"><b>NaKH<sub>12</sub></b><span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b>2nd of 8 authors.</b> I did the band-structure, density-of-states, crystal-orbital, and ELF analyses.</p>
@@ -206,12 +192,11 @@ austinellis.org</a>
 
 <article class="ref" id="ref-tmdc" data-tags="electrides">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k"><i>J. Phys. Chem. Lett.</i> <b>2024</b>, 15 (23), 6174–6182</p>
 <h4><a href="https://doi.org/10.1021/acs.jpclett.4c01263">Tunable electrides on monolayer TMDCs</a></h4>
 <p class="ref-au">Y. Sun, <b>A. Ellis</b>, S. Diaz, W. Li, M. Miao</p>
 <p class="ref-sum">Chalcogen vacancies strengthen the weak electride character of monolayer transition-metal dichalcogenides to the level of known electrides, and the vacancy states help catalyze hydrogen evolution.</p>
-<p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.4c01263">Paper</a><a href="posters/TunableElectride_TMDCs.pdf">Poster</a><a class="figlink" href="#fig-electrides" data-fig="fig-electrides:0:0">Fig. 3a <span>3D</span></a></p>
+<p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.4c01263">Paper</a><a href="posters/TunableElectride_TMDCs.pdf">Poster</a><a class="figlink" href="#fig-electrides" data-fig="fig-electrides:0:0"><b>MoS<sub>2</sub> vacancy</b><span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b>2nd of 5 authors.</b> I analyzed the vacancy states with ELF, charge-density differences, and band structures, and helped with the H-adsorption calculations.</p>
@@ -225,12 +210,11 @@ austinellis.org</a>
 
 <article class="ref" id="ref-cs-polyoxides" data-tags="pressure">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k"><i>arXiv</i> <b>2026</b>, 2110.07865 <span class="tag">Preprint</span></p>
 <h4><a href="https://arxiv.org/abs/2110.07865">A practical route to demonstrating core reactivity in Cs polyoxides under pressure</a></h4>
 <p class="ref-au">Y. Sun, S. Ellis, D. Khodagholian, L. Wyke, <b>A. Ellis</b>, P. C. Müller, B. N. Schüpp, R. Nelson, R. Dronskowski, M. Miao</p>
 <p class="ref-sum">First-principles structure searches show the polyoxygen units of Cs–O compounds breaking down under pressure, as the Cs core electrons start to take part in bonding.</p>
-<p class="ref-links"><a href="https://arxiv.org/abs/2110.07865">Preprint</a><a href="posters/Cs_polyoxide_CoreReactivity.pdf">Poster</a><a class="figlink" href="#fig-pressure" data-fig="fig-pressure:1:0">Fig. 5b <span>3D</span></a></p>
+<p class="ref-links"><a href="https://arxiv.org/abs/2110.07865">Preprint</a><a href="posters/Cs_polyoxide_CoreReactivity.pdf">Poster</a><a class="figlink" href="#fig-pressure" data-fig="fig-pressure:1:0"><b>CsO</b><span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b>5th of 10 authors.</b></p>
@@ -239,7 +223,6 @@ austinellis.org</a>
 
 <article class="ref" id="ref-cs-core" data-tags="pressure">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k"><i>arXiv</i> <b>2026</b>, 2611.06009 <span class="tag">Preprint</span></p>
 <h4><a href="https://arxiv.org/abs/2611.06009">Core reactivity in Cs–Ba–O ternary system under pressure</a></h4>
 <p class="ref-au">S. Ellis, <b>A. Ellis</b>, L. Wyke, C. Taylor, M. Miao</p>
@@ -253,12 +236,11 @@ austinellis.org</a>
 
 <article class="ref" id="ref-wisp" data-tags="first ml">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k"><i>ChemRxiv</i> <b>2026</b> <span class="tag">Preprint</span></p>
 <h4><a href="https://doi.org/10.26434/chemrxiv.15011092/v1">WISP: learning spin-resolved electron localization from atomic environments</a></h4>
 <p class="ref-au"><b>A. Ellis</b></p>
 <p class="ref-sum">A network that predicts the electron localization function of both spin channels at any point in a crystal, from the atomic structure and the magnetic moments on the atoms. On 21,922 held-out structures the mean absolute error is 0.011 per channel on the ELF scale of 0 to 1.</p>
-<p class="ref-links"><a href="https://doi.org/10.26434/chemrxiv.15011092/v1">Preprint</a><a class="figlink" href="#scheme-1">Scheme 1 <span>steps</span></a><a class="figlink" href="#fig-wisp" data-fig="fig-wisp:0:0">Fig. 1a <span>3D</span></a><a class="figlink" href="#fig-wisp" data-fig="fig-wisp:1:0">Fig. 1b <span>3D</span></a></p>
+<p class="ref-links"><a href="https://doi.org/10.26434/chemrxiv.15011092/v1">Preprint</a><a class="figlink" href="#scheme-1"><b>How it works</b><span>steps</span></a><a class="figlink" href="#fig-wisp" data-fig="fig-wisp:0:0"><b>MnPd</b><span>3D</span></a><a class="figlink" href="#fig-wisp" data-fig="fig-wisp:1:0"><b>Sc<sub>5</sub>Cl<sub>8</sub></b><span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b class="first">Sole author.</b></p>
@@ -271,12 +253,11 @@ austinellis.org</a>
 
 <article class="ref" id="ref-polymerization" data-tags="first reactions pressure">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k">Manuscript in preparation</p>
 <h4>Mapping acetonitrile polymerization under pressure with ReactionFlow</h4>
 <p class="ref-au"><b>A. Ellis</b>, S. Bagchi, M. Goswami, J. Jakowski, J. Huang, P. Ganesh, I. Ivanov</p>
 <p class="ref-sum">Compressed crystalline acetonitrile polymerizes through hydrogen transfers and <span style="white-space:nowrap">C–C</span> additions. ReactionFlow picks these steps out of molecular dynamics, and DFT checks their barriers.</p>
-<p class="ref-links"><a href="https://github.com/Austin243/ReactionFlow">Code</a><a class="figlink" href="#fig-reactions" data-fig="fig-reactions:0:0">Fig. 6a <span>3D</span></a></p>
+<p class="ref-links"><a href="https://github.com/Austin243/ReactionFlow">Code</a><a class="figlink" href="#fig-reactions" data-fig="fig-reactions:0:0"><b>CH<sub>3</sub>CN, 35 GPa</b><span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b class="first">First author.</b></p>
@@ -285,12 +266,11 @@ austinellis.org</a>
 
 <article class="ref" id="ref-tmd-vacancies" data-tags="electrides">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k">Manuscript · draft available upon request</p>
 <h4>Statistical prediction of vacancy thermodynamics and stress coupling in chalcogen-alloyed TMDs</h4>
 <p class="ref-au">J. Jeffries, <b>A. Ellis</b>, S. Ellis, E. Martinez, E. Zarkadoula</p>
 <p class="ref-sum">A statistical prediction of how chalcogen vacancies form in alloyed transition-metal dichalcogenides, and of how their energies respond to stress.</p>
-<p class="ref-links"><a class="figlink" href="#fig-electrides" data-fig="fig-electrides:2:0">Fig. 3c <span>3D</span></a></p>
+<p class="ref-links"><a class="figlink" href="#fig-electrides" data-fig="fig-electrides:2:0"><b>TaS<sub>2</sub> vacancy</b><span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b>2nd of 5 authors.</b></p>
@@ -299,7 +279,6 @@ austinellis.org</a>
 
 <article class="ref" id="ref-mlip" data-tags="first ml reactions">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k">Manuscript · draft available upon request</p>
 <h4>Accuracy and limits of pretrained interatomic potentials across molecular reaction pathways</h4>
 <p class="ref-au"><b>A. Ellis</b>, R. Morelock, S. Bagchi, A. M. dos Santos, M. Goswami, J. Jakowski, J. Huang, P. Ganesh, I. Ivanov</p>
@@ -313,12 +292,11 @@ austinellis.org</a>
 
 <article class="ref" id="ref-oligomerization" data-tags="reactions">
 <div>
-<span class="ref-n"></span>
 <p class="ref-k">Manuscript in preparation</p>
 <h4>Stimulus-directed oligomerization and polymerization of acetonitrile</h4>
 <p class="ref-au">I. N. Ivanov, <b>A. Ellis</b>, P. Christakopoulos, A. Puretsky, C. Rouleau, J. Huang, J. Jakowski, M. Goswami, P. Ganesh, B. Sumpter</p>
 <p class="ref-sum">How the choice of stimulus directs acetonitrile toward oligomers or polymers.</p>
-<p class="ref-links"><a class="figlink" href="#fig-reactions" data-fig="fig-reactions:1:0">Fig. 6b <span>3D</span></a></p>
+<p class="ref-links"><a class="figlink" href="#fig-reactions" data-fig="fig-reactions:1:0"><b>On Na(100)</b><span>3D</span></a></p>
 </div>
 <aside class="ref-side">
 <p class="note"><span class="label">My role</span><b>2nd of 10 authors.</b></p>
@@ -328,31 +306,31 @@ austinellis.org</a>
 <p class="empty" hidden>Nothing in the list matches that filter.</p>
 </section>
 
-<!-- ================= 2 figures ================= -->
+<!-- ================= figures ================= -->
 <section class="sec" id="figures" aria-labelledby="figures-h">
-<div class="sec-head"><span class="sec-n">2</span><h2 id="figures-h">Figures</h2>
+<div class="sec-head"><h2 id="figures-h">Figures</h2>
 <p class="sec-sub">Structures and electron densities from my projects, in three parts: the two networks, WISP and ELFNet, and then the other projects. Drag a figure to rotate it, pinch or ⌘/ctrl-scroll to zoom, and move the slider to change the isosurface.</p></div>
 <noscript><p class="sec-sub">The 3D figures need JavaScript.</p></noscript>
 
-<!-- 2.1 WISP: how it works, then its predictions next to DFT -->
+<!-- WISP: how it works, then its predictions next to DFT -->
 <div class="sub" id="wisp">
-<div class="sub-head"><span class="sub-n">2.1</span><h3>WISP</h3>
-<p>A network that predicts the electron localization function of both spin channels at any point in a crystal, from the atomic structure and the magnetic moments on the atoms <a class="cite" href="#ref-wisp" data-ref="wisp">[9]</a>. Scheme 1 steps through how it works, and Figure 1 puts its predictions next to the DFT calculations.</p></div>
+<div class="sub-head"><h3>WISP</h3>
+<p>A network that predicts the electron localization function of both spin channels at any point in a crystal, from the atomic structure and the magnetic moments on the atoms (<a class="cite" href="#ref-wisp" data-ref="wisp">ChemRxiv 2026</a>). The first figure steps through how it works, and the second puts its predictions next to the DFT calculations.</p></div>
 <figure class="fig scheme" id="scheme-1"></figure>
 <figure class="fig wide" id="fig-wisp"></figure>
 </div>
 
-<!-- 2.2 ELFNet -->
+<!-- ELFNet -->
 <div class="sub" id="elfnet">
-<div class="sub-head"><span class="sub-n">2.2</span><h3>ELFNet</h3>
-<p>A periodic 3D convolutional network that maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation <a class="cite" href="#ref-elfnet" data-ref="elfnet">[1]</a>. Scheme 2 steps through how it works, and Figure 2 puts its prediction next to the DFT calculation.</p></div>
+<div class="sub-head"><h3>ELFNet</h3>
+<p>A periodic 3D convolutional network that maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation (<a class="cite" href="#ref-elfnet" data-ref="elfnet">J. Mater. Inf. 2026</a>). The first figure steps through how it works, and the second puts its prediction next to the DFT calculation.</p></div>
 <figure class="fig scheme" id="scheme-2"></figure>
 <figure class="fig wide" id="fig-elfnet"></figure>
 </div>
 
-<!-- 2.3 the other projects -->
+<!-- the other projects -->
 <div class="sub" id="structures">
-<div class="sub-head"><span class="sub-n">2.3</span><h3>Other projects</h3>
+<div class="sub-head"><h3>Other projects</h3>
 <p>Electrides, superhydrides, compounds under pressure, and reactions.</p></div>
 <figure class="fig" id="fig-electrides"></figure>
 <figure class="fig" id="fig-superhydrides"></figure>
@@ -361,37 +339,37 @@ austinellis.org</a>
 </div>
 </section>
 
-<!-- ================= 3 news ================= -->
+<!-- ================= news ================= -->
 <section class="sec" id="news" aria-labelledby="news-h">
-<div class="sec-head"><span class="sec-n">3</span><h2 id="news-h">News</h2>
-<p class="sec-sub">The revision history of this page. <a class="more" href="updates.html">All updates, with photos →</a></p></div>
+<div class="sec-head"><h2 id="news-h">News</h2>
+<p class="sec-sub"><a class="more" href="updates.html">All updates, with photos →</a></p></div>
 <div class="row">
 <ol class="news" reversed>
-<li><a class="v" href="updates.html#v12">v12</a><time datetime="2026-10">Oct 2026</time><p>Our ELFNet paper was selected for the front cover of the <em>Journal of Materials Informatics</em>, Volume 6, Issue 3.</p></li>
-<li><a class="v" href="updates.html#v11">v11</a><time datetime="2026-10">Oct 2026</time><p>Took part in the Open Scientific Intelligence (OSI) Hackathon with an ORNL team. We built <em>Electride Detectives</em>, a swarm of LLM agents that reason about what makes a material an electride.</p></li>
-<li><a class="v" href="updates.html#v10">v10</a><time datetime="2026-09">Sep 2026</time><p>Published my first-author ELFNet paper, <em>Prediction of Electron Localization Functions from Superposed Atomic Densities for Accelerated Superhydride Discovery</em>, in the <em>Journal of Materials Informatics</em>.</p></li>
-<li><a class="v" href="updates.html#v9">v9</a><time datetime="2026-08">Aug 2026</time><p>Attended my first CNMS User Meeting at Oak Ridge and presented a poster on my internship work.</p></li>
-<li><a class="v" href="updates.html#v8">v8</a><time datetime="2026-07">Jul 2026</time><p>Published my first-author paper, <em>Emerging Electride Behavior and Metallization in Molecular Hydrogen under High Pressure</em>, in <em>The Journal of Physical Chemistry Letters</em>.</p></li>
-<li><a class="v" href="updates.html#v7">v7</a><time datetime="2026-05">May 2026</time><p>Started a research internship at Oak Ridge National Laboratory’s Center for Nanophase Materials Sciences.</p></li>
-<li><a class="v" href="updates.html#v6">v6</a><time datetime="2026-05">May 2026</time><p>Defended my M.S. thesis, <em>From New Chemistry to New Materials: Computational and Data-Driven Discovery</em>, at CSU Northridge.</p></li>
-<li><a class="v" href="updates.html#v5">v5</a><time datetime="2026-03">Mar 2026</time><p>Talk at the APS Global Physics Summit in Denver on predicting electron localization functions with a 3D CNN, supported by a DCOMP travel award.</p></li>
-<li><a class="v" href="updates.html#v4">v4</a><time datetime="2026-02">Feb 2026</time><p>Led the semester’s first Chemistry and Biochemistry Journal Club meeting, on <em>Metallic Oxides and the Overlooked Role of Bandwidth</em>.</p></li>
-<li><a class="v" href="updates.html#v3">v3</a><time datetime="2026-01">Jan 2026</time><p>Two posters at the Gordon Research Conference on Multifunctional Materials and Structures, Ventura.</p></li>
-<li><a class="v" href="updates.html#v2">v2</a><time datetime="2025-12">Dec 2025</time><p>NeurIPS AI4Mat 2025, San Diego: two posters and a travel grant.</p></li>
-<li><a class="v" href="updates.html#v1">v1</a><time datetime="2025-11">Nov 2025</time><p>CSUN Newsroom featured our work on the pressure-driven redox reversal of iron in Earth’s core.</p></li>
+<li><a class="when" href="updates.html#v12"><time datetime="2026-10">Oct 2026</time></a><p>Our ELFNet paper was selected for the front cover of the <em>Journal of Materials Informatics</em>, Volume 6, Issue 3.</p></li>
+<li><a class="when" href="updates.html#v11"><time datetime="2026-10">Oct 2026</time></a><p>Took part in the Open Scientific Intelligence (OSI) Hackathon with an ORNL team. We built <em>Electride Detectives</em>, a swarm of LLM agents that reason about what makes a material an electride.</p></li>
+<li><a class="when" href="updates.html#v10"><time datetime="2026-09">Sep 2026</time></a><p>Published my first-author ELFNet paper, <em>Prediction of Electron Localization Functions from Superposed Atomic Densities for Accelerated Superhydride Discovery</em>, in the <em>Journal of Materials Informatics</em>.</p></li>
+<li><a class="when" href="updates.html#v9"><time datetime="2026-08">Aug 2026</time></a><p>Attended my first CNMS User Meeting at Oak Ridge and presented a poster on my internship work.</p></li>
+<li><a class="when" href="updates.html#v8"><time datetime="2026-07">Jul 2026</time></a><p>Published my first-author paper, <em>Emerging Electride Behavior and Metallization in Molecular Hydrogen under High Pressure</em>, in <em>The Journal of Physical Chemistry Letters</em>.</p></li>
+<li><a class="when" href="updates.html#v7"><time datetime="2026-05">May 2026</time></a><p>Started a research internship at Oak Ridge National Laboratory’s Center for Nanophase Materials Sciences.</p></li>
+<li><a class="when" href="updates.html#v6"><time datetime="2026-05">May 2026</time></a><p>Defended my M.S. thesis, <em>From New Chemistry to New Materials: Computational and Data-Driven Discovery</em>, at CSU Northridge.</p></li>
+<li><a class="when" href="updates.html#v5"><time datetime="2026-03">Mar 2026</time></a><p>Talk at the APS Global Physics Summit in Denver on predicting electron localization functions with a 3D CNN, supported by a DCOMP travel award.</p></li>
+<li><a class="when" href="updates.html#v4"><time datetime="2026-02">Feb 2026</time></a><p>Led the semester’s first Chemistry and Biochemistry Journal Club meeting, on <em>Metallic Oxides and the Overlooked Role of Bandwidth</em>.</p></li>
+<li><a class="when" href="updates.html#v3"><time datetime="2026-01">Jan 2026</time></a><p>Two posters at the Gordon Research Conference on Multifunctional Materials and Structures, Ventura.</p></li>
+<li><a class="when" href="updates.html#v2"><time datetime="2025-12">Dec 2025</time></a><p>NeurIPS AI4Mat 2025, San Diego: two posters and a travel grant.</p></li>
+<li><a class="when" href="updates.html#v1"><time datetime="2025-11">Nov 2025</time></a><p>CSUN Newsroom featured our work on the pressure-driven redox reversal of iron in Earth’s core.</p></li>
 </ol>
 <aside>
 <figure class="mfig">
 <a href="https://www.oaepublish.com/volumes/jmi.2052"><img src="assets/img/jmi-cover-6-3.webp" width="800" height="1131" alt="Front cover of the Journal of Materials Informatics, Volume 6, Issue 3, showing the ELFNet paper" loading="lazy" decoding="async"></a>
-<figcaption><b>v12</b> · The front cover of the <em>Journal of Materials Informatics</em>, Volume 6, Issue 3, September 2026 <a class="cite" href="#ref-elfnet" data-ref="elfnet"></a>.</figcaption>
+<figcaption>The front cover of the <em>Journal of Materials Informatics</em>, Volume 6, Issue 3, September 2026.</figcaption>
 </figure>
 </aside>
 </div>
 </section>
 
-<!-- ================= 4 about ================= -->
+<!-- ================= about ================= -->
 <section class="sec" id="about" aria-labelledby="about-h">
-<div class="sec-head"><span class="sec-n">4</span><h2 id="about-h">About</h2></div>
+<div class="sec-head"><h2 id="about-h">About</h2></div>
 <div class="row">
 <div>
 <div class="bio">
@@ -427,13 +405,13 @@ austinellis.org</a>
 </div>
 </section>
 
-<!-- ================= 5 talks, outreach, code ================= -->
+<!-- ================= talks, outreach, code ================= -->
 <section class="sec" id="talks" aria-labelledby="talks-h">
-<div class="sec-head"><span class="sec-n">5</span><h2 id="talks-h">Talks, outreach, and code</h2></div>
+<div class="sec-head"><h2 id="talks-h">Talks, outreach, and code</h2></div>
 <div class="row">
 <div>
 <table class="bt">
-<caption><b>Table 1</b><span class="pipe"> | </span>Posters and talks.</caption>
+<caption>Posters and talks</caption>
 <thead><tr><th scope="col">Date</th><th scope="col">Kind</th><th scope="col">Where</th></tr></thead>
 <tbody>
 <tr><td>Oct 2026</td><td>Poster</td><td>ORNL NEAT Science Symposium</td></tr>
@@ -470,7 +448,6 @@ austinellis.org</a>
 
 <footer class="foot">
 <p>© 2026 Austin Ellis</p>
-<p class="colophon">Set in Newsreader, Inter, and JetBrains Mono.</p>
 <nav aria-label="Contact">
 <a href="mailto:austin.ellis813@gmail.com">Email</a>
 <a href="https://github.com/Austin243">GitHub</a>

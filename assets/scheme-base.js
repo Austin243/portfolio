@@ -1,4 +1,4 @@
-/* What the 3D schemes share: the row of step chips, the stage with its cards, Back / Next / Replay, the text beside
+/* What the step-by-step figures share: the row of step chips, the stage with its cards, Back / Next / Replay, the text beside
    the picture, and the clock that plays a step. A scheme hands over its steps and a `make` function; `make` gets the
    tools below and returns the hooks that draw its own picture:
      layout()        the stage changed size (false while it has none)
@@ -13,12 +13,12 @@ window.LP_scheme = (host, def) => {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches, STEPS = def.steps;
   host.innerHTML =
     '<div class="fig-main">' +
-    '<ol class="steps" aria-label="Steps of Scheme ' + def.n + '">' + STEPS.map((s, i) => '<li><button type="button" data-step="' + i + '"><b>' + (i + 1) + '</b>' + s.name + '</button></li>').join('') + '</ol>' +
+    '<ol class="steps" aria-label="' + def.label + ': steps">' + STEPS.map((s, i) => '<li><button type="button" data-step="' + i + '"><b>' + (i + 1) + '</b>' + s.name + '</button></li>').join('') + '</ol>' +
     '<div class="sch-wrap"><div class="stage sch-stage sch-3d">' + def.stage + '<p class="hint" hidden>' + def.hint + '</p></div><p class="sch-info"></p></div>' +
     '<div class="sch-nav"><button type="button" class="back">← Back</button><span class="where"><button type="button" class="replay">Replay</button><span class="count"></span></span><button type="button" class="next"></button></div>' +
     '</div>' +
     '<figcaption class="fig-side">' +
-    '<p class="fig-title"><b>Scheme ' + def.n + '</b><span class="pipe">|</span>' + def.title + '</p>' +
+    '<p class="fig-title"><b>' + def.title + '</b>' + (def.cite ? ' (' + def.cite + ')' : '') + '</p>' +
     '<div class="sch-text" aria-live="polite"><h4></h4><p class="cap"></p></div>' +
     '<div class="legend">' + def.legend + '</div><p class="spec">' + def.spec + '</p></figcaption>';
   const stage = $('.sch-stage'), info = $('.sch-info'), hint = $('.hint'), chips = $$('.steps button'), back = $('.back'), next = $('.next'), replay = $('.replay'), count = $('.count');

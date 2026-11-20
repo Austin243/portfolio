@@ -1,8 +1,8 @@
-/* Scheme 2 in 3D: how ELFNet works, one step at a time, in one cell of the calcium lattice of CaH6 that can be turned.
+/* How ELFNet works, in 3D: one step at a time, in one cell of the calcium lattice of CaH6 that can be turned.
    The atoms, the superposed atomic density on a plane through the middle of the cell, a 5 x 5 x 5 convolution block that
    can be dragged through a face and comes back in at the opposite one, the reach of a grid point growing through the
    sixteen residual blocks, the ELF that comes out (the map, and the isosurface of the figures), and the comparison with DFT.
-   The fields are the real ones (assets/elfnet-plane.js and the scenes of Figure 2); the drawings of the network at work
+   The fields are the real ones (assets/elfnet-plane.js and the scenes of the 3D figure below it); the drawings of the network at work
    are schematic. Where WebGL is missing, the flat version (scheme-elfnet.js) is shown instead. */
 (() => {
   'use strict';
@@ -96,7 +96,7 @@
       text: 'A last convolution and a sigmoid turn the 32 numbers held at each grid point into one value between 0 and 1. That is the predicted ELF, on the same grid as the input: the map changes to it, and the yellow surface is where it reaches ' + ISO + '. The whole prediction is one pass through the network.',
       alt: 'The density map changes into a map of the predicted electron localization function, and a yellow isosurface appears in the cell.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is ELFNet, right of it the DFT calculation of the same lattice. Between the atoms both have the same network of high ELF, and the small spheres mark where the hydrogens of CaH<sub>6</sub> sit on it. Close to the nuclei the two differ; ELFNet’s training puts its weight on the space between the atoms. The network was trained on 326,009 structures from about −50 to 500 GPa, and the whole workflow is about 350 times faster than computing the ELF with VASP, on the hardware in the paper.' + (figN ? ' <a href="#fig-elfnet">Figure ' + figN + '</a> has the two side by side.' : ''),
+      text: 'Left of the line is ELFNet, right of it the DFT calculation of the same lattice. Between the atoms both have the same network of high ELF, and the small spheres mark where the hydrogens of CaH<sub>6</sub> sit on it. Close to the nuclei the two differ; ELFNet’s training puts its weight on the space between the atoms. The network was trained on 326,009 structures from about −50 to 500 GPa, and the whole workflow is about 350 times faster than computing the ELF with VASP, on the hardware in the paper.' + (figN ? ' <a href="#fig-elfnet">The figure below</a> has the two side by side.' : ''),
       alt: 'The cell with a line across the picture: the ELFNet prediction on the left and the DFT calculation on the right, and small spheres at the hydrogen sites of CaH6.' }
   ];
   let strip = '<span class="b" data-k="stem">Stem</span>';
@@ -104,8 +104,8 @@
   strip += '<span class="b" data-k="post">Post</span><span class="b" data-k="head">Head</span>';
 
   window.LP_scheme(host, {
-    n: 2, steps: STEPS, hint: 'drag to turn', hintFrom: 0,
-    title: 'How ELFNet turns a crystal structure into an ELF map, one step at a time. ' + cite,
+    label: 'How ELFNet works', steps: STEPS, hint: 'drag to turn', hintFrom: 0,
+    title: 'How ELFNet turns a crystal structure into an ELF map, one step at a time.', cite: cite,
     stage: '<canvas class="gl" tabindex="0" role="img"></canvas><canvas class="ov" aria-hidden="true"></canvas>' +
       '<div class="sch-net" aria-hidden="true" hidden>' + strip + '</div>' +
       '<div class="sch-read" hidden><canvas class="sig" aria-hidden="true"></canvas><div><p class="k"></p><p class="v"></p></div></div>' +
@@ -120,7 +120,7 @@
       window.LP_SCHEME2 = st;   // for checking the page from the console
       const cv = $('canvas.gl'), ov = $('canvas.ov'), netEl = $('.sch-net'), read = $('.sch-read'), sig = $('canvas.sig'), wipeEl = $('.sch-wipe'), qEl = $('.sch-q'), hint = $('.hint');
       const readK = $('.k', read), readV = $('.v', read), netParts = $$('.sch-net > *');
-      const scenes = {};   // the isosurfaces come from the scenes of Figure 2
+      const scenes = {};   // the isosurfaces come from the scenes of the 3D figure below
       let eng = null, dragging = false;
 
       // the view: from the front, turned to the side and seen a little from above
@@ -257,7 +257,7 @@
         wipeEl.style.left = (st.split * 100) + '%'; wipeEl.setAttribute('aria-valuenow', String(Math.round(st.split * 100)));
       };
       const sync = (k) => {
-        cv.setAttribute('aria-label', 'Scheme 2, step ' + (k + 1) + ' of ' + STEPS.length + ', ' + STEPS[k].name + '. ' + STEPS[k].alt);
+        cv.setAttribute('aria-label', 'How ELFNet works, step ' + (k + 1) + ' of ' + STEPS.length + ', ' + STEPS[k].name + '. ' + STEPS[k].alt);
         netEl.hidden = k < 2 || k > 4; read.hidden = k < 4; qEl.hidden = k < 2; wipeEl.hidden = k !== 5;
         hint.textContent = k < 2 ? 'drag to turn' : 'drag to turn · drag the point';
       };

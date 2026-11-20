@@ -1,5 +1,5 @@
-/* Figure content for the Living Preprint preview: which scenes each figure shows, and the caption,
-   legend and one-line record of every scene. The wording is taken from the live austinellis.org viewers. */
+/* What the 3D figures show: which scenes each figure holds, and the caption, legend and one-line record
+   of every scene. */
 (() => {
   'use strict';
   const C = { H: '#DAE0E8', Na: '#B1A4C8', K: '#A122F7', U: '#7AA2AA', Mo: '#B486B0', S: '#D9B43A', Ta: '#6F8FB5', Ca: '#5E93B8',
@@ -11,11 +11,11 @@
 
   window.LP_SCENES = {
     // machine learning
-    cah6_ca_elfnet: { ref: 'elfnet', field: ELF(0.71), legend: el('Ca', 'H'), given: ['Ca'],
+    cah6_ca_elfnet: { ref: 'elfnet', field: ELF(0.71), legend: el('Ca', 'H'),
       spec: 'Ca lattice of <b>CaH<sub>6</sub></b> · ELF from ELFNet · grid 32×32×32',
       label: 'Interactive 3D view: ELF of the calcium lattice of CaH6 predicted by ELFNet, with the hydrogen sites marked',
       cap: 'The calcium lattice of CaH<sub>6</sub>, with the hydrogen left out of the calculation. ELFNet predicts this ELF from superposed atomic densities, and the yellow surface encloses the sites where the hydrogens sit in CaH<sub>6</sub>, drawn as small spheres.' },
-    cah6_ca_dft: { ref: 'elfnet', field: ELF(0.71), legend: el('Ca', 'H'), given: ['Ca'],
+    cah6_ca_dft: { ref: 'elfnet', field: ELF(0.71), legend: el('Ca', 'H'),
       spec: 'Ca lattice of <b>CaH<sub>6</sub></b> · ELF from DFT · grid 28×28×28',
       label: 'Interactive 3D view: ELF of the calcium lattice of CaH6 from DFT, with the hydrogen sites marked',
       cap: 'The DFT ELF of the same lattice, for comparison. It is highest at the hydrogen sites.' },
@@ -159,13 +159,4 @@
       { name: 'CH<sub>3</sub>CN, 35 GPa', states: [['acn_m4_35gpa', 'CH₃CN · 35 GPa']] },
       { name: 'On Na(100)', states: [['na100_aminopyrimidine', 'Aminopyrimidine'], ['na100_triazine', 'Triazine']] }] }
   ];
-
-  // The graphical abstract beside the abstract: one scene with a line wiped across it. Left of the line are the atoms
-  // the calculation starts from (the scene's `given` species), right of it the electron localization that comes out.
-  window.LP_HERO = { id: 'ga', split: 0.46, panels: [{ name: 'CaH<sub>6</sub>', states: [['cah6_ca_elfnet', 'ELFNet'], ['cah6_ca_dft', 'DFT']] }],
-    caps: {
-      cah6_ca_elfnet: 'Atoms in, electrons out. Left of the line are the atoms ELFNet starts from: the calcium lattice of CaH<sub>6</sub>, with no hydrogen in it. Right of the line is the electron localization it predicts. The yellow surface closes around the sites where the hydrogens sit in CaH<sub>6</sub>, drawn as small spheres.',
-      cah6_ca_dft: 'The same lattice with the DFT calculation right of the line, for comparison. Its ELF is highest at the hydrogen sites.' },
-    // said after the citation, so the reference stays with the sentence it belongs to
-    more: { cah6_ca_elfnet: '<a href="#scheme-1">Scheme 1</a> walks through how WISP, a later network, makes this kind of prediction.' } };
 })();

@@ -1,4 +1,4 @@
-/* Scheme 1 in 3D: how WISP works, one step at a time, inside a piece of the MnPd crystal that can be turned.
+/* How WISP works, in 3D: one step at a time, inside a piece of the MnPd crystal that can be turned.
    The atoms and their moments, the message passing, a query point with its 5 Å sphere and a line from every atom in it,
    the field the decoder returns on a plane through the crystal, the spin flip, and the comparison with DFT.
    The fields are the real ones (assets/wisp-plane.js) and so are the distances and the counts; the pictures of what
@@ -99,15 +99,15 @@
       text: 'For the other spin channel, the same network runs again with every moment reversed. Reversing the moments swaps the two channels exactly, because of how the network is built, so it never has to learn that. In MnPd the spin-down channel has a large region around Pd that the spin-up channel lacks.',
       alt: 'The moment arrows turn over and the map changes to the spin-down channel, which has a large region around each palladium atom.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.' + (figN ? ' <a href="#fig-wisp">Figure ' + figN + '</a> has the same comparison with isosurfaces.' : ''),
+      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.' + (figN ? ' <a href="#fig-wisp">The figure below</a> has the same comparison with isosurfaces.' : ''),
       alt: 'The same map with a line across the picture: the WISP prediction on the left and the DFT calculation on the right. The two sides match.' }
   ];
   const GLYPHS = '<svg viewBox="0 0 46 16" width="46" height="16" aria-hidden="true"><g fill="#0B7A80"><circle cx="5" cy="8" r="3.2"/><ellipse cx="19" cy="4.4" rx="2.6" ry="3.4"/><ellipse cx="19" cy="11.6" rx="2.6" ry="3.4"/>' +
     '<g transform="translate(36 8) rotate(45)"><ellipse cx="0" cy="-4" rx="2.1" ry="3"/><ellipse cx="0" cy="4" rx="2.1" ry="3"/><ellipse cx="-4" cy="0" rx="3" ry="2.1"/><ellipse cx="4" cy="0" rx="3" ry="2.1"/></g></g></svg>';
 
   window.LP_scheme(host, {
-    n: 1, steps: STEPS, hint: 'drag to turn', hintFrom: 0,
-    title: 'How WISP predicts where electrons localize, one step at a time. ' + cite,
+    label: 'How WISP works', steps: STEPS, hint: 'drag to turn', hintFrom: 0,
+    title: 'How WISP predicts where electrons localize, one step at a time.', cite: cite,
     stage: '<canvas class="gl" tabindex="0" role="img"></canvas><canvas class="ov" aria-hidden="true"></canvas>' +
       '<div class="states sch-chan" role="group" aria-label="Spin channel shown" hidden>' +
       '<button type="button" data-ch="up">Spin up · <i>m</i></button><button type="button" data-ch="down">Spin down · −<i>m</i></button><button type="button" data-diff aria-pressed="false" hidden>Difference</button></div>' +
@@ -261,7 +261,7 @@
       };
       const sync = (k) => {
         const ch = chName();
-        cv.setAttribute('aria-label', 'Scheme 1, step ' + (k + 1) + ' of ' + STEPS.length + ', ' + STEPS[k].name + '. ' + STEPS[k].alt);
+        cv.setAttribute('aria-label', 'How WISP works, step ' + (k + 1) + ' of ' + STEPS.length + ', ' + STEPS[k].name + '. ' + STEPS[k].alt);
         chan.hidden = k < 4; $('[data-diff]', chan).hidden = k !== 5;
         $$('[data-ch]', chan).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.ch === ch)));
         $('[data-diff]', chan).setAttribute('aria-pressed', String(st.diff));

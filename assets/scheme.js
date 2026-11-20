@@ -1,4 +1,4 @@
-/* Scheme 1: how WISP works, one step at a time.
+/* How WISP works, one step at a time: the flat version, shown where WebGL is missing.
    One picture of the (110) plane of MnPd, drawn on a canvas, that changes with the step: the atoms and their moments,
    the message passing between atoms, a query point that can be dragged, the field the decoder returns, the spin flip,
    and the comparison with DFT. The fields are the real ones (assets/wisp-plane.js) and so are the distances and the
@@ -55,7 +55,7 @@ window.LP_flat1 = () => {
   };
 
   // ---------- page elements ----------
-  const figN = (window.LP_FIGS || []).findIndex((f) => f.id === 'fig-wisp') + 1;   // the number of the 3D figure that follows the scheme
+  const figN = (window.LP_FIGS || []).findIndex((f) => f.id === 'fig-wisp') + 1;   // whether the 3D figure that follows is on the page
   const STEPS = [
     { name: 'Structure', dur: 1900,
       text: 'WISP is given a crystal: which atoms it has, where they sit, the cell, and the magnetic moment on each atom. This is MnPd, cut along a plane that holds both atoms. The arrows are the moments, ' + D.moments[0].toFixed(2) + ' μ<sub>B</sub> on Mn and ' + D.moments[1].toFixed(2) + ' μ<sub>B</sub> on Pd.',
@@ -73,12 +73,12 @@ window.LP_flat1 = () => {
       text: 'For the other spin channel, the same network runs again with every moment reversed. Reversing the moments swaps the two channels exactly, because of how the network is built, so it never has to learn that. In MnPd the spin-down channel has a large region around Pd that the spin-up channel lacks.',
       alt: 'The moment arrows turn over and the map changes to the spin-down channel, which has a large region around each palladium atom.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.' + (figN ? ' <a href="#fig-wisp">Figure ' + figN + '</a> has the same comparison in 3D.' : ''),
+      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.' + (figN ? ' <a href="#fig-wisp">The figure below</a> has the same comparison in 3D.' : ''),
       alt: 'The same map with a line across it: the WISP prediction on the left and the DFT calculation on the right. The two sides match.' }
   ];
   host.innerHTML =
     '<div class="fig-main">' +
-    '<ol class="steps" aria-label="Steps of Scheme 1">' + STEPS.map((s, i) => '<li><button type="button" data-step="' + i + '"><b>' + (i + 1) + '</b>' + s.name + '</button></li>').join('') + '</ol>' +
+    '<ol class="steps" aria-label="How WISP works: steps">' + STEPS.map((s, i) => '<li><button type="button" data-step="' + i + '"><b>' + (i + 1) + '</b>' + s.name + '</button></li>').join('') + '</ol>' +
     '<div class="sch-wrap"><div class="stage sch-stage"><canvas class="sch" role="img"></canvas>' +
     '<div class="states sch-chan" role="group" aria-label="Spin channel shown" hidden>' +
     '<button type="button" data-ch="up">Spin up · <i>m</i></button><button type="button" data-ch="down">Spin down · −<i>m</i></button><button type="button" data-diff aria-pressed="false" hidden>Difference</button></div>' +
@@ -89,7 +89,7 @@ window.LP_flat1 = () => {
     '<div class="sch-nav"><button type="button" class="back">← Back</button><span class="where"><button type="button" class="replay">Replay</button><span class="count"></span></span><button type="button" class="next"></button></div>' +
     '</div>' +
     '<figcaption class="fig-side">' +
-    '<p class="fig-title"><b>Scheme 1</b><span class="pipe">|</span>How WISP predicts where electrons localize, one step at a time. ' + cite + '</p>' +
+    '<p class="fig-title"><b>How WISP predicts where electrons localize, one step at a time.</b>' + (cite ? ' (' + cite + ')' : '') + '</p>' +
     '<div class="sch-text" aria-live="polite"><h4></h4><p class="cap"></p></div>' +
     '<div class="legend"><span><i style="background:#A0489C"></i>Mn</span><span><i style="background:#B4B8B2"></i>Pd</span>' +
     '<span><em class="lg-arrow"></em>moment</span><span><em class="lg-ring"></em>encoded atom</span><span><em class="lg-q"></em>query point</span>' +
@@ -368,7 +368,7 @@ window.LP_flat1 = () => {
     const row = chips[0].closest('ol'), li = chips[k].parentNode;   // keep the chip of this step in sight when the row is wider than the column
     if (row.scrollWidth > row.clientWidth) row.scrollLeft = Math.max(0, li.offsetLeft - row.offsetLeft - (row.clientWidth - li.offsetWidth) / 2);
     put(head, (k + 1) + ' · ' + STEPS[k].name); put(body, STEPS[k].text);
-    cv.setAttribute('aria-label', 'Scheme 1, step ' + (k + 1) + ' of ' + STEPS.length + ', ' + STEPS[k].name + '. ' + STEPS[k].alt);
+    cv.setAttribute('aria-label', 'How WISP works, step ' + (k + 1) + ' of ' + STEPS.length + ', ' + STEPS[k].name + '. ' + STEPS[k].alt);
     back.disabled = k === 0; count.textContent = (k + 1) + ' / ' + STEPS.length;
     put(next, k === STEPS.length - 1 ? 'Start over ↺' : 'Next: ' + STEPS[k + 1].name + ' →');
     chan.hidden = k < 4; $('[data-diff]', chan).hidden = k !== 5;

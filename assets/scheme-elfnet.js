@@ -1,4 +1,4 @@
-/* Scheme 2: how ELFNet works, one step at a time.
+/* How ELFNet works, one step at a time: the flat version, shown where WebGL is missing.
    One face of the calcium lattice of CaH6, drawn on a canvas, that changes with the step: the atoms, the superposed
    atomic density on its grid, a convolution block that can be dragged across the edge of the cell, the reach of a grid
    point growing through the sixteen residual blocks, the ELF that comes out, and the comparison with DFT.
@@ -12,7 +12,7 @@ window.LP_flat2 = () => {
   const $$ = (s, r = host) => Array.from(r.querySelectorAll(s));
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cite = window.LP_CITE ? window.LP_CITE('elfnet') : '';
-  const figN = (window.LP_FIGS || []).findIndex((f) => f.id === 'fig-elfnet') + 1;   // the number of the 3D figure that follows the scheme
+  const figN = (window.LP_FIGS || []).findIndex((f) => f.id === 'fig-elfnet') + 1;   // whether the 3D figure that follows is on the page
 
   // ---------- the face of the cell, in Å ----------
   const A = D.a, N = D.n, ND = D.nd;   // cell edge, grid points along it for the density and the prediction, and for DFT
@@ -37,7 +37,7 @@ window.LP_flat2 = () => {
     const row = (kk) => { const o = w(kk) * n; return cr(f[o + w(i - 1)], f[o + w(i)], f[o + w(i + 1)], f[o + w(i + 2)], tx); };
     return Math.max(0, Math.min(1, cr(row(k - 1), row(k), row(k + 1), row(k + 2), ty)));
   };
-  // the blue-green-red scale of the 3D figures, softened as in Scheme 1; and white to blue for the density
+  // the blue-green-red scale of the 3D figures, softened as in the WISP figure; and white to blue for the density
   const elfColor = (t) => {
     t = Math.max(0, Math.min(1, t));
     let c;
@@ -65,7 +65,7 @@ window.LP_flat2 = () => {
       text: 'A last convolution and a sigmoid turn the 32 numbers held at each grid point into one value between 0 and 1. That is the predicted ELF, on the same grid as the input. The whole prediction is one pass through the network.',
       alt: 'The density map changes into a map of the predicted electron localization function, with a network of high values between the atoms.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is ELFNet, right of it the DFT calculation of the same lattice. Between the atoms both have the same network of high ELF, and the squares mark where the hydrogens of CaH<sub>6</sub> sit on it. Close to the nuclei the two differ; ELFNet’s training puts its weight on the space between the atoms. The network was trained on 326,009 structures from about −50 to 500 GPa, and the whole workflow is about 350 times faster than computing the ELF with VASP, on the hardware in the paper.' + (figN ? ' <a href="#fig-elfnet">Figure ' + figN + '</a> has the same comparison in 3D.' : ''),
+      text: 'Left of the line is ELFNet, right of it the DFT calculation of the same lattice. Between the atoms both have the same network of high ELF, and the squares mark where the hydrogens of CaH<sub>6</sub> sit on it. Close to the nuclei the two differ; ELFNet’s training puts its weight on the space between the atoms. The network was trained on 326,009 structures from about −50 to 500 GPa, and the whole workflow is about 350 times faster than computing the ELF with VASP, on the hardware in the paper.' + (figN ? ' <a href="#fig-elfnet">The figure below</a> has the same comparison in 3D.' : ''),
       alt: 'The same map with a line across it: the ELFNet prediction on the left and the DFT calculation on the right, and four squares at the hydrogen sites of CaH6.' }
   ];
   let net = '<span class="b" data-k="stem">Stem</span>';
@@ -73,7 +73,7 @@ window.LP_flat2 = () => {
   net += '<span class="b" data-k="post">Post</span><span class="b" data-k="head">Head</span>';
   host.innerHTML =
     '<div class="fig-main">' +
-    '<ol class="steps" aria-label="Steps of Scheme 2">' + STEPS.map((s, i) => '<li><button type="button" data-step="' + i + '"><b>' + (i + 1) + '</b>' + s.name + '</button></li>').join('') + '</ol>' +
+    '<ol class="steps" aria-label="How ELFNet works: steps">' + STEPS.map((s, i) => '<li><button type="button" data-step="' + i + '"><b>' + (i + 1) + '</b>' + s.name + '</button></li>').join('') + '</ol>' +
     '<div class="sch-wrap"><div class="stage sch-stage"><canvas class="sch" role="img"></canvas>' +
     '<div class="sch-net" aria-hidden="true" hidden>' + net + '</div>' +
     '<div class="sch-read" hidden><canvas class="sig" aria-hidden="true"></canvas><div><p class="k"></p><p class="v"></p></div></div>' +
@@ -83,7 +83,7 @@ window.LP_flat2 = () => {
     '<div class="sch-nav"><button type="button" class="back">← Back</button><span class="where"><button type="button" class="replay">Replay</button><span class="count"></span></span><button type="button" class="next"></button></div>' +
     '</div>' +
     '<figcaption class="fig-side">' +
-    '<p class="fig-title"><b>Scheme 2</b><span class="pipe">|</span>How ELFNet turns a crystal structure into an ELF map, one step at a time. ' + cite + '</p>' +
+    '<p class="fig-title"><b>How ELFNet turns a crystal structure into an ELF map, one step at a time.</b>' + (cite ? ' (' + cite + ')' : '') + '</p>' +
     '<div class="sch-text" aria-live="polite"><h4></h4><p class="cap"></p></div>' +
     '<div class="legend"><span><i style="background:#5E93B8"></i>Ca</span><span><em class="lg-k"></em>5 × 5 × 5 block</span><span><em class="lg-h"></em>H site of CaH₆</span>' +
     '<span class="lg-sad">density, low<b></b>high</span><span class="lg-elf">ELF 0<b></b>' + VMAX + '</span></div>' +
@@ -327,7 +327,7 @@ window.LP_flat2 = () => {
     const row = chips[0].closest('ol'), li = chips[k].parentNode;   // keep the chip of this step in sight when the row is wider than the column
     if (row.scrollWidth > row.clientWidth) row.scrollLeft = Math.max(0, li.offsetLeft - row.offsetLeft - (row.clientWidth - li.offsetWidth) / 2);
     put(head, (k + 1) + ' · ' + STEPS[k].name); put(body, STEPS[k].text);
-    cv.setAttribute('aria-label', 'Scheme 2, step ' + (k + 1) + ' of ' + STEPS.length + ', ' + STEPS[k].name + '. ' + STEPS[k].alt);
+    cv.setAttribute('aria-label', 'How ELFNet works, step ' + (k + 1) + ' of ' + STEPS.length + ', ' + STEPS[k].name + '. ' + STEPS[k].alt);
     back.disabled = k === 0; count.textContent = (k + 1) + ' / ' + STEPS.length;
     put(next, k === STEPS.length - 1 ? 'Start over ↺' : 'Next: ' + STEPS[k + 1].name + ' →');
     netEl.hidden = k < 2 || k > 4; read.hidden = k < 4; qEl.hidden = k < 2; wipeEl.hidden = k !== 5;
