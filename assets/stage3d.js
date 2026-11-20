@@ -1,6 +1,6 @@
 /* A 3D stage for the step-by-step figures. It keeps the camera, the trackball and the lighting of the figure engine
    (VestaGL) and draws things that move anew on every frame: spheres, rods and cones, lines, boxes, a map on a plane,
-   points, a field as a grid of points in one cell or all through a crystal, and see-through shells. A figure sets `paint` and calls these from it.
+   points, a field as a grid of points, an isosurface repeated through a crystal, and see-through shells. A figure sets `paint` and calls these from it.
    Lengths are in Å, colors are [r, g, b] from 0 to 1. */
 const Stage3D = class extends VestaGL {
   // frame: { center, radius, width, aspect, view (three rows: screen right, screen up, toward the viewer), axes, triad }
@@ -64,19 +64,13 @@ const Stage3D = class extends VestaGL {
       ' vCol = vec4(mix(mix(uLow, uHigh, t), uBoxCol, inb), a); vec4 p = project(aPos); p.z -= 0.002;\n' +
       ' gl_Position = a > 0.004 ? p : vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = uSize * mix(0.34 + 0.66 * t, max(0.34 + 0.4 * uBoxA.y, 0.34 + 0.66 * t), inb); }',
       PREC + 'varying vec4 vCol;\nvoid main(){ ' + ROUND + ' gl_FragColor = vec4(vCol.rgb, vCol.a * smoothstep(0.5, 0.34, d)); }');
-    // A field at points all through a crystal. Each point carries four values, two fields (uSrc picks one) in two
-    // states each (uFlip mixes them), and shows where that value is high (uGate): larger, more solid, and in the color
-    // of the value. The points repeat with the period uL and are shown around uQ, fading out with distance from it;
-    // uShow lets them come in a few at a time.
-    this.cloudP = quiet('attribute vec3 aPos; attribute vec4 aVal; attribute float aRnd;\n' + VH +
-      'uniform vec3 uQ; uniform float uL; uniform vec2 uFade; uniform float uFlip; uniform float uSrc; uniform float uShow; uniform float uSize; uniform float uAlpha; uniform vec2 uGate; varying vec4 vCol;\n' +
-      'vec3 ramp(float t){ t = clamp(t, 0.0, 1.0); vec3 c = t < 0.25 ? vec3(0.0, t / 0.25, 1.0) : t < 0.5 ? vec3(0.0, 1.0, 1.0 - (t - 0.25) / 0.25) : t < 0.75 ? vec3((t - 0.5) / 0.25, 1.0, 0.0) : vec3(1.0, 1.0 - (t - 0.75) / 0.25, 0.0); return (c + (1.0 - c) * 0.14) * vec3(0.97, 0.93, 0.97); }\n' +
-      'void main(){ vec3 w = uQ + mod(aPos - uQ + 0.5 * uL, uL) - 0.5 * uL;\n' +
-      ' float v = mix(mix(aVal.x, aVal.y, uFlip), mix(aVal.z, aVal.w, uFlip), uSrc); float t = smoothstep(uGate.x, uGate.y, v);\n' +
-      ' float a = uAlpha * (1.0 - smoothstep(uFade.x, uFade.y, distance(w, uQ))) * (0.04 + 0.62 * pow(t, 1.3)) * step(aRnd, uShow) * step(0.001, t);\n' +
-      ' vec4 p = project(w); p.z -= 0.002; vCol = vec4(mix(ramp(v), vec3(1.0), 3.0 * vFog), a);\n' +
-      ' gl_Position = a > 0.004 ? p : vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = uSize * (0.32 + 0.52 * t); }',
-      PREC + 'varying vec4 vCol;\nvoid main(){ ' + ROUND + ' vec3 c = mix(vCol.rgb, vCol.rgb * 0.8, smoothstep(0.22, 0.47, d)); gl_FragColor = vec4(c, vCol.a * smoothstep(0.5, 0.4, d)); }');
+    // An isosurface that repeats through a crystal: the mesh of one cell, as the engine builds it, drawn at several
+    // offsets, and only inside a box (uLo to uHi) and a sphere around uQ, fading toward the sphere's edge.
+    this.tileP = quiet('attribute vec3 aPos; attribute vec3 aNrm; uniform vec3 uOff; varying vec3 vN; varying vec3 vW;\n' + VH +
+      'void main(){ vec3 w = aPos + uOff; vW = w; vN = uM * aNrm; gl_Position = project(w); }',
+      PREC + 'varying vec3 vN; varying vec3 vW; varying float vFog; uniform vec3 uColor; uniform float uAlpha; uniform vec3 uQ; uniform vec2 uFade; uniform vec3 uLo; uniform vec3 uHi;\n' + LIT +
+      'void main(){ float d = distance(vW, uQ); if (d > uFade.y || any(lessThan(vW, uLo)) || any(greaterThan(vW, uHi))) discard; vec3 n = normalize(vN); if (n.z < 0.0) n = -n;\n' +
+      ' gl_FragColor = vec4(mix(shade(n, uColor, 0.06), vec3(1.0), vFog), uAlpha * (1.0 - smoothstep(uFade.x, uFade.y, d))); }');
     this.quad = gl.createBuffer(); this.scratch = gl.createBuffer();
   }
   // ---------- one frame ----------
@@ -228,21 +222,21 @@ const Stage3D = class extends VestaGL {
     this.blend(false); gl.drawArrays(gl.POINTS, 0, n);
     gl.disableVertexAttribArray(P.loc.aVal);
   }
-  // a field at points through a crystal: `data` holds x, y, z, four values from 0 to 1 and a random number from 0 to 1 for each.
-  // o: at (the point they are shown around), period (Å), fade ([from, to] distances from it), flip, src, show,
-  //    size (px of the largest point), alpha, gate ([from, to]: the values between which a point comes up)
-  cloud(key, data, n, o) {
-    if (!this.cloudP) return;
-    const gl = this.gl, P = this._use(this.cloudP);
-    this._kept(key, data);
-    gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 32, 0);
-    gl.enableVertexAttribArray(P.loc.aVal); gl.vertexAttribPointer(P.loc.aVal, 4, gl.FLOAT, false, 32, 12);
-    gl.enableVertexAttribArray(P.loc.aRnd); gl.vertexAttribPointer(P.loc.aRnd, 1, gl.FLOAT, false, 32, 28);
-    gl.uniform3fv(P.loc.uQ, o.at); gl.uniform1f(P.loc.uL, o.period); gl.uniform2f(P.loc.uFade, o.fade[0], o.fade[1]);
-    gl.uniform1f(P.loc.uFlip, o.flip || 0); gl.uniform1f(P.loc.uSrc, o.src || 0); gl.uniform1f(P.loc.uShow, o.show == null ? 1 : o.show);
-    gl.uniform1f(P.loc.uSize, o.size * Math.min(2, window.devicePixelRatio || 1)); gl.uniform1f(P.loc.uAlpha, o.alpha == null ? 1 : o.alpha); gl.uniform2f(P.loc.uGate, o.gate[0], o.gate[1]);
-    this.blend(false); gl.drawArrays(gl.POINTS, 0, n);
-    gl.disableVertexAttribArray(P.loc.aVal); gl.disableVertexAttribArray(P.loc.aRnd);
+  // the isosurface of one cell (a mesh from meshOf) repeated at `offsets`, each [x, y, z] in Å, and cut to a box, a sphere, or both.
+  // o: color, alpha, box ([lo, hi] corners), at and fade (the sphere's center, and [from, to]: where it starts to fade and where it ends)
+  tiled(mesh, offsets, o) {
+    if (!this.tileP || !mesh || !mesh.iso || !mesh.iso.n || !offsets.length || !(o.alpha > 0)) return;
+    const gl = this.gl, P = this._use(this.tileP);
+    const box = o.box || [[-1e6, -1e6, -1e6], [1e6, 1e6, 1e6]], fade = o.fade || [1e6, 2e6];
+    gl.uniform3fv(P.loc.uColor, o.color); gl.uniform1f(P.loc.uAlpha, o.alpha); gl.uniform3fv(P.loc.uQ, o.at || [0, 0, 0]); gl.uniform2f(P.loc.uFade, fade[0], fade[1]); gl.uniform3fv(P.loc.uLo, box[0]); gl.uniform3fv(P.loc.uHi, box[1]);
+    gl.bindBuffer(gl.ARRAY_BUFFER, mesh.iso.buf);
+    gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 24, 0);
+    gl.enableVertexAttribArray(P.loc.aNrm); gl.vertexAttribPointer(P.loc.aNrm, 3, gl.FLOAT, false, 24, 12);
+    const all = () => { for (const off of offsets) { gl.uniform3f(P.loc.uOff, off[0], off[1], off[2]); gl.drawArrays(gl.TRIANGLES, 0, mesh.iso.n); } };
+    // nearest layer only, over all the copies: depth first, then color where the depth matches
+    gl.disable(gl.BLEND); gl.depthMask(true); gl.colorMask(false, false, false, false); all(); gl.colorMask(true, true, true, true);
+    gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(false); gl.depthFunc(gl.LEQUAL); all();
+    gl.depthFunc(gl.LESS); gl.depthMask(true); gl.disable(gl.BLEND); gl.disableVertexAttribArray(P.loc.aNrm);
   }
   // The isosurface (and its level control) of a scene in the figures' own format, built by the engine and kept.
   meshOf(scene) {

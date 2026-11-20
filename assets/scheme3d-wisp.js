@@ -1,9 +1,9 @@
 /* How WISP works, in 3D: one step at a time, inside a piece of the MnPd crystal that can be turned.
    The atoms and their moments, the message passing, a query point with its 5 Å sphere and a line from every atom in it,
-   the field the decoder returns (as a map on a plane through the crystal, and as query points all through it), the spin
-   flip, and the comparison with DFT. The fields are the real ones (assets/wisp-plane.js for the plane, the grids of the
-   3D figure below for the rest) and so are the distances and the counts; the pictures of what happens inside the
-   network are schematic. Where WebGL is missing, the flat version (scheme.js) is shown instead. */
+   the field the decoder returns (a map on a plane through the crystal, and around it the surface where the ELF reaches
+   0.30), the spin flip, and the comparison with DFT. The fields are the real ones (assets/wisp-plane.js for the map,
+   the grids of the 3D figure below for the surface) and so are the distances and the counts; the pictures of what
+   happens inside the network are schematic. Where WebGL is missing, the flat version (scheme.js) is shown instead. */
 (() => {
   'use strict';
   const host = document.getElementById('scheme-1'), D = window.LP_WISP;
@@ -21,7 +21,7 @@
   const SPECIES = [{ el: 'Mn', rgb: [0.627, 0.282, 0.612], m: D.moments[0] }, { el: 'Pd', rgb: [0.706, 0.722, 0.698], m: D.moments[1] }];
   const R_BALL = 0.44, R_DOT = 0.2, ARROW = 0.3;         // atom radius, its radius once the map shows, arrow length per μB beyond the atom
   const VMAX = 0.45, DMAX = 0.03;
-  const TEAL = [0.043, 0.478, 0.502], GOLD = [0.851, 0.604, 0.106], NAVY = [0.153, 0.251, 0.486], WHITE = [1, 1, 1];
+  const TEAL = [0.043, 0.478, 0.502], GOLD = [0.851, 0.604, 0.106], NAVY = [0.153, 0.251, 0.486], WHITE = [1, 1, 1], YELLOW = [0.98, 0.83, 0.22], INK = [0.1, 0.098, 0.082];
   const mix = (c, w, t) => [c[0] + (w[0] - c[0]) * t, c[1] + (w[1] - c[1]) * t, c[2] + (w[2] - c[2]) * t];
   const add = (p, d, k) => [p[0] + d[0] * k, p[1] + d[1] * k, p[2] + d[2] * k];
 
@@ -94,14 +94,14 @@
       text: 'Now I can ask about any point in the crystal, whether or not it lies on a grid. The point gathers the features of every atom within 5 Å, along with the direction to each one. Drag the point to try another place.',
       alt: 'A query point between the atoms, a sphere of radius 5 angstrom around it, and a line from every atom inside the sphere to the point.' },
     { name: 'Decode', dur: 3600,
-      text: 'A small network combines what the point gathered into one number between 0 and 1: the ELF there. Asking at many points fills in the field all through the crystal. A dot marks a point where the ELF comes out high: the higher, the larger the dot and the warmer its color. This is the spin-up channel.',
-      alt: 'Colored dots appear at query points all through the crystal around the point, where the spin-up electron localization function is high: shells of dots around the manganese atoms.' },
+      text: 'A small network combines what the point gathered into one number between 0 and 1: the ELF there. Asking at many points fills in the field. Here it is in one cell of the crystal: the map shows it on a plane through the cell, and the yellow surface is where it reaches 0.30. This is the spin-up channel.',
+      alt: 'Colored dots appear at many query points on a plane through the crystal and merge into a map of the spin-up electron localization function. The picture closes in on one cell: its outline, the map through it, and small yellow isosurfaces near the manganese atoms.' },
     { name: 'Flip spins', dur: 2000,
       text: 'For the other spin channel, the same network runs again with every moment reversed. Reversing the moments swaps the two channels exactly, because of how the network is built, so it never has to learn that. In MnPd the spin-down channel has a large region around Pd that the spin-up channel lacks.',
-      alt: 'The moment arrows turn over and the dots change to the spin-down channel, where they fill a large region around each palladium atom.' },
+      alt: 'The moment arrows turn over and the map and the yellow isosurface change to the spin-down channel, which has a large region around each palladium atom.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.' + (figN ? ' <a href="#fig-wisp">The figure below</a> has the same comparison with isosurfaces.' : ''),
-      alt: 'The same dots with a line across the picture: the WISP prediction on the left and the DFT calculation on the right. The two sides match.' }
+      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.' + (figN ? ' <a href="#fig-wisp">The figure below</a> has the two side by side.' : ''),
+      alt: 'The same cell with a line across the picture: the WISP prediction on the left and the DFT calculation on the right. The two sides match.' }
   ];
   const GLYPHS = '<svg viewBox="0 0 46 16" width="46" height="16" aria-hidden="true"><g fill="#0B7A80"><circle cx="5" cy="8" r="3.2"/><ellipse cx="19" cy="4.4" rx="2.6" ry="3.4"/><ellipse cx="19" cy="11.6" rx="2.6" ry="3.4"/>' +
     '<g transform="translate(36 8) rotate(45)"><ellipse cx="0" cy="-4" rx="2.1" ry="3"/><ellipse cx="0" cy="4" rx="2.1" ry="3"/><ellipse cx="-4" cy="0" rx="3" ry="2.1"/><ellipse cx="4" cy="0" rx="3" ry="2.1"/></g></g></svg>';
@@ -117,8 +117,8 @@
       '<button type="button" class="sch-q" aria-label="Query point. Drag it, or move it with the arrow keys." hidden><i>r</i></button>',
     legend: '<span><i style="background:#A0489C"></i>Mn</span><span><i style="background:#B4B8B2"></i>Pd</span>' +
       '<span><em class="lg-arrow"></em>moment</span><span><em class="lg-ring"></em>encoded atom</span><span><em class="lg-q"></em>query point</span>' +
-      '<span class="lg-elf">ELF 0<b></b>' + VMAX + '</span><span class="lg-diff" hidden>|WISP − DFT| 0<b></b>' + DMAX + '</span>',
-    spec: '<b>MnPd</b> · mp-1902 · <i>a</i> = ' + A.toFixed(3) + ' Å · the query point moves on the (110) plane through Mn · fields on a ' + N + '×' + N + '×' + N + ' grid, every second point of it drawn. The fields, distances and counts are real; the drawings of the network at work are schematic.',
+      '<span class="lg-elf">ELF 0<b></b>' + VMAX + '</span><span><i class="iso"></i>ELF 0.30</span><span class="lg-diff" hidden>|WISP − DFT| 0<b></b>' + DMAX + '</span>',
+    spec: '<b>MnPd</b> · mp-1902 · <i>a</i> = ' + A.toFixed(3) + ' Å · the map is the (110) plane through Mn · fields on a ' + N + '×' + N + '×' + N + ' grid. The fields, distances and counts are real; the drawings of the network at work are schematic.',
     make: (api) => {
       const st = api.st, on = api.on, smooth = api.smooth, put = api.put, $ = api.$, $$ = api.$$, stage = api.stage, reduced = api.reduced;
       Object.assign(st, { q: Q0.slice(), flip: 0, flipTo: 0, diff: false, split: 0.62, wipeTo: 0.62, wipeHeld: false, touchedFlip: false });
@@ -127,31 +127,36 @@
       const readK = $('.k', read), readV = $('.v', read);
       let eng = null, scatter = null, dragging = false, cam = P3(Q0);
 
-      // The field through the crystal, as points: every second point of the grid the fields of the 3D figure below are
-      // on (the same calculations as the map), in 3 x 3 x 3 cells, each with the value WISP and DFT give there in both
-      // channels as a fraction of the color scale. The points repeat with the crystal, so the same set serves wherever
-      // the query point goes.
-      const VOLS = ['mnpd_wisp_up', 'mnpd_wisp_down', 'mnpd_dft_up', 'mnpd_dft_down'], CELLS = 3, RS = 4.55, vols = {};
-      let cloud = null, cloudN = 0, pitch = A / 14;
-      const buildCloud = () => {
-        const grids = VOLS.map((id) => {
-          const gr = vols[id].grid;
-          if (!gr.vals) { const bin = atob(gr.data), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); gr.vals = u; }
-          return gr;
-        });
-        const n = grids[0].n, m = n.map((x) => x >> 1);
-        if (grids.some((gr) => gr.n.join() !== n.join())) return;
-        let seed = 20261120;
-        const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let x = Math.imul(seed ^ seed >>> 15, 1 | seed); x = x + Math.imul(x ^ x >>> 7, 61 | x) ^ x; return ((x ^ x >>> 14) >>> 0) / 4294967296; };
-        const d = new Float32Array(CELLS * CELLS * CELLS * m[0] * m[1] * m[2] * 8);
-        let o = 0;
-        for (let cz = 0; cz < CELLS; cz++) for (let cy = 0; cy < CELLS; cy++) for (let cx = 0; cx < CELLS; cx++)
-          for (let k = 0; k < m[2]; k++) for (let j = 0; j < m[1]; j++) for (let i = 0; i < m[0]; i++) {
-            d[o] = (cx + i / m[0]) * A; d[o + 1] = (cy + j / m[1]) * A; d[o + 2] = (cz + k / m[2]) * A;
-            for (let f = 0; f < 4; f++) d[o + 3 + f] = grids[f].vals[((2 * k) * n[1] + 2 * j) * n[0] + 2 * i] / 255;
-            d[o + 7] = rnd(); o += 8;
-          }
-        cloud = d; cloudN = o / 8; pitch = A / m[0];
+      // The field away from the plane: the surface where the ELF reaches 0.30, as in the 3D figure below and from the
+      // same grids, built by the engine for one cell and repeated around the query point. Where that surface is large
+      // (the spin-down channel) it is built from the grid at half its resolution, which looks the same at this size and
+      // is four times lighter to draw; where it is small and thin (the spin-up channel) the whole grid is used.
+      const VOLS = { wisp: ['mnpd_wisp_up', 'mnpd_wisp_down'], dft: ['mnpd_dft_up', 'mnpd_dft_down'] }, vols = {}, meshes = {};
+      const HEAVY = 14000;   // triangles in one cell above which the lighter grid is used
+      // From "Decode" on the picture closes in on one cell of the crystal, the one the query point starts in the middle
+      // of and stays inside: its outline, the map on the plane through it, and the surface inside it.
+      const BOX = [[0, 0, -A / 2], [A, A, A / 2]], BOX_CELLS = [[0, 0, 0], [0, 0, -A]], BOX_C = [A / 2, A / 2, 0];
+      const WIDE = 16.4, NEAR = 9.6;   // how many Å the picture is across: the piece of crystal, then the one cell
+      st.near = 0;                     // 0: the piece of crystal, 1: the one cell
+      const halve = (gr) => {
+        const n = gr.n, m = n.map((x) => x >> 1), out = new Uint8Array(m[0] * m[1] * m[2]), w = [1, 2, 1];
+        // each kept point takes a 1-2-1 average of its neighbors along every axis, so halving neither shifts nor roughens the surface
+        for (let k = 0; k < m[2]; k++) for (let j = 0; j < m[1]; j++) for (let i = 0; i < m[0]; i++) {
+          let sum = 0;
+          for (let c = -1; c <= 1; c++) for (let b = -1; b <= 1; b++) for (let a = -1; a <= 1; a++)
+            sum += w[a + 1] * w[b + 1] * w[c + 1] * gr.vals[(((2 * k + c + n[2]) % n[2]) * n[1] + ((2 * j + b + n[1]) % n[1])) * n[0] + ((2 * i + a + n[0]) % n[0])];
+          out[(k * m[1] + j) * m[0] + i] = Math.round(sum / 64);
+        }
+        return { n: m, vals: out, origin: [0, 0, 0], step: m.map((x) => 1 / x), periodic: [true, true, true] };
+      };
+      const meshOf = (g, id) => {
+        if (meshes[id] !== undefined) return meshes[id];
+        const d = vols[id];
+        if (!d) return null;
+        const bare = (tag, grid) => ({ id: id + tag, lattice: d.lattice, iso: d.iso, lines: [], faces: [], grid: grid });
+        let m = g.meshOf(bare(':surface', d.grid));
+        if (m && m.iso && m.iso.n / 3 > HEAVY && d.grid.n.every((x) => x % 2 === 0)) m = g.meshOf(bare(':surface-half', halve(d.grid)));
+        return (meshes[id] = m || null);
       };
 
       // the view: the plane seen from the front, then turned a little to the side and from above
@@ -171,7 +176,7 @@
           eng.attach(undefined, ov); eng.attach(cv);
           if (eng.status === 'nogl') { api.dead = true; host.removeAttribute('data-view'); host.innerHTML = ''; if (window.LP_flat1) window.LP_flat1(); return false; }   // no WebGL after all: the flat version
           eng.paint = paint;
-          if (window.LP_loadScene && eng.cloudP) VOLS.forEach((id) => window.LP_loadScene(id, (d) => { vols[id] = d; if (!cloud && VOLS.every((v) => vols[v])) { buildCloud(); api.kick(); } }, () => {}));
+          if (window.LP_loadScene && eng.tileP) VOLS.wisp.concat(VOLS.dft).forEach((id) => window.LP_loadScene(id, (d) => { vols[id] = d; api.kick(); }, () => {}));
         } else eng.resize(W, H);
         return true;
       };
@@ -179,8 +184,9 @@
       // ---------- one frame ----------
       const paint = (g) => {
         const k = st.step, t = st.t, q3 = P3(st.q), c = g.d.center;
-        const dotted = !!(cloud && g.cloudP);   // the field is drawn through the crystal; without it, on the plane only
-        const fld = on(3, 0.62, 1), small = on(3, 0, 0.14), qa = on(2, 0, 0.2), ringA = on(1, 0.84, 1), back = (1 - 0.55 * on(4, 0, 0.3)) * (dotted ? 1 - 0.6 * on(3, 0.05, 0.5) : 1);
+        const near = g.tileP ? st.near : 0;   // how far the picture has closed in on the one cell
+        const fld = on(3, 0.62, 1), small = on(3, 0, 0.14), qa = on(2, 0, 0.2), ringA = on(1, 0.84, 1), back = (1 - 0.55 * on(4, 0, 0.3)) * (1 - near);
+        const surfA = g.tileP && k >= 3 && !(k === 5 && st.diff) ? on(3, 0.8, 1) : 0;   // the surface comes in once the map is there
         const grow = k === 2 ? 1 - Math.pow(1 - Math.max(0, Math.min(1, (t - 0.06) / 0.5)), 3) : k > 2 ? 1 : 0, reach = k === 2 ? smooth((t - 0.42) / 0.45) : k > 2 ? 1 : 0;
         const dir = [Math.cos(Math.PI * st.flip) * EV[0] + Math.sin(Math.PI * st.flip) * EN[0], Math.cos(Math.PI * st.flip) * EV[1] + Math.sin(Math.PI * st.flip) * EN[1], Math.cos(Math.PI * st.flip) * EV[2] + Math.sin(Math.PI * st.flip) * EN[2]];
         const atoms = around(qa > 0 ? q3 : c, SEE), r0 = R_BALL + (R_DOT - R_BALL) * small;
@@ -190,11 +196,14 @@
           const pop = k > 0 ? 1 : smooth((t - Math.min(0.42, a.d / 15)) / 0.3);
           if (pop <= 0) continue;
           // far: 0 inside the cutoff, 1 at the edge of what is drawn; out: outside the sphere of the query once there is one
-          const sp = SPECIES[a.sp], far = smooth((a.d - CUT) / (SEE - CUT)), out = qa * (a.d > CUT ? 1 : 0), pale = Math.min(0.88, 0.8 * far + 0.5 * out);
-          const r = r0 * (0.6 + 0.4 * pop) * (1 - 0.62 * far) * (1 - 0.3 * out);
+          // gone: an atom away from the one cell steps back as the picture closes in on it
+          const gone = near * smooth((Math.hypot(a.p[0] - BOX_C[0], a.p[1] - BOX_C[1], a.p[2] - BOX_C[2]) - 2.5) / 1.1);
+          if (gone > 0.94) continue;
+          const sp = SPECIES[a.sp], far = smooth((a.d - CUT) / (SEE - CUT)) * (1 - near), out = qa * (a.d > CUT ? 1 : 0) * (1 - near), pale = Math.max(Math.min(0.88, 0.8 * far + 0.5 * out), 0.9 * gone);
+          const r = r0 * (0.6 + 0.4 * pop) * (1 - 0.62 * far) * (1 - 0.3 * out) * (1 - gone);
           g.sphere(a.p, r, mix(sp.rgb, WHITE, pale));
           const grown = k > 0 ? 1 : smooth((t - 0.5) / 0.45);
-          if (grown > 0 && pale < 0.8) g.arrow(a.p, dir, (2 * r + ARROW * sp.m * (1 - 0.6 * far)) * grown, (sp.m > 1 ? 0.045 : 0.03) * (1 - 0.5 * far), mix(NAVY, WHITE, pale));
+          if (grown > 0 && pale < 0.8 && gone < 0.6) g.arrow(a.p, dir, (2 * r + ARROW * sp.m * (1 - 0.6 * far) * (1 - gone)) * grown, (sp.m > 1 ? 0.045 : 0.03) * (1 - 0.5 * far) * (1 - gone), mix(NAVY, WHITE, pale));
         }
         // message passing: the links between neighbors (each Pd to the eight Mn around it)
         const la = (k === 1 ? smooth(t / 0.08) : k === 2 ? 1 - smooth(t / 0.3) : 0);
@@ -217,30 +226,42 @@
         if (qa > 0 && reach > 0) for (const a of atoms) {
           if (a.d > CUT) continue;
           const al = reach * smooth((CUT - a.d) / 0.5) * (1 - 0.3 * fld) * back, s0 = Math.min(0.9, (r0 + 0.04) / a.d);
+          if (al < 0.03 || near > 0.6) continue;   // the lines are gone before the picture has closed in on the cell
           const from = [a.p[0] + (q3[0] - a.p[0]) * s0, a.p[1] + (q3[1] - a.p[1]) * s0, a.p[2] + (q3[2] - a.p[2]) * s0], mid = [(from[0] + q3[0]) / 2, (from[1] + q3[1]) / 2, (from[2] + q3[2]) / 2];
-          g.rod(from, mid, 0.026, mix(TEAL, WHITE, 1 - al)); g.rod(mid, q3, 0.026, mix(GOLD, WHITE, 1 - al));
+          g.rod(from, mid, 0.026 * (1 - near), mix(TEAL, WHITE, 1 - al)); g.rod(mid, q3, 0.026 * (1 - near), mix(GOLD, WHITE, 1 - al));
         }
-        if (qa > 0) g.sphere(q3, 0.2 * (k === 2 ? 1 + 0.5 * (1 - smooth(t / 0.25)) : 1), mix(GOLD, WHITE, 1 - qa));
+        if (qa > 0) g.sphere(q3, (0.2 - 0.06 * near) * (k === 2 ? 1 + 0.5 * (1 - smooth(t / 0.25)) : 1), mix(GOLD, WHITE, 1 - qa));
+        if (near > 0) g.box(BOX[0], BOX[1], INK, 0, 0.9 * near);   // the one cell
 
-        // the field on the plane, where it cannot be drawn through the crystal, and for the difference between WISP and DFT
-        if (k >= 3 && fld > 0 && (!dotted || (k === 5 && st.diff))) {
-          const cu = c[0] * EU[0] + c[1] * EU[1] + c[2] * EU[2], cv2 = c[2], R = 7.2;
-          const o = add(add(P3([cu, cv2]), EU, -R), EV, -R), eu = EU.map((x) => x * 2 * R), ev = EV.map((x) => x * 2 * R);
-          const uv0 = [(cu - R) / U, (cv2 - R) / V], uv1 = [(cu + R) / U, (cv2 + R) / V];
-          const show = (src) => g.map(o, eu, ev, uv0, uv1, { a: g.texture(src + ':up', tile(src + ':up'), true), b: g.texture(src + ':down', tile(src + ':down'), true), mix: st.flip, alpha: fld, fadeCenter: q3, fade: [CUT + 0.1, SEE + 0.5] });
+        // the field on the plane: WISP, or WISP left of the line and DFT right of it, or their difference
+        if (k >= 3 && fld > 0) {
+          let show;
+          if (g.tileP) {
+            // through the one cell: its whole section, and fainter a little way beyond it, where the crystal repeats
+            const m = 0.26, o = add(add([0, 0, 0], EU, -m * U), EV, -(0.5 + m) * V), eu = EU.map((x) => x * U * (1 + 2 * m)), ev = EV.map((x) => x * V * (1 + 2 * m));
+            show = (src) => g.map(o, eu, ev, [-m, -0.5 - m], [1 + m, 0.5 + m], { a: g.texture(src + ':up', tile(src + ':up'), true), b: g.texture(src + ':down', tile(src + ':down'), true), mix: st.flip, alpha: fld, inside: [0, -0.5, 1, 0.5], outside: 0.3, depth: true });
+          } else {
+            // where the surface cannot be drawn: a wide piece of the plane around the query point, as far as the atoms are drawn
+            const cu = c[0] * EU[0] + c[1] * EU[1] + c[2] * EU[2], cv2 = c[2], R = 7.2;
+            const o = add(add(P3([cu, cv2]), EU, -R), EV, -R), eu = EU.map((x) => x * 2 * R), ev = EV.map((x) => x * 2 * R);
+            const uv0 = [(cu - R) / U, (cv2 - R) / V], uv1 = [(cu + R) / U, (cv2 + R) / V];
+            show = (src) => g.map(o, eu, ev, uv0, uv1, { a: g.texture(src + ':up', tile(src + ':up'), true), b: g.texture(src + ':down', tile(src + ':down'), true), mix: st.flip, alpha: fld, fadeCenter: q3, fade: [CUT + 0.1, SEE + 0.5] });
+          }
           if (k === 5 && st.diff) show('diff');
           else if (k === 5) { g.between(0, st.split); show('wisp'); g.between(st.split, 1); show('dft'); g.everywhere(); }
           else show('wisp');
         }
-        // The field through the crystal: a dot at each of many points around the query point, larger and warmer in
-        // color where the ELF is higher. At "Decode" they come in a few at a time.
-        if (dotted && k >= 3 && !(k === 5 && st.diff)) {
-          const some = k === 3 ? Math.pow(Math.max(0, Math.min(1, (t - 0.1) / 0.8)), 2.4) : 1;
-          const field = (src) => g.cloud('field', cloud, cloudN, { at: q3, period: CELLS * A, fade: [RS - 0.9, RS], flip: st.flip, src: src, show: some, size: g.scale() * pitch * 0.96, alpha: 1, gate: [0.52, 0.72] });
-          if (k === 5) { g.between(0, st.split); field(0); g.between(st.split, 1); field(1); g.everywhere(); } else field(0);
+        // The field away from the plane: the surface where the ELF reaches 0.30, inside the one cell. While the moments
+        // turn over, the surface of one channel gives way to that of the other.
+        if (surfA > 0) {
+          const surface = (src) => VOLS[src].forEach((id, down) => {
+            const a = down ? st.flip : 1 - st.flip;
+            if (a > 0.004) g.tiled(meshOf(g, id), BOX_CELLS, { box: BOX, color: YELLOW, alpha: 0.5 * surfA * a });
+          });
+          if (k === 5) { g.between(0, st.split); surface('wisp'); g.between(st.split, 1); surface('dft'); g.everywhere(); } else surface('wisp');
         }
         // query points appear one by one, then faster, each already in the color of the value WISP returns there
-        if (!dotted && k === 3 && fld < 1) {
+        if (k === 3 && fld < 1) {
           if (!scatter) {
             let seed = 20261119;
             const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let x = Math.imul(seed ^ seed >>> 15, 1 | seed); x = x + Math.imul(x ^ x >>> 7, 61 | x) ^ x; return ((x ^ x >>> 14) >>> 0) / 4294967296; };
@@ -257,9 +278,10 @@
         // see-through things last: the shell around each encoded atom, and the sphere of the cutoff
         if (ringA > 0) for (const a of atoms) {
           const far = smooth((a.d - CUT) / (SEE - CUT)), out = qa * (a.d > CUT ? 1 : 0);
-          if (far < 0.9 && out < 0.5) g.shell(a.p, r0 * (1 - 0.62 * far) + 0.075, TEAL, 0.55 * ringA * (1 - far) * (1 - 0.5 * small), 0.1, 2.2);
+          const gone = near * smooth((Math.hypot(a.p[0] - BOX_C[0], a.p[1] - BOX_C[1], a.p[2] - BOX_C[2]) - 2.5) / 1.1);
+          if (far < 0.9 && out < 0.5 && gone < 0.9) g.shell(a.p, r0 * (1 - 0.62 * far) * (1 - 0.5 * gone) + 0.075, TEAL, 0.55 * ringA * (1 - far) * (1 - 0.5 * small) * (1 - gone), 0.1, 2.2);
         }
-        if (qa > 0) g.shell(q3, 0.42, GOLD, 0.55 * qa, 0.1, 1.6);
+        if (qa > 0) g.shell(q3, 0.42 - 0.12 * near, GOLD, 0.55 * qa, 0.1, 1.6);
         if (qa > 0 && grow > 0) g.shell(q3, CUT * grow, GOLD, 0.42 * qa * back, 0.02, 3.0);
       };
 
@@ -284,7 +306,8 @@
         const k = st.step, ch = chName(), arrowCh = ch === 'up' ? '↑' : '↓';
         put(api.info, (k === 1 ? GLYPHS : '') + '<span>' + (k === 0 ? 'a piece of the MnPd crystal' :
           k === 1 ? 'each atom: features with <i>ℓ</i> = 0, 1, 2' :
-          k < 4 ? '<b>' + count(st.q) + '</b> atoms within 5 Å of <i>r</i>' :
+          k < 3 || (k === 3 && !(eng && eng.tileP)) ? '<b>' + count(st.q) + '</b> atoms within 5 Å of <i>r</i>' :
+          k === 3 ? 'one cell of the crystal · the yellow surface is ELF <b>0.30</b>' :
           k === 4 ? 'the same network, run with <i>m</i> and with −<i>m</i>' :
           st.diff ? 'where WISP and DFT differ, spin ' + ch : 'mean |WISP − DFT| in MnPd: <b>' + D.mae[ch].toFixed(4) + '</b> for spin ' + ch) + '</span>');
         if (k >= 3) {
@@ -322,7 +345,10 @@
         if (Math.abs(st.flip - target) > 0.001) { const d = dt / 700; st.flip += Math.max(-d, Math.min(d, target - st.flip)); busy = true; } else st.flip = target;
         if (st.step === 5 && Math.abs(st.split - st.wipeTo) > 0.001 && !st.wipeHeld) { st.split += (st.wipeTo - st.split) * Math.min(1, dt / 160); busy = true; wipeEl.style.left = (st.split * 100) + '%'; }
         if (eng) {
-          const to = P3(st.q), c = eng.d.center, far = Math.hypot(to[0] - c[0], to[1] - c[1], to[2] - c[2]);
+          const goal = !eng.tileP || st.step < 3 ? 0 : st.step > 3 ? 1 : smooth((st.t - 0.12) / 0.55);
+          if (Math.abs(st.near - goal) > 0.002) { st.near = reduced ? goal : st.near + (goal - st.near) * Math.min(1, dt / 190); busy = true; live(); } else st.near = goal;
+          eng.d.width = WIDE + (NEAR - WIDE) * st.near;
+          const pq = P3(st.q), to = pq.map((x, i) => x + (BOX_C[i] - x) * st.near), c = eng.d.center, far = Math.hypot(to[0] - c[0], to[1] - c[1], to[2] - c[2]);
           if (far > 0.002) { const f = reduced ? 1 : Math.min(1, dt / 220); for (let i = 0; i < 3; i++) c[i] += (to[i] - c[i]) * f; busy = true; live(); }
           if (eng.dirty) busy = busy || eng.ptr.size > 0;
         }
