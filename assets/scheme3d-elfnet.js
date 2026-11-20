@@ -1,7 +1,8 @@
 /* How ELFNet works, in 3D: one step at a time, in one cell of the calcium lattice of CaH6 that can be turned.
-   The atoms, the superposed atomic density on a plane through the middle of the cell, a 5 x 5 x 5 convolution block that
-   can be dragged through a face and comes back in at the opposite one, the reach of a grid point growing through the
-   sixteen residual blocks, the ELF that comes out (the map, and the isosurface of the figures), and the comparison with DFT.
+   The atoms, the superposed atomic density as a dot on every point of its grid, a 5 x 5 x 5 convolution block that can
+   be dragged through a face and comes back in at the opposite one, the reach of a grid point growing through the sixteen
+   residual blocks, the ELF that comes out (a map on a plane through the middle of the cell, and the isosurface of the
+   figures), and the comparison with DFT.
    The fields are the real ones (assets/elfnet-plane.js and the scenes of the 3D figure below it); the drawings of the network at work
    are schematic. Where WebGL is missing, the flat version (scheme-elfnet.js) is shown instead. */
 (() => {
@@ -68,6 +69,19 @@
     if (b > N - 1) return [[a, N - 1], [0, b - N]];
     return [[a, b]];
   };
+  // The density on every grid point, for drawing it through the whole cell: x, y, z and how strongly the point shows.
+  // The points on the far faces repeat those on the near ones, so the cell looks the same from every side. Most of the
+  // cell lies in the lowest tenth of the stored range, so the range is stretched before it is drawn.
+  let cloud = null, cloudN = 0;
+  if (D.vol && D.vol.sad) {
+    const b = atob(D.vol.sad), M = N + 1, d = new Float32Array(M * M * M * 4);
+    let o = 0;
+    for (let k = 0; k < M; k++) for (let j = 0; j < M; j++) for (let i = 0; i < M; i++) {
+      const v = b.charCodeAt(((k % N) * N + (j % N)) * N + (i % N)) / 255;
+      d[o++] = i * V; d[o++] = j * V; d[o++] = k * V; d[o++] = Math.pow(Math.max(0, Math.min(1, (v - 0.03) / 0.47)), 0.7);
+    }
+    cloud = d; cloudN = M * M * M;
+  }
   // the calcium atoms of the cell, and every hydrogen site of CaH6 on its faces with the links of the cage between them
   const CAS = []; for (let i = 0; i < 8; i++) CAS.push([(i & 1) * A, (i >> 1 & 1) * A, (i >> 2) * A]); CAS.push([A / 2, A / 2, A / 2]);
   const HS = [];
@@ -84,17 +98,17 @@
       text: 'ELFNet is given a crystal structure and nothing else. This is the calcium lattice of CaH<sub>6</sub> with the hydrogen left out: one cubic cell, with a calcium at each corner and one at its center. The cell repeats in every direction. Drag to turn it.',
       alt: 'A cubic cell in 3D with a calcium atom at each corner and one at its center.' },
     { name: 'Density', dur: 2200,
-      text: 'First the densities of the free atoms are added up on a grid over the cell. This superposed atomic density (SAD) takes no quantum calculation, only the positions and a table of atomic densities. The grid, ' + N + ' points along each edge here, is all the network sees. The map shows it on a plane through the middle of the cell.',
-      alt: 'A plane through the middle of the cell carries a grid and a map of the superposed atomic density, highest at the central calcium atom.' },
+      text: 'First the densities of the free atoms are added up on a grid over the cell. This superposed atomic density (SAD) takes no quantum calculation, only the positions and a table of atomic densities. The grid, ' + N + ' points along each edge here, is all the network sees. Each dot is one grid point, larger and bluer where the density is higher.',
+      alt: 'The cell fills with a grid of dots for the superposed atomic density: dense blue clouds around each calcium atom, faint dots between them.' },
     { name: 'Convolve', dur: 2400,
-      text: 'The network is built from 3D convolutions. Each one updates every grid point from the 5 × 5 × 5 block of points around it. Where the block reaches past a face of the cell it wraps around to the opposite face, because the crystal repeats. Drag the block to a face or a corner.',
-      alt: 'A small cube of five by five by five grid points sticks out through one face of the cell. The part that sticks out reappears at the opposite face.' },
+      text: 'The network is built from 3D convolutions. Each one updates every grid point from the 5 × 5 × 5 block of points around it. Where the block reaches past a face of the cell it wraps around to the opposite face, because the crystal repeats. The orange dots are the points of one block. Drag it to a face or a corner.',
+      alt: 'A small cube of five by five by five grid points, drawn in orange, sticks out through one face of the cell. The part that sticks out reappears at the opposite face.' },
     { name: 'Stack', dur: 4400,
       text: 'Sixteen residual blocks follow, each with two convolutions, and an attention block after every fourth. The grid keeps its size the whole way. With each block a point is influenced by points farther away; in this cell, after four blocks it has seen all of it.',
-      alt: 'The region that influences one grid point grows block by block, wraps around the faces, and fills the whole cell.' },
+      alt: 'The grid points that influence one point turn orange block by block: the region grows, wraps around the faces, and fills the whole cell.' },
     { name: 'Read out', dur: 2400,
-      text: 'A last convolution and a sigmoid turn the 32 numbers held at each grid point into one value between 0 and 1. That is the predicted ELF, on the same grid as the input: the map changes to it, and the yellow surface is where it reaches ' + ISO + '. The whole prediction is one pass through the network.',
-      alt: 'The density map changes into a map of the predicted electron localization function, and a yellow isosurface appears in the cell.' },
+      text: 'A last convolution and a sigmoid turn the 32 numbers held at each grid point into one value between 0 and 1. That is the predicted ELF, on the same grid as the input. The map shows it on a plane through the middle of the cell, and the yellow surface is where it reaches ' + ISO + '. The whole prediction is one pass through the network.',
+      alt: 'The dots of the density give way to a map of the predicted electron localization function on a plane through the middle of the cell, and a yellow isosurface appears in the cell.' },
     { name: 'Compare', dur: 1300,
       text: 'Left of the line is ELFNet, right of it the DFT calculation of the same lattice. Between the atoms both have the same network of high ELF, and the small spheres mark where the hydrogens of CaH<sub>6</sub> sit on it. Close to the nuclei the two differ; ELFNet’s training puts its weight on the space between the atoms. The network was trained on 326,009 structures from about −50 to 500 GPa, and the whole workflow is about 350 times faster than computing the ELF with VASP, on the hardware in the paper.' + (figN ? ' <a href="#fig-elfnet">The figure below</a> has the two side by side.' : ''),
       alt: 'The cell with a line across the picture: the ELFNet prediction on the left and the DFT calculation on the right, and small spheres at the hydrogen sites of CaH6.' }
@@ -113,7 +127,7 @@
       '<button type="button" class="sch-q" aria-label="Grid point. Drag it, or move it with the arrow keys." hidden></button>',
     legend: '<span><i style="background:#5E93B8"></i>Ca</span><span><em class="lg-k"></em>5 × 5 × 5 block</span><span><i style="background:#DAE0E8"></i>H site of CaH₆</span>' +
       '<span class="lg-sad">density, low<b></b>high</span><span class="lg-elf">ELF 0<b></b>' + VMAX + '</span><span><i class="iso"></i>ELF ' + ISO + '</span>',
-    spec: '<b>Ca lattice of CaH<sub>6</sub></b> · <i>a</i> = ' + A.toFixed(3) + ' Å · the map is the plane through the middle of the cell · density and ELFNet on a ' + N + '×' + N + '×' + N + ' grid, DFT on ' + ND + '×' + ND + '×' + ND + ' · FlatResNet3D, 4,232,989 parameters. The fields are real; the drawings of the network at work are schematic.',
+    spec: '<b>Ca lattice of CaH<sub>6</sub></b> · <i>a</i> = ' + A.toFixed(3) + ' Å · the ELF map is the plane through the middle of the cell · density and ELFNet on a ' + N + '×' + N + '×' + N + ' grid, DFT on ' + ND + '×' + ND + '×' + ND + ' · FlatResNet3D, 4,232,989 parameters. The fields are real; the drawings of the network at work are schematic.',
     make: (api) => {
       const st = api.st, on = api.on, smooth = api.smooth, put = api.put, $ = api.$, $$ = api.$$, stage = api.stage, reduced = api.reduced;
       Object.assign(st, { f: [N - 1, 12], moved: false, split: 0.56, wipeTo: 0.56, wipeHeld: false });
@@ -158,6 +172,7 @@
       const paint = (g) => {
         const k = st.step, t = st.t, f = focus(), fi = Math.round(f[0]), fj = Math.round(f[1]);
         const sadA = on(1, 0.2, 0.85), elfA = on(4, 0.1, 0.6), small = on(1, 0.1, 0.4), surfA = on(4, 0.5, 1), ha = on(5, 0.35, 0.8), pa = on(2, 0, 0.15);
+        const dotted = !!(cloud && g.gridP);   // the density is drawn on the whole grid; without it, on the plane only
         g.solid();
         g.box([0, 0, 0], [A, A, A], INK, 0, 0.9 * on(0, 0, 0.3));
         // the calcium atoms: spheres at first, smaller once the map is there
@@ -175,22 +190,32 @@
 
         // the map on the plane through the middle of the cell: the density, then the ELF; fainter where the cell repeats around it
         const m = 0.26 * A, o = [-m, -m, ZC], eu = [A + 2 * m, 0, 0], ev = [0, A + 2 * m, 0], uv0 = [-m / A, -m / A], uv1 = [1 + m / A, 1 + m / A];
-        const plate = (a, b, mixAB) => g.map(o, eu, ev, uv0, uv1, { a: g.texture(a, tile(a), true), b: g.texture(b, tile(b), true), mix: mixAB, alpha: sadA, grid: g.texture('grid', tile('grid'), true),
+        const plate = (a, b, mixAB, alpha) => g.map(o, eu, ev, uv0, uv1, { a: g.texture(a, tile(a), true), b: g.texture(b, tile(b), true), mix: mixAB, alpha: alpha, grid: g.texture('grid', tile('grid'), true),
           gridAlpha: on(1, 0, 0.3) * (0.55 - 0.33 * elfA) * (stage.classList.contains('narrow') ? 0.6 : 1), inside: [0, 0, 1, 1], outside: 0.3, depth: true });
         const surface = (id, a) => { const sc = scenes[id]; if (sc && a > 0) g.surface(g.meshOf(sc), sc.planes, YELLOW, a); };
         if (sadA > 0) {
           if (k === 5) {
-            g.between(0, st.split); plate('net', 'net', 0); surface('cah6_ca_elfnet', 0.5);
-            g.between(st.split, 1); plate('dft', 'dft', 0); surface('cah6_ca_dft', 0.5);
+            g.between(0, st.split); plate('net', 'net', 0, 1); surface('cah6_ca_elfnet', 0.5);
+            g.between(st.split, 1); plate('dft', 'dft', 0, 1); surface('cah6_ca_dft', 0.5);
             g.everywhere();
-          } else { plate('sad', 'net', elfA); surface('cah6_ca_elfnet', 0.5 * surfA); }
+          } else if (dotted) { if (elfA > 0) plate('net', 'net', 0, elfA); surface('cah6_ca_elfnet', 0.5 * surfA); }
+          else { plate('sad', 'net', elfA, sadA); surface('cah6_ca_elfnet', 0.5 * surfA); }
+        }
+        // The density on its grid: a dot at every grid point, larger and bluer where the density is higher. The points
+        // that feed the grid point being followed are orange: its 5 x 5 x 5 block, then all that the stack has reached.
+        const dotA = dotted ? on(1, 0.05, 0.3) * (1 - elfA) : 0;
+        if (dotA > 0) {
+          // the wider the reach, the fainter its points, so that a reach that fills the cell still shows what is inside
+          const h = k === 2 ? KH : k === 3 ? Math.floor(KH + 4 * depth()) : -1, wide = Math.min(1, (2 * h + 1) / N);
+          g.grid('sad', cloud, cloudN, { size: g.scale() * V * 0.92, show: on(1, 0.1, 0.95), alpha: dotA, step: V, period: N, low: [0.70, 0.77, 0.88], high: [0.13, 0.36, 0.70],
+            box: [fi, fj, KZ, h], boxColor: ORANGE, boxAlpha: k === 2 ? on(2, 0, 0.18) : 1, boxMin: 0.8 - 0.68 * Math.pow(wide, 0.7) });
         }
 
         // the region that influences the point: a 5 x 5 x 5 block at "Convolve", then wider with every residual block
         if (k === 2 || k === 3) {
           const h = k === 2 ? KH : Math.floor(KH + 4 * depth()), a = k === 2 ? on(2, 0, 0.18) : 1, whole = 2 * h + 1 >= N;
           for (const ax of spans(fi, h)) for (const ay of spans(fj, h)) for (const az of spans(KZ, h)) {
-            g.box([(ax[0] - 0.5) * V, (ay[0] - 0.5) * V, (az[0] - 0.5) * V], [(ax[1] + 0.5) * V, (ay[1] + 0.5) * V, (az[1] + 0.5) * V], ORANGE, (whole ? 0.07 : 0.17) * a, 0.9 * a);
+            g.box([(ax[0] - 0.5) * V, (ay[0] - 0.5) * V, (az[0] - 0.5) * V], [(ax[1] + 0.5) * V, (ay[1] + 0.5) * V, (az[1] + 0.5) * V], ORANGE, (dotted ? 0.05 : whole ? 0.07 : 0.17) * a, 0.9 * a);
           }
           if (k === 2) {
             // the block as the convolution sees it, sticking out through the face, and an arc to where those points really are

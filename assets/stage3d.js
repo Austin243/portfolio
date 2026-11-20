@@ -1,6 +1,7 @@
-/* A 3D stage for the schemes. It keeps the camera, the trackball and the lighting of the figure engine (VestaGL) and
-   draws things that move anew on every frame: spheres, rods and cones, lines, boxes, a map on a plane, points, and
-   see-through shells. A scheme sets `paint` and calls these from it. Lengths are in Å, colors are [r, g, b] from 0 to 1. */
+/* A 3D stage for the step-by-step figures. It keeps the camera, the trackball and the lighting of the figure engine
+   (VestaGL) and draws things that move anew on every frame: spheres, rods and cones, lines, boxes, a map on a plane,
+   points, a field as a grid of points in one cell or all through a crystal, and see-through shells. A figure sets `paint` and calls these from it.
+   Lengths are in Å, colors are [r, g, b] from 0 to 1. */
 const Stage3D = class extends VestaGL {
   // frame: { center, radius, width, aspect, view (three rows: screen right, screen up, toward the viewer), axes, triad }
   constructor(W, H, frame) {
@@ -49,6 +50,33 @@ const Stage3D = class extends VestaGL {
       'void main(){ vCol = aCol; vec4 p = project(aPos); p.z -= 0.004; gl_Position = p; gl_PointSize = uSize; }',
       PREC + 'varying vec3 vCol; varying float vFog; uniform float uAlpha;\n' +
       'void main(){ vec2 q = gl_PointCoord - 0.5; if (dot(q, q) > 0.25) discard; gl_FragColor = vec4(vCol, uAlpha); }');
+    // A field on a grid, one point per grid point: larger, darker and more solid where its value (0 to 1) is high. The
+    // highest values come in first as uShow goes from 0 to 1. Points inside a box (given in grid points, and wrapping
+    // around the cell as the crystal does) take another color.
+    const ROUND = 'float d = length(gl_PointCoord - 0.5); if (d > 0.5) discard;';
+    const quiet = (vs, fs) => { try { return this._prog(vs, fs); } catch (err) { return null; } };   // a device that refuses one of these still gets the rest of the picture
+    this.gridP = quiet('attribute vec3 aPos; attribute float aVal;\n' + VH +
+      'uniform float uSize; uniform float uShow; uniform float uAlpha; uniform vec4 uBox; uniform vec2 uBoxA; uniform vec2 uGrid; uniform vec3 uLow; uniform vec3 uHigh; uniform vec3 uBoxCol; varying vec4 vCol;\n' +
+      'void main(){ float t = aVal; float vis = clamp((uShow * 1.2 - (1.0 - t)) / 0.2, 0.0, 1.0);\n' +
+      ' vec3 dd = abs(mod(aPos / uGrid.x - uBox.xyz + 0.5 * uGrid.y, uGrid.y) - 0.5 * uGrid.y);\n' +
+      ' float inb = uBox.w < 0.0 ? 0.0 : uBoxA.x * step(max(dd.x, max(dd.y, dd.z)), uBox.w + 0.25);\n' +
+      ' float base = 0.02 + 0.98 * pow(t, 2.6); float a = uAlpha * vis * mix(base, max(uBoxA.y, base), inb);\n' +
+      ' vCol = vec4(mix(mix(uLow, uHigh, t), uBoxCol, inb), a); vec4 p = project(aPos); p.z -= 0.002;\n' +
+      ' gl_Position = a > 0.004 ? p : vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = uSize * mix(0.34 + 0.66 * t, max(0.34 + 0.4 * uBoxA.y, 0.34 + 0.66 * t), inb); }',
+      PREC + 'varying vec4 vCol;\nvoid main(){ ' + ROUND + ' gl_FragColor = vec4(vCol.rgb, vCol.a * smoothstep(0.5, 0.34, d)); }');
+    // A field at points all through a crystal. Each point carries four values, two fields (uSrc picks one) in two
+    // states each (uFlip mixes them), and shows where that value is high (uGate): larger, more solid, and in the color
+    // of the value. The points repeat with the period uL and are shown around uQ, fading out with distance from it;
+    // uShow lets them come in a few at a time.
+    this.cloudP = quiet('attribute vec3 aPos; attribute vec4 aVal; attribute float aRnd;\n' + VH +
+      'uniform vec3 uQ; uniform float uL; uniform vec2 uFade; uniform float uFlip; uniform float uSrc; uniform float uShow; uniform float uSize; uniform float uAlpha; uniform vec2 uGate; varying vec4 vCol;\n' +
+      'vec3 ramp(float t){ t = clamp(t, 0.0, 1.0); vec3 c = t < 0.25 ? vec3(0.0, t / 0.25, 1.0) : t < 0.5 ? vec3(0.0, 1.0, 1.0 - (t - 0.25) / 0.25) : t < 0.75 ? vec3((t - 0.5) / 0.25, 1.0, 0.0) : vec3(1.0, 1.0 - (t - 0.75) / 0.25, 0.0); return (c + (1.0 - c) * 0.14) * vec3(0.97, 0.93, 0.97); }\n' +
+      'void main(){ vec3 w = uQ + mod(aPos - uQ + 0.5 * uL, uL) - 0.5 * uL;\n' +
+      ' float v = mix(mix(aVal.x, aVal.y, uFlip), mix(aVal.z, aVal.w, uFlip), uSrc); float t = smoothstep(uGate.x, uGate.y, v);\n' +
+      ' float a = uAlpha * (1.0 - smoothstep(uFade.x, uFade.y, distance(w, uQ))) * (0.04 + 0.62 * pow(t, 1.3)) * step(aRnd, uShow) * step(0.001, t);\n' +
+      ' vec4 p = project(w); p.z -= 0.002; vCol = vec4(mix(ramp(v), vec3(1.0), 3.0 * vFog), a);\n' +
+      ' gl_Position = a > 0.004 ? p : vec4(2.0, 2.0, 2.0, 1.0); gl_PointSize = uSize * (0.32 + 0.52 * t); }',
+      PREC + 'varying vec4 vCol;\nvoid main(){ ' + ROUND + ' vec3 c = mix(vCol.rgb, vCol.rgb * 0.8, smoothstep(0.22, 0.47, d)); gl_FragColor = vec4(c, vCol.a * smoothstep(0.5, 0.4, d)); }');
     this.quad = gl.createBuffer(); this.scratch = gl.createBuffer();
   }
   // ---------- one frame ----------
@@ -177,6 +205,44 @@ const Stage3D = class extends VestaGL {
     gl.uniform1f(P.loc.uSize, size * Math.min(2, window.devicePixelRatio || 1)); gl.uniform1f(P.loc.uAlpha, a == null ? 1 : a);
     this.blend(false); gl.drawArrays(gl.POINTS, 0, n);
     gl.disableVertexAttribArray(P.loc.aCol);
+  }
+  _kept(key, data) {
+    const gl = this.gl;
+    let b = this.bufs[key];
+    if (!b) { b = this.bufs[key] = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW); } else gl.bindBuffer(gl.ARRAY_BUFFER, b);
+    return b;
+  }
+  // a field on a grid as points: `data` holds x, y, z and a value from 0 to 1 for each of the n points.
+  // o: size (px of the largest point), show, alpha, step (Å between points), period (points per cell edge),
+  //    low and high (colors), box ([i, j, k, half-width in points], half-width below 0 for none), boxColor,
+  //    boxAlpha (how far the points in the box take its color), boxMin (how solid the faintest of them is)
+  grid(key, data, n, o) {
+    if (!this.gridP) return;
+    const gl = this.gl, P = this._use(this.gridP), box = o.box || [0, 0, 0, -1], bc = o.boxColor || [1, 0.5, 0];
+    this._kept(key, data);
+    gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 16, 0);
+    gl.enableVertexAttribArray(P.loc.aVal); gl.vertexAttribPointer(P.loc.aVal, 1, gl.FLOAT, false, 16, 12);
+    gl.uniform1f(P.loc.uSize, o.size * Math.min(2, window.devicePixelRatio || 1)); gl.uniform1f(P.loc.uShow, o.show == null ? 1 : o.show); gl.uniform1f(P.loc.uAlpha, o.alpha == null ? 1 : o.alpha);
+    gl.uniform2f(P.loc.uGrid, o.step, o.period); gl.uniform3fv(P.loc.uLow, o.low); gl.uniform3fv(P.loc.uHigh, o.high);
+    gl.uniform4f(P.loc.uBox, box[0], box[1], box[2], box[3]); gl.uniform2f(P.loc.uBoxA, o.boxAlpha == null ? 1 : o.boxAlpha, o.boxMin == null ? 0.6 : o.boxMin); gl.uniform3fv(P.loc.uBoxCol, bc);
+    this.blend(false); gl.drawArrays(gl.POINTS, 0, n);
+    gl.disableVertexAttribArray(P.loc.aVal);
+  }
+  // a field at points through a crystal: `data` holds x, y, z, four values from 0 to 1 and a random number from 0 to 1 for each.
+  // o: at (the point they are shown around), period (Å), fade ([from, to] distances from it), flip, src, show,
+  //    size (px of the largest point), alpha, gate ([from, to]: the values between which a point comes up)
+  cloud(key, data, n, o) {
+    if (!this.cloudP) return;
+    const gl = this.gl, P = this._use(this.cloudP);
+    this._kept(key, data);
+    gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 32, 0);
+    gl.enableVertexAttribArray(P.loc.aVal); gl.vertexAttribPointer(P.loc.aVal, 4, gl.FLOAT, false, 32, 12);
+    gl.enableVertexAttribArray(P.loc.aRnd); gl.vertexAttribPointer(P.loc.aRnd, 1, gl.FLOAT, false, 32, 28);
+    gl.uniform3fv(P.loc.uQ, o.at); gl.uniform1f(P.loc.uL, o.period); gl.uniform2f(P.loc.uFade, o.fade[0], o.fade[1]);
+    gl.uniform1f(P.loc.uFlip, o.flip || 0); gl.uniform1f(P.loc.uSrc, o.src || 0); gl.uniform1f(P.loc.uShow, o.show == null ? 1 : o.show);
+    gl.uniform1f(P.loc.uSize, o.size * Math.min(2, window.devicePixelRatio || 1)); gl.uniform1f(P.loc.uAlpha, o.alpha == null ? 1 : o.alpha); gl.uniform2f(P.loc.uGate, o.gate[0], o.gate[1]);
+    this.blend(false); gl.drawArrays(gl.POINTS, 0, n);
+    gl.disableVertexAttribArray(P.loc.aVal); gl.disableVertexAttribArray(P.loc.aRnd);
   }
   // The isosurface (and its level control) of a scene in the figures' own format, built by the engine and kept.
   meshOf(scene) {
