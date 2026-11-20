@@ -132,6 +132,7 @@
     }
     waiting[id].push({ ok: ok, fail: fail });
   };
+  window.LP_loadScene = loadScene;   // the 3D schemes draw the isosurfaces of the figures' own scenes
 
   // ---------- live figures ----------
   const SC = window.LP_SCENES || {}, viewers = {}, engines = [];

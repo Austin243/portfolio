@@ -3,7 +3,7 @@
    the message passing between atoms, a query point that can be dragged, the field the decoder returns, the spin flip,
    and the comparison with DFT. The fields are the real ones (assets/wisp-plane.js) and so are the distances and the
    counts; the pictures of what happens inside the network (ripples, moving dots, the scatter of query points) are schematic. */
-(() => {
+window.LP_flat1 = () => {
   'use strict';
   const host = document.getElementById('scheme-1'), D = window.LP_WISP;
   if (!host) return;
@@ -473,4 +473,6 @@
     const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); if (!reduced && !st.started) go(0, true); } }, { threshold: 0.35 });   // not if a step was already picked
     io.observe(stage);
   } else { wake(); go(0, true); }
-})();
+};
+// the flat version runs unless the 3D one (scheme3d-wisp.js) has taken the figure; that one falls back to it without WebGL
+if (!(document.getElementById('scheme-1') || { dataset: { view: '3d' } }).dataset.view) window.LP_flat1();

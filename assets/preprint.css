@@ -263,6 +263,7 @@ h1 { margin: 20px 0 0 -3px; font: 400 clamp(54px, 6.5vw, 94px)/.95 var(--serif);
 .sch-info svg { flex: none; }
 .sch-q { position: absolute; z-index: 4; width: 44px; height: 44px; margin: -22px 0 0 -22px; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: grab; touch-action: none; -webkit-tap-highlight-color: transparent; }
 .sch-q.on { cursor: grabbing; }
+.sch-q i { position: absolute; left: 33px; top: 1px; font: italic 700 17px/1 var(--serif); color: #1A1915; text-shadow: 0 0 2px #FFFFFF, 0 0 4px #FFFFFF, 0 0 7px #FFFFFF; pointer-events: none; }
 .sch-q:focus-visible { outline-offset: -9px; border-radius: 50%; }
 .sch-wipe b { top: 80%; }
 .sch-wipe span { position: absolute; top: 80%; margin-top: -11px; padding: 5px 8px; background: rgba(255, 255, 255, .94); border: 1px solid #E2DED2; border-radius: 6px; font: 600 10.5px/1 var(--mono); letter-spacing: .08em; color: #1A1915; white-space: nowrap; pointer-events: none; }

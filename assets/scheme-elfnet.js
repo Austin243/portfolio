@@ -3,7 +3,7 @@
    atomic density on its grid, a convolution block that can be dragged across the edge of the cell, the reach of a grid
    point growing through the sixteen residual blocks, the ELF that comes out, and the comparison with DFT.
    The fields are the real ones (assets/elfnet-plane.js); the drawings of the network at work are schematic. */
-(() => {
+window.LP_flat2 = () => {
   'use strict';
   const host = document.getElementById('scheme-2'), D = window.LP_ELFNET;
   if (!host) return;
@@ -414,4 +414,6 @@
     const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); if (!reduced && !st.started) go(0, true); } }, { threshold: 0.35 });   // not if a step was already picked
     io.observe(stage);
   } else { wake(); go(0, true); }
-})();
+};
+// the flat version runs unless the 3D one (scheme3d-elfnet.js) has taken the figure; that one falls back to it without WebGL
+if (!(document.getElementById('scheme-2') || { dataset: { view: '3d' } }).dataset.view) window.LP_flat2();
