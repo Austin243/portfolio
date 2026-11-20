@@ -35,7 +35,122 @@
   $$('a.cite[data-ref]').forEach((a) => { if (refName[a.dataset.ref]) a.textContent = refName[a.dataset.ref]; });
   $$('.refs').forEach((g) => { const c = $('.group small', g); if (c) c.textContent = String($$('.ref', g).length); });
   // arriving from another page at one entry (a paper in the list, a news item): mark it
-  if (/^#(ref-|v\d)/.test(location.hash)) { const hit = document.getElementById(location.hash.slice(1)); if (hit) hit.classList.add('flash'); }
+  const arrived = /^#(ref-|v\d)/.test(location.hash) ? document.getElementById(location.hash.slice(1)) : null;
+  if (arrived) arrived.classList.add('flash');
+
+  // ---------- the research cards: one row that moves sideways, with the arrows, the arrow keys, a drag, or a swipe ----------
+  const shelf = $('.shelf'), shelfNav = $('.shelf-nav');
+  const motion = () => (window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
+  let shelfReset = () => {}, shelfShow = () => {};
+  if (shelf && shelfNav) {
+    const prev = $('.prev', shelfNav), next = $('.next', shelfNav), count = $('.count', shelfNav), ticksEl = $('.ticks', shelfNav);
+    const shown = () => refs.filter((r) => !r.hidden);
+    const pad = () => parseFloat(getComputedStyle(shelf).scrollPaddingLeft) || 0;
+    // the scroll position at which a card sits at the left edge of the row
+    const startOf = (c) => c.getBoundingClientRect().left - shelf.getBoundingClientRect().left + shelf.scrollLeft - pad();
+    const maxLeft = () => shelf.scrollWidth - shelf.clientWidth;
+    const to = (x, instant) => shelf.scrollTo({ left: Math.max(0, Math.min(maxLeft(), x)), behavior: instant ? 'auto' : motion() });
+    // the cards in view: most of each one inside the row
+    const inView = () => {
+      const r = shelf.getBoundingClientRect();
+      return shown().filter((c) => { const b = c.getBoundingClientRect(); return Math.min(b.right, r.right) - Math.max(b.left, r.left) >= 0.6 * b.width; });
+    };
+    // the card at the left edge now, or the one the row is already on its way to (a second press during a move adds to it)
+    let aim = -1, aimAt = 0;
+    const current = () => {
+      if (aim >= 0 && performance.now() - aimAt < 700) return aim;
+      const x = shelf.scrollLeft, S = shown().map(startOf); let k = 0; S.forEach((v, i) => { if (Math.abs(v - x) < Math.abs(S[k] - x)) k = i; }); return k;
+    };
+    // how many cards fit side by side
+    const perView = () => { const c = shown()[0]; if (!c) return 1; const g = parseFloat(getComputedStyle(c.parentNode).columnGap) || 0; return Math.max(1, Math.floor((shelf.clientWidth - pad() + g) / (c.offsetWidth + g))); };
+    const goTo = (i) => { const cs = shown(); if (!cs.length) return; aim = Math.max(0, Math.min(cs.length - 1, i)); aimAt = performance.now(); to(startOf(cs[aim])); };
+    const step = (dir) => goTo(current() + dir);                 // the arrow keys: one card
+    const page = (dir) => goTo(current() + dir * perView());    // the buttons: as many as fit
+
+    // under the row: a mark for every card shown, dark for the ones in view; a click on one brings that card to the edge
+    let ticks = [];
+    const build = () => {
+      ticksEl.textContent = ''; ticks = [];
+      $$('.refs', shelf).forEach((g) => {
+        const cs = $$('.ref', g).filter((c) => !c.hidden);
+        if (!cs.length) return;
+        if (ticks.length) { const sep = document.createElement('span'); sep.className = 'sep'; ticksEl.appendChild(sep); }
+        cs.forEach((c) => {
+          const b = document.createElement('button'), h = $('h4', c);
+          b.type = 'button'; b.tabIndex = -1; b.title = h ? h.textContent : '';
+          b.addEventListener('click', () => to(startOf(c)));
+          ticksEl.appendChild(b); ticks.push([c, b]);
+        });
+      });
+    };
+    let queued = 0;
+    const update = () => {
+      queued = 0;
+      const x = shelf.scrollLeft, m = maxLeft(), vis = inView(), all = shown();
+      prev.disabled = x <= 2; next.disabled = x >= m - 2;
+      shelf.classList.toggle('more-right', x < m - 2);
+      ticks.forEach(([c, b]) => b.classList.toggle('on', vis.indexOf(c) >= 0));
+      const a = all.indexOf(vis[0]) + 1, z = all.indexOf(vis[vis.length - 1]) + 1;
+      count.textContent = vis.length ? (a === z ? a : a + '–' + z) + ' of ' + all.length : '';
+    };
+    const later = () => { if (!queued) queued = requestAnimationFrame(update); };
+    shelf.addEventListener('scroll', later, { passive: true });
+    for (const ev of ['wheel', 'touchstart']) shelf.addEventListener(ev, () => { aim = -1; }, { passive: true });   // a move by hand starts from where the row is
+    window.addEventListener('resize', later);
+    if ('ResizeObserver' in window) new ResizeObserver(later).observe(shelf);
+    prev.addEventListener('click', () => page(-1));
+    next.addEventListener('click', () => page(1));
+
+    // keys: with the row (or something in it) focused, and with nothing focused while the row is on screen
+    shelf.addEventListener('keydown', (e) => {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); step(e.key === 'ArrowRight' ? 1 : -1); }
+      else if ((e.key === 'Home' || e.key === 'End') && e.target === shelf) { e.preventDefault(); to(e.key === 'Home' ? 0 : maxLeft()); }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
+      const t = e.target;
+      if (!(t === document.body || t === root || (t.closest && t.closest('.shelf-nav, .filters')))) return;
+      const r = shelf.getBoundingClientRect();
+      if (r.bottom < window.innerHeight * 0.25 || r.top > window.innerHeight * 0.75) return;
+      e.preventDefault(); step(e.key === 'ArrowRight' ? 1 : -1);
+    });
+
+    // a drag with the mouse moves the row; a touch screen or a trackpad moves it on its own. A drag is not a click.
+    let drag = null, dragged = false;
+    shelf.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('button, input, select, textarea')) return;
+      drag = { x: e.clientX, left: shelf.scrollLeft, id: e.pointerId, moved: false };
+      aim = -1;
+    });
+    shelf.addEventListener('pointermove', (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.x;
+      if (!drag.moved) {
+        if (Math.abs(dx) < 6) return;
+        drag.moved = true; shelf.classList.add('dragging');
+        try { shelf.setPointerCapture(e.pointerId); } catch (err) {}
+        const sel = window.getSelection && window.getSelection(); if (sel && sel.rangeCount) sel.collapseToStart();
+      }
+      shelf.scrollLeft = drag.left - dx;
+    });
+    const drop = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const moved = drag.moved; drag = null;
+      if (!moved) return;
+      dragged = true; setTimeout(() => { dragged = false; }, 0);
+      shelf.classList.toggle('dragging', false);
+      aim = -1; goTo(current());   // settle on the card nearest to where it was let go
+    };
+    shelf.addEventListener('pointerup', drop); shelf.addEventListener('pointercancel', drop);
+    shelf.addEventListener('click', (e) => { if (dragged) { e.preventDefault(); e.stopPropagation(); } }, true);
+    shelf.addEventListener('dragstart', (e) => e.preventDefault());   // no dragging the pictures or the links out of the page
+
+    shelfReset = () => { aim = -1; build(); to(0, true); update(); };
+    shelfShow = (c) => requestAnimationFrame(() => to(startOf(c)));
+    build(); update();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(later);
+  }
 
   // ---------- filter chips over the list ----------
   const chips = $$('.filters button[data-f]'), none = $('.empty');
@@ -45,9 +160,12 @@
     refs.forEach((r) => { r.hidden = !tagged(r, f); });
     $$('.refs').forEach((g) => { g.hidden = !$$('.ref', g).some((r) => !r.hidden); });
     if (none) none.hidden = refs.some((r) => !r.hidden);
+    shelfReset();
   };
   chips.forEach((b) => {
-    const c = $('small', b); if (c) c.textContent = String(refs.filter((r) => tagged(r, b.dataset.f)).length);
+    const n = refs.filter((r) => tagged(r, b.dataset.f)).length, c = $('small', b);
+    if (c) c.textContent = String(n);
+    b.hidden = n === 0;   // a topic with nothing in the list yet stays out of sight until something is added to it
     b.addEventListener('click', () => applyFilter(b.getAttribute('aria-pressed') === 'true' ? 'all' : b.dataset.f));
   });
 
@@ -75,9 +193,16 @@
     const a = citeOf(e.target); if (!a) return;
     hidePop();
     const r = document.getElementById('ref-' + a.dataset.ref); if (!r) return;
+    // the page takes the move itself: down to the row, and along the row until the card is at its left edge
+    e.preventDefault();
+    if (location.hash !== '#ref-' + a.dataset.ref) history.pushState(null, '', '#ref-' + a.dataset.ref);
     if (r.hidden) applyFilter('all');
+    const above = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+    window.scrollTo({ top: r.getBoundingClientRect().top + window.scrollY - above, behavior: motion() });
     r.classList.remove('flash'); void r.offsetWidth; r.classList.add('flash');
+    shelfShow(r);
   });
+  if (arrived && arrived.classList.contains('ref')) window.addEventListener('load', () => shelfShow(arrived));
 
   // ---------- the nav marks the section being read ----------
   const navLinks = $$('.nav a[href^="#"]');

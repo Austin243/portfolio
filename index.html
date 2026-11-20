@@ -84,7 +84,7 @@ austinellis.org</a>
 <dl class="meta">
 <div><dt>Education</dt><dd>M.S. Chemistry, CSU Northridge, 2026 <span>B.S. Pharmacological Chemistry, UC San Diego, 2022</span></dd></div>
 <div><dt>Advisors</dt><dd>Maosheng Miao <span>CSU Northridge</span></dd><dd style="margin-top:8px">Jingsong Huang, Ilia Ivanov, Soumendu Bagchi, Jacek Jakowski <span>Oak Ridge National Laboratory</span></dd></div>
-<div><dt>Work</dt><dd><b>6</b> papers · <b>3</b> preprints · <b>4</b> manuscripts <span>5 as first or sole author</span></dd></div>
+<div><dt>Work</dt><dd><b>6</b> papers · <b>3</b> preprints <span>3 as first or sole author</span></dd></div>
 <div><dt>Next</dt><dd>Ph.D. program, fall 2027</dd></div>
 </dl>
 
@@ -104,12 +104,11 @@ austinellis.org</a>
 <!-- ================= research ================= -->
 <section class="sec" id="research" aria-labelledby="research-h">
 <div class="sec-head"><h2 id="research-h">Research</h2>
-<p class="sec-sub">Six papers, three preprints, and four manuscripts. The note with each one says what I did.</p></div>
+<p class="sec-sub">Six papers and three preprints. The note with each one says what I did.</p></div>
 
 <div class="filters" role="group" aria-label="Filter the list">
 <span class="label">Show</span>
 <button type="button" data-f="all" aria-pressed="true">All <small></small></button>
-<button type="button" data-f="first" aria-pressed="false">First author <small></small></button>
 <button type="button" data-f="ml" aria-pressed="false">Machine learning <small></small></button>
 <button type="button" data-f="electrides" aria-pressed="false">Electrides &amp; 2D <small></small></button>
 <button type="button" data-f="superhydrides" aria-pressed="false">Superhydrides <small></small></button>
@@ -117,191 +116,132 @@ austinellis.org</a>
 <button type="button" data-f="reactions" aria-pressed="false">Reactions <small></small></button>
 </div>
 
-<div class="refs">
+<div class="shelf" tabindex="0" role="region" aria-label="Papers and preprints. The arrow keys move through them.">
+<div class="refs" data-group="papers">
 <h3 class="group">Papers <small></small></h3>
+<div class="cards">
 
 <article class="ref" id="ref-elfnet" data-tags="first ml superhydrides">
-<div>
+<a class="ref-fig" href="https://www.oaepublish.com/articles/jmi.2026.44" tabindex="-1"><img src="assets/img/elfnet-toc.webp" width="1200" height="858" alt="ELFNet workflow: a high-pressure ELF dataset of 326,009 structures, their superposed atomic densities, a periodic 3D convolutional network, and the predicted ELF" loading="lazy" decoding="async"></a>
+<div class="ref-body">
 <p class="ref-k"><i>J. Mater. Inf.</i> <b>2026</b>, 6, 45 <span class="tag hot">Front cover</span></p>
 <h4><a href="https://www.oaepublish.com/articles/jmi.2026.44">ELFNet: electron localization from superposed atomic densities</a></h4>
 <p class="ref-au"><b>A. Ellis</b>, S. Ellis, M. Miao</p>
 <p class="ref-sum">A periodic 3D convolutional network maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation.</p>
+<p class="note"><b class="first">First author.</b> I designed, trained, and tested the network.</p>
 <p class="ref-links"><a href="https://www.oaepublish.com/articles/jmi.2026.44">Paper</a><a href="https://openreview.net/forum?id=VHX3ubJCuK">Workshop paper</a><a href="https://github.com/Austin243/ELFNet">Code</a><a href="posters/SeitzELF_3DCNN.pdf">Poster</a><a href="slides/ellis-aps-2026.pdf">Slides</a><a class="figlink" href="#scheme-2"><b>How it works</b><span>steps</span></a><a class="figlink" href="#fig-elfnet" data-fig="fig-elfnet:0:0"><b>CaH<sub>6</sub></b><span>3D</span></a></p>
 </div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b class="first">First author.</b> I designed, trained, and tested the network.</p>
-<a class="thumb" href="https://www.oaepublish.com/articles/jmi.2026.44"><img src="assets/img/elfnet-toc.webp" width="1200" height="858" alt="ELFNet workflow: a high-pressure ELF dataset of 326,009 structures, their superposed atomic densities, a periodic 3D convolutional network, and the predicted ELF" loading="lazy" decoding="async"></a>
-</aside>
 </article>
 
 <article class="ref" id="ref-h2" data-tags="first electrides pressure">
-<div>
+<a class="ref-fig" href="https://doi.org/10.1021/acs.jpclett.6c01415" tabindex="-1"><img src="assets/img/h2-phase-diagram.webp" width="1200" height="600" alt="Pressure–temperature phase diagram of molecular hydrogen with electron localization isosurfaces for phases I to IV" loading="lazy" decoding="async"></a>
+<div class="ref-body">
 <p class="ref-k"><i>J. Phys. Chem. Lett.</i> <b>2026</b>, 17 (29), 8198–8205</p>
 <h4><a href="https://doi.org/10.1021/acs.jpclett.6c01415">Emerging electride in molecular hydrogen metallization</a></h4>
 <p class="ref-au"><b>A. Ellis</b>, S. Ellis, A. Pandit, M. Miao</p>
 <p class="ref-sum">As solid hydrogen metallizes under pressure, electrons localize in the interstitial regions between H<sub>2</sub> molecules, an electride-like route that sets it apart from other molecular crystals.</p>
+<p class="note"><b class="first">First author.</b> I ran the PBE and HSE06 calculations and the analysis of the interstitial states.</p>
 <p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.6c01415">Paper</a><a href="slides/ellis-thesis-defense-2026.pdf">Thesis slides</a><a class="figlink" href="#fig-electrides" data-fig="fig-electrides:1:0"><b>Solid H<sub>2</sub></b><span>3D</span></a></p>
 </div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b class="first">First author.</b> I ran the PBE and HSE06 calculations and the analysis of the interstitial states.</p>
-<a class="thumb" href="https://doi.org/10.1021/acs.jpclett.6c01415"><img src="assets/img/h2-phase-diagram.webp" width="1200" height="600" alt="Pressure–temperature phase diagram of molecular hydrogen with electron localization isosurfaces for phases I to IV" loading="lazy" decoding="async"></a>
-</aside>
 </article>
 
 <article class="ref" id="ref-fe" data-tags="pressure">
-<div>
+<a class="ref-fig" href="https://doi.org/10.1073/pnas.2414911122" tabindex="-1"><img src="assets/img/iron-redox.webp" width="1200" height="600" alt="Formation-energy convex hulls for iron with silicon, phosphorus, sulfur, germanium, arsenic, and selenium" loading="lazy" decoding="async"></a>
+<div class="ref-body">
 <p class="ref-k"><i>Proc. Natl. Acad. Sci. U.S.A.</i> <b>2025</b>, 122, e2414911122</p>
 <h4><a href="https://doi.org/10.1073/pnas.2414911122">Iron redox chemistry in deep Earth</a></h4>
 <p class="ref-au">X. Wang, X. Feng, J. Li, Y. Lv, <b>A. Ellis</b>, S. Scott, A. Pandit, D. Khodagholian, R. J. Hemley, M. G. Jackson, F. J. Spera, S. A. T. Redfern, M. Miao</p>
 <p class="ref-sum">Large-scale first-principles calculations show iron turning from electron donor to electron acceptor at core pressures, which changes the elements it can pull into Earth’s core.</p>
+<p class="note"><b>5th of 13 authors.</b> I mapped phase stability across Fe–p-block compounds with CALYPSO searches and HSE06 convex hulls, and ran the Bader charge analysis.</p>
 <p class="ref-links"><a href="https://doi.org/10.1073/pnas.2414911122">Paper</a><a href="https://newsroom.csun.edu/2025/11/18/study-by-csun-prof-upends-understanding-of-what-happens-to-iron-at-earths-core/">CSUN Newsroom</a><a class="figlink" href="#fig-pressure" data-fig="fig-pressure:0:0"><b>Fe–I</b><span>3D</span></a></p>
 </div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b>5th of 13 authors.</b> I mapped phase stability across Fe–p-block compounds with CALYPSO searches and HSE06 convex hulls, and ran the Bader charge analysis.</p>
-<a class="thumb" href="https://doi.org/10.1073/pnas.2414911122"><img src="assets/img/iron-redox.webp" width="1200" height="600" alt="Formation-energy convex hulls for iron with silicon, phosphorus, sulfur, germanium, arsenic, and selenium" loading="lazy" decoding="async"></a>
-</aside>
 </article>
 
 <article class="ref" id="ref-superhydrides" data-tags="superhydrides ml">
-<div>
+<a class="ref-fig" href="https://doi.org/10.1021/jacs.5c11731" tabindex="-1"><img src="assets/img/superhydrides.webp" width="1000" height="581" alt="Two-step chemical-template workflow for discovering metal superhydrides" loading="lazy" decoding="async"></a>
+<div class="ref-body">
 <p class="ref-k"><i>J. Am. Chem. Soc.</i> <b>2025</b>, 147 (44), 40407–40419</p>
 <h4><a href="https://doi.org/10.1021/jacs.5c11731">Metal superhydrides from chemical templates</a></h4>
 <p class="ref-au">Y. Sun, <b>A. Ellis</b>, X. Chen, M. Miao</p>
 <p class="ref-sum">A template-guided machine-learning workflow found 13 new structural prototypes and 31 stable metal superhydrides, 19 of them with predicted T<sub>c</sub> above 100 K.</p>
+<p class="note"><b>2nd of 4 authors.</b> I helped build the training set and ran the template-guided CALYPSO searches and stability screening.</p>
 <p class="ref-links"><a href="https://doi.org/10.1021/jacs.5c11731">Paper</a><a href="https://openreview.net/forum?id=dEtRvi7G5i">Workshop paper</a><a href="posters/ML_BatchedSuperhydrides.pdf">Poster</a><a class="figlink" href="#fig-superhydrides" data-fig="fig-superhydrides:1:0"><b>U<sub>10</sub>H<sub>84</sub></b><span>3D</span></a></p>
 </div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b>2nd of 4 authors.</b> I helped build the training set and ran the template-guided CALYPSO searches and stability screening.</p>
-<a class="thumb" href="https://doi.org/10.1021/jacs.5c11731"><img src="assets/img/superhydrides.webp" width="1000" height="581" alt="Two-step chemical-template workflow for discovering metal superhydrides" loading="lazy" decoding="async"></a>
-</aside>
 </article>
 
 <article class="ref" id="ref-nakh12" data-tags="superhydrides pressure">
-<div>
+<a class="ref-fig" href="https://doi.org/10.1002/adfm.202415910" tabindex="-1"><img src="assets/img/nakh12.webp" width="1200" height="600" alt="Crystal structure of NaKH12 and the energy change with H–H distance" loading="lazy" decoding="async"></a>
+<div class="ref-body">
 <p class="ref-k"><i>Adv. Funct. Mater.</i> <b>2025</b>, 35, 2415910</p>
 <h4><a href="https://doi.org/10.1002/adfm.202415910">Superconductivity in molecular hydrides</a></h4>
 <p class="ref-au">W. Zhao, <b>A. Ellis</b>, D. Duan, H. Wang, Q. Jiang, M. Du, T. Cui, M. Miao</p>
 <p class="ref-sum">Interstitial electrons act as chemical templates that assemble H<sub>2</sub> units in NaKH<sub>12</sub>, predicted to superconduct up to 245 K at a moderate 60 GPa.</p>
+<p class="note"><b>2nd of 8 authors.</b> I did the band-structure, density-of-states, crystal-orbital, and ELF analyses.</p>
 <p class="ref-links"><a href="https://doi.org/10.1002/adfm.202415910">Paper</a><a class="figlink" href="#fig-superhydrides" data-fig="fig-superhydrides:0:0"><b>NaKH<sub>12</sub></b><span>3D</span></a></p>
 </div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b>2nd of 8 authors.</b> I did the band-structure, density-of-states, crystal-orbital, and ELF analyses.</p>
-<a class="thumb" href="https://doi.org/10.1002/adfm.202415910"><img src="assets/img/nakh12.webp" width="1200" height="600" alt="Crystal structure of NaKH12 and the energy change with H–H distance" loading="lazy" decoding="async"></a>
-</aside>
 </article>
 
 <article class="ref" id="ref-tmdc" data-tags="electrides">
-<div>
+<a class="ref-fig" href="https://doi.org/10.1021/acs.jpclett.4c01263" tabindex="-1"><img src="assets/img/tmdc-vacancy.webp" width="1200" height="600" alt="Crystal orbital of a monolayer MX2 with a chalcogen vacancy, showing localized interstitial electrons that regulate hydrogen evolution" loading="lazy" decoding="async"></a>
+<div class="ref-body">
 <p class="ref-k"><i>J. Phys. Chem. Lett.</i> <b>2024</b>, 15 (23), 6174–6182</p>
 <h4><a href="https://doi.org/10.1021/acs.jpclett.4c01263">Tunable electrides on monolayer TMDCs</a></h4>
 <p class="ref-au">Y. Sun, <b>A. Ellis</b>, S. Diaz, W. Li, M. Miao</p>
 <p class="ref-sum">Chalcogen vacancies strengthen the weak electride character of monolayer transition-metal dichalcogenides to the level of known electrides, and the vacancy states help catalyze hydrogen evolution.</p>
+<p class="note"><b>2nd of 5 authors.</b> I analyzed the vacancy states with ELF, charge-density differences, and band structures, and helped with the H-adsorption calculations.</p>
 <p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.4c01263">Paper</a><a href="posters/TunableElectride_TMDCs.pdf">Poster</a><a class="figlink" href="#fig-electrides" data-fig="fig-electrides:0:0"><b>MoS<sub>2</sub> vacancy</b><span>3D</span></a></p>
 </div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b>2nd of 5 authors.</b> I analyzed the vacancy states with ELF, charge-density differences, and band structures, and helped with the H-adsorption calculations.</p>
-<a class="thumb" href="https://doi.org/10.1021/acs.jpclett.4c01263"><img src="assets/img/tmdc-vacancy.webp" width="1200" height="600" alt="Crystal orbital of a monolayer MX2 with a chalcogen vacancy, showing localized interstitial electrons that regulate hydrogen evolution" loading="lazy" decoding="async"></a>
-</aside>
 </article>
 </div>
+</div>
 
-<div class="refs">
+<div class="refs" data-group="preprints">
 <h3 class="group">Preprints <small></small></h3>
+<div class="cards">
 
 <article class="ref" id="ref-cs-polyoxides" data-tags="pressure">
-<div>
+<a class="ref-fig" href="https://arxiv.org/abs/2110.07865" tabindex="-1"><img src="assets/img/cards/cs-polyoxides.webp" width="700" height="320" alt="Crystal structure of CsO at 150 GPa, with its O–O pairs" loading="lazy" decoding="async"></a>
+<div class="ref-body">
 <p class="ref-k"><i>arXiv</i> <b>2026</b>, 2110.07865 <span class="tag">Preprint</span></p>
 <h4><a href="https://arxiv.org/abs/2110.07865">A practical route to demonstrating core reactivity in Cs polyoxides under pressure</a></h4>
 <p class="ref-au">Y. Sun, S. Ellis, D. Khodagholian, L. Wyke, <b>A. Ellis</b>, P. C. Müller, B. N. Schüpp, R. Nelson, R. Dronskowski, M. Miao</p>
 <p class="ref-sum">First-principles structure searches show the polyoxygen units of Cs–O compounds breaking down under pressure, as the Cs core electrons start to take part in bonding.</p>
+<p class="note"><b>5th of 10 authors.</b></p>
 <p class="ref-links"><a href="https://arxiv.org/abs/2110.07865">Preprint</a><a href="posters/Cs_polyoxide_CoreReactivity.pdf">Poster</a><a class="figlink" href="#fig-pressure" data-fig="fig-pressure:1:0"><b>CsO</b><span>3D</span></a></p>
 </div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b>5th of 10 authors.</b></p>
-</aside>
 </article>
 
 <article class="ref" id="ref-cs-core" data-tags="pressure">
-<div>
+<div class="ref-fig type" aria-hidden="true"><span class="t-big">Cs–Ba–O</span><span class="t-small">structure searches at 150 and 250 GPa</span></div>
+<div class="ref-body">
 <p class="ref-k"><i>arXiv</i> <b>2026</b>, 2611.06009 <span class="tag">Preprint</span></p>
 <h4><a href="https://arxiv.org/abs/2611.06009">Core reactivity in Cs–Ba–O ternary system under pressure</a></h4>
 <p class="ref-au">S. Ellis, <b>A. Ellis</b>, L. Wyke, C. Taylor, M. Miao</p>
 <p class="ref-sum">High pressure can bring the Cs 5p core electrons into covalent bonding. Structure searches in the Cs–Ba–O system at 150 and 250 GPa put CsBa<sub>3</sub>O<sub>8</sub> and CsBaO<sub>4</sub> on the convex hull at 250 GPa, with mild Cs 5p–O 2p bonding and O<sub>2</sub> units still intact. Cs<sub>2</sub>BaO<sub>3</sub> bonds more strongly but is metastable.</p>
+<p class="note"><b>2nd of 5 authors.</b></p>
 <p class="ref-links"><a href="https://arxiv.org/abs/2611.06009">Preprint</a></p>
 </div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b>2nd of 5 authors.</b></p>
-</aside>
 </article>
 
 <article class="ref" id="ref-wisp" data-tags="first ml">
-<div>
+<a class="ref-fig" href="https://doi.org/10.26434/chemrxiv.15011092/v1" tabindex="-1"><img src="assets/img/cards/wisp.webp" width="700" height="320" alt="Unit cell of MnPd with the spin-down electron localization predicted by WISP" loading="lazy" decoding="async"></a>
+<div class="ref-body">
 <p class="ref-k"><i>ChemRxiv</i> <b>2026</b> <span class="tag">Preprint</span></p>
 <h4><a href="https://doi.org/10.26434/chemrxiv.15011092/v1">WISP: learning spin-resolved electron localization from atomic environments</a></h4>
 <p class="ref-au"><b>A. Ellis</b></p>
 <p class="ref-sum">A network that predicts the electron localization function of both spin channels at any point in a crystal, from the atomic structure and the magnetic moments on the atoms. On 21,922 held-out structures the mean absolute error is 0.011 per channel on the ELF scale of 0 to 1.</p>
+<p class="note"><b class="first">Sole author.</b></p>
 <p class="ref-links"><a href="https://doi.org/10.26434/chemrxiv.15011092/v1">Preprint</a><a class="figlink" href="#scheme-1"><b>How it works</b><span>steps</span></a><a class="figlink" href="#fig-wisp" data-fig="fig-wisp:0:0"><b>MnPd</b><span>3D</span></a><a class="figlink" href="#fig-wisp" data-fig="fig-wisp:1:0"><b>Sc<sub>5</sub>Cl<sub>8</sub></b><span>3D</span></a></p>
 </div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b class="first">Sole author.</b></p>
-</aside>
 </article>
 </div>
-
-<div class="refs">
-<h3 class="group">Manuscripts <small></small></h3>
-
-<article class="ref" id="ref-polymerization" data-tags="first reactions pressure">
-<div>
-<p class="ref-k">Manuscript in preparation</p>
-<h4>Mapping acetonitrile polymerization under pressure with ReactionFlow</h4>
-<p class="ref-au"><b>A. Ellis</b>, S. Bagchi, M. Goswami, J. Jakowski, J. Huang, P. Ganesh, I. Ivanov</p>
-<p class="ref-sum">Compressed crystalline acetonitrile polymerizes through hydrogen transfers and <span style="white-space:nowrap">C–C</span> additions. ReactionFlow picks these steps out of molecular dynamics, and DFT checks their barriers.</p>
-<p class="ref-links"><a href="https://github.com/Austin243/ReactionFlow">Code</a><a class="figlink" href="#fig-reactions" data-fig="fig-reactions:0:0"><b>CH<sub>3</sub>CN, 35 GPa</b><span>3D</span></a></p>
 </div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b class="first">First author.</b></p>
-</aside>
-</article>
 
-<article class="ref" id="ref-tmd-vacancies" data-tags="electrides">
-<div>
-<p class="ref-k">Manuscript · draft available upon request</p>
-<h4>Statistical prediction of vacancy thermodynamics and stress coupling in chalcogen-alloyed TMDs</h4>
-<p class="ref-au">J. Jeffries, <b>A. Ellis</b>, S. Ellis, E. Martinez, E. Zarkadoula</p>
-<p class="ref-sum">A statistical prediction of how chalcogen vacancies form in alloyed transition-metal dichalcogenides, and of how their energies respond to stress.</p>
-<p class="ref-links"><a class="figlink" href="#fig-electrides" data-fig="fig-electrides:2:0"><b>TaS<sub>2</sub> vacancy</b><span>3D</span></a></p>
 </div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b>2nd of 5 authors.</b></p>
-</aside>
-</article>
-
-<article class="ref" id="ref-mlip" data-tags="first ml reactions">
-<div>
-<p class="ref-k">Manuscript · draft available upon request</p>
-<h4>Accuracy and limits of pretrained interatomic potentials across molecular reaction pathways</h4>
-<p class="ref-au"><b>A. Ellis</b>, R. Morelock, S. Bagchi, A. M. dos Santos, M. Goswami, J. Jakowski, J. Huang, P. Ganesh, I. Ivanov</p>
-<p class="ref-sum">Fifteen pretrained machine-learned interatomic potentials compared with DFT energies, forces, and barriers along 9,017 gas-phase reactions.</p>
-<p class="ref-links"><a href="https://github.com/Austin243/dorts9k-mlip-benchmark">Code</a></p>
-</div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b class="first">First author.</b></p>
-</aside>
-</article>
-
-<article class="ref" id="ref-oligomerization" data-tags="reactions">
-<div>
-<p class="ref-k">Manuscript in preparation</p>
-<h4>Stimulus-directed oligomerization and polymerization of acetonitrile</h4>
-<p class="ref-au">I. N. Ivanov, <b>A. Ellis</b>, P. Christakopoulos, A. Puretsky, C. Rouleau, J. Huang, J. Jakowski, M. Goswami, P. Ganesh, B. Sumpter</p>
-<p class="ref-sum">How the choice of stimulus directs acetonitrile toward oligomers or polymers.</p>
-<p class="ref-links"><a class="figlink" href="#fig-reactions" data-fig="fig-reactions:1:0"><b>On Na(100)</b><span>3D</span></a></p>
-</div>
-<aside class="ref-side">
-<p class="note"><span class="label">My role</span><b>2nd of 10 authors.</b></p>
-</aside>
-</article>
+<div class="shelf-nav">
+<div class="ticks" aria-hidden="true"></div>
+<p class="count"></p>
+<div class="arrows"><button type="button" class="prev" aria-label="Earlier entries"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5"/></svg></button><button type="button" class="next" aria-label="Later entries"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5"/></svg></button></div>
 </div>
 <p class="empty" hidden>Nothing in the list matches that filter.</p>
 </section>
