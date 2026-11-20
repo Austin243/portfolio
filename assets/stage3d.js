@@ -71,6 +71,16 @@ const Stage3D = class extends VestaGL {
       PREC + 'varying vec3 vN; varying vec3 vW; varying float vFog; uniform vec3 uColor; uniform float uAlpha; uniform vec3 uQ; uniform vec2 uFade; uniform vec3 uLo; uniform vec3 uHi;\n' + LIT +
       'void main(){ float d = distance(vW, uQ); if (d > uFade.y || any(lessThan(vW, uLo)) || any(greaterThan(vW, uHi))) discard; vec3 n = normalize(vN); if (n.z < 0.0) n = -n;\n' +
       ' gl_FragColor = vec4(mix(shade(n, uColor, 0.06), vec3(1.0), vFog), uAlpha * (1.0 - smoothstep(uFade.x, uFade.y, d))); }');
+    // the colored cuts of the 3D figures (the faces of a mesh, colored where the field is above the level), able to fade
+    this.secAP = quiet('attribute vec3 aPos; attribute vec2 aUV; varying vec2 vUV;\n' + VH +
+      'void main(){ vUV = aUV; gl_Position = project(aPos); }',
+      PREC + 'varying vec2 vUV; varying float vFog; uniform sampler2D uTex; uniform float uIso; uniform float uAlpha;\n' +
+      'vec3 cmap(float t){ t = clamp(t, 0.0, 1.0);\n' +
+      ' if (t < 0.25) return mix(vec3(0.0, 0.0, 1.0), vec3(0.0, 1.0, 1.0), t / 0.25);\n' +
+      ' if (t < 0.5) return mix(vec3(0.0, 1.0, 1.0), vec3(0.0, 1.0, 0.0), (t - 0.25) / 0.25);\n' +
+      ' if (t < 0.75) return mix(vec3(0.0, 1.0, 0.0), vec3(1.0, 1.0, 0.0), (t - 0.5) / 0.25);\n' +
+      ' return mix(vec3(1.0, 1.0, 0.0), vec3(1.0, 0.0, 0.0), (t - 0.75) / 0.25); }\n' +
+      'void main(){ float v = texture2D(uTex, vUV).r; if (v < uIso) discard; gl_FragColor = vec4(mix(mix(cmap(v), vec3(1.0), 0.14), vec3(1.0), vFog), uAlpha); }');
     this.quad = gl.createBuffer(); this.scratch = gl.createBuffer();
   }
   // ---------- one frame ----------
@@ -237,6 +247,37 @@ const Stage3D = class extends VestaGL {
     gl.disable(gl.BLEND); gl.depthMask(true); gl.colorMask(false, false, false, false); all(); gl.colorMask(true, true, true, true);
     gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(false); gl.depthFunc(gl.LEQUAL); all();
     gl.depthFunc(gl.LESS); gl.depthMask(true); gl.disable(gl.BLEND); gl.disableVertexAttribArray(P.loc.aNrm);
+  }
+  // A scene's isosurface as the 3D figures draw it: repeated over the scene's translations, cut by its planes, and only
+  // its nearest layer blended.
+  isoSurface(mesh, planes, translations, rgb, alpha) {
+    if (!mesh || !mesh.iso || !mesh.iso.n || !(alpha > 0)) return;
+    const gl = this.gl, P = this._use(this.isoP), pl = new Float32Array(32), T = translations && translations.length ? translations : [[0, 0, 0]];
+    (planes || []).slice(0, 8).forEach((q, i) => pl.set(q, i * 4));
+    gl.uniform4fv(P.loc.uPl, pl); gl.uniform1i(P.loc.uNp, Math.min(8, (planes || []).length));
+    gl.uniform3fv(P.loc.uColor, rgb); gl.uniform1f(P.loc.uAlpha, alpha);
+    gl.bindBuffer(gl.ARRAY_BUFFER, mesh.iso.buf);
+    gl.enableVertexAttribArray(P.loc.aPos); gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 24, 0);
+    gl.enableVertexAttribArray(P.loc.aNrm); gl.vertexAttribPointer(P.loc.aNrm, 3, gl.FLOAT, false, 24, 12);
+    const all = () => { for (const t of T) { gl.uniform3fv(P.loc.uOff, t); gl.drawArrays(gl.TRIANGLES, 0, mesh.iso.n); } };
+    gl.disable(gl.BLEND); gl.depthMask(true); gl.colorMask(false, false, false, false); all(); gl.colorMask(true, true, true, true);
+    gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(false); gl.depthFunc(gl.LEQUAL); all();
+    gl.depthFunc(gl.LESS); gl.depthMask(true); gl.disable(gl.BLEND); gl.disableVertexAttribArray(P.loc.aNrm);
+  }
+  // a scene's colored cuts (mesh.secs), shown where the field is above `iso`, at `alpha`
+  sections(mesh, iso, alpha) {
+    if (!this.secAP || !mesh || !mesh.secs || !mesh.secs.length || !(alpha > 0)) return;
+    const gl = this.gl, P = this._use(this.secAP);
+    gl.uniform1i(P.loc.uTex, 0); gl.activeTexture(gl.TEXTURE0); gl.uniform1f(P.loc.uAlpha, alpha);
+    gl.enableVertexAttribArray(P.loc.aPos); gl.enableVertexAttribArray(P.loc.aUV);
+    if (alpha < 0.999) this.blend(false); else this.solid();
+    for (const q of mesh.secs) {
+      gl.uniform1f(P.loc.uIso, q.full ? 0 : iso); gl.bindTexture(gl.TEXTURE_2D, q.tex); gl.bindBuffer(gl.ARRAY_BUFFER, q.buf);
+      gl.vertexAttribPointer(P.loc.aPos, 3, gl.FLOAT, false, 20, 0); gl.vertexAttribPointer(P.loc.aUV, 2, gl.FLOAT, false, 20, 12);
+      gl.drawArrays(gl.TRIANGLES, 0, q.n);
+    }
+    gl.disableVertexAttribArray(P.loc.aUV);
+    this.solid();
   }
   // The isosurface (and its level control) of a scene in the figures' own format, built by the engine and kept.
   meshOf(scene) {

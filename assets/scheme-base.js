@@ -50,7 +50,7 @@ window.LP_scheme = (host, def) => {
     if (row.scrollWidth > row.clientWidth) row.scrollLeft = Math.max(0, li.offsetLeft - row.offsetLeft - (row.clientWidth - li.offsetWidth) / 2);
     put(head, (k + 1) + ' · ' + STEPS[k].name); put(body, STEPS[k].text);
     back.disabled = k === 0; count.textContent = (k + 1) + ' / ' + STEPS.length;
-    put(next, k === STEPS.length - 1 ? 'Start over ↺' : 'Next: ' + STEPS[k + 1].name + ' →');
+    put(next, k === STEPS.length - 1 ? 'Start over ↺' : 'Next<span class="nx">: ' + STEPS[k + 1].name + '</span> →');
     hint.hidden = k < def.hintFrom || stage.classList.contains('touched');
     view.sync(k); view.live();
   };
@@ -85,15 +85,22 @@ window.LP_scheme = (host, def) => {
     shown.delete(body);
     textBox.style.minHeight = tall + 'px';
   };
-  const refit = () => { if (!api.dead && view.layout()) { roomForText(); sync(); kick(); } };
-  const wake = () => {
-    if ('ResizeObserver' in window) new ResizeObserver(refit).observe(stage); else { window.addEventListener('resize', refit); refit(); }
+  // The picture's WebGL context is made when the figure comes near the screen and given back when it is far away or
+  // hidden (view.sleep), so that a page with many figures stays within what the browser allows.
+  let awake = false, watching = false;
+  const refit = () => { if (awake && !api.dead && view.layout()) { roomForText(); sync(); kick(); } };
+  const watchSize = () => {
+    if (watching) return;
+    watching = true;
+    if ('ResizeObserver' in window) new ResizeObserver(refit).observe(stage); else window.addEventListener('resize', refit);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { colW = -1; refit(); });
   };
+  const wake = () => { if (awake) return; awake = true; watchSize(); refit(); };
+  const sleep = () => { if (!awake) return; awake = false; if (view.sleep) view.sleep(); };
   sync();
   if ('IntersectionObserver' in window) {
-    const near = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { near.disconnect(); wake(); } }, { rootMargin: '500px 0px' });
-    near.observe(stage);
+    if (window.LP_glWatch) window.LP_glWatch(stage, wake, sleep);
+    else { const near = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { near.disconnect(); wake(); } }, { rootMargin: '500px 0px' }); near.observe(stage); }
     const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); if (!reduced && !st.started) go(0, true); } }, { threshold: 0.35 });   // not if a step was already picked
     io.observe(stage);
   } else { wake(); go(0, true); }

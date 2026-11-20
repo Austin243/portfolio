@@ -329,7 +329,7 @@ window.LP_flat2 = () => {
     put(head, (k + 1) + ' · ' + STEPS[k].name); put(body, STEPS[k].text);
     cv.setAttribute('aria-label', 'How ELFNet works, step ' + (k + 1) + ' of ' + STEPS.length + ', ' + STEPS[k].name + '. ' + STEPS[k].alt);
     back.disabled = k === 0; count.textContent = (k + 1) + ' / ' + STEPS.length;
-    put(next, k === STEPS.length - 1 ? 'Start over ↺' : 'Next: ' + STEPS[k + 1].name + ' →');
+    put(next, k === STEPS.length - 1 ? 'Start over ↺' : 'Next<span class="nx">: ' + STEPS[k + 1].name + '</span> →');
     netEl.hidden = k < 2 || k > 4; read.hidden = k < 4; qEl.hidden = k < 2; wipeEl.hidden = k !== 5;
     hint.hidden = k < 2 || stage.classList.contains('touched');
     live();

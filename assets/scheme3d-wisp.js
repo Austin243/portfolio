@@ -85,7 +85,7 @@
   // ---------- the page around the picture ----------
   const STEPS = [
     { name: 'Structure', dur: 1900,
-      text: 'WISP is given a crystal: which atoms it has, where they sit, the cell, and the magnetic moment on each atom. This is a piece of MnPd; the crystal goes on in every direction. The arrows are the moments, ' + D.moments[0].toFixed(2) + ' μ<sub>B</sub> on Mn and ' + D.moments[1].toFixed(2) + ' μ<sub>B</sub> on Pd. Drag to turn it.',
+      text: 'The ELF maps where electrons sit in bonds, lone pairs and the cavities of electrides, but computing it takes the occupied orbitals from a DFT calculation. WISP predicts it for each spin from the structure alone, to sort candidates before that calculation. It is given the atoms of a crystal, where they sit, the cell, and the magnetic moment on each atom: here a piece of MnPd, with arrows for the moments, ' + D.moments[0].toFixed(2) + ' μ<sub>B</sub> on Mn and ' + D.moments[1].toFixed(2) + ' μ<sub>B</sub> on Pd. Drag to turn it.',
       alt: 'A piece of the MnPd crystal in 3D. A long arrow through each manganese and a very short one through each palladium show the magnetic moments.' },
     { name: 'Encode', dur: 3200,
       text: 'An equivariant network passes messages between atoms up to 5 Å apart, twice. Afterwards every atom holds a set of features that describe its surroundings. Some are plain numbers and some have a direction (<i>ℓ</i> = 0, 1, 2), so they turn when the crystal turns.',
@@ -100,7 +100,7 @@
       text: 'For the other spin channel, the same network runs again with every moment reversed. Reversing the moments swaps the two channels exactly, because of how the network is built, so it never has to learn that. In MnPd the spin-down channel has a large region around Pd that the spin-up channel lacks.',
       alt: 'The moment arrows turn over and the map and the yellow isosurface change to the spin-down channel, which has a large region around each palladium atom.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.' + (figN ? ' <a href="#fig-wisp">The figure below</a> has the two side by side.' : ''),
+      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known. It could screen for electrides and magnetic materials before any DFT is run.' + (figN ? ' <a href="#fig-wisp">The figure below</a> has the two side by side.' : ''),
       alt: 'The same cell with a line across the picture: the WISP prediction on the left and the DFT calculation on the right. The two sides match.' }
   ];
   const GLYPHS = '<svg viewBox="0 0 46 16" width="46" height="16" aria-hidden="true"><g fill="#0B7A80"><circle cx="5" cy="8" r="3.2"/><ellipse cx="19" cy="4.4" rx="2.6" ry="3.4"/><ellipse cx="19" cy="11.6" rx="2.6" ry="3.4"/>' +
@@ -123,7 +123,8 @@
       const st = api.st, on = api.on, smooth = api.smooth, put = api.put, $ = api.$, $$ = api.$$, stage = api.stage, reduced = api.reduced;
       Object.assign(st, { q: Q0.slice(), flip: 0, flipTo: 0, diff: false, split: 0.62, wipeTo: 0.62, wipeHeld: false, touchedFlip: false });
       window.LP_SCHEME = st;   // for checking the page from the console
-      const cv = $('canvas.gl'), ov = $('canvas.ov'), chan = $('.sch-chan'), read = $('.sch-read'), sig = $('canvas.sig'), wipeEl = $('.sch-wipe'), qEl = $('.sch-q'), hint = $('.hint');
+      let cv = $('canvas.gl'), saved = null;   // the canvas is replaced when the figure sleeps; saved: the view it had
+      const ov = $('canvas.ov'), chan = $('.sch-chan'), read = $('.sch-read'), sig = $('canvas.sig'), wipeEl = $('.sch-wipe'), qEl = $('.sch-q'), hint = $('.hint');
       const readK = $('.k', read), readV = $('.v', read);
       let eng = null, scatter = null, dragging = false, cam = P3(Q0);
 
@@ -174,6 +175,7 @@
         if (!eng) {
           eng = new Stage3D(W, H, { center: P3(Q0), radius: 9.5, width: 16.4, aspect: 1.4, view: view, axes: [[A, 0, 0], [0, A, 0], [0, 0, A]], triad: false });
           eng.attach(undefined, ov); eng.attach(cv);
+          if (saved && saved.M) { eng.M = saved.M; eng.zoom = saved.zoom; eng.dirty = true; }
           if (eng.status === 'nogl') { api.dead = true; host.removeAttribute('data-view'); host.innerHTML = ''; if (window.LP_flat1) window.LP_flat1(); return false; }   // no WebGL after all: the flat version
           eng.paint = paint;
           if (window.LP_loadScene && eng.tileP) VOLS.wisp.concat(VOLS.dft).forEach((id) => window.LP_loadScene(id, (d) => { vols[id] = d; api.kick(); }, () => {}));
@@ -378,13 +380,14 @@
       });
       // the picture turns when it is dragged; a click without a drag sends the query point there
       let down = null;
-      cv.addEventListener('pointerdown', (e) => { if (!eng) return; api.touched(); down = [e.clientX, e.clientY]; eng.down(e); });
-      cv.addEventListener('pointermove', (e) => { if (!eng || !eng.ptr.size) return; eng.move(e); live(); api.kick(); });
-      cv.addEventListener('pointerup', (e) => { if (!eng) return; eng.up(e); if (down && st.step >= 2 && Math.hypot(e.clientX - down[0], e.clientY - down[1]) < 4) moveQ(e); down = null; });
-      cv.addEventListener('pointercancel', (e) => { if (eng) eng.up(e); down = null; });
-      cv.addEventListener('dblclick', () => { if (eng) { eng.resetView(); live(); api.kick(); } });
-      cv.addEventListener('keydown', (e) => { if (eng && eng.key(e)) { e.preventDefault(); live(); api.kick(); } });
-      cv.addEventListener('wheel', (e) => { if (eng && (e.ctrlKey || e.metaKey)) { e.preventDefault(); eng.zoomBy(Math.exp(-e.deltaY * 0.01)); live(); api.kick(); } }, { passive: false });
+      const onCv = (type, fn, opt) => stage.addEventListener(type, (e) => { if (e.target === cv) fn(e); }, opt);
+      onCv('pointerdown', (e) => { if (!eng) return; api.touched(); down = [e.clientX, e.clientY]; eng.down(e); });
+      onCv('pointermove', (e) => { if (!eng || !eng.ptr.size) return; eng.move(e); live(); api.kick(); });
+      onCv('pointerup', (e) => { if (!eng) return; eng.up(e); if (down && st.step >= 2 && Math.hypot(e.clientX - down[0], e.clientY - down[1]) < 4) moveQ(e); down = null; });
+      onCv('pointercancel', (e) => { if (eng) eng.up(e); down = null; });
+      onCv('dblclick', () => { if (eng) { eng.resetView(); live(); api.kick(); } });
+      onCv('keydown', (e) => { if (eng && eng.key(e)) { e.preventDefault(); live(); api.kick(); } });
+      onCv('wheel', (e) => { if (eng && (e.ctrlKey || e.metaKey)) { e.preventDefault(); eng.zoomBy(Math.exp(-e.deltaY * 0.01)); live(); api.kick(); } }, { passive: false });
       // the line between WISP and DFT
       const dragWipe = (e) => { const r = stage.getBoundingClientRect(); st.split = st.wipeTo = Math.max(0.05, Math.min(0.95, (e.clientX - r.left) / r.width)); live(); api.kick(); };
       wipeEl.addEventListener('pointerdown', (e) => { e.preventDefault(); st.wipeHeld = true; try { wipeEl.setPointerCapture(e.pointerId); } catch (err) {} wipeEl.classList.add('on'); dragWipe(e); });
@@ -395,7 +398,15 @@
         const d = e.key === 'ArrowLeft' ? -0.04 : e.key === 'ArrowRight' ? 0.04 : 0; if (!d) return;
         e.preventDefault(); st.split = st.wipeTo = Math.max(0.05, Math.min(0.95, st.split + d)); live(); api.kick();
       });
-      return { layout: layout, draw: draw, live: live, sync: sync, enter: enter, tick: tick };
+      // far from the screen or hidden: give the WebGL context back; layout() makes a new one on the way back
+      const sleep = () => {
+        if (!eng) return;
+        saved = { M: eng.M ? eng.M.map((r) => r.slice()) : null, zoom: eng.zoom };
+        cv = window.LP_freshCanvas ? window.LP_freshCanvas(cv, eng.gl) : cv;
+        eng = null; dragging = false; down = null;
+        for (const k in meshes) delete meshes[k];   // they hold buffers of the context given back
+      };
+      return { layout: layout, draw: draw, live: live, sync: sync, enter: enter, tick: tick, sleep: sleep };
     }
   });
 })();

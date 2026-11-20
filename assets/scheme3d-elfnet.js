@@ -95,7 +95,7 @@
   // ---------- the page around the picture ----------
   const STEPS = [
     { name: 'Structure', dur: 1500,
-      text: 'ELFNet is given a crystal structure and nothing else. This is the calcium lattice of CaH<sub>6</sub> with the hydrogen left out: one cubic cell, with a calcium at each corner and one at its center. The cell repeats in every direction. Drag to turn it.',
+      text: 'The ELF shows where electrons localize, in bonds, lone pairs and the empty spaces of a lattice, but computing it takes a DFT calculation, too slow for screening thousands of candidates. ELFNet predicts it from a crystal structure and nothing else. This is the calcium lattice of CaH<sub>6</sub> with the hydrogen left out: one cubic cell, with a calcium at each corner and one at its center. The cell repeats in every direction. Drag to turn it.',
       alt: 'A cubic cell in 3D with a calcium atom at each corner and one at its center.' },
     { name: 'Density', dur: 2200,
       text: 'First the densities of the free atoms are added up on a grid over the cell. This superposed atomic density (SAD) takes no quantum calculation, only the positions and a table of atomic densities. The grid, ' + N + ' points along each edge here, is all the network sees. Each dot is one grid point, larger and bluer where the density is higher.',
@@ -110,7 +110,7 @@
       text: 'A last convolution and a sigmoid turn the 32 numbers held at each grid point into one value between 0 and 1. That is the predicted ELF, on the same grid as the input. The map shows it on a plane through the middle of the cell, and the yellow surface is where it reaches ' + ISO + '. The whole prediction is one pass through the network.',
       alt: 'The dots of the density give way to a map of the predicted electron localization function on a plane through the middle of the cell, and a yellow isosurface appears in the cell.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is ELFNet, right of it the DFT calculation of the same lattice. Between the atoms both have the same network of high ELF, and the small spheres mark where the hydrogens of CaH<sub>6</sub> sit on it. Close to the nuclei the two differ; ELFNet’s training puts its weight on the space between the atoms. The network was trained on 326,009 structures from about −50 to 500 GPa, and the whole workflow is about 350 times faster than computing the ELF with VASP, on the hardware in the paper.' + (figN ? ' <a href="#fig-elfnet">The figure below</a> has the two side by side.' : ''),
+      text: 'Left of the line is ELFNet, right of it the DFT calculation of the same lattice. Between the atoms both show the same network of high ELF, and the small spheres mark where the hydrogens of CaH<sub>6</sub> sit on it; close to the nuclei the two differ. Trained on 326,009 structures from about −50 to 500 GPa, the workflow runs about 350 times faster than computing the ELF with VASP, on the hardware in the paper: fast enough to screen many lattices, such as hosts for new superhydrides, before any DFT.' + (figN ? ' <a href="#fig-elfnet">The figure below</a> has the two side by side.' : ''),
       alt: 'The cell with a line across the picture: the ELFNet prediction on the left and the DFT calculation on the right, and small spheres at the hydrogen sites of CaH6.' }
   ];
   let strip = '<span class="b" data-k="stem">Stem</span>';
@@ -132,7 +132,8 @@
       const st = api.st, on = api.on, smooth = api.smooth, put = api.put, $ = api.$, $$ = api.$$, stage = api.stage, reduced = api.reduced;
       Object.assign(st, { f: [N - 1, 12], moved: false, split: 0.56, wipeTo: 0.56, wipeHeld: false });
       window.LP_SCHEME2 = st;   // for checking the page from the console
-      const cv = $('canvas.gl'), ov = $('canvas.ov'), netEl = $('.sch-net'), read = $('.sch-read'), sig = $('canvas.sig'), wipeEl = $('.sch-wipe'), qEl = $('.sch-q'), hint = $('.hint');
+      let cv = $('canvas.gl'), saved = null;   // the canvas is replaced when the figure sleeps; saved: the view it had
+      const ov = $('canvas.ov'), netEl = $('.sch-net'), read = $('.sch-read'), sig = $('canvas.sig'), wipeEl = $('.sch-wipe'), qEl = $('.sch-q'), hint = $('.hint');
       const readK = $('.k', read), readV = $('.v', read), netParts = $$('.sch-net > *');
       const scenes = {};   // the isosurfaces come from the scenes of the 3D figure below
       let eng = null, dragging = false;
@@ -152,6 +153,7 @@
         if (!eng) {
           eng = new Stage3D(W, H, { center: [A / 2, A / 2, A / 2], radius: 4.7, width: 9.4, aspect: 1.4, view: view, axes: [[A, 0, 0], [0, A, 0], [0, 0, A]] });
           eng.attach(undefined, ov); eng.attach(cv);
+          if (saved && saved.M) { eng.M = saved.M; eng.zoom = saved.zoom; eng.dirty = true; }
           if (eng.status === 'nogl') { api.dead = true; host.removeAttribute('data-view'); host.innerHTML = ''; if (window.LP_flat2) window.LP_flat2(); return false; }   // no WebGL after all: the flat version
           eng.paint = paint;
           if (window.LP_loadScene) for (const id of ['cah6_ca_elfnet', 'cah6_ca_dft']) window.LP_loadScene(id, (d) => { scenes[id] = Object.assign({}, d); api.kick(); }, () => {});
@@ -309,13 +311,14 @@
       });
       // the picture turns when it is dragged; a click without a drag sends the grid point there
       let down = null;
-      cv.addEventListener('pointerdown', (e) => { if (!eng) return; api.touched(); down = [e.clientX, e.clientY]; eng.down(e); });
-      cv.addEventListener('pointermove', (e) => { if (!eng || !eng.ptr.size) return; eng.move(e); live(); api.kick(); });
-      cv.addEventListener('pointerup', (e) => { if (!eng) return; eng.up(e); if (down && st.step >= 2 && Math.hypot(e.clientX - down[0], e.clientY - down[1]) < 4) moveF(e); down = null; });
-      cv.addEventListener('pointercancel', (e) => { if (eng) eng.up(e); down = null; });
-      cv.addEventListener('dblclick', () => { if (eng) { eng.resetView(); live(); api.kick(); } });
-      cv.addEventListener('keydown', (e) => { if (eng && eng.key(e)) { e.preventDefault(); live(); api.kick(); } });
-      cv.addEventListener('wheel', (e) => { if (eng && (e.ctrlKey || e.metaKey)) { e.preventDefault(); eng.zoomBy(Math.exp(-e.deltaY * 0.01)); live(); api.kick(); } }, { passive: false });
+      const onCv = (type, fn, opt) => stage.addEventListener(type, (e) => { if (e.target === cv) fn(e); }, opt);
+      onCv('pointerdown', (e) => { if (!eng) return; api.touched(); down = [e.clientX, e.clientY]; eng.down(e); });
+      onCv('pointermove', (e) => { if (!eng || !eng.ptr.size) return; eng.move(e); live(); api.kick(); });
+      onCv('pointerup', (e) => { if (!eng) return; eng.up(e); if (down && st.step >= 2 && Math.hypot(e.clientX - down[0], e.clientY - down[1]) < 4) moveF(e); down = null; });
+      onCv('pointercancel', (e) => { if (eng) eng.up(e); down = null; });
+      onCv('dblclick', () => { if (eng) { eng.resetView(); live(); api.kick(); } });
+      onCv('keydown', (e) => { if (eng && eng.key(e)) { e.preventDefault(); live(); api.kick(); } });
+      onCv('wheel', (e) => { if (eng && (e.ctrlKey || e.metaKey)) { e.preventDefault(); eng.zoomBy(Math.exp(-e.deltaY * 0.01)); live(); api.kick(); } }, { passive: false });
       // the line between ELFNet and DFT
       const dragWipe = (e) => { const r = stage.getBoundingClientRect(); st.split = st.wipeTo = Math.max(0.05, Math.min(0.95, (e.clientX - r.left) / r.width)); live(); api.kick(); };
       wipeEl.addEventListener('pointerdown', (e) => { e.preventDefault(); st.wipeHeld = true; try { wipeEl.setPointerCapture(e.pointerId); } catch (err) {} wipeEl.classList.add('on'); dragWipe(e); });
@@ -326,7 +329,14 @@
         const d = e.key === 'ArrowLeft' ? -0.04 : e.key === 'ArrowRight' ? 0.04 : 0; if (!d) return;
         e.preventDefault(); st.split = st.wipeTo = Math.max(0.05, Math.min(0.95, st.split + d)); live(); api.kick();
       });
-      return { layout: layout, draw: draw, live: live, sync: sync, enter: enter, tick: tick };
+      // far from the screen or hidden: give the WebGL context back; layout() makes a new one on the way back
+      const sleep = () => {
+        if (!eng) return;
+        saved = { M: eng.M ? eng.M.map((r) => r.slice()) : null, zoom: eng.zoom };
+        cv = window.LP_freshCanvas ? window.LP_freshCanvas(cv, eng.gl) : cv;
+        eng = null; dragging = false; down = null;
+      };
+      return { layout: layout, draw: draw, live: live, sync: sync, enter: enter, tick: tick, sleep: sleep };
     }
   });
 })();

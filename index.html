@@ -36,6 +36,8 @@
 <script src="assets/elfnet-plane.js" defer></script>
 <script src="assets/scheme3d-elfnet.js" defer></script>
 <script src="assets/scheme-elfnet.js" defer></script>
+<script src="assets/scheme3d-paper.js" defer></script>
+<script src="assets/paper-steps.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#top">Skip to content</a>
@@ -92,9 +94,9 @@ austinellis.org</a>
 <div class="glance-grid">
 <a href="#fig-elfnet" data-fig="fig-elfnet:0:0"><img src="assets/img/glance/elfnet.webp" width="480" height="480" alt="Calcium lattice of CaH6 with the electron localization predicted by ELFNet as a yellow surface" decoding="async"><span>ELFNet</span></a>
 <a href="#fig-wisp" data-fig="fig-wisp:0:0"><img src="assets/img/glance/wisp.webp" width="480" height="480" alt="Unit cell of MnPd with the spin-down electron localization predicted by WISP" decoding="async"><span>WISP</span></a>
-<a href="#fig-superhydrides" data-fig="fig-superhydrides:0:0"><img src="assets/img/glance/superhydrides.webp" width="480" height="480" alt="NaKH12 at 60 GPa with electron localization around each H2 unit" decoding="async"><span>Superhydrides</span></a>
-<a href="#fig-electrides" data-fig="fig-electrides:0:0"><img src="assets/img/glance/electrides.webp" width="480" height="480" alt="Monolayer MoS2 with a sulfur vacancy and the electron localization around it" decoding="async"><span>Electrides</span></a>
-<a href="#fig-pressure" data-fig="fig-pressure:0:1"><img src="assets/img/glance/pressure.webp" width="480" height="480" alt="Crystal structure of Fe3I at 300 GPa" decoding="async"><span>High pressure</span></a>
+<a href="#scheme-nakh12"><img src="assets/img/glance/superhydrides.webp" width="480" height="480" alt="NaKH12 at 60 GPa with electron localization around each H2 unit" decoding="async"><span>Superhydrides</span></a>
+<a href="#scheme-tmdc"><img src="assets/img/glance/electrides.webp" width="480" height="480" alt="Monolayer MoS2 with a sulfur vacancy and the electron localization around it" decoding="async"><span>Electrides</span></a>
+<a href="#scheme-iron"><img src="assets/img/glance/pressure.webp" width="480" height="480" alt="Crystal structure of Fe3I at 300 GPa" decoding="async"><span>High pressure</span></a>
 <a href="#fig-reactions" data-fig="fig-reactions:0:0"><img src="assets/img/glance/reactions.webp" width="480" height="480" alt="Crystalline acetonitrile at 35 GPa with three molecules linked into a chain" decoding="async"><span>Reactions</span></a>
 </div>
 <figcaption class="cap">Structures from my projects. Pick one to turn it in 3D.</figcaption>
@@ -141,7 +143,7 @@ austinellis.org</a>
 <p class="ref-au"><b>A. Ellis</b>, S. Ellis, A. Pandit, M. Miao</p>
 <p class="ref-sum">As solid hydrogen metallizes under pressure, electrons localize in the interstitial regions between H<sub>2</sub> molecules, an electride-like route that sets it apart from other molecular crystals.</p>
 <p class="note"><b class="first">First author.</b> I ran the PBE and HSE06 calculations and the analysis of the interstitial states.</p>
-<p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.6c01415">Paper</a><a href="slides/ellis-thesis-defense-2026.pdf">Thesis slides</a><a class="figlink" href="#fig-electrides" data-fig="fig-electrides:1:0"><b>Solid H<sub>2</sub></b><span>3D</span></a></p>
+<p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.6c01415">Paper</a><a href="slides/ellis-thesis-defense-2026.pdf">Thesis slides</a><a class="figlink" href="#scheme-h2"><b>How we did it</b><span>steps</span></a></p>
 </div>
 </article>
 
@@ -153,7 +155,7 @@ austinellis.org</a>
 <p class="ref-au">X. Wang, X. Feng, J. Li, Y. Lv, <b>A. Ellis</b>, S. Scott, A. Pandit, D. Khodagholian, R. J. Hemley, M. G. Jackson, F. J. Spera, S. A. T. Redfern, M. Miao</p>
 <p class="ref-sum">Large-scale first-principles calculations show iron turning from electron donor to electron acceptor at core pressures, which changes the elements it can pull into Earth’s core.</p>
 <p class="note"><b>5th of 13 authors.</b> I mapped phase stability across Fe–p-block compounds with CALYPSO searches and HSE06 convex hulls, and ran the Bader charge analysis.</p>
-<p class="ref-links"><a href="https://doi.org/10.1073/pnas.2414911122">Paper</a><a href="https://newsroom.csun.edu/2025/11/18/study-by-csun-prof-upends-understanding-of-what-happens-to-iron-at-earths-core/">CSUN Newsroom</a><a class="figlink" href="#fig-pressure" data-fig="fig-pressure:0:0"><b>Fe–I</b><span>3D</span></a></p>
+<p class="ref-links"><a href="https://doi.org/10.1073/pnas.2414911122">Paper</a><a href="https://newsroom.csun.edu/2025/11/18/study-by-csun-prof-upends-understanding-of-what-happens-to-iron-at-earths-core/">CSUN Newsroom</a><a class="figlink" href="#scheme-iron"><b>How we did it</b><span>steps</span></a></p>
 </div>
 </article>
 
@@ -165,7 +167,7 @@ austinellis.org</a>
 <p class="ref-au">Y. Sun, <b>A. Ellis</b>, X. Chen, M. Miao</p>
 <p class="ref-sum">A template-guided machine-learning workflow found 13 new structural prototypes and 31 stable metal superhydrides, 19 of them with predicted T<sub>c</sub> above 100 K.</p>
 <p class="note"><b>2nd of 4 authors.</b> I helped build the training set and ran the template-guided CALYPSO searches and stability screening.</p>
-<p class="ref-links"><a href="https://doi.org/10.1021/jacs.5c11731">Paper</a><a href="https://openreview.net/forum?id=dEtRvi7G5i">Workshop paper</a><a href="posters/ML_BatchedSuperhydrides.pdf">Poster</a><a class="figlink" href="#fig-superhydrides" data-fig="fig-superhydrides:1:0"><b>U<sub>10</sub>H<sub>84</sub></b><span>3D</span></a></p>
+<p class="ref-links"><a href="https://doi.org/10.1021/jacs.5c11731">Paper</a><a href="https://openreview.net/forum?id=dEtRvi7G5i">Workshop paper</a><a href="posters/ML_BatchedSuperhydrides.pdf">Poster</a><a class="figlink" href="#scheme-templates"><b>How we did it</b><span>steps</span></a></p>
 </div>
 </article>
 
@@ -177,7 +179,7 @@ austinellis.org</a>
 <p class="ref-au">W. Zhao, <b>A. Ellis</b>, D. Duan, H. Wang, Q. Jiang, M. Du, T. Cui, M. Miao</p>
 <p class="ref-sum">Interstitial electrons act as chemical templates that assemble H<sub>2</sub> units in NaKH<sub>12</sub>, predicted to superconduct up to 245 K at a moderate 60 GPa.</p>
 <p class="note"><b>2nd of 8 authors.</b> I did the band-structure, density-of-states, crystal-orbital, and ELF analyses.</p>
-<p class="ref-links"><a href="https://doi.org/10.1002/adfm.202415910">Paper</a><a class="figlink" href="#fig-superhydrides" data-fig="fig-superhydrides:0:0"><b>NaKH<sub>12</sub></b><span>3D</span></a></p>
+<p class="ref-links"><a href="https://doi.org/10.1002/adfm.202415910">Paper</a><a class="figlink" href="#scheme-nakh12"><b>How we did it</b><span>steps</span></a></p>
 </div>
 </article>
 
@@ -189,7 +191,7 @@ austinellis.org</a>
 <p class="ref-au">Y. Sun, <b>A. Ellis</b>, S. Diaz, W. Li, M. Miao</p>
 <p class="ref-sum">Chalcogen vacancies strengthen the weak electride character of monolayer transition-metal dichalcogenides to the level of known electrides, and the vacancy states help catalyze hydrogen evolution.</p>
 <p class="note"><b>2nd of 5 authors.</b> I analyzed the vacancy states with ELF, charge-density differences, and band structures, and helped with the H-adsorption calculations.</p>
-<p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.4c01263">Paper</a><a href="posters/TunableElectride_TMDCs.pdf">Poster</a><a class="figlink" href="#fig-electrides" data-fig="fig-electrides:0:0"><b>MoS<sub>2</sub> vacancy</b><span>3D</span></a></p>
+<p class="ref-links"><a href="https://doi.org/10.1021/acs.jpclett.4c01263">Paper</a><a href="posters/TunableElectride_TMDCs.pdf">Poster</a><a class="figlink" href="#scheme-tmdc"><b>How we did it</b><span>steps</span></a></p>
 </div>
 </article>
 </div>
@@ -207,7 +209,7 @@ austinellis.org</a>
 <p class="ref-au">Y. Sun, S. Ellis, D. Khodagholian, L. Wyke, <b>A. Ellis</b>, P. C. Müller, B. N. Schüpp, R. Nelson, R. Dronskowski, M. Miao</p>
 <p class="ref-sum">First-principles structure searches show the polyoxygen units of Cs–O compounds breaking down under pressure, as the Cs core electrons start to take part in bonding.</p>
 <p class="note"><b>5th of 10 authors.</b></p>
-<p class="ref-links"><a href="https://arxiv.org/abs/2110.07865">Preprint</a><a href="posters/Cs_polyoxide_CoreReactivity.pdf">Poster</a><a class="figlink" href="#fig-pressure" data-fig="fig-pressure:1:0"><b>CsO</b><span>3D</span></a></p>
+<p class="ref-links"><a href="https://arxiv.org/abs/2110.07865">Preprint</a><a href="posters/Cs_polyoxide_CoreReactivity.pdf">Poster</a><a class="figlink" href="#fig-cso" data-fig="fig-cso:0:0"><b>CsO</b><span>3D</span></a></p>
 </div>
 </article>
 
@@ -249,33 +251,79 @@ austinellis.org</a>
 <!-- ================= figures ================= -->
 <section class="sec" id="figures" aria-labelledby="figures-h">
 <div class="sec-head"><h2 id="figures-h">Figures</h2>
-<p class="sec-sub">Structures and electron densities from my projects, in three parts: the two networks, WISP and ELFNet, and then the other projects. Drag a figure to rotate it, pinch or ⌘/ctrl-scroll to zoom, and move the slider to change the isosurface.</p></div>
+<p class="sec-sub">One card for each paper, stepping through why we did the work, what we did, and what it is for. Move between the cards with the arrows, or the arrow keys. Drag a figure to turn it, pinch or ⌘/ctrl-scroll to zoom, and move the slider to change the isosurface.</p></div>
 <noscript><p class="sec-sub">The 3D figures need JavaScript.</p></noscript>
 
+<div class="papers-bar">
+<div class="paper-names" role="group" aria-label="Papers">
+<button type="button" data-card="wisp" aria-current="true">WISP</button>
+<button type="button" data-card="elfnet">ELFNet</button>
+<button type="button" data-card="hydrogen">Solid hydrogen</button>
+<button type="button" data-card="iron">Iron in deep Earth</button>
+<button type="button" data-card="templates">Superhydride templates</button>
+<button type="button" data-card="nakh12">NaKH<sub>12</sub></button>
+<button type="button" data-card="tmdc">TMDC electrides</button>
+<button type="button" data-card="structures">Other projects</button>
+</div>
+<div class="paper-nav"><p class="count" aria-live="polite"></p><div class="arrows"><button type="button" class="prev" aria-label="Previous paper"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5"/></svg></button><button type="button" class="next" aria-label="Next paper"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5"/></svg></button></div></div>
+</div>
+<div class="shelf papers" tabindex="0" role="region" aria-label="One card for each paper. The arrow keys move between them.">
+
 <!-- WISP: how it works, then its predictions next to DFT -->
-<div class="sub" id="wisp">
+<article class="paper" id="wisp">
 <div class="sub-head"><h3>WISP</h3>
 <p>A network that predicts the electron localization function of both spin channels at any point in a crystal, from the atomic structure and the magnetic moments on the atoms (<a class="cite" href="#ref-wisp" data-ref="wisp">ChemRxiv 2026</a>). The first figure steps through how it works, and the second puts its predictions next to the DFT calculations.</p></div>
 <figure class="fig scheme" id="scheme-1"></figure>
 <figure class="fig wide" id="fig-wisp"></figure>
-</div>
+</article>
 
 <!-- ELFNet -->
-<div class="sub" id="elfnet">
+<article class="paper" id="elfnet">
 <div class="sub-head"><h3>ELFNet</h3>
 <p>A periodic 3D convolutional network that maps inexpensive superposed atomic densities to DFT electron localization functions, so bonding and interstitial localization can be screened before a full calculation (<a class="cite" href="#ref-elfnet" data-ref="elfnet">J. Mater. Inf. 2026</a>). The first figure steps through how it works, and the second puts its prediction next to the DFT calculation.</p></div>
 <figure class="fig scheme" id="scheme-2"></figure>
 <figure class="fig wide" id="fig-elfnet"></figure>
-</div>
+</article>
+
+<!-- the published papers, newest first -->
+<article class="paper" id="hydrogen">
+<div class="sub-head"><h3>Emerging electride in molecular hydrogen metallization</h3>
+<p>As solid hydrogen metallizes under pressure, electrons localize in the interstitial regions between H<sub>2</sub> molecules, an electride-like route that sets it apart from other molecular crystals (<a class="cite" href="#ref-h2" data-ref="h2">J. Phys. Chem. Lett. 2026</a>).</p></div>
+<figure class="fig scheme" id="scheme-h2"></figure>
+</article>
+
+<article class="paper" id="iron">
+<div class="sub-head"><h3>Iron redox chemistry in deep Earth</h3>
+<p>Large-scale first-principles calculations show iron turning from electron donor to electron acceptor at core pressures, which changes the elements it can pull into Earth’s core (<a class="cite" href="#ref-fe" data-ref="fe">Proc. Natl. Acad. Sci. U.S.A. 2025</a>).</p></div>
+<figure class="fig scheme" id="scheme-iron"></figure>
+</article>
+
+<article class="paper" id="templates">
+<div class="sub-head"><h3>Metal superhydrides from chemical templates</h3>
+<p>A template-guided machine-learning workflow found 13 new structural prototypes and 31 stable metal superhydrides, 19 of them with predicted T<sub>c</sub> above 100 K (<a class="cite" href="#ref-superhydrides" data-ref="superhydrides">J. Am. Chem. Soc. 2025</a>).</p></div>
+<figure class="fig scheme" id="scheme-templates"></figure>
+</article>
+
+<article class="paper" id="nakh12">
+<div class="sub-head"><h3>Superconductivity in molecular hydrides</h3>
+<p>Interstitial electrons act as chemical templates that assemble H<sub>2</sub> units in NaKH<sub>12</sub>, predicted to superconduct up to 245 K at a moderate 60 GPa (<a class="cite" href="#ref-nakh12" data-ref="nakh12">Adv. Funct. Mater. 2025</a>).</p></div>
+<figure class="fig scheme" id="scheme-nakh12"></figure>
+</article>
+
+<article class="paper" id="tmdc">
+<div class="sub-head"><h3>Tunable electrides on monolayer TMDCs</h3>
+<p>Chalcogen vacancies strengthen the weak electride character of monolayer transition-metal dichalcogenides to the level of known electrides, and the vacancy states help catalyze hydrogen evolution (<a class="cite" href="#ref-tmdc" data-ref="tmdc">J. Phys. Chem. Lett. 2024</a>).</p></div>
+<figure class="fig scheme" id="scheme-tmdc"></figure>
+</article>
 
 <!-- the other projects -->
-<div class="sub" id="structures">
+<article class="paper" id="structures">
 <div class="sub-head"><h3>Other projects</h3>
-<p>Electrides, superhydrides, compounds under pressure, and reactions.</p></div>
-<figure class="fig" id="fig-electrides"></figure>
-<figure class="fig" id="fig-superhydrides"></figure>
-<figure class="fig" id="fig-pressure"></figure>
+<p>Cesium oxides under pressure (<a class="cite" href="#ref-cs-polyoxides" data-ref="cs-polyoxides">arXiv 2026</a>), and work in progress on vacancies in TMD sheets and on reactions of acetonitrile.</p></div>
+<figure class="fig" id="fig-cso"></figure>
+<figure class="fig" id="fig-tas2"></figure>
 <figure class="fig" id="fig-reactions"></figure>
+</article>
 </div>
 </section>
 

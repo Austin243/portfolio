@@ -52,11 +52,11 @@
     mos2_vacancy: { ref: 'tmdc', field: ELF(1), legend: el('Mo', 'S'),
       spec: '<b>MoS<sub>2</sub></b> · 2H monolayer, 4×4 supercell · Mo 16, S 31 · ELF grid 108×108×200',
       label: 'Interactive 3D view: MoS2 monolayer flake with one sulfur vacancy at its center',
-      cap: 'A MoS<sub>2</sub> monolayer with one sulfur removed at the center of the flake. Every S carries a lone-pair ELF basin; at the vacancy a smaller basin with no atom inside sits where the sulfur was: the electride-like vacancy state.' },
+      cap: 'A MoS<sub>2</sub> monolayer with one sulfur removed at the center of the flake. Every S carries a lone-pair ELF basin; at the vacancy a smaller basin with no atom inside sits in the hole the sulfur left, a little closer to the Mo layer: the electride-like vacancy state.' },
     h2_c2c_b15: { ref: 'h2', field: RHO, legend: el('H'),
-      spec: '<b>H<sub>2</sub></b> · C2/c-12 · band 15 at Γ, the LUMO',
+      spec: '<b>H<sub>2</sub></b> · C2/c-12 · band 15 at Γ, a conduction-band state',
       label: 'Interactive 3D view: C2/c solid hydrogen with the band-15 state running in channels between the H2 molecules',
-      cap: 'C2/c-12 solid hydrogen, band 15 at Γ (Fig. 3a of the paper). The lowest conduction state runs in continuous channels between the H<sub>2</sub> molecules: electrons moving into the interstitial space as the gap closes.' },
+      cap: 'C2/c-12 solid hydrogen, band 15 at Γ (Fig. 3a of the paper). This conduction-band state runs in channels between the H<sub>2</sub> molecules: electrons moving into the interstitial space as the gap closes.' },
     h2_ama2_b25: { ref: 'h2', field: RHO, legend: el('H'),
       spec: '<b>H<sub>2</sub></b> · Ama2 · 425 GPa · band 25 at R',
       label: 'Interactive 3D view: Ama2 solid hydrogen with the band-25 state in the interstitial space between molecular layers',
@@ -84,9 +84,9 @@
       label: 'Interactive 3D view: Na-K sublattice with interstitial ELF basins at the centers of the small Na4K4 cubes',
       cap: 'The same cell with the hydrogen taken out. An interstitial ELF basin sits at the center of each small Na<sub>4</sub>K<sub>4</sub> cube: the site the six H<sub>2</sub> units gather around in NaKH<sub>12</sub>.' },
     u10h84_structure: { ref: 'superhydrides', legend: el('U', 'H'),
-      spec: '<b>U<sub>10</sub>H<sub>84</sub></b> · I4/m · 200 GPa · U 10, H 84',
+      spec: '<b>U<sub>10</sub>H<sub>84</sub></b> · I4/m · U 10, H 84',
       label: 'Interactive 3D view: U10H84 superhydride cell with its hydrogen cage network',
-      cap: 'U<sub>10</sub>H<sub>84</sub> (I4/m, 200 GPa), one of the superhydrides from the template-guided search, with its hydrogen cage network.' },
+      cap: 'U<sub>10</sub>H<sub>84</sub> (I4/m), one of the superhydrides from the template-guided search, with its hydrogen cage network.' },
     u10_template: { ref: 'superhydrides', field: ELF(1), legend: el('U'),
       spec: '<b>U<sub>10</sub></b> metal lattice · I4/m · U 10 · ELF grid 60×60×40',
       label: 'Interactive 3D view: bare U10 metal lattice with its ELF isosurface',
@@ -126,7 +126,7 @@
   };
 
   // A figure is a row of panels (a, b, c); a panel can hold several states of the same system. The figures are numbered
-  // in this order, and the page puts each one where its id is (see the three parts of the Figures section in index.html).
+  // in this order, and the page puts each one where its id is (in its paper's card in the Figures section of index.html).
   // A figure with `pair` shows two views side by side that turn together; its states name a left and a right scene.
   window.LP_FIGS = [
     { id: 'fig-wisp', title: 'WISP next to DFT. Turn either view and the other follows.', pair: ['WISP', 'DFT'], panels: [
@@ -145,16 +145,11 @@
       caps: {
         cah6_ca_elfnet: 'The calcium lattice of CaH<sub>6</sub>, with the hydrogen left out of the calculation. ELFNet predicts its ELF from superposed atomic densities; the other view is the DFT calculation. In both, the yellow surface encloses the sites where the hydrogens sit in CaH<sub>6</sub>, drawn as small spheres.' },
       specs: { cah6_ca_elfnet: 'Ca lattice of <b>CaH<sub>6</sub></b> · ELFNet on a 32×32×32 grid, DFT on 28×28×28' } },
-    { id: 'fig-electrides', title: 'Electrides in 2D and under pressure.', panels: [
-      { name: 'MoS<sub>2</sub> vacancy', states: [['mos2_vacancy', 'MoS₂ · S vacancy']] },
-      { name: 'Solid H<sub>2</sub>', states: [['h2_c2c_b15', 'C2/c · band 15'], ['h2_ama2_b25', 'Ama2 · band 25'], ['h2_p63m_b9', 'P6₃/m · band 9'], ['h2_p63m_b11', 'P6₃/m · band 11']] },
-      { name: 'TaS<sub>2</sub> vacancy', states: [['tas2_vacancy', 'TaS₂ · S vacancy']] }] },
-    { id: 'fig-superhydrides', title: 'Chemical templates for superhydrides.', panels: [
-      { name: 'NaKH<sub>12</sub>', states: [['nakh12_60GPa', 'NaKH₁₂'], ['nak_sublattice', 'Na–K only']] },
-      { name: 'U<sub>10</sub>H<sub>84</sub>', states: [['u10h84_structure', 'U₁₀H₈₄'], ['u10_template', 'U₁₀ lattice · ELF']] }] },
-    { id: 'fig-pressure', title: 'Iron and cesium compounds under pressure.', panels: [
-      { name: 'Fe–I', states: [['fei2_0gpa', 'FeI₂ · 0 GPa'], ['fe3i_300gpa', 'Fe₃I · 300 GPa']] },
+    // the other projects: a preprint and work in progress
+    { id: 'fig-cso', title: 'CsO at 150 and 250 GPa.', panels: [
       { name: 'CsO', states: [['cso_p63mmc_150gpa', 'CsO · 150 GPa'], ['cso_r3m_250gpa', 'CsO · 250 GPa']] }] },
+    { id: 'fig-tas2', title: 'A sulfur vacancy in a TaS<sub>2</sub> sheet.', panels: [
+      { name: 'TaS<sub>2</sub> vacancy', states: [['tas2_vacancy', 'TaS₂ · S vacancy']] }] },
     { id: 'fig-reactions', title: 'Acetonitrile under pressure and on sodium.', panels: [
       { name: 'CH<sub>3</sub>CN, 35 GPa', states: [['acn_m4_35gpa', 'CH₃CN · 35 GPa']] },
       { name: 'On Na(100)', states: [['na100_aminopyrimidine', 'Aminopyrimidine'], ['na100_triazine', 'Triazine']] }] }

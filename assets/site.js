@@ -38,13 +38,14 @@
   const arrived = /^#(ref-|v\d)/.test(location.hash) ? document.getElementById(location.hash.slice(1)) : null;
   if (arrived) arrived.classList.add('flash');
 
-  // ---------- the research cards: one row that moves sideways, with the arrows, the arrow keys, a drag, or a swipe ----------
-  const shelf = $('.shelf'), shelfNav = $('.shelf-nav');
+  // ---------- rows of cards that move sideways: the research list, and the Figures (one card per paper) ----------
+  // Arrows and arrow keys move a row card by card, a click on a mark or a name brings that card to the left edge, a
+  // trackpad or a finger moves it freely, and (where o.drag) so does a mouse drag. A row whose cards differ much in
+  // height (o.fit) takes the height of the card in view.
   const motion = () => (window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
-  let shelfReset = () => {}, shelfShow = () => {};
-  if (shelf && shelfNav) {
-    const prev = $('.prev', shelfNav), next = $('.next', shelfNav), count = $('.count', shelfNav), ticksEl = $('.ticks', shelfNav);
-    const shown = () => refs.filter((r) => !r.hidden);
+  const shelves = [];
+  const makeShelf = (shelf, o) => {
+    const prev = o.prev, next = o.next, count = o.count, shown = o.items;
     const pad = () => parseFloat(getComputedStyle(shelf).scrollPaddingLeft) || 0;
     // the scroll position at which a card sits at the left edge of the row
     const startOf = (c) => c.getBoundingClientRect().left - shelf.getBoundingClientRect().left + shelf.scrollLeft - pad();
@@ -57,34 +58,47 @@
     };
     // the card at the left edge now, or the one the row is already on its way to (a second press during a move adds to it)
     let aim = -1, aimAt = 0;
-    const current = () => {
-      if (aim >= 0 && performance.now() - aimAt < 700) return aim;
-      const x = shelf.scrollLeft, S = shown().map(startOf); let k = 0; S.forEach((v, i) => { if (Math.abs(v - x) < Math.abs(S[k] - x)) k = i; }); return k;
-    };
+    const nearest = () => { const x = shelf.scrollLeft, S = shown().map(startOf); let k = 0; S.forEach((v, i) => { if (Math.abs(v - x) < Math.abs(S[k] - x)) k = i; }); return k; };
+    const current = () => (aim >= 0 && performance.now() - aimAt < 700 ? aim : nearest());
     // how many cards fit side by side
     const perView = () => { const c = shown()[0]; if (!c) return 1; const g = parseFloat(getComputedStyle(c.parentNode).columnGap) || 0; return Math.max(1, Math.floor((shelf.clientWidth - pad() + g) / (c.offsetWidth + g))); };
-    const goTo = (i) => { const cs = shown(); if (!cs.length) return; aim = Math.max(0, Math.min(cs.length - 1, i)); aimAt = performance.now(); to(startOf(cs[aim])); };
+    const goTo = (i, instant) => { const cs = shown(); if (!cs.length) return; aim = Math.max(0, Math.min(cs.length - 1, i)); aimAt = performance.now(); to(startOf(cs[aim]), instant); };
     const step = (dir) => goTo(current() + dir);                 // the arrow keys: one card
     const page = (dir) => goTo(current() + dir * perView());    // the buttons: as many as fit
 
-    // under the row: a mark for every card shown, dark for the ones in view; a click on one brings that card to the edge
+    // the marks (o.ticks: one per card, grouped by o.groups) or the names (o.names: [button, card]) that pick a card
     let ticks = [];
     const build = () => {
-      ticksEl.textContent = ''; ticks = [];
-      $$('.refs', shelf).forEach((g) => {
-        const cs = $$('.ref', g).filter((c) => !c.hidden);
+      if (!o.ticks) return;
+      o.ticks.textContent = ''; ticks = [];
+      o.groups().forEach((cs) => {
+        cs = cs.filter((c) => !c.hidden);
         if (!cs.length) return;
-        if (ticks.length) { const sep = document.createElement('span'); sep.className = 'sep'; ticksEl.appendChild(sep); }
+        if (ticks.length) { const sep = document.createElement('span'); sep.className = 'sep'; o.ticks.appendChild(sep); }
         cs.forEach((c) => {
           const b = document.createElement('button'), h = $('h4', c);
           b.type = 'button'; b.tabIndex = -1; b.title = h ? h.textContent : '';
           b.addEventListener('click', () => to(startOf(c)));
-          ticksEl.appendChild(b); ticks.push([c, b]);
+          o.ticks.appendChild(b); ticks.push([c, b]);
         });
       });
     };
+    (o.names || []).forEach(([b, c]) => b.addEventListener('click', () => goTo(shown().indexOf(c))));
+    // the height of the card in view, for a row whose cards differ in height
+    // A jump straight to a card sets the height at once, without the easing: the page then already has the length
+    // the jump needs, and a link to a figure low in a tall card does not stop short of it.
+    let fitH = 0;
+    const fit = (instant) => {
+      if (!o.fit) return;
+      const c = shown()[nearest()]; if (!c) return;
+      const cs = getComputedStyle(shelf), h = Math.ceil(c.offsetHeight + parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom));
+      if (h === fitH) return;
+      fitH = h;
+      if (instant) { shelf.style.transition = 'none'; shelf.style.height = h + 'px'; void shelf.offsetHeight; shelf.style.transition = ''; }
+      else shelf.style.height = h + 'px';
+    };
     let queued = 0;
-    const update = () => {
+    const update = (instant) => {
       queued = 0;
       const x = shelf.scrollLeft, m = maxLeft(), vis = inView(), all = shown();
       prev.disabled = x <= 2; next.disabled = x >= m - 2;
@@ -92,65 +106,95 @@
       ticks.forEach(([c, b]) => b.classList.toggle('on', vis.indexOf(c) >= 0));
       const a = all.indexOf(vis[0]) + 1, z = all.indexOf(vis[vis.length - 1]) + 1;
       count.textContent = vis.length ? (a === z ? a : a + '–' + z) + ' of ' + all.length : '';
+      if (o.names) {
+        const here = all[nearest()];
+        o.names.forEach(([b, c]) => {
+          const on = c === here;
+          if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+          if (on && o.names.row && o.names.row.scrollWidth > o.names.row.clientWidth) {
+            const row = o.names.row, want = b.offsetLeft - row.offsetLeft - (row.clientWidth - b.offsetWidth) / 2;
+            if (Math.abs(row.scrollLeft - want) > 4) row.scrollTo({ left: Math.max(0, want), behavior: motion() });
+          }
+        });
+      }
+      fit(instant === true);
     };
     const later = () => { if (!queued) queued = requestAnimationFrame(update); };
     shelf.addEventListener('scroll', later, { passive: true });
     for (const ev of ['wheel', 'touchstart']) shelf.addEventListener(ev, () => { aim = -1; }, { passive: true });   // a move by hand starts from where the row is
     window.addEventListener('resize', later);
-    if ('ResizeObserver' in window) new ResizeObserver(later).observe(shelf);
+    if ('ResizeObserver' in window) { const ro = new ResizeObserver(later); ro.observe(shelf); if (o.fit) shown().forEach((c) => ro.observe(c)); }
     prev.addEventListener('click', () => page(-1));
     next.addEventListener('click', () => page(1));
-
-    // keys: with the row (or something in it) focused, and with nothing focused while the row is on screen
+    // keys: with the row (or something of its own) focused; the page-wide arrow keys are handled below, for all rows
     shelf.addEventListener('keydown', (e) => {
       if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.target !== shelf && !(e.target.closest && e.target.closest('.ref'))) return;   // keys inside a figure are the figure's
       if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); step(e.key === 'ArrowRight' ? 1 : -1); }
       else if ((e.key === 'Home' || e.key === 'End') && e.target === shelf) { e.preventDefault(); to(e.key === 'Home' ? 0 : maxLeft()); }
     });
-    document.addEventListener('keydown', (e) => {
-      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
-      const t = e.target;
-      if (!(t === document.body || t === root || (t.closest && t.closest('.shelf-nav, .filters')))) return;
-      const r = shelf.getBoundingClientRect();
-      if (r.bottom < window.innerHeight * 0.25 || r.top > window.innerHeight * 0.75) return;
-      e.preventDefault(); step(e.key === 'ArrowRight' ? 1 : -1);
-    });
-
     // a drag with the mouse moves the row; a touch screen or a trackpad moves it on its own. A drag is not a click.
-    let drag = null, dragged = false;
-    shelf.addEventListener('pointerdown', (e) => {
-      if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('button, input, select, textarea')) return;
-      drag = { x: e.clientX, left: shelf.scrollLeft, id: e.pointerId, moved: false };
-      aim = -1;
-    });
-    shelf.addEventListener('pointermove', (e) => {
-      if (!drag || e.pointerId !== drag.id) return;
-      const dx = e.clientX - drag.x;
-      if (!drag.moved) {
-        if (Math.abs(dx) < 6) return;
-        drag.moved = true; shelf.classList.add('dragging');
-        try { shelf.setPointerCapture(e.pointerId); } catch (err) {}
-        const sel = window.getSelection && window.getSelection(); if (sel && sel.rangeCount) sel.collapseToStart();
-      }
-      shelf.scrollLeft = drag.left - dx;
-    });
-    const drop = (e) => {
-      if (!drag || e.pointerId !== drag.id) return;
-      const moved = drag.moved; drag = null;
-      if (!moved) return;
-      dragged = true; setTimeout(() => { dragged = false; }, 0);
-      shelf.classList.toggle('dragging', false);
-      aim = -1; goTo(current());   // settle on the card nearest to where it was let go
-    };
-    shelf.addEventListener('pointerup', drop); shelf.addEventListener('pointercancel', drop);
-    shelf.addEventListener('click', (e) => { if (dragged) { e.preventDefault(); e.stopPropagation(); } }, true);
-    shelf.addEventListener('dragstart', (e) => e.preventDefault());   // no dragging the pictures or the links out of the page
-
-    shelfReset = () => { aim = -1; build(); to(0, true); update(); };
-    shelfShow = (c) => requestAnimationFrame(() => to(startOf(c)));
+    if (o.drag) {
+      let drag = null, dragged = false;
+      shelf.addEventListener('pointerdown', (e) => {
+        if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('button, input, select, textarea')) return;
+        drag = { x: e.clientX, left: shelf.scrollLeft, id: e.pointerId, moved: false };
+        aim = -1;
+      });
+      shelf.addEventListener('pointermove', (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const dx = e.clientX - drag.x;
+        if (!drag.moved) {
+          if (Math.abs(dx) < 6) return;
+          drag.moved = true; shelf.classList.add('dragging');
+          try { shelf.setPointerCapture(e.pointerId); } catch (err) {}
+          const sel = window.getSelection && window.getSelection(); if (sel && sel.rangeCount) sel.collapseToStart();
+        }
+        shelf.scrollLeft = drag.left - dx;
+      });
+      const drop = (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const moved = drag.moved; drag = null;
+        if (!moved) return;
+        dragged = true; setTimeout(() => { dragged = false; }, 0);
+        shelf.classList.toggle('dragging', false);
+        aim = -1; goTo(current());   // settle on the card nearest to where it was let go
+      };
+      shelf.addEventListener('pointerup', drop); shelf.addEventListener('pointercancel', drop);
+      shelf.addEventListener('click', (e) => { if (dragged) { e.preventDefault(); e.stopPropagation(); } }, true);
+      shelf.addEventListener('dragstart', (e) => e.preventDefault());   // no dragging the pictures or the links out of the page
+    }
     build(); update();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(later);
+    const api = {
+      shelf: shelf, step: step,
+      reset: () => { aim = -1; build(); to(0, true); update(); },
+      show: (c, instant) => { const i = shown().indexOf(c); if (i < 0) return; if (instant) { goTo(i, true); update(true); } else requestAnimationFrame(() => goTo(i)); }
+    };
+    shelves.push(api);
+    return api;
+  };
+  // The arrow keys move the row in the middle of the screen, when nothing else has the keys (a button of a figure,
+  // a canvas or a slider keeps them).
+  document.addEventListener('keydown', (e) => {
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
+    const t = e.target;
+    if (!(t === document.body || t === root || (t.closest && t.closest('.shelf-nav, .filters, .papers-bar')))) return;
+    const mid = window.innerHeight / 2, s = shelves.find((x) => { const r = x.shelf.getBoundingClientRect(); return r.top <= mid && r.bottom >= mid; });
+    if (!s) return;
+    e.preventDefault(); s.step(e.key === 'ArrowRight' ? 1 : -1);
+  });
+
+  const shelf = $('.shelf:not(.papers)'), shelfNav = $('.shelf-nav');
+  let research = null;
+  if (shelf && shelfNav) {
+    research = makeShelf(shelf, {
+      items: () => refs.filter((r) => !r.hidden), groups: () => $$('.refs', shelf).map((g) => $$('.ref', g)), ticks: $('.ticks', shelfNav),
+      prev: $('.prev', shelfNav), next: $('.next', shelfNav), count: $('.count', shelfNav), drag: true
+    });
   }
+  const shelfReset = () => { if (research) research.reset(); };
+  const shelfShow = (c) => { if (research) research.show(c); };
 
   // ---------- filter chips over the list ----------
   const chips = $$('.filters button[data-f]'), none = $('.empty');
@@ -213,6 +257,31 @@
     $$('main section[id]').forEach((s) => spy.observe(s));
   }
 
+  // ---------- Figures: one card per paper, in a row that moves sideways ----------
+  const papers = $('.shelf.papers'), papersBar = $('.papers-bar');
+  let figuresRow = null;
+  if (papers && papersBar) {
+    const cards = $$('.paper', papers), namesRow = $('.paper-names', papersBar);
+    const names = $$('button[data-card]', namesRow).map((b) => [b, document.getElementById(b.dataset.card)]).filter((x) => x[1]);
+    names.row = namesRow;
+    figuresRow = makeShelf(papers, { items: () => cards, names: names, prev: $('.prev', papersBar), next: $('.next', papersBar), count: $('.count', papersBar), fit: true });
+  }
+  // a link to anything in a paper's card brings that card into the row first, so the browser can scroll to it
+  const cardOf = (el) => (el && el.closest ? el.closest('.shelf.papers .paper') : null);
+  const reveal = (el) => { const c = cardOf(el); if (c && figuresRow) figuresRow.show(c, true); };
+  window.LP_reveal = reveal;
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a || a.getAttribute('href').length < 2) return;
+    const t = document.getElementById(a.getAttribute('href').slice(1)); if (t) reveal(t);
+  }, true);
+  const toHash = () => {
+    const t = location.hash.length > 1 && document.getElementById(location.hash.slice(1));
+    if (t && cardOf(t)) { reveal(t); requestAnimationFrame(() => t.scrollIntoView()); }
+  };
+  window.addEventListener('hashchange', toHash);
+  window.addEventListener('load', toHash);
+  toHash();
+
   // ---------- scenes: one small script per scene, loaded when a figure first needs it ----------
   // calmer element colors than the VESTA defaults stored in the older scene files (the legends match)
   const PALETTE = { H: [0.855, 0.878, 0.91], S: [0.851, 0.706, 0.227], Na: [0.694, 0.643, 0.784] };
@@ -235,6 +304,29 @@
     waiting[id].push({ ok: ok, fail: fail });
   };
   window.LP_loadScene = loadScene;   // the 3D schemes draw the isosurfaces of the figures' own scenes
+
+  // ---------- WebGL contexts: only the figures near the screen hold one ----------
+  // A browser keeps only so many WebGL contexts (16 in Chrome and Safari) and drops the oldest beyond that, which leaves
+  // that figure blank. So a figure wakes (makes its context) when it comes within a screen's height of the view, and
+  // sleeps (gives the context back) a moment after it moves farther away or is hidden. However many figures the page
+  // has, only the few near the screen hold a context.
+  const glWatch = (() => {
+    const jobs = new Map();
+    const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => {
+      es.forEach((e) => {
+        const j = jobs.get(e.target); if (!j) return;
+        clearTimeout(j.timer);
+        if (e.isIntersecting) j.wake(); else j.timer = setTimeout(j.sleep, 1500);
+      });
+    }, { rootMargin: '100% 0px' }) : null;
+    return (el, wake, sleep) => { if (!io) { wake(); return; } jobs.set(el, { wake: wake, sleep: sleep, timer: 0 }); io.observe(el); };
+  })();
+  // give a canvas's context back: lose it, and put a fresh canvas in its place, since a lost context cannot be made anew on the same canvas
+  const freshCanvas = (cv, gl) => {
+    const x = gl && gl.getExtension && gl.getExtension('WEBGL_lose_context'); if (x) x.loseContext();
+    const fresh = cv.cloneNode(false); cv.replaceWith(fresh); return fresh;
+  };
+  window.LP_glWatch = glWatch; window.LP_freshCanvas = freshCanvas;   // the step-by-step figures sleep and wake the same way
 
   // ---------- live figures ----------
   const SC = window.LP_SCENES || {}, viewers = {}, engines = [];
@@ -301,6 +393,9 @@
     const put = (sd, id) => {
       const eng = sd.eng, d = mine[id], lead = mine[cur()];
       eng.setScene(d);
+      // back from sleep on the same structure: the view as it was left
+      if (sd.saved && sd.saved.id === id) { eng.M = sd.saved.M; eng.zoom = sd.saved.zoom; eng.dirty = true; }
+      sd.saved = null;
       if (pair) {
         // the view that arrives second takes the level and the camera of the one already on screen
         if (lead && lead !== d && d.grid && Math.abs(lead.iso - d.iso) > 1e-9) eng.setIso(lead.iso);
@@ -371,30 +466,40 @@
       follow(sides[0]);
     }));
 
-    // WebGL starts when the figure is about to scroll into view
+    // The pointer and keys go to whichever canvas and engine the view has now (both are replaced when the figure sleeps).
+    sides.forEach((sd) => {
+      const on = (type, fn, opt) => sd.stage.addEventListener(type, (e) => { if (sd.eng && e.target === sd.cv) fn(e, sd.eng); }, opt);
+      on('pointerdown', (e, eng) => { stages.forEach((el) => el.classList.add('touched')); eng.down(e); });
+      on('pointermove', (e, eng) => { eng.move(e); if (eng.ptr.size) follow(sd); });
+      on('pointerup', (e, eng) => eng.up(e));
+      on('pointercancel', (e, eng) => eng.up(e));
+      on('dblclick', () => reset());
+      on('keydown', (e, eng) => { if (eng.key(e)) { e.preventDefault(); follow(sd); } });
+      on('wheel', (e, eng) => { if (e.ctrlKey || e.metaKey) { e.preventDefault(); eng.zoomBy(Math.exp(-e.deltaY * 0.01)); follow(sd); } }, { passive: false });
+      if ('ResizeObserver' in window) new ResizeObserver(() => { if (sd.eng && sd.stage.clientWidth > 0 && sd.stage.clientHeight > 0) sd.eng.resize(sd.stage.clientWidth, sd.stage.clientHeight); }).observe(sd.stage);
+    });
+    // WebGL starts when the figure comes near the screen, and stops when it is far away or hidden
     const start = () => {
       if (sides[0].eng) return;
       sides.forEach((sd) => {
-        const eng = sd.eng = new VestaGL(Math.max(1, sd.stage.clientWidth), Math.max(1, sd.stage.clientHeight)), cv = sd.cv;
+        const eng = sd.eng = new VestaGL(Math.max(1, sd.stage.clientWidth), Math.max(1, sd.stage.clientHeight));
         eng.hint = ''; eng.triX = 38; eng.triY = 32; eng.readY = 22;
         eng.attach(undefined, sd.ov);
-        eng.attach(cv);
-        if ('ResizeObserver' in window) new ResizeObserver(() => { if (sd.stage.clientWidth > 0 && sd.stage.clientHeight > 0) eng.resize(sd.stage.clientWidth, sd.stage.clientHeight); }).observe(sd.stage);
-        cv.addEventListener('pointerdown', (e) => { stages.forEach((el) => el.classList.add('touched')); eng.down(e); });
-        cv.addEventListener('pointermove', (e) => { eng.move(e); if (eng.ptr.size) follow(sd); });
-        cv.addEventListener('pointerup', (e) => eng.up(e));
-        cv.addEventListener('pointercancel', (e) => eng.up(e));
-        cv.addEventListener('dblclick', reset);
-        cv.addEventListener('keydown', (e) => { if (eng.key(e)) { e.preventDefault(); follow(sd); } });
-        cv.addEventListener('wheel', (e) => { if (e.ctrlKey || e.metaKey) { e.preventDefault(); eng.zoomBy(Math.exp(-e.deltaY * 0.01)); follow(sd); } }, { passive: false });
+        eng.attach(sd.cv);
         engines.push(eng);
       });
       show();
     };
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); start(); } }, { rootMargin: '300px 0px' });
-      io.observe(stage);
-    } else start();
+    const stop = () => {
+      sides.forEach((sd) => {
+        const eng = sd.eng; if (!eng) return;
+        if (eng.M && sd.shown) sd.saved = { id: sd.shown, M: eng.M.map((r) => r.slice()), zoom: eng.zoom };
+        const i = engines.indexOf(eng); if (i >= 0) engines.splice(i, 1);
+        sd.cv = freshCanvas(sd.cv, eng.gl);
+        sd.eng = null; sd.shown = null;
+      });
+    };
+    glWatch(host, start, stop);
     render();
     return { pick: pick };
   }

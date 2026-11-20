@@ -257,7 +257,7 @@ const VestaGL = class {
   down(e) {
     if (!this.cv) return;
     this.ptr.set(e.pointerId, this._css(e));
-    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) { }
+    try { this.cv.setPointerCapture(e.pointerId); } catch (err) { }   // the canvas, also when the listener sits on the stage around it
     if (this.ptr.size === 2) { const [p, q] = [...this.ptr.values()]; this.pinch = Math.hypot(p[0] - q[0], p[1] - q[1]); }
   }
   move(e) {

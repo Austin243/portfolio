@@ -370,7 +370,7 @@ window.LP_flat1 = () => {
     put(head, (k + 1) + ' · ' + STEPS[k].name); put(body, STEPS[k].text);
     cv.setAttribute('aria-label', 'How WISP works, step ' + (k + 1) + ' of ' + STEPS.length + ', ' + STEPS[k].name + '. ' + STEPS[k].alt);
     back.disabled = k === 0; count.textContent = (k + 1) + ' / ' + STEPS.length;
-    put(next, k === STEPS.length - 1 ? 'Start over ↺' : 'Next: ' + STEPS[k + 1].name + ' →');
+    put(next, k === STEPS.length - 1 ? 'Start over ↺' : 'Next<span class="nx">: ' + STEPS[k + 1].name + '</span> →');
     chan.hidden = k < 4; $('[data-diff]', chan).hidden = k !== 5;
     $$('[data-ch]', chan).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.ch === ch)));
     $('[data-diff]', chan).setAttribute('aria-pressed', String(st.diff));
