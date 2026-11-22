@@ -3,7 +3,7 @@
    be dragged through a face and comes back in at the opposite one, the reach of a grid point growing through the sixteen
    residual blocks, the ELF that comes out (a map on a plane through the middle of the cell, and the isosurface of the
    figures), and the comparison with DFT.
-   The fields are the real ones (assets/elfnet-plane.js and the scenes of the 3D figure below it); the drawings of the network at work
+   The fields are the real ones (assets/elfnet-plane.js and the cah6_ca_* scenes); the drawings of the network at work
    are schematic. Where WebGL is missing, the flat version (scheme-elfnet.js) is shown instead. */
 (() => {
   'use strict';
@@ -11,7 +11,6 @@
   if (!host || !D || !D.mid || typeof Stage3D === 'undefined' || !window.LP_scheme || typeof WebGLRenderingContext === 'undefined') return;
   host.dataset.view = '3d';   // the flat version stands back
   const cite = window.LP_CITE ? window.LP_CITE('elfnet') : '';
-  const figN = (window.LP_FIGS || []).findIndex((f) => f.id === 'fig-elfnet') + 1;
 
   // ---------- the cell, in Å ----------
   const A = D.a, N = D.n, ND = D.nd, V = A / N;   // cell edge, grid points along it (density and prediction; DFT), grid spacing
@@ -110,8 +109,12 @@
       text: 'A last convolution and a sigmoid turn the 32 numbers held at each grid point into one value between 0 and 1. That is the predicted ELF, on the same grid as the input. The map shows it on a plane through the middle of the cell, and the yellow surface is where it reaches ' + ISO + '. The whole prediction is one pass through the network.',
       alt: 'The dots of the density give way to a map of the predicted electron localization function on a plane through the middle of the cell, and a yellow isosurface appears in the cell.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is ELFNet, right of it the DFT calculation of the same lattice. Between the atoms both show the same network of high ELF, and the small spheres mark where the hydrogens of CaH<sub>6</sub> sit on it; close to the nuclei the two differ. Trained on 326,009 structures from about −50 to 500 GPa, the workflow runs about 350 times faster than computing the ELF with VASP, on the hardware in the paper: fast enough to screen many lattices, such as hosts for new superhydrides, before any DFT.' + (figN ? ' <a href="#fig-elfnet">The figure below</a> has the two side by side.' : ''),
-      alt: 'The cell with a line across the picture: the ELFNet prediction on the left and the DFT calculation on the right, and small spheres at the hydrogen sites of CaH6.' }
+      text: 'Left of the line is ELFNet, right of it the DFT calculation of the same lattice. Between the atoms both show the same network of high ELF, and the small spheres mark where the hydrogens of CaH<sub>6</sub> sit on it; close to the nuclei the two differ. Trained on 326,009 structures from about −50 to 500 GPa, the workflow runs about 345 times faster than computing the ELF with VASP, by the paper’s accounting.',
+      alt: 'The cell with a line across the picture: the ELFNet prediction on the left and the DFT calculation on the right, and small spheres at the hydrogen sites of CaH6.' },
+    // a slide after the steps drawn here: the two calculations side by side, as views that turn together (fig-elfnet)
+    { name: 'Side by side', dur: 1500,
+      text: 'The two side by side, in full: ELFNet on the left, DFT on the right. Turn either view and the other follows. In both, the yellow surface encloses the sites where the hydrogens of CaH<sub>6</sub> sit, drawn as small spheres. That is the use: a quick first look at many metal lattices, such as hosts for new superhydrides, before any DFT.',
+      slide: { fig: 'fig-elfnet', pick: [0, 0] } }
   ];
   let strip = '<span class="b" data-k="stem">Stem</span>';
   for (let i = 1; i <= BLOCKS; i++) strip += '<i class="rb"></i>' + (i % EVERY === 0 ? '<i class="at"></i>' : '');
@@ -135,7 +138,7 @@
       let cv = $('canvas.gl'), saved = null;   // the canvas is replaced when the figure sleeps; saved: the view it had
       const ov = $('canvas.ov'), netEl = $('.sch-net'), read = $('.sch-read'), sig = $('canvas.sig'), wipeEl = $('.sch-wipe'), qEl = $('.sch-q'), hint = $('.hint');
       const readK = $('.k', read), readV = $('.v', read), netParts = $$('.sch-net > *');
-      const scenes = {};   // the isosurfaces come from the scenes of the 3D figure below
+      const scenes = {};   // the isosurfaces come from the cah6_ca_* scenes
       let eng = null, dragging = false;
 
       // the view: from the front, turned to the side and seen a little from above
@@ -154,7 +157,7 @@
           eng = new Stage3D(W, H, { center: [A / 2, A / 2, A / 2], radius: 4.7, width: 9.4, aspect: 1.4, view: view, axes: [[A, 0, 0], [0, A, 0], [0, 0, A]] });
           eng.attach(undefined, ov); eng.attach(cv);
           if (saved && saved.M) { eng.M = saved.M; eng.zoom = saved.zoom; eng.dirty = true; }
-          if (eng.status === 'nogl') { api.dead = true; host.removeAttribute('data-view'); host.innerHTML = ''; if (window.LP_flat2) window.LP_flat2(); return false; }   // no WebGL after all: the flat version
+          if (eng.status === 'nogl') { api.dead = true; api.giveBack(); host.removeAttribute('data-view'); host.innerHTML = ''; if (window.LP_flat2) window.LP_flat2(); return false; }   // no WebGL after all: the flat version
           eng.paint = paint;
           if (window.LP_loadScene) for (const id of ['cah6_ca_elfnet', 'cah6_ca_dft']) window.LP_loadScene(id, (d) => { scenes[id] = Object.assign({}, d); api.kick(); }, () => {});
         } else eng.resize(W, H);

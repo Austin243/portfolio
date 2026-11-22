@@ -2,7 +2,7 @@
    The atoms and their moments, the message passing, a query point with its 5 Å sphere and a line from every atom in it,
    the field the decoder returns (a map on a plane through the crystal, and around it the surface where the ELF reaches
    0.30), the spin flip, and the comparison with DFT. The fields are the real ones (assets/wisp-plane.js for the map,
-   the grids of the 3D figure below for the surface) and so are the distances and the counts; the pictures of what
+   the grids of the mnpd_* scenes for the surface) and so are the distances and the counts; the pictures of what
    happens inside the network are schematic. Where WebGL is missing, the flat version (scheme.js) is shown instead. */
 (() => {
   'use strict';
@@ -10,7 +10,6 @@
   if (!host || !D || typeof Stage3D === 'undefined' || !window.LP_scheme || typeof WebGLRenderingContext === 'undefined') return;
   host.dataset.view = '3d';   // the flat version stands back
   const cite = window.LP_CITE ? window.LP_CITE('wisp') : '';
-  const figN = (window.LP_FIGS || []).findIndex((f) => f.id === 'fig-wisp') + 1;
 
   // ---------- the crystal, in Å ----------
   const A = D.a, U = A * Math.SQRT2, V = A, N = D.n;     // cell edge; periods of the map's plane along [110] and [001]
@@ -100,8 +99,15 @@
       text: 'For the other spin channel, the same network runs again with every moment reversed. Reversing the moments swaps the two channels exactly, because of how the network is built, so it never has to learn that. In MnPd the spin-down channel has a large region around Pd that the spin-up channel lacks.',
       alt: 'The moment arrows turn over and the map and the yellow isosurface change to the spin-down channel, which has a large region around each palladium atom.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known. It could screen for electrides and magnetic materials before any DFT is run.' + (figN ? ' <a href="#fig-wisp">The figure below</a> has the two side by side.' : ''),
-      alt: 'The same cell with a line across the picture: the WISP prediction on the left and the DFT calculation on the right. The two sides match.' }
+      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.',
+      alt: 'The same cell with a line across the picture: the WISP prediction on the left and the DFT calculation on the right. The two sides match.' },
+    // two slides after the steps drawn here: the two calculations side by side, as views that turn together (fig-wisp)
+    { name: 'Side by side', dur: 1500,
+      text: 'The two side by side, in full: WISP on the left, DFT on the right. Turn either view and the other follows, and switch the spin channel above them. At ELF 0.30 a large region surrounds the Pd atom in spin down and is absent in spin up, in both; that difference between the channels is what WISP has to get right.',
+      slide: { fig: 'fig-wisp', pick: [0, 0] } },
+    { name: 'An electride', dur: 1500,
+      text: 'Sc<sub>5</sub>Cl<sub>8</sub>, a known electride, with only its geometry as input. Besides the shells around the atoms, the ELF reaches 0.83 at the center of the cut face, 2.2 Å from the nearest atom, in WISP and in DFT alike. A high ELF alone does not prove an electride, so WISP is a first pass, for electrides and magnetic materials: it picks the structures worth a full calculation.',
+      slide: { fig: 'fig-wisp', pick: [1, 0] } }
   ];
   const GLYPHS = '<svg viewBox="0 0 46 16" width="46" height="16" aria-hidden="true"><g fill="#0B7A80"><circle cx="5" cy="8" r="3.2"/><ellipse cx="19" cy="4.4" rx="2.6" ry="3.4"/><ellipse cx="19" cy="11.6" rx="2.6" ry="3.4"/>' +
     '<g transform="translate(36 8) rotate(45)"><ellipse cx="0" cy="-4" rx="2.1" ry="3"/><ellipse cx="0" cy="4" rx="2.1" ry="3"/><ellipse cx="-4" cy="0" rx="3" ry="2.1"/><ellipse cx="4" cy="0" rx="3" ry="2.1"/></g></g></svg>';
@@ -128,8 +134,8 @@
       const readK = $('.k', read), readV = $('.v', read);
       let eng = null, scatter = null, dragging = false, cam = P3(Q0);
 
-      // The field away from the plane: the surface where the ELF reaches 0.30, as in the 3D figure below and from the
-      // same grids, built by the engine for one cell and repeated around the query point. Where that surface is large
+      // The field away from the plane: the surface where the ELF reaches 0.30, from the grids of the mnpd_* scenes,
+      // built by the engine for one cell and repeated around the query point. Where that surface is large
       // (the spin-down channel) it is built from the grid at half its resolution, which looks the same at this size and
       // is four times lighter to draw; where it is small and thin (the spin-up channel) the whole grid is used.
       const VOLS = { wisp: ['mnpd_wisp_up', 'mnpd_wisp_down'], dft: ['mnpd_dft_up', 'mnpd_dft_down'] }, vols = {}, meshes = {};
@@ -176,7 +182,7 @@
           eng = new Stage3D(W, H, { center: P3(Q0), radius: 9.5, width: 16.4, aspect: 1.4, view: view, axes: [[A, 0, 0], [0, A, 0], [0, 0, A]], triad: false });
           eng.attach(undefined, ov); eng.attach(cv);
           if (saved && saved.M) { eng.M = saved.M; eng.zoom = saved.zoom; eng.dirty = true; }
-          if (eng.status === 'nogl') { api.dead = true; host.removeAttribute('data-view'); host.innerHTML = ''; if (window.LP_flat1) window.LP_flat1(); return false; }   // no WebGL after all: the flat version
+          if (eng.status === 'nogl') { api.dead = true; api.giveBack(); host.removeAttribute('data-view'); host.innerHTML = ''; if (window.LP_flat1) window.LP_flat1(); return false; }   // no WebGL after all: the flat version
           eng.paint = paint;
           if (window.LP_loadScene && eng.tileP) VOLS.wisp.concat(VOLS.dft).forEach((id) => window.LP_loadScene(id, (d) => { vols[id] = d; api.kick(); }, () => {}));
         } else eng.resize(W, H);

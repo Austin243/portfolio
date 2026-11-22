@@ -361,6 +361,29 @@ h1 { margin: 0 0 0 -3px; font: 400 clamp(54px, 6.5vw, 94px)/.95 var(--serif); fo
 .pl-img figcaption { font: 500 12px/1.35 var(--sans); color: #6B665C; text-align: center; }
 .sch-stage.flat canvas.gl { visibility: hidden; }
 .sch-stage.pl-covered .hint, .sch-stage.flat .hint { visibility: hidden; }
+/* a slide: after the steps a scheme draws itself, a figure of the page (two views that turn together) takes the picture's
+   place, small and side by side at every width; the step's text is its caption. What the scheme keeps on the stage
+   underneath is hidden, for the eye and for the keyboard. */
+.sch-slide { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; justify-content: center; padding: 12px 14px; background: var(--card); }
+.sch-slide.in { animation: slide-in .35s ease both; }
+@keyframes slide-in { from { opacity: 0; } }
+.sch-slide .fig { margin: 0; }
+.sch-slide .fig-bar .panels { display: none; }
+/* of the figure's caption only its legend stays, in one line under the views (the step's text is the caption) */
+.sch-slide .fig.wide .fig-side { display: block; padding: 10px 2px 0; }
+.sch-slide .fig-side > div:first-child, .sch-slide .fig-side .iso-row, .sch-slide .fig-side .spec { display: none; }
+.sch-slide .fig.wide .legend { margin: 0; padding: 0; border: 0; max-width: none; }
+.sch-slide .fig-bar { margin-bottom: 8px; }
+.sch-slide .pair { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.sch-slide .pair .stage { height: auto; min-height: 0; aspect-ratio: 1.24; }
+.sch-wrap.slid .sch-stage > :not(.sch-slide), .sch-wrap.slid .sch-info { visibility: hidden; }
+@media (prefers-reduced-motion: reduce) { .sch-slide.in { animation: none; } }
+@container (max-width: 560px) {
+  .sch-slide { padding: 8px; }
+  .sch-slide .pair { gap: 6px; }
+  .sch-slide .pair .stage { aspect-ratio: 1; }
+  .sch-slide .pair .hint { display: none; }
+}
 
 /* ---------- news ---------- */
 .news { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--strong); }

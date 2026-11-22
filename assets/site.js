@@ -266,17 +266,32 @@
     names.row = namesRow;
     figuresRow = makeShelf(papers, { items: () => cards, names: names, prev: $('.prev', papersBar), next: $('.next', papersBar), count: $('.count', papersBar), fit: true });
   }
-  // a link to anything in a paper's card brings that card into the row first, so the browser can scroll to it
+  // A jump to anything in a paper's card (a link on the page, or an address ending in #...) is made here, not by the
+  // browser. The browser would also scroll the row itself down to the target, because the cards beside the one in
+  // view are taller than the row, and that hid the top of the card. The row only ever moves sideways: the card comes
+  // into the row, then the page scrolls, to the card's top for the card or its first figure, else to the target.
   const cardOf = (el) => (el && el.closest ? el.closest('.shelf.papers .paper') : null);
   const reveal = (el) => { const c = cardOf(el); if (c && figuresRow) figuresRow.show(c, true); };
   window.LP_reveal = reveal;
+  const jumpTo = (t, smooth) => {
+    const c = cardOf(t); if (!c) return;
+    reveal(t);
+    papers.scrollTop = 0;
+    const at = t === c || t === $('.fig', c) ? c : t;
+    const above = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+    window.scrollTo({ top: at.getBoundingClientRect().top + window.scrollY - above, behavior: smooth ? motion() : 'auto' });
+  };
+  if (papers) papers.addEventListener('scroll', () => { if (papers.scrollTop) papers.scrollTop = 0; }, { passive: true });
   document.addEventListener('click', (e) => {
     const a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a || a.getAttribute('href').length < 2) return;
-    const t = document.getElementById(a.getAttribute('href').slice(1)); if (t) reveal(t);
+    const h = a.getAttribute('href'), t = document.getElementById(h.slice(1)); if (!t || !cardOf(t)) return;
+    e.preventDefault();
+    if (location.hash !== h) history.pushState(null, '', h);
+    jumpTo(t, true);
   }, true);
   const toHash = () => {
     const t = location.hash.length > 1 && document.getElementById(location.hash.slice(1));
-    if (t && cardOf(t)) { reveal(t); requestAnimationFrame(() => t.scrollIntoView()); }
+    if (t && cardOf(t)) { reveal(t); requestAnimationFrame(() => jumpTo(t)); }
   };
   window.addEventListener('hashchange', toHash);
   window.addEventListener('load', toHash);
@@ -506,6 +521,7 @@
 
   (window.LP_FIGS || []).forEach((f) => { viewers[f.id] = makeViewer(document.getElementById(f.id), f); });
 
+  window.LP_pick = (id, p, s) => { const v = viewers[id]; if (v) v.pick(p || 0, s || 0); };   // for a step figure that shows a figure as a slide
   // a link with data-fig="figure:panel:state" (in the research list and in the overview at the top) opens that view of the figure
   $$('a[data-fig]').forEach((a) => {
     const q = a.dataset.fig.split(':');

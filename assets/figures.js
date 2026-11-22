@@ -129,6 +129,7 @@
   // in this order, and the page puts each one where its id is (in its paper's card in the Figures section of index.html).
   // A figure with `pair` shows two views side by side that turn together; its states name a left and a right scene.
   window.LP_FIGS = [
+    // the two models next to DFT: each is a slide at the end of its step figure (see scheme-base.js)
     { id: 'fig-wisp', title: 'WISP next to DFT. Turn either view and the other follows.', pair: ['WISP', 'DFT'], panels: [
       { name: 'MnPd', states: [['mnpd_wisp_down', 'mnpd_dft_down', 'Spin down'], ['mnpd_wisp_up', 'mnpd_dft_up', 'Spin up']] },
       { name: 'Sc<sub>5</sub>Cl<sub>8</sub>', states: [['sc5cl8_wisp', 'sc5cl8_dft', 'Sc₅Cl₈']] }],
