@@ -58,22 +58,22 @@ window.LP_flat1 = () => {
   const figN = (window.LP_FIGS || []).findIndex((f) => f.id === 'fig-wisp') + 1;   // whether the 3D figure that follows is on the page
   const STEPS = [
     { name: 'Structure', dur: 1900,
-      text: 'WISP is given a crystal: which atoms it has, where they sit, the cell, and the magnetic moment on each atom. This is MnPd, cut along a plane that holds both atoms. The arrows are the moments, ' + D.moments[0].toFixed(2) + ' μ<sub>B</sub> on Mn and ' + D.moments[1].toFixed(2) + ' μ<sub>B</sub> on Pd.',
+      text: 'The input to WISP is the atoms of a crystal, their positions, the cell, and the magnetic moment on each atom. The example is MnPd, cut along a plane that contains both atoms. The arrows are the moments of ' + D.moments[0].toFixed(2) + ' μ<sub>B</sub> on Mn and ' + D.moments[1].toFixed(2) + ' μ<sub>B</sub> on Pd.',
       alt: 'Rows of manganese and palladium atoms in a plane of MnPd. A long arrow on each manganese and a very short one on each palladium show the magnetic moments.' },
     { name: 'Encode', dur: 3200,
-      text: 'An equivariant network passes messages between atoms up to 5 Å apart, twice. Afterwards every atom holds a set of features that describe its surroundings. Some are plain numbers and some have a direction (<i>ℓ</i> = 0, 1, 2), so they turn when the crystal turns.',
+      text: 'An equivariant network passes messages between atoms up to 5 Å apart, in two rounds. Each atom then carries a set of features that describe its environment. Some of these features are scalars and others have a direction (<i>ℓ</i> = 0, 1, 2), so they rotate with the crystal.',
       alt: 'Rings spread out from every atom twice, and dots travel along the links between neighboring atoms. Each atom ends up with a ring around it.' },
     { name: 'Query', dur: 1700,
-      text: 'Now I can ask about any point in the crystal, whether or not it lies on a grid. The point gathers the features of every atom within 5 Å, along with the direction to each one. Drag the point to try another place.',
+      text: 'The ELF can be requested at any point in the crystal, whether or not the point lies on a grid. The point collects the features of every atom within 5 Å together with the direction to each atom. Drag the point to move it.',
       alt: 'A query point between the atoms, a dashed circle of radius 5 angstrom around it, and lines from the atoms inside the circle to the point.' },
     { name: 'Decode', dur: 3600,
-      text: 'A small network combines what the point gathered into one number between 0 and 1: the ELF there. Asking at many points fills in the field. This is the spin-up channel.',
+      text: 'A small network combines the collected features into a single value between 0 and 1, which is the ELF at that point. Repeating this at many points gives the full field. This is the spin-up channel.',
       alt: 'Colored dots appear at many query points and merge into a map of the spin-up electron localization function over the plane.' },
     { name: 'Flip spins', dur: 2000,
-      text: 'For the other spin channel, the same network runs again with every moment reversed. Reversing the moments swaps the two channels exactly, because of how the network is built, so it never has to learn that. In MnPd the spin-down channel has a large region around Pd that the spin-up channel lacks.',
+      text: 'For the other spin channel, the same network is run again with every moment reversed. The network is constructed so that reversing the moments exchanges the two channels exactly, and this symmetry therefore does not have to be learned. In MnPd the spin-down channel has a large region around Pd that is absent in the spin-up channel.',
       alt: 'The moment arrows turn over and the map changes to the spin-down channel, which has a large region around each palladium atom.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.' + (figN ? ' <a href="#fig-wisp">The figure below</a> has the same comparison in 3D.' : ''),
+      text: 'WISP is on the left of the line and the DFT calculation is on the right. MnPd was not in the training data. The mean absolute difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and it is 0.011 over all 21,922 test structures. Two parts of the model are not shown, a branch for points with no atom within 5 Å and a second network that predicts the moments when only the positions are known.' + (figN ? ' <a href="#fig-wisp">The figure below</a> has the same comparison in 3D.' : ''),
       alt: 'The same map with a line across it: the WISP prediction on the left and the DFT calculation on the right. The two sides match.' }
   ];
   host.innerHTML =

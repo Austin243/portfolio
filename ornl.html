@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Current work · Austin Ellis</title>
-<meta name="description" content="What Austin Ellis is working on at Oak Ridge National Laboratory: how pressure, a solvent or a metal surface changes the reactions of acetonitrile.">
+<meta name="description" content="Austin Ellis's current work at Oak Ridge National Laboratory on how pressure, solvents and metal surfaces change the reaction pathways of acetonitrile.">
 <link rel="canonical" href="https://austinellis.org/ornl.html">
 <meta property="og:title" content="Current work · Austin Ellis">
-<meta property="og:description" content="What Austin Ellis is working on at Oak Ridge National Laboratory: how pressure, a solvent or a metal surface changes the reactions of acetonitrile.">
+<meta property="og:description" content="Austin Ellis's current work at Oak Ridge National Laboratory on how pressure, solvents and metal surfaces change the reaction pathways of acetonitrile.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://austinellis.org/ornl.html">
 <meta property="og:image" content="https://austinellis.org/assets/img/og-nakh12.png">
@@ -58,87 +58,87 @@ austinellis.org</a>
 
 <div class="phead">
 <h1>What I’m working on now</h1>
-<p class="lede">At Oak Ridge National Laboratory I study how pressure, a solvent or a metal surface changes the reactions a molecule takes. The molecule is acetonitrile, and most of this is still in progress.</p>
+<p class="lede">I am a research intern at Oak Ridge National Laboratory, where I study how pressure, solvents and metal surfaces change the reaction pathways of acetonitrile. Most of this work is still in progress.</p>
 </div>
 
 <!-- ================= the question ================= -->
 <section class="sec" id="why" aria-labelledby="why-h">
-<div class="sec-head"><h2 id="why-h">The question</h2></div>
+<div class="sec-head"><h2 id="why-h">The project</h2></div>
 <div class="prose">
-<p>Heat pushes a reaction over its barrier. Pressure, a solvent, a catalyst or a plasma can do more: they reshape the energy landscape, and may open paths that heating alone does not reach. I work in a project at Oak Ridge, led by Ilia Ivanov, that asks how they do it.</p>
-<p>Acetonitrile is the first test system. It forms chains, rings and polymers under very different conditions, and it is small enough to simulate in detail. So we follow it from the starting molecules to its products in three surroundings: a compressed crystal, a mixture with an alcohol, and a film on an alkali metal.</p>
+<p>Thermal energy allows a reaction to cross its barrier, but it does not change the energy landscape. Pressure, solvents, catalysts and plasmas can change the landscape itself and may open reaction pathways that heating alone cannot reach. I work on an ORNL project led by Ilia Ivanov that studies how these conditions change the transition states and pathways of molecular reactions.</p>
+<p>Acetonitrile is our first test system because it forms chains, rings and polymers under very different conditions and is small enough to simulate in detail. We study its reactions in three environments, which are the compressed crystal, mixtures with alcohols, and films on alkali metals.</p>
 </div>
-<figure class="pic"><img src="assets/img/steps/rx-landscape.webp" width="2000" height="789" alt="A drawing of an energy landscape with reactants and three products: heat, microwaves, pressure, a catalyst and a plasma each take a different path across it" decoding="async"><figcaption>One reaction, several ways to drive it. From my SESAPS 2026 talk.</figcaption></figure>
+<figure class="pic"><img src="assets/img/steps/rx-landscape.webp" width="2000" height="789" alt="A drawing of an energy landscape with reactants and three products: heat, microwaves, pressure, a catalyst and a plasma each take a different path across it" decoding="async"><figcaption>Different ways to drive a reaction across an energy landscape. From my SESAPS 2026 talk.</figcaption></figure>
 </section>
 
 <!-- ================= finding the steps ================= -->
 <section class="sec" id="steps" aria-labelledby="steps-h">
-<div class="sec-head"><h2 id="steps-h">Finding the steps</h2></div>
+<div class="sec-head"><h2 id="steps-h">Finding reaction steps</h2></div>
 <div class="prose">
-<p>These reactions are too slow for DFT dynamics, so we run them with machine-learned potentials. ReactionFlow, a package I wrote, watches the bonds while the simulation runs. When a new bond persists it pauses the run, relaxes a frame from each side of the event, and joins the two with a nudged elastic band whose highest image climbs to the saddle. It keeps the barrier only if the saddle has one negative mode and both sides relax to the two states. Then it resumes the run where it stopped, and DFT checks the barrier afterwards.</p>
-<p>To know which potentials to trust, we first compared fifteen of them with DFT along 9,017 reaction pathways.</p>
+<p>These reactions are too slow for DFT molecular dynamics, so we simulate them with machine-learned interatomic potentials. I wrote ReactionFlow to find the reactions in these simulations. It monitors the bonds during the run. When a new bond persists, it pauses the run, relaxes a frame from before and after the event, and connects the two with a climbing-image nudged elastic band calculation to locate the saddle point. The barrier is kept only if the saddle has one negative mode and relaxes to the two states on either side. ReactionFlow then resumes the run from where it stopped, and we recompute the barrier with DFT.</p>
+<p>These results depend on the accuracy of the potentials, so we first benchmarked fifteen pretrained potentials against DFT along 9,017 reaction pathways.</p>
 <p class="ref-links"><a href="https://github.com/Austin243/ReactionFlow">ReactionFlow on GitHub</a><a href="https://doi.org/10.26434/chemrxiv.15012574/v1">The benchmark, ChemRxiv 2026</a></p>
 </div>
-<figure class="pic mid"><div class="rf-box" data-rf-anim="assets/img/steps/rx-rf-surface.webp" aria-label="An animation on a contour map of a model energy surface: a trajectory wanders in the reactant valley and crosses to the product; the run pauses, both ends relax, a band of images is refined between them and its top image climbs to the saddle; the saddle is checked and the barrier stored; the run resumes."><img src="assets/img/steps/rx-rf-still.webp" width="1440" height="800" alt="ReactionFlow on a model energy surface: the run, the detected bond change, and the six stages from running to resuming" loading="lazy" decoding="async"></div><figcaption>What ReactionFlow does with a run. The surface is a model, not a real reaction. From my SESAPS 2026 talk.</figcaption></figure>
+<figure class="pic mid"><div class="rf-box" data-rf-anim="assets/img/steps/rx-rf-surface.webp" aria-label="An animation on a contour map of a model energy surface: a trajectory wanders in the reactant valley and crosses to the product; the run pauses, both ends relax, a band of images is refined between them and its top image climbs to the saddle; the saddle is checked and the barrier stored; the run resumes."><img src="assets/img/steps/rx-rf-still.webp" width="1440" height="800" alt="ReactionFlow on a model energy surface: the run, the detected bond change, and the six stages from running to resuming" loading="lazy" decoding="async"></div><figcaption>The stages of ReactionFlow, shown on a model energy surface. From my SESAPS 2026 talk.</figcaption></figure>
 </section>
 
 <!-- ================= under pressure ================= -->
 <section class="sec" id="pressure" aria-labelledby="pressure-h">
 <div class="sec-head"><h2 id="pressure-h">Under pressure</h2></div>
 <div class="prose">
-<p>Crystalline acetonitrile polymerizes when it is compressed and heated. In DFT dynamics at 35 GPa nothing reacts within 10.7 picoseconds, even near 1,100 K: the reactions need nanoseconds. A potential fine-tuned on DFT data lets us run that long, and at 2,000 K the molecules link into a network.</p>
-<p>To see the single steps, we put together a connected path from the crystal to a chain of five molecules, nine steps in all, and checked every state on it with DFT. The first step joins two molecules through a new C–C bond while a hydrogen moves to a nitrogen. It is the hardest of the nine: 2.66 eV, or 2.67 eV with DFT. Later additions are easier. The early hydrogen transfers leave N–H groups in the growing chain, and the fifth molecule adds through one of them over only 0.68 eV.</p>
+<p>Crystalline acetonitrile polymerizes when it is compressed and heated. DFT molecular dynamics at 35 GPa, heated to about 1,100 K over 10.7 ps, forms no bonds because these reactions require nanoseconds. We therefore fine-tuned a machine-learned potential on DFT data to reach these time scales. With this potential the molecules link into a network at 35 GPa and 2,000 K.</p>
+<p>To resolve the individual steps, we assembled a connected path of nine steps from the crystal to a chain of five molecules and checked every state with a DFT single point. In the first step two molecules join through a new C–C bond while a hydrogen transfers to nitrogen. This step has the highest barrier of the nine, 2.66 eV with the potential and 2.67 eV with DFT. The later additions are easier because the early hydrogen transfers leave N–H groups in the growing chain. The fifth molecule adds through one of these groups with a barrier of 0.68 eV.</p>
 </div>
 <figure class="fig" id="fig-path"></figure>
-<figure class="pic mid"><img src="assets/img/steps/rx-path-35gpa.webp" width="1600" height="1227" alt="Enthalpy along the connected polymerization path at 35 GPa, from the crystal through the dimer, trimer and tetramer to the pentamer, with DFT single points on each state" loading="lazy" decoding="async"><figcaption>The whole path: nine barriers between the crystal and five joined molecules, with a DFT point on each state.</figcaption></figure>
+<figure class="pic mid"><img src="assets/img/steps/rx-path-35gpa.webp" width="1600" height="1227" alt="Enthalpy along the connected polymerization path at 35 GPa, from the crystal through the dimer, trimer and tetramer to the pentamer, with DFT single points on each state" loading="lazy" decoding="async"><figcaption>Enthalpy along the connected path at 35 GPa, with a DFT single point at each state.</figcaption></figure>
 
 <div class="prose">
-<h3>More ways to react</h3>
-<p>Growth along the chain is not all that happens. At 20 GPa we have saddles for eight kinds of local step: growth through a new C–C or C–N bond, two dimers coupling, branching, a hydrogen passing between nitrogens, an eight-membered ring closing, a rearrangement, and ammonia leaving. Their barriers run from 0.1 to 2.2 eV. They start from different precursors, so this is not yet a ranking of products.</p>
+<h3>Other reaction steps at 20 GPa</h3>
+<p>Chain growth is one of several kinds of reaction step. At 20 GPa we located saddle points for eight local steps, which are C–C growth, C–N growth, coupling of two dimers, branching, hydrogen transfer between nitrogen atoms, closure of an eight-membered ring, a bond rearrangement, and NH<sub>3</sub> release. Their barriers range from 0.1 to 2.2 eV. These steps start from different precursors, so their barriers cannot yet be used to rank the products.</p>
 </div>
-<figure class="pic narrow"><img src="assets/img/steps/rx-20gpa-steps.webp" width="1700" height="2343" alt="Eight local steps at 20 GPa, each as reactant, transition state and product with its enthalpy profile: C–C growth, C–N growth, oligomer coupling, branch formation, N-to-N hydrogen transfer, ring closure, bond rearrangement and NH3 release" loading="lazy" decoding="async"><figcaption>Eight local steps at 20 GPa, with barrier and reaction enthalpy in eV. From a manuscript in preparation.</figcaption></figure>
+<figure class="pic narrow"><img src="assets/img/steps/rx-20gpa-steps.webp" width="1700" height="2343" alt="Eight local steps at 20 GPa, each as reactant, transition state and product with its enthalpy profile: C–C growth, C–N growth, oligomer coupling, branch formation, N-to-N hydrogen transfer, ring closure, bond rearrangement and NH3 release" loading="lazy" decoding="async"><figcaption>Eight local steps at 20 GPa with their barriers and reaction enthalpies in eV. From a manuscript in preparation.</figcaption></figure>
 
 <div class="prose">
-<h3>Pressure and heat</h3>
-<p>With the checked steps in a kinetic model, we can ask what one cell of 48 molecules holds after an hour at each pressure and temperature. At 800 K and below almost nothing has reacted. At 1,000 K pressure makes the difference: about one cell in ten holds an oligomer at 5 GPa, nearly every cell does at 20 GPa, and at 35 GPa nearly every cell holds five or more joined molecules.</p>
-<p>This model is exploratory: static barriers, one prefactor, and a network that is still growing. In the perfect crystal it gives nothing at room temperature, so the conversion seen there in experiment may start at defects.</p>
+<h3>Pressure and temperature</h3>
+<p>We used the checked steps in a kinetic Monte Carlo model to estimate what forms in a cell of 48 molecules after one hour at each pressure and temperature. At 800 K and below, almost nothing has reacted at any pressure. At 1,000 K the result depends strongly on pressure. The probability that the cell contains an oligomer is about 10% at 5 GPa and 96% at 20 GPa, and at 35 GPa the cell almost always contains a chain of five or more molecules.</p>
+<p>This model is exploratory. It uses static barriers and a single prefactor, and the reaction network is still being extended. It predicts no reaction in the perfect crystal at room temperature, so the conversion observed at room temperature in experiments may begin at defects.</p>
 </div>
-<figure class="pic"><img src="assets/img/steps/rx-pt-map.webp" width="1800" height="618" alt="Three maps of pressure against temperature: the probability that a cell of 48 acetonitrile molecules holds any oligomer, five or more units, or eight or more units after one hour. Blank below 800 K, rising with pressure at 1000 K." loading="lazy" decoding="async"><figcaption>What one cell holds after an hour. An exploratory kinetic model.</figcaption></figure>
+<figure class="pic"><img src="assets/img/steps/rx-pt-map.webp" width="1800" height="618" alt="Three maps of pressure against temperature: the probability that a cell of 48 acetonitrile molecules holds any oligomer, five or more units, or eight or more units after one hour. Blank below 800 K, rising with pressure at 1000 K." loading="lazy" decoding="async"><figcaption>Probability that a cell of 48 molecules contains an oligomer after one hour, from an exploratory kinetic model.</figcaption></figure>
 </section>
 
 <!-- ================= in a solvent ================= -->
 <section class="sec" id="solvent" aria-labelledby="solvent-h">
-<div class="sec-head"><h2 id="solvent-h">In a solvent</h2></div>
+<div class="sec-head"><h2 id="solvent-h">In alcohols</h2></div>
 <div class="prose">
-<p>In an alcohol, acetonitrile takes another route: three molecules close into a triazine ring, which can go on to an aminopyrimidine. In the route we found, it starts when an alcohol adds across the C≡N bond, so it should matter how the alcohol sits around acetonitrile. The idea we are testing is that the structure of a solution decides which reactions happen in it.</p>
-<p>To see that structure, we search for the ways acetonitrile packs with methanol and with isopropanol, at three ratios each. Below is the lowest-energy packing found at each ratio, drawn as one acetonitrile with its twelve nearest molecules. In the one-to-one packings every O–H points at a nitrile nitrogen. With more alcohol, or less, the O–H groups mostly bond to each other.</p>
-<p>These come from searches with a machine-learned potential, and all of them lie above the separate pure crystals. They are candidates, not known phases.</p>
+<p>In alcohols, acetonitrile can trimerize to a triazine and react further to an aminopyrimidine. In the route we found, the first step is the addition of an alcohol across the C≡N bond. The arrangement of the alcohol around acetonitrile should therefore affect the reaction. More generally, we want to test whether the structure of a solution determines which reactions occur in it.</p>
+<p>To study this structure, we searched for crystal packings of acetonitrile with methanol and with isopropanol at three ratios each. The figure shows the lowest-energy packing found at each ratio as one acetonitrile molecule and its twelve nearest neighbors. In the 1:1 packings every hydroxyl group forms a hydrogen bond to a nitrile nitrogen. At the other ratios most hydroxyl groups form hydrogen bonds to other alcohol molecules.</p>
+<p>These structures come from searches with a machine-learned potential. All of them are higher in energy than the separate pure crystals, so they should be regarded as candidate structures.</p>
 </div>
 <figure class="fig" id="fig-alcohols"></figure>
 </section>
 
 <!-- ================= on a metal ================= -->
 <section class="sec" id="metals" aria-labelledby="metals-h">
-<div class="sec-head"><h2 id="metals-h">On a metal</h2></div>
+<div class="sec-head"><h2 id="metals-h">On alkali metals</h2></div>
 <div class="prose">
-<p>A metal surface changes the route again. Experiments on sodium point to pyrimidine rings, so we followed a film of acetonitrile on lithium, sodium and potassium step by step, each state reached from the one before it and each barrier checked with DFT. On sodium, ten steps lead to the ring, none above 12.3 kcal/mol until the last hydrogen transfer, at 22.2.</p>
+<p>Alkali metals change the reaction again. Experiments on sodium indicate pyrimidine rings as the product. We followed a film of acetonitrile on the (100) surfaces of Li, Na and K step by step, with every state reached from the previous one and every barrier checked with DFT. On sodium, ten steps lead to the aminopyrimidine ring. The largest barrier before the final hydrogen transfer is 12.3 kcal/mol, and the final hydrogen transfer costs 22.2 kcal/mol.</p>
 </div>
 <figure class="fig" id="fig-metals"></figure>
 
 <div class="prose">
-<h3>Which product</h3>
-<p>Barriers alone do not say what forms. So the 211 connected steps on the three metals, with their DFT barriers, go into a kinetic model that follows one reaction centre from the film. At room temperature sodium closes the aminopyrimidine ring, the product seen in experiment, and rests as its amide. Potassium takes the same first steps but stops at an open-chain dimer. Lithium couples two molecules directly and makes no ring.</p>
-<p>This model is exploratory too. How long sodium takes is not firm (seconds to about a day, depending on how the barriers are read), and whether lithium joins through carbon or nitrogen is not settled.</p>
+<h3>Predicted products</h3>
+<p>The barriers alone do not determine the product distribution. We therefore used the 211 connected steps on the three metals, with their DFT barriers, in a kinetic model that follows one reaction center starting from the unreacted film. At room temperature sodium forms the aminopyrimidine ring, which is the product observed in experiment, and remains as its amide. Potassium follows the same first steps but stops at an open-chain dimer. Lithium couples two molecules directly and forms no ring.</p>
+<p>This model is also exploratory. The time sodium needs to form the ring ranges from seconds to about a day depending on how the barriers are referenced, and it is not yet settled whether the lithium dimer is C–C or N-linked.</p>
 </div>
-<figure class="pic"><img src="assets/img/steps/rx-metals-kmc.webp" width="2000" height="735" alt="Shares of reaction centres against time at 298 K: on lithium a capped C–C dimer near 91 percent, on sodium the aminopyrimidine ring with half formed by 20 seconds, on potassium an open-chain dimer with half formed by 11 minutes" loading="lazy" decoding="async"><figcaption>Shares of reaction centres at 298 K. An exploratory kinetic model.</figcaption></figure>
+<figure class="pic"><img src="assets/img/steps/rx-metals-kmc.webp" width="2000" height="735" alt="Shares of reaction centres against time at 298 K: on lithium a capped C–C dimer near 91 percent, on sodium the aminopyrimidine ring with half formed by 20 seconds, on potassium an open-chain dimer with half formed by 11 minutes" loading="lazy" decoding="async"><figcaption>Product shares at 298 K from an exploratory kinetic model.</figcaption></figure>
 </section>
 
 <!-- ================= what it is for ================= -->
 <section class="sec" id="aim" aria-labelledby="aim-h">
-<div class="sec-head"><h2 id="aim-h">What it is for</h2></div>
+<div class="sec-head"><h2 id="aim-h">Goal</h2></div>
 <div class="prose">
-<p>Each study ends in a map: every step from the starting molecules to a product, with its barrier. The goal is to resolve the transition states that pressure reaches, then reach them under milder conditions, and so to choose a reaction’s path by choosing its surroundings. The project pairs these simulations with high-pressure, neutron and Raman experiments.</p>
-<p>Most of this is work in progress, with manuscripts in preparation. My ORNL research page has the fuller account: every route, with its charts and structures.</p>
+<p>Each of these studies gives a map of the reaction, with every step from the starting molecules to a product and its barrier. The goal of the project is to resolve the transition states reached under pressure and then to reach the same transition states under milder conditions, so that a reaction pathway can be selected through its environment. The simulations are combined with high-pressure, neutron and Raman experiments in the same project.</p>
+<p>Most of this work is in progress, with manuscripts in preparation. My ORNL research page gives a more complete account, including every route with its charts and structures.</p>
 <p class="ref-links"><a href="https://austin243.github.io/ornl-research/">ORNL research page</a></p>
 </div>
 </section>

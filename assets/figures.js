@@ -72,7 +72,7 @@
     tas2_vacancy: { ref: 'tmd-vacancies', legend: el('S', 'Ta'),
       spec: '<b>TaS<sub>2</sub></b> · monolayer, 4×4 supercell · Ta 16, S 31',
       label: 'Interactive 3D view: TaS2 monolayer with one sulfur vacancy, seen from below',
-      cap: 'A TaS<sub>2</sub> sheet with one sulfur missing from the lower layer, seen from below. The sulfur above the gap has sunk toward the tantalum plane.' },
+      cap: 'A TaS<sub>2</sub> monolayer with one sulfur vacancy in the lower layer, viewed from below. The sulfur atom above the vacancy has moved toward the tantalum plane.' },
 
     // superhydrides
     nakh12_60GPa: { ref: 'nakh12', field: ELF(1), legend: el('Na', 'K', 'H'),
@@ -104,19 +104,19 @@
     cso_p63mmc_150gpa: { ref: 'cs-polyoxides', legend: el('Cs', 'O'),
       spec: '<b>CsO</b> · P6<sub>3</sub>/mmc · 150 GPa · Cs 4, O 4',
       label: 'Interactive 3D view: CsO at 150 GPa with its oxygens in pairs',
-      cap: 'CsO at 150 GPa. The oxygens sit in pairs, 1.41 Å apart.' },
+      cap: 'CsO at 150 GPa. The oxygen atoms form O–O pairs with a distance of 1.41 Å.' },
     cso_r3m_250gpa: { ref: 'cs-polyoxides', legend: el('Cs', 'O'),
       spec: '<b>CsO</b> · R-3m · 250 GPa · Cs 2, O 2',
       label: 'Interactive 3D view: CsO at 250 GPa with the oxygen pairs broken up',
-      cap: 'CsO at 250 GPa, past the transition near 221 GPa. The pairs have come apart, and each oxygen now sits 1.93 Å from a cesium.' },
+      cap: 'CsO at 250 GPa, above the transition near 221 GPa. The O–O pairs have separated, and each oxygen is 1.93 Å from a cesium atom.' },
     cs2bao3_cm_250gpa: { ref: 'cs-core', legend: el('Cs', 'Ba', 'O'),
       spec: '<b>Cs<sub>2</sub>BaO<sub>3</sub></b> · Cm · 250 GPa · Cs 4, Ba 2, O 6',
-      label: 'Interactive 3D view: Cs2BaO3 at 250 GPa, with each cesium between two oxygens in a nearly straight line',
-      cap: 'Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa. There are no O–O pairs: the closest two oxygens are 2.56 Å apart. Each cesium sits between two oxygens in a nearly straight line, 2.06 to 2.14 Å away.' },
+      label: 'Interactive 3D view: Cs2BaO3 at 250 GPa, with nearly linear O–Cs–O units',
+      cap: 'Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa. The structure has no O–O pairs, and the shortest O–O distance is 2.56 Å. Each cesium has two oxygen neighbors at 2.06 to 2.14 Å in a nearly linear O–Cs–O unit.' },
     cs2bao3_elf_250gpa: { ref: 'cs-core', field: ELF(0.9), legend: el('Cs', 'Ba', 'O'),
       spec: '<b>Cs<sub>2</sub>BaO<sub>3</sub></b> · Cm · 250 GPa · ELF from DFT · grid 48×30×36',
       label: 'Interactive 3D view: ELF of Cs2BaO3 at 250 GPa, cut on the plane that holds both kinds of cesium',
-      cap: 'The ELF of Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa. The front face is the plane that holds both kinds of cesium (Fig. 4b of the preprint). Between a cesium and each of its two close oxygens the ELF stays at about 0.35 or above; toward the farther oxygens it drops to 0.2. At 0.40 the yellow surface joins one kind of cesium to its two oxygens, and at 0.36 it joins both.' }
+      cap: 'The ELF of Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa. The front face is the (010) plane through both inequivalent cesium sites (Fig. 4b of the preprint). Along the short Cs–O contacts the ELF remains at about 0.35 or above, whereas along the longer Cs–O contacts it decreases to 0.2. The isosurface at 0.40 connects one cesium site to its two oxygen neighbors, and at 0.36 it connects both sites.' }
   };
 
   // A figure is a row of panels (a, b, c); a panel can hold several states of the same system. The figures are numbered
@@ -128,9 +128,9 @@
       { name: 'MnPd', states: [['mnpd_wisp_down', 'mnpd_dft_down', 'Spin down'], ['mnpd_wisp_up', 'mnpd_dft_up', 'Spin up']] },
       { name: 'Sc<sub>5</sub>Cl<sub>8</sub>', states: [['sc5cl8_wisp', 'sc5cl8_dft', 'Sc₅Cl₈']] }],
       caps: {
-        mnpd_wisp_down: 'MnPd, spin-down channel. WISP predicts it from the structure and the magnetic moments on the atoms; the other view is the DFT calculation. At ELF 0.30 a large region surrounds the Pd atom in both.',
-        mnpd_wisp_up: 'The spin-up channel at the same isovalue. The large region around Pd is absent in both views, and that difference between the two channels is what WISP has to get right.',
-        sc5cl8_wisp: 'Sc<sub>5</sub>Cl<sub>8</sub>, a known electride. WISP had only the geometry as input. Besides the shells around the atoms, the ELF reaches 0.83 at the center of the cut face, 2.2 Å from the nearest atom, in the prediction and in DFT alike: the interstitial maximum of the electride.' },
+        mnpd_wisp_down: 'MnPd, spin-down channel. WISP predicts it from the structure and the magnetic moments on the atoms, and the other view is the DFT calculation. At ELF 0.30 a large region surrounds the Pd atom in both.',
+        mnpd_wisp_up: 'The spin-up channel at the same isovalue. The large region around Pd is absent in both views. WISP has to reproduce this difference between the two channels.',
+        sc5cl8_wisp: 'Sc<sub>5</sub>Cl<sub>8</sub>, a known electride, for which WISP received only the geometry. In addition to the shells around the atoms, the ELF reaches 0.83 at the center of the cut face, 2.2 Å from the nearest atom, in both the prediction and DFT. This is the interstitial maximum of the electride.' },
       specs: {
         mnpd_wisp_down: '<b>MnPd</b> · spin down · WISP and DFT · both on a 28×28×28 grid',
         mnpd_wisp_up: '<b>MnPd</b> · spin up · WISP and DFT · both on a 28×28×28 grid',
@@ -138,7 +138,7 @@
     { id: 'fig-elfnet', title: 'ELFNet next to DFT. Turn either view and the other follows.', pair: ['ELFNet', 'DFT'], panels: [
       { name: 'CaH<sub>6</sub>', states: [['cah6_ca_elfnet', 'cah6_ca_dft', 'Ca lattice']] }],
       caps: {
-        cah6_ca_elfnet: 'The calcium lattice of CaH<sub>6</sub>, with the hydrogen left out of the calculation. ELFNet predicts its ELF from superposed atomic densities; the other view is the DFT calculation. In both, the yellow surface encloses the sites where the hydrogens sit in CaH<sub>6</sub>, drawn as small spheres.' },
+        cah6_ca_elfnet: 'The calcium lattice of CaH<sub>6</sub>, with the hydrogen left out of the calculation. ELFNet predicts its ELF from superposed atomic densities, and the other view is the DFT calculation. In both, the yellow isosurface encloses the hydrogen sites of CaH<sub>6</sub>, which are drawn as small spheres.' },
       specs: { cah6_ca_elfnet: 'Ca lattice of <b>CaH<sub>6</sub></b> · ELFNet on a 32×32×32 grid, DFT on 28×28×28' } },
     // the other projects: a preprint and work in progress
     { id: 'fig-cso', title: 'CsO at 150 and 250 GPa.', panels: [

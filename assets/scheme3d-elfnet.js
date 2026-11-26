@@ -94,26 +94,26 @@
   // ---------- the page around the picture ----------
   const STEPS = [
     { name: 'Structure', dur: 1500,
-      text: 'The ELF shows where electrons localize, in bonds, lone pairs and the empty spaces of a lattice, but computing it takes a DFT calculation, too slow for screening thousands of candidates. ELFNet predicts it from a crystal structure and nothing else. This is the calcium lattice of CaH<sub>6</sub> with the hydrogen left out: one cubic cell, with a calcium at each corner and one at its center. The cell repeats in every direction. Drag to turn it.',
+      text: 'The ELF shows where electrons localize in bonds, lone pairs and the interstitial space of a lattice, but it requires a DFT calculation, which is too slow for screening thousands of candidates. ELFNet predicts the ELF from the crystal structure alone. The example is the calcium lattice of CaH<sub>6</sub> with the hydrogen removed. The cubic cell has a calcium atom at each corner and one at its center, and it repeats in every direction. Drag to turn it.',
       alt: 'A cubic cell in 3D with a calcium atom at each corner and one at its center.' },
     { name: 'Density', dur: 2200,
-      text: 'First the densities of the free atoms are added up on a grid over the cell. This superposed atomic density (SAD) takes no quantum calculation, only the positions and a table of atomic densities. The grid, ' + N + ' points along each edge here, is all the network sees. Each dot is one grid point, larger and bluer where the density is higher.',
+      text: 'The densities of the free atoms are first summed on a grid over the cell. This superposed atomic density (SAD) requires no quantum calculation, only the atomic positions and a table of atomic densities. The grid, with ' + N + ' points along each edge here, is the only input to the network. Each dot is one grid point, and it is larger and bluer where the density is higher.',
       alt: 'The cell fills with a grid of dots for the superposed atomic density: dense blue clouds around each calcium atom, faint dots between them.' },
     { name: 'Convolve', dur: 2400,
-      text: 'The network is built from 3D convolutions. Each one updates every grid point from the 5 × 5 × 5 block of points around it. Where the block reaches past a face of the cell it wraps around to the opposite face, because the crystal repeats. The orange dots are the points of one block. Drag it to a face or a corner.',
+      text: 'The network is built from 3D convolutions. Each convolution updates every grid point from the 5 × 5 × 5 block of points around it. Where the block extends past a face of the cell, it wraps around to the opposite face because the crystal is periodic. The orange dots are the points of one block. Drag it to a face or a corner.',
       alt: 'A small cube of five by five by five grid points, drawn in orange, sticks out through one face of the cell. The part that sticks out reappears at the opposite face.' },
     { name: 'Stack', dur: 4400,
-      text: 'Sixteen residual blocks follow, each with two convolutions, and an attention block after every fourth. The grid keeps its size the whole way. With each block a point is influenced by points farther away; in this cell, after four blocks it has seen all of it.',
+      text: 'Sixteen residual blocks follow, each with two convolutions, with an attention block after every fourth. The grid keeps its size throughout. Each block extends the range of points that influence a given point, and in this cell four blocks are enough to cover all of it.',
       alt: 'The grid points that influence one point turn orange block by block: the region grows, wraps around the faces, and fills the whole cell.' },
     { name: 'Read out', dur: 2400,
-      text: 'A last convolution and a sigmoid turn the 32 numbers held at each grid point into one value between 0 and 1. That is the predicted ELF, on the same grid as the input. The map shows it on a plane through the middle of the cell, and the yellow surface is where it reaches ' + ISO + '. The whole prediction is one pass through the network.',
+      text: 'A final convolution and a sigmoid convert the 32 values at each grid point into one value between 0 and 1. This is the predicted ELF on the same grid as the input. The map shows it on a plane through the middle of the cell, and the yellow isosurface is at ' + ISO + '. The whole prediction is a single pass through the network.',
       alt: 'The dots of the density give way to a map of the predicted electron localization function on a plane through the middle of the cell, and a yellow isosurface appears in the cell.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is ELFNet, right of it the DFT calculation of the same lattice. Between the atoms both show the same network of high ELF, and the small spheres mark where the hydrogens of CaH<sub>6</sub> sit on it; close to the nuclei the two differ. Trained on 326,009 structures from about −50 to 500 GPa, the workflow runs about 345 times faster than computing the ELF with VASP, by the paper’s accounting.',
+      text: 'ELFNet is on the left of the line and the DFT calculation of the same lattice is on the right. Between the atoms both show the same network of high ELF, and the small spheres mark the hydrogen positions of CaH<sub>6</sub> on it. The two differ close to the nuclei. ELFNet was trained on 326,009 structures from about −50 to 500 GPa, and according to the paper the workflow is about 345 times faster than computing the ELF with VASP.',
       alt: 'The cell with a line across the picture: the ELFNet prediction on the left and the DFT calculation on the right, and small spheres at the hydrogen sites of CaH6.' },
     // a slide after the steps drawn here: the two calculations side by side, as views that turn together (fig-elfnet)
     { name: 'Side by side', dur: 1500,
-      text: 'The two side by side, in full: ELFNet on the left, DFT on the right. Turn either view and the other follows. In both, the yellow surface encloses the sites where the hydrogens of CaH<sub>6</sub> sit, drawn as small spheres. That is the use: a quick first look at many metal lattices, such as hosts for new superhydrides, before any DFT.',
+      text: 'ELFNet (left) and DFT (right) are shown in full, side by side. Turning either view turns the other. In both, the yellow isosurface encloses the hydrogen sites of CaH<sub>6</sub>, which are drawn as small spheres. ELFNet is intended for this kind of fast first screening of many metal lattices, such as hosts for new superhydrides, before any DFT calculation.',
       slide: { fig: 'fig-elfnet', pick: [0, 0] } }
   ];
   let strip = '<span class="b" data-k="stem">Stem</span>';
@@ -122,7 +122,7 @@
 
   window.LP_scheme(host, {
     label: 'How ELFNet works', steps: STEPS, hint: 'drag to turn', hintFrom: 0,
-    title: 'How ELFNet turns a crystal structure into an ELF map, one step at a time.', cite: cite,
+    title: 'How ELFNet predicts an ELF map from a crystal structure.', cite: cite,
     stage: '<canvas class="gl" tabindex="0" role="img"></canvas><canvas class="ov" aria-hidden="true"></canvas>' +
       '<div class="sch-net" aria-hidden="true" hidden>' + strip + '</div>' +
       '<div class="sch-read" hidden><canvas class="sig" aria-hidden="true"></canvas><div><p class="k"></p><p class="v"></p></div></div>' +
@@ -130,7 +130,7 @@
       '<button type="button" class="sch-q" aria-label="Grid point. Drag it, or move it with the arrow keys." hidden></button>',
     legend: '<span><i style="background:#5E93B8"></i>Ca</span><span><em class="lg-k"></em>5 × 5 × 5 block</span><span><i style="background:#DAE0E8"></i>H site of CaH₆</span>' +
       '<span class="lg-sad">density, low<b></b>high</span><span class="lg-elf">ELF 0<b></b>' + VMAX + '</span><span><i class="iso"></i>ELF ' + ISO + '</span>',
-    spec: '<b>Ca lattice of CaH<sub>6</sub></b> · <i>a</i> = ' + A.toFixed(3) + ' Å · the ELF map is the plane through the middle of the cell · density and ELFNet on a ' + N + '×' + N + '×' + N + ' grid, DFT on ' + ND + '×' + ND + '×' + ND + ' · FlatResNet3D, 4,232,989 parameters. The fields are real; the drawings of the network at work are schematic.',
+    spec: '<b>Ca lattice of CaH<sub>6</sub></b> · <i>a</i> = ' + A.toFixed(3) + ' Å · the ELF map is the plane through the middle of the cell · density and ELFNet on a ' + N + '×' + N + '×' + N + ' grid, DFT on ' + ND + '×' + ND + '×' + ND + ' · FlatResNet3D, 4,232,989 parameters. The fields are real, and the drawings of the network are schematic.',
     make: (api) => {
       const st = api.st, on = api.on, smooth = api.smooth, put = api.put, $ = api.$, $$ = api.$$, stage = api.stage, reduced = api.reduced;
       Object.assign(st, { f: [N - 1, 12], moved: false, split: 0.56, wipeTo: 0.56, wipeHeld: false });

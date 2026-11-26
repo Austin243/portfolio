@@ -430,7 +430,7 @@
   };
   // ---------------------------------------------------------------- in the page
   // what is going on, said under the picture; the two parts of the check come from the drawing itself
-  const NOTE = { hold0: 'Molecular dynamics on the surface', md: 'Molecular dynamics on the surface', detect: 'A new bond has persisted: the run pauses', record: 'Barrier stored', resume: 'The run resumes where it stopped', hold1: 'The run resumes where it stopped', fade: 'The run resumes where it stopped' };
+  const NOTE = { hold0: 'Molecular dynamics', md: 'Molecular dynamics', detect: 'A new bond persists and the run pauses', record: 'Barrier stored', resume: 'The run resumes', hold1: 'The run resumes', fade: 'The run resumes' };
   let R = null, live = null, chips = [], noteEl = null, t0 = 0, raf = 0, on = false, seen = true, lastDraw = 0, lastPhase = null, lastNote = null;
   const draw = (now) => {
     raf = 0;

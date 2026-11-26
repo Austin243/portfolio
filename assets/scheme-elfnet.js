@@ -50,22 +50,22 @@ window.LP_flat2 = () => {
   // ---------- page elements ----------
   const STEPS = [
     { name: 'Structure', dur: 1500,
-      text: 'ELFNet is given a crystal structure and nothing else. This is the calcium lattice of CaH<sub>6</sub> with the hydrogen left out, seen on one face of the cubic cell, with a calcium at each corner. The cell repeats in every direction.',
+      text: 'The only input to ELFNet is a crystal structure. The example is the calcium lattice of CaH<sub>6</sub> with the hydrogen removed, viewed on one face of the cubic cell with a calcium atom at each corner. The cell repeats in every direction.',
       alt: 'A square cell with a calcium atom at each of its four corners.' },
     { name: 'Density', dur: 2200,
-      text: 'First the densities of the free atoms are added up on a grid over the cell. This superposed atomic density (SAD) takes no quantum calculation, only the positions and a table of atomic densities. The grid, ' + N + ' points along each edge here, is all the network sees.',
+      text: 'The densities of the free atoms are first summed on a grid over the cell. This superposed atomic density (SAD) requires no quantum calculation, only the atomic positions and a table of atomic densities. The grid, with ' + N + ' points along each edge here, is the only input to the network.',
       alt: 'A grid over the cell, and on it a map of the superposed atomic density, highest at the calcium atoms.' },
     { name: 'Convolve', dur: 2400,
-      text: 'The network is built from 3D convolutions. Each one updates every grid point from the 5 × 5 × 5 block of points around it. Where the block reaches past the edge of the cell it wraps around to the other side, because the crystal repeats. Drag the block to an edge or a corner.',
+      text: 'The network is built from 3D convolutions. Each convolution updates every grid point from the 5 × 5 × 5 block of points around it. Where the block extends past the edge of the cell, it wraps around to the other side because the crystal is periodic. Drag the block to an edge or a corner.',
       alt: 'A block of five by five grid points at the right edge of the cell. The part that sticks out reappears at the left edge.' },
     { name: 'Stack', dur: 4400,
-      text: 'Sixteen residual blocks follow, each with two convolutions, and an attention block after every fourth. The grid keeps its size the whole way. With each block a point is influenced by points farther away; in this cell, after four blocks it has seen all of it.',
+      text: 'Sixteen residual blocks follow, each with two convolutions, with an attention block after every fourth. The grid keeps its size throughout. Each block extends the range of points that influence a given point, and in this cell four blocks are enough to cover all of it.',
       alt: 'The region that influences one grid point grows block by block, wraps around the edges, and covers the whole cell.' },
     { name: 'Read out', dur: 2200,
-      text: 'A last convolution and a sigmoid turn the 32 numbers held at each grid point into one value between 0 and 1. That is the predicted ELF, on the same grid as the input. The whole prediction is one pass through the network.',
+      text: 'A final convolution and a sigmoid convert the 32 values at each grid point into one value between 0 and 1. This is the predicted ELF on the same grid as the input. The whole prediction is a single pass through the network.',
       alt: 'The density map changes into a map of the predicted electron localization function, with a network of high values between the atoms.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is ELFNet, right of it the DFT calculation of the same lattice. Between the atoms both have the same network of high ELF, and the squares mark where the hydrogens of CaH<sub>6</sub> sit on it. Close to the nuclei the two differ; ELFNet’s training puts its weight on the space between the atoms. The network was trained on 326,009 structures from about −50 to 500 GPa, and the whole workflow is about 350 times faster than computing the ELF with VASP, on the hardware in the paper.' + (figN ? ' <a href="#fig-elfnet">The figure below</a> has the same comparison in 3D.' : ''),
+      text: 'ELFNet is on the left of the line and the DFT calculation of the same lattice is on the right. Between the atoms both show the same network of high ELF, and the squares mark the hydrogen positions of CaH<sub>6</sub> on it. The two differ close to the nuclei because the training of ELFNet weights the space between the atoms. The network was trained on 326,009 structures from about −50 to 500 GPa, and the workflow is about 350 times faster than computing the ELF with VASP on the hardware used in the paper.' + (figN ? ' <a href="#fig-elfnet">The figure below</a> has the same comparison in 3D.' : ''),
       alt: 'The same map with a line across it: the ELFNet prediction on the left and the DFT calculation on the right, and four squares at the hydrogen sites of CaH6.' }
   ];
   let net = '<span class="b" data-k="stem">Stem</span>';

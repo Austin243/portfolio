@@ -84,29 +84,29 @@
   // ---------- the page around the picture ----------
   const STEPS = [
     { name: 'Structure', dur: 1900,
-      text: 'The ELF maps where electrons sit in bonds, lone pairs and the cavities of electrides, but computing it takes the occupied orbitals from a DFT calculation. WISP predicts it for each spin from the structure alone, to sort candidates before that calculation. It is given the atoms of a crystal, where they sit, the cell, and the magnetic moment on each atom: here a piece of MnPd, with arrows for the moments, ' + D.moments[0].toFixed(2) + ' μ<sub>B</sub> on Mn and ' + D.moments[1].toFixed(2) + ' μ<sub>B</sub> on Pd. Drag to turn it.',
+      text: 'The ELF shows where electrons localize in bonds, lone pairs and the cavities of electrides, but it is normally obtained from the occupied orbitals of a DFT calculation. WISP predicts the ELF of each spin channel from the structure alone, so that candidate materials can be screened before any DFT calculation. Its input is the atoms of a crystal, their positions, the cell, and the magnetic moment on each atom. The example is MnPd, with arrows for the moments of ' + D.moments[0].toFixed(2) + ' μ<sub>B</sub> on Mn and ' + D.moments[1].toFixed(2) + ' μ<sub>B</sub> on Pd. Drag to turn it.',
       alt: 'A piece of the MnPd crystal in 3D. A long arrow through each manganese and a very short one through each palladium show the magnetic moments.' },
     { name: 'Encode', dur: 3200,
-      text: 'An equivariant network passes messages between atoms up to 5 Å apart, twice. Afterwards every atom holds a set of features that describe its surroundings. Some are plain numbers and some have a direction (<i>ℓ</i> = 0, 1, 2), so they turn when the crystal turns.',
+      text: 'An equivariant network passes messages between atoms up to 5 Å apart, in two rounds. Each atom then carries a set of features that describe its environment. Some of these features are scalars and others have a direction (<i>ℓ</i> = 0, 1, 2), so they rotate with the crystal.',
       alt: 'Dots run along the links between neighboring atoms, twice, and each atom ends up with a shell around it.' },
     { name: 'Query', dur: 1900,
-      text: 'Now I can ask about any point in the crystal, whether or not it lies on a grid. The point gathers the features of every atom within 5 Å, along with the direction to each one. Drag the point to try another place.',
+      text: 'The ELF can be requested at any point in the crystal, whether or not the point lies on a grid. The point collects the features of every atom within 5 Å together with the direction to each atom. Drag the point to move it.',
       alt: 'A query point between the atoms, a sphere of radius 5 angstrom around it, and a line from every atom inside the sphere to the point.' },
     { name: 'Decode', dur: 3600,
-      text: 'A small network combines what the point gathered into one number between 0 and 1: the ELF there. Asking at many points fills in the field. Here it is in one cell of the crystal: the map shows it on a plane through the cell, and the yellow surface is where it reaches 0.30. This is the spin-up channel.',
+      text: 'A small network combines the collected features into a single value between 0 and 1, which is the ELF at that point. Repeating this at many points gives the full field. It is shown here for one cell of the crystal, as a map on a plane through the cell and as a yellow isosurface at 0.30. This is the spin-up channel.',
       alt: 'Colored dots appear at many query points on a plane through the crystal and merge into a map of the spin-up electron localization function. The picture closes in on one cell: its outline, the map through it, and small yellow isosurfaces near the manganese atoms.' },
     { name: 'Flip spins', dur: 2000,
-      text: 'For the other spin channel, the same network runs again with every moment reversed. Reversing the moments swaps the two channels exactly, because of how the network is built, so it never has to learn that. In MnPd the spin-down channel has a large region around Pd that the spin-up channel lacks.',
+      text: 'For the other spin channel, the same network is run again with every moment reversed. The network is constructed so that reversing the moments exchanges the two channels exactly, and this symmetry therefore does not have to be learned. In MnPd the spin-down channel has a large region around Pd that is absent in the spin-up channel.',
       alt: 'The moment arrows turn over and the map and the yellow isosurface change to the spin-down channel, which has a large region around each palladium atom.' },
     { name: 'Compare', dur: 1300,
-      text: 'Left of the line is WISP, right of it the DFT calculation. MnPd was not in the training data. The mean difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and 0.011 over all 21,922 test structures. Two parts are not shown: a branch for points with no atom within 5 Å, and a second network that predicts the moments when only the positions are known.',
+      text: 'WISP is on the left of the line and the DFT calculation is on the right. MnPd was not in the training data. The mean absolute difference here is ' + ((D.mae.up + D.mae.down) / 2).toFixed(3) + ' on the scale of 0 to 1, and it is 0.011 over all 21,922 test structures. Two parts of the model are not shown, a branch for points with no atom within 5 Å and a second network that predicts the moments when only the positions are known.',
       alt: 'The same cell with a line across the picture: the WISP prediction on the left and the DFT calculation on the right. The two sides match.' },
     // two slides after the steps drawn here: the two calculations side by side, as views that turn together (fig-wisp)
     { name: 'Side by side', dur: 1500,
-      text: 'The two side by side, in full: WISP on the left, DFT on the right. Turn either view and the other follows, and switch the spin channel above them. At ELF 0.30 a large region surrounds the Pd atom in spin down and is absent in spin up, in both; that difference between the channels is what WISP has to get right.',
+      text: 'WISP (left) and DFT (right) are shown in full, side by side. Turning either view turns the other, and the spin channel can be switched above them. At ELF 0.30 a large region surrounds the Pd atom in the spin-down channel and is absent in the spin-up channel, in both WISP and DFT. WISP has to reproduce this difference between the channels.',
       slide: { fig: 'fig-wisp', pick: [0, 0] } },
     { name: 'An electride', dur: 1500,
-      text: 'Sc<sub>5</sub>Cl<sub>8</sub>, a known electride, with only its geometry as input. Besides the shells around the atoms, the ELF reaches 0.83 at the center of the cut face, 2.2 Å from the nearest atom, in WISP and in DFT alike. A high ELF alone does not prove an electride, so WISP is a first pass, for electrides and magnetic materials: it picks the structures worth a full calculation.',
+      text: 'Sc<sub>5</sub>Cl<sub>8</sub> is a known electride, and here WISP receives only its geometry. In addition to the shells around the atoms, the ELF reaches 0.83 at the center of the cut face, 2.2 Å from the nearest atom, in both WISP and DFT. A high ELF alone does not establish an electride, so WISP serves as a first screen for electrides and magnetic materials that selects structures for a full calculation.',
       slide: { fig: 'fig-wisp', pick: [1, 0] } }
   ];
   const GLYPHS = '<svg viewBox="0 0 46 16" width="46" height="16" aria-hidden="true"><g fill="#0B7A80"><circle cx="5" cy="8" r="3.2"/><ellipse cx="19" cy="4.4" rx="2.6" ry="3.4"/><ellipse cx="19" cy="11.6" rx="2.6" ry="3.4"/>' +
@@ -114,7 +114,7 @@
 
   window.LP_scheme(host, {
     label: 'How WISP works', steps: STEPS, hint: 'drag to turn', hintFrom: 0,
-    title: 'How WISP predicts where electrons localize, one step at a time.', cite: cite,
+    title: 'How WISP predicts where electrons localize.', cite: cite,
     stage: '<canvas class="gl" tabindex="0" role="img"></canvas><canvas class="ov" aria-hidden="true"></canvas>' +
       '<div class="states sch-chan" role="group" aria-label="Spin channel shown" hidden>' +
       '<button type="button" data-ch="up">Spin up · <i>m</i></button><button type="button" data-ch="down">Spin down · −<i>m</i></button><button type="button" data-diff aria-pressed="false" hidden>Difference</button></div>' +
@@ -124,7 +124,7 @@
     legend: '<span><i style="background:#A0489C"></i>Mn</span><span><i style="background:#B4B8B2"></i>Pd</span>' +
       '<span><em class="lg-arrow"></em>moment</span><span><em class="lg-ring"></em>encoded atom</span><span><em class="lg-q"></em>query point</span>' +
       '<span class="lg-elf">ELF 0<b></b>' + VMAX + '</span><span><i class="iso"></i>ELF 0.30</span><span class="lg-diff" hidden>|WISP − DFT| 0<b></b>' + DMAX + '</span>',
-    spec: '<b>MnPd</b> · mp-1902 · <i>a</i> = ' + A.toFixed(3) + ' Å · the map is the (110) plane through Mn · fields on a ' + N + '×' + N + '×' + N + ' grid. The fields, distances and counts are real; the drawings of the network at work are schematic.',
+    spec: '<b>MnPd</b> · mp-1902 · <i>a</i> = ' + A.toFixed(3) + ' Å · the map is the (110) plane through Mn · fields on a ' + N + '×' + N + '×' + N + ' grid. The fields, distances and counts are real, and the drawings of the network are schematic.',
     make: (api) => {
       const st = api.st, on = api.on, smooth = api.smooth, put = api.put, $ = api.$, $$ = api.$$, stage = api.stage, reduced = api.reduced;
       Object.assign(st, { q: Q0.slice(), flip: 0, flipTo: 0, diff: false, split: 0.62, wipeTo: 0.62, wipeHeld: false, touchedFlip: false });
