@@ -113,6 +113,10 @@
       spec: '<b>Cs<sub>2</sub>BaO<sub>3</sub></b> · Cm · 250 GPa · Cs 4, Ba 2, O 6',
       label: 'Interactive 3D view: Cs2BaO3 at 250 GPa, with each cesium between two oxygens in a nearly straight line',
       cap: 'Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa. There are no O–O pairs: the closest two oxygens are 2.56 Å apart. Each cesium sits between two oxygens in a nearly straight line, 2.06 to 2.14 Å away.' },
+    cs2bao3_elf_250gpa: { ref: 'cs-core', field: ELF(0.9), legend: el('Cs', 'Ba', 'O'),
+      spec: '<b>Cs<sub>2</sub>BaO<sub>3</sub></b> · Cm · 250 GPa · ELF from DFT · grid 48×30×36',
+      label: 'Interactive 3D view: ELF of Cs2BaO3 at 250 GPa, cut on the plane that holds both kinds of cesium',
+      cap: 'The ELF of Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa. The front face is the plane that holds both kinds of cesium (Fig. 4b of the preprint). Between a cesium and each of its two close oxygens the ELF stays at about 0.35 or above; toward the farther oxygens it drops to 0.2. At 0.40 the yellow surface joins one kind of cesium to its two oxygens, and at 0.36 it joins both.' },
 
     // reactions
     acn_m4_35gpa: { ref: 'polymerization', legend: el('C', 'H', 'N').concat([['unreacted', '#BCC2C8']]),
@@ -154,7 +158,7 @@
     { id: 'fig-cso', title: 'CsO at 150 and 250 GPa.', panels: [
       { name: 'CsO', states: [['cso_p63mmc_150gpa', 'CsO · 150 GPa'], ['cso_r3m_250gpa', 'CsO · 250 GPa']] }] },
     { id: 'fig-cs2bao3', title: 'Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa.', panels: [
-      { name: 'Cs<sub>2</sub>BaO<sub>3</sub>', states: [['cs2bao3_cm_250gpa', 'Cs₂BaO₃ · 250 GPa']] }] },
+      { name: 'Cs<sub>2</sub>BaO<sub>3</sub>', states: [['cs2bao3_cm_250gpa', 'Structure'], ['cs2bao3_elf_250gpa', 'ELF']] }] },
     { id: 'fig-tas2', title: 'A sulfur vacancy in a TaS<sub>2</sub> sheet.', panels: [
       { name: 'TaS<sub>2</sub> vacancy', states: [['tas2_vacancy', 'TaS₂ · S vacancy']] }] },
     { id: 'fig-reactions', title: 'Acetonitrile under pressure and on sodium.', panels: [
