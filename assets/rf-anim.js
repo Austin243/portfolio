@@ -3,7 +3,7 @@
    the bond watch that pauses it, the relaxation of both ends, a nudged elastic band with a climbing image, the two descents
    from the saddle that check it, and the stored barrier. Nothing in it is a ReactionFlow result. The surface and the
    computations are in the first part (the talk's model.mjs), the drawing in the second (its rf_animation.mjs); both are
-   put together by tools/make_rf_anim.py, so edit them there. A step of a paper's figure shows it with image: { anim: 'rf', bg: the surface, ... }. */
+   put together by tools/make_rf_anim.py, so edit them there. The page on my work at Oak Ridge (ornl.html) plays it in the box marked data-rf-anim. */
 (() => {
   'use strict';
   // ---------------------------------------------------------------- the model surface and the computations on it
@@ -450,7 +450,7 @@
   };
   const kick = () => { if (on && seen && !raf) raf = requestAnimationFrame(draw); };
   const api = {
-    // el: the box to draw in; pic: the step's image ({ bg: the surface, alt }); width: how wide the picture's frame is, in px
+    // el: the box to draw in; pic: { bg: the picture of the surface, alt }; width: the box's width plus 44, in px
     mount(el, pic, width) {
       // the labels were made for a slide: where the picture is shown small they are drawn larger, to stay near 11 px
       const LS = Math.max(1, Math.min(1.9, 11.5 * 1380 / (44 * Math.max(120, (width || 600) - 44))));
@@ -459,12 +459,12 @@
       const text = (x, y, t, o) => '<text x="' + x + '" y="' + y + '" font-family="Arial" ' + o + '>' + t + '</text>';
       el.innerHTML = '<svg viewBox="' + (m.x - pad) + ' ' + (m.y - pad) + ' ' + (m.w + 2 * pad) + ' ' + (m.h + 2 * pad) + '" role="img" aria-label="' + (pic.alt || '').replace(/"/g, '&quot;') + '">' +
         '<defs><clipPath id="rf-map"><rect x="' + m.x + '" y="' + m.y + '" width="' + m.w + '" height="' + m.h + '" rx="' + m.r + '"/></clipPath></defs>' +
-        '<image href="' + pic.bg + '" width="' + R.W + '" height="' + R.H + '"/>' +
-        text(350.1, f(84 + 16 * LS), 'Reactant', 'font-size="' + f(44 * LS) + '" font-weight="bold" fill="#202020"') +
-        text(1257.2, 610, 'Product', 'font-size="' + f(44 * LS) + '" font-weight="bold" text-anchor="middle" fill="#202020"') +
+        '<image href="' + pic.bg + '" width="' + R.W + '" height="' + R.H + '"/><g class="rf-live"></g>' +
+        // the labels go on top: the loop's fade back to its start draws the surface again, and would cover them
+        text(350.1, f(84 + 16 * LS), 'Reactant', 'font-size="' + f(44 * LS) + '" font-weight="bold" fill="#202020" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="5" paint-order="stroke"') +
+        text(1257.2, 610, 'Product', 'font-size="' + f(44 * LS) + '" font-weight="bold" text-anchor="middle" fill="#202020" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="5" paint-order="stroke"') +
         text(984.8, 608, 'bond forms', 'font-size="' + f(33 * LS) + '" font-style="italic" text-anchor="end" fill="#5B6B70"') +
-        '<path d="M992.8 598h22m-9 -8l9 8l-9 8" fill="none" stroke="#5B6B70" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
-        '<g class="rf-live"></g></svg>' +
+        '<path d="M992.8 598h22m-9 -8l9 8l-9 8" fill="none" stroke="#5B6B70" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
         '<ol class="rf-chips" aria-hidden="true">' + R.CHIPS.map((c) => '<li>' + c[0] + '</li>').join('') + '</ol><p class="rf-note" aria-hidden="true"></p>';
       live = el.querySelector('.rf-live'); chips = Array.from(el.querySelectorAll('.rf-chips li')); noteEl = el.querySelector('.rf-note'); lastPhase = lastNote = null;
       live.innerHTML = R.frame(0).svg;
@@ -476,4 +476,10 @@
   };
   window.LP_ANIMS = window.LP_ANIMS || {};
   window.LP_ANIMS.rf = api;
+  // a box marked data-rf-anim="<the picture of the surface>" plays it; for a visitor who asked for no motion the still inside it stays
+  document.querySelectorAll('[data-rf-anim]').forEach((el) => {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    api.mount(el, { bg: el.dataset.rfAnim, alt: el.getAttribute('aria-label') || '' }, el.clientWidth + 44);
+    api.start(); api.restart();
+  });
 })();

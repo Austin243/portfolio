@@ -4,13 +4,10 @@
   'use strict';
   const C = { H: '#DAE0E8', Na: '#B1A4C8', K: '#A122F7', U: '#7AA2AA', Mo: '#B486B0', S: '#D9B43A', Ta: '#6F8FB5', Ca: '#5E93B8',
     Mn: '#A0489C', Pd: '#B4B8B2', Sc: '#B58AC6', Cl: '#5DB870', Fe: '#C4762B', I: '#7D3AB8', Cs: '#2FA39A', Ba: '#8B6BB8', O: '#D6402E',
-    C: '#3A444F', N: '#3157BB', Li: '#86E074' };
+    C: '#3A444F', N: '#3157BB' };
   const el = (...names) => names.map((n) => [n, C[n]]);
   const ELF = (max) => ({ name: 'ELF', max: max || 1, unit: '' });
   const RHO = { name: '', max: 3, unit: '⟨ρ⟩' };
-  const PATH = el('C', 'H', 'N').concat([['unreacted', '#BCC2C8']]);
-  const SHELL = el('C', 'N', 'H', 'O').concat([['C of the alcohol', '#A2937F'], ['farther molecules', '#BCC2C8']]);
-  const SEARCH = 'a fine-tuned UMA-S potential, 0 GPa';
 
   window.LP_SCENES = {
     // machine learning
@@ -119,69 +116,7 @@
     cs2bao3_elf_250gpa: { ref: 'cs-core', field: ELF(0.9), legend: el('Cs', 'Ba', 'O'),
       spec: '<b>Cs<sub>2</sub>BaO<sub>3</sub></b> · Cm · 250 GPa · ELF from DFT · grid 48×30×36',
       label: 'Interactive 3D view: ELF of Cs2BaO3 at 250 GPa, cut on the plane that holds both kinds of cesium',
-      cap: 'The ELF of Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa. The front face is the plane that holds both kinds of cesium (Fig. 4b of the preprint). Between a cesium and each of its two close oxygens the ELF stays at about 0.35 or above; toward the farther oxygens it drops to 0.2. At 0.40 the yellow surface joins one kind of cesium to its two oxygens, and at 0.36 it joins both.' },
-
-    // reactions (work in progress at Oak Ridge)
-    acn_path_m0: { legend: el('C', 'H', 'N'),
-      spec: '<b>CH<sub>3</sub>CN</b> · β phase · 35 GPa · C 96, H 144, N 48 · the start of the path',
-      label: 'Interactive 3D view: crystalline acetonitrile at 35 GPa before any molecule has reacted',
-      cap: 'Crystalline acetonitrile at 35 GPa, 48 molecules in the cell, at the start of the path. No molecule has reacted yet.' },
-    acn_path_m1: { legend: PATH,
-      spec: '<b>CH<sub>3</sub>CN</b> · 35 GPa · C 96, H 144, N 48 · dimer',
-      label: 'Interactive 3D view: crystalline acetonitrile at 35 GPa with two molecules joined',
-      cap: 'Two molecules have joined, drawn in full color; the rest are faded. This first bond is the hardest step of the path: 2.66 eV, or 2.67 eV with DFT.' },
-    acn_path_m3: { legend: PATH,
-      spec: '<b>CH<sub>3</sub>CN</b> · 35 GPa · C 96, H 144, N 48 · trimer',
-      label: 'Interactive 3D view: crystalline acetonitrile at 35 GPa with three molecules joined',
-      cap: 'A third molecule has joined. This addition costs 1.40 eV.' },
-    acn_path_m7: { legend: PATH,
-      spec: '<b>CH<sub>3</sub>CN</b> · 35 GPa · C 96, H 144, N 48 · tetramer',
-      label: 'Interactive 3D view: crystalline acetonitrile at 35 GPa with four molecules joined',
-      cap: 'Four molecules joined. The fourth adds as a branch over 0.73 eV, after a rearrangement that costs 2.23 eV.' },
-    acn_path_m9: { legend: PATH,
-      spec: '<b>CH<sub>3</sub>CN</b> · 35 GPa · C 96, H 144, N 48 · pentamer',
-      label: 'Interactive 3D view: crystalline acetonitrile at 35 GPa with five molecules joined',
-      cap: 'Five molecules joined. The last one adds through an N–H group that an earlier hydrogen transfer left in the chain, over only 0.68 eV (0.66 eV with DFT). This cell lies 1.37 eV below the start.' },
-    acn_meoh_25: { legend: SHELL,
-      spec: '<b>7 CH<sub>3</sub>CN : 3 CH<sub>3</sub>OH</b> · cell of 14 + 6 molecules · lowest of 2,448 packings · ' + SEARCH + ' · 55 meV per molecule above the pure crystals',
-      label: 'Interactive 3D view: one acetonitrile and its twelve nearest molecules in a 7 to 3 crystal of acetonitrile and methanol',
-      cap: 'Seven acetonitrile to three methanol, about 25% methanol by volume. One acetonitrile is shown with its twelve nearest molecules. Only two of them are methanol, and five of the six methanols in the cell hydrogen-bond to each other, not to a nitrile.' },
-    acn_meoh_50: { legend: SHELL,
-      spec: '<b>CH<sub>3</sub>CN : CH<sub>3</sub>OH</b>, 1 : 1 · cell of 2 + 2 molecules · lowest of 2,448 packings · ' + SEARCH + ' · 42 meV per molecule above the pure crystals',
-      label: 'Interactive 3D view: one acetonitrile and its twelve nearest molecules in a 1 to 1 crystal of acetonitrile and methanol',
-      cap: 'Acetonitrile and methanol, one to one. Seven of the twelve nearest molecules are methanol, and every methanol in the cell points its O–H at a nitrile nitrogen (thin lines).' },
-    acn_meoh_75: { legend: SHELL,
-      spec: '<b>CH<sub>3</sub>CN : 4 CH<sub>3</sub>OH</b> · cell of 1 + 4 molecules · lowest of 2,448 packings · ' + SEARCH + ' · 36 meV per molecule above the pure crystals',
-      label: 'Interactive 3D view: one acetonitrile and its twelve nearest molecules in a 1 to 4 crystal of acetonitrile and methanol',
-      cap: 'One acetonitrile to four methanol, about 75% methanol by volume. Eight of the twelve nearest molecules are methanol, but their O–H groups bond to each other in chains (thin lines), and none reaches the nitrile.' },
-    acn_ipa_25: { legend: SHELL,
-      spec: '<b>13 CH<sub>3</sub>CN : 3 (CH<sub>3</sub>)<sub>2</sub>CHOH</b> · cell of 13 + 3 molecules · lowest of 1,224 packings so far · ' + SEARCH + ' · 76 meV per molecule above the pure crystals',
-      label: 'Interactive 3D view: one acetonitrile and its twelve nearest molecules in a 13 to 3 crystal of acetonitrile and isopropanol',
-      cap: 'Thirteen acetonitrile to three isopropanol, about 25% isopropanol by volume. Nine of the thirteen acetonitriles in the cell have no isopropanol among their twelve nearest molecules, and this is one of them. This search is half finished.' },
-    acn_ipa_50: { legend: SHELL,
-      spec: '<b>CH<sub>3</sub>CN : (CH<sub>3</sub>)<sub>2</sub>CHOH</b>, 1 : 1 · cell of 2 + 2 molecules · lowest of 2,448 packings · ' + SEARCH + ' · 60 meV per molecule above the pure crystals',
-      label: 'Interactive 3D view: one acetonitrile and its twelve nearest molecules in a 1 to 1 crystal of acetonitrile and isopropanol',
-      cap: 'Acetonitrile and isopropanol, one to one. Seven of the twelve nearest molecules are isopropanol, and here too every O–H points at a nitrile nitrogen (thin lines).' },
-    acn_ipa_75: { legend: SHELL,
-      spec: '<b>CH<sub>3</sub>CN : 2 (CH<sub>3</sub>)<sub>2</sub>CHOH</b> · cell of 1 + 2 molecules · lowest of 2,448 packings · ' + SEARCH + ' · 64 meV per molecule above the pure crystals',
-      label: 'Interactive 3D view: one acetonitrile and its twelve nearest molecules in a 1 to 2 crystal of acetonitrile and isopropanol',
-      cap: 'One acetonitrile to two isopropanol, about 75% isopropanol by volume. Ten of the twelve nearest molecules are isopropanol, and their O–H groups bond to each other (thin lines), not to the nitrile.' },
-    li100_aminopyrimidine: { legend: el('C', 'N', 'H', 'Li'),
-      spec: '<b>Li(100)</b> · 4-amino-2,6-dimethylpyrimidine · C 6, N 3, H 9',
-      label: 'Interactive 3D view: 4-amino-2,6-dimethylpyrimidine on a lithium (100) surface',
-      cap: 'The same ring on lithium. Lithium needs the largest steps of the three metals, 33.7 kcal/mol on its route to this ring. In our kinetic model it couples two molecules instead and makes no ring at room temperature.' },
-    na100_aminopyrimidine: { legend: el('C', 'N', 'H', 'Na'),
-      spec: '<b>Na(100)</b> · 4-amino-2,6-dimethylpyrimidine · C 6, N 3, H 9',
-      label: 'Interactive 3D view: 4-amino-2,6-dimethylpyrimidine on a sodium (100) surface',
-      cap: '4-Amino-2,6-dimethylpyrimidine on a sodium (100) surface: three acetonitrile molecules joined into one ring. This is the product seen in experiment. Ten steps lead to it from the film of acetonitrile, none above 12.3 kcal/mol until the last hydrogen transfer, at 22.2.' },
-    k100_aminopyrimidine: { legend: el('C', 'N', 'H', 'K'),
-      spec: '<b>K(100)</b> · 4-amino-2,6-dimethylpyrimidine · C 6, N 3, H 9',
-      label: 'Interactive 3D view: 4-amino-2,6-dimethylpyrimidine on a potassium (100) surface',
-      cap: 'The same ring on potassium. In our kinetic model potassium does not get this far at room temperature: it takes the same first steps as sodium and stops at an open-chain dimer.' },
-    na100_triazine: { legend: el('C', 'N', 'H', 'Na'),
-      spec: '<b>Na(100)</b> · 2,4,6-trimethyl-1,3,5-triazine · C 6, N 3, H 9',
-      label: 'Interactive 3D view: trimethyltriazine on a sodium (100) surface',
-      cap: 'The triazine, the other ring that three acetonitrile molecules can close into, on sodium. Its largest step there is 11.3 kcal/mol.' }
+      cap: 'The ELF of Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa. The front face is the plane that holds both kinds of cesium (Fig. 4b of the preprint). Between a cesium and each of its two close oxygens the ELF stays at about 0.35 or above; toward the farther oxygens it drops to 0.2. At 0.40 the yellow surface joins one kind of cesium to its two oxygens, and at 0.36 it joins both.' }
   };
 
   // A figure is a row of panels (a, b, c); a panel can hold several states of the same system. The figures are numbered
@@ -205,12 +140,6 @@
       caps: {
         cah6_ca_elfnet: 'The calcium lattice of CaH<sub>6</sub>, with the hydrogen left out of the calculation. ELFNet predicts its ELF from superposed atomic densities; the other view is the DFT calculation. In both, the yellow surface encloses the sites where the hydrogens sit in CaH<sub>6</sub>, drawn as small spheres.' },
       specs: { cah6_ca_elfnet: 'Ca lattice of <b>CaH<sub>6</sub></b> · ELFNet on a 32×32×32 grid, DFT on 28×28×28' } },
-    // my work at Oak Ridge: slides at the end of its step figure
-    { id: 'fig-reactions', title: 'Acetonitrile in three surroundings.', panels: [
-      { name: 'Under pressure', states: [['acn_path_m0', 'Start'], ['acn_path_m1', 'Dimer'], ['acn_path_m3', 'Trimer'], ['acn_path_m7', 'Tetramer'], ['acn_path_m9', 'Pentamer']] },
-      { name: 'With methanol', states: [['acn_meoh_25', '7 : 3'], ['acn_meoh_50', '1 : 1'], ['acn_meoh_75', '1 : 4']] },
-      { name: 'With isopropanol', states: [['acn_ipa_25', '13 : 3'], ['acn_ipa_50', '1 : 1'], ['acn_ipa_75', '1 : 2']] },
-      { name: 'On Li, Na and K', states: [['li100_aminopyrimidine', 'Li'], ['na100_aminopyrimidine', 'Na'], ['k100_aminopyrimidine', 'K'], ['na100_triazine', 'Triazine on Na']] }] },
     // the other projects: a preprint and work in progress
     { id: 'fig-cso', title: 'CsO at 150 and 250 GPa.', panels: [
       { name: 'CsO', states: [['cso_p63mmc_150gpa', 'CsO · 150 GPa'], ['cso_r3m_250gpa', 'CsO · 250 GPa']] }] },
