@@ -481,7 +481,7 @@ table.bt.two td:nth-child(2) { width: auto; color: var(--ink-2); white-space: no
 .plates h3 { margin: 0 0 7px; font: 500 20px/1.22 var(--serif); font-optical-sizing: auto; letter-spacing: -.006em; color: var(--ink); text-wrap: balance; }
 .plates h3 b { margin-right: 8px; font: 700 15px/1 var(--sans); }
 .plates p { margin: 0 0 11px; text-wrap: pretty; }
-.plates + .ornl-list { margin-top: 48px; }
+.plates + .ornl-list, .plates + .ornl-decks { margin-top: 48px; }
 
 /* a dated entry with its photos beside it: the news page and the outreach page */
 .log { border-top: 1px solid var(--strong); }
