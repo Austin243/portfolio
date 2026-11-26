@@ -376,6 +376,15 @@ h1 { margin: 0 0 0 -3px; font: 400 clamp(54px, 6.5vw, 94px)/.95 var(--serif); fo
 .sch-slide .fig-bar { margin-bottom: 8px; }
 .sch-slide .pair { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .sch-slide .pair .stage { height: auto; min-height: 0; aspect-ratio: 1.24; }
+/* a figure with one view as a slide: the picture fills the slide, with the caption of the state shown under it */
+.sch-slide .fig:not(.wide) { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.sch-slide .fig:not(.wide) .fig-main { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+.sch-slide .fig:not(.wide) .stage { flex: 1 1 0; min-height: 0; aspect-ratio: auto; }
+.sch-slide .fig:not(.wide) .fig-side { padding: 8px 2px 0; }
+.sch-slide .fig:not(.wide) .fig-title, .sch-slide .fig:not(.wide) .legend, .sch-slide .fig:not(.wide) .iso-row, .sch-slide .fig:not(.wide) .spec { display: none; }
+.sch-slide .fig:not(.wide) .cap { margin: 0; max-width: none; font-size: 12.5px; line-height: 1.45; }
+.sch-slide .states { flex-direction: row; max-width: calc(100% - 24px); overflow-x: auto; scrollbar-width: none; }
+.sch-slide .states button { flex: none; }
 .sch-wrap.slid .sch-stage > :not(.sch-slide), .sch-wrap.slid .sch-info { visibility: hidden; }
 @media (prefers-reduced-motion: reduce) { .sch-slide.in { animation: none; } }
 @container (max-width: 560px) {
