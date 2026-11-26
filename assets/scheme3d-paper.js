@@ -142,7 +142,7 @@ window.LP_paperScheme = (def) => {
   // ---------- the page around the picture ----------
   const stageHTML = '<canvas class="gl" tabindex="0" role="img"></canvas><canvas class="ov" aria-hidden="true"></canvas>' +
     '<div class="pl-labels" aria-hidden="true"></div>' +
-    '<figure class="pl-img" hidden><img alt="" decoding="async"><figcaption></figcaption></figure>';
+    '<figure class="pl-img" hidden><img alt="" decoding="async"><div class="pl-anim" hidden></div><figcaption></figcaption></figure>';
   const api0 = window.LP_scheme(host, {
     label: def.label, steps: STEPS, hint: 'drag to turn', hintFrom: 0,
     title: def.title, cite: cite, stage: stageHTML, legend: def.legend, spec: def.spec,
@@ -150,6 +150,9 @@ window.LP_paperScheme = (def) => {
       const st = api.st, $ = api.$, stage = api.stage, reduced = api.reduced;
       let cv = $('canvas.gl'), saved = null, eng = null, from = -1, cur = -1, flat = !gl3d, cam = null;
       const ov = $('canvas.ov'), labelsEl = $('.pl-labels'), figEl = $('.pl-img'), figImg = $('img', figEl), figCap = $('figcaption', figEl);
+      const animEl = $('.pl-anim', figEl); let playing = null;
+      // a picture with fine print (image.zoom) opens at full size in a new tab when it is clicked
+      figImg.addEventListener('click', () => { if (figImg.classList.contains('zoom')) window.open(figImg.currentSrc || figImg.src, '_blank', 'noopener'); });
       host.lpPaper = st;   // for checking the page from the console
       let labelEls = [];
 
@@ -326,7 +329,14 @@ window.LP_paperScheme = (def) => {
         if (img) a = flat ? 1 : (A && A.image === B.image ? 1 : sm((t - 0.1) / 0.35));
         else if (A && A.image) a = 1 - sm(t / 0.3);
         const show = img || (A && A.image);
-        if (show && figImg.getAttribute('src') !== show.src) { figImg.src = show.src; figImg.alt = show.alt || ''; figCap.innerHTML = show.caption || ''; }
+        if (show && figImg.getAttribute('src') !== show.src) { figImg.src = show.src; figImg.alt = show.alt || ''; figCap.innerHTML = show.caption || ''; figImg.classList.toggle('zoom', !!show.zoom); }
+        // a picture can be an animation (image.anim names it, see rf-anim.js): it plays in place of the still while its step is
+        // shown, and the still stays for visitors who asked for no motion
+        const an = show && show.anim && !reduced && !flat && window.LP_ANIMS ? window.LP_ANIMS[show.anim] : null;
+        if (an && animEl.dataset.anim !== show.anim) { animEl.dataset.anim = show.anim; an.mount(animEl, show, stage.clientWidth); }
+        figImg.hidden = !!an; animEl.hidden = !an;
+        const play = an && img === show && a > 0.5 ? an : null;
+        if (play !== playing) { if (playing) playing.stop(); playing = play; if (playing) playing.start(); }
         figEl.hidden = !(a > 0.01); figEl.style.opacity = String(a);
         stage.classList.toggle('pl-covered', a > 0.5);   // nothing to turn while a figure of the paper covers the picture
       };
@@ -340,6 +350,8 @@ window.LP_paperScheme = (def) => {
       const enter = (k) => {
         if (k === cur) { from = cur >= 0 && from !== k ? from : -1; }
         else { from = cur; cur = k; }
+        const pic = (shotOf(k) || {}).image;
+        if (pic && pic.anim && window.LP_ANIMS && window.LP_ANIMS[pic.anim]) window.LP_ANIMS[pic.anim].restart();   // an animation starts over with its step
         if (!eng) return;
         const A = shotOf(from), B = shotOf(k), f = frameOf(B);
         if (!f) return;
