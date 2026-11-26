@@ -1,13 +1,14 @@
 /* The steps of each paper, for its step-by-step figure (assets/scheme3d-paper.js), from the papers themselves. A step's
    shot says what the picture shows at the end of the step: a structure (a scene of the 3D figures, or one made from it
    in `derive`), which atoms are shown or faded, whether its isosurface and colored cuts are on, a turn of the view,
-   labels on points of the structure, or a figure of the paper laid over the picture. Newest paper first. */
+   labels on points of the structure, or a figure of the paper laid over the picture. Newest paper first, then the
+   preprints, whose last step is a slide with the 3D figure of their card. */
 (() => {
   'use strict';
   if (!window.LP_paperScheme) return;
   const sw = (c, name) => '<span><i style="background:' + c + '"></i>' + name + '</span>';
   const iso = (name) => '<span><i class="iso"></i>' + name + '</span>';
-  const C = { H: '#DAE0E8', Na: '#B1A4C8', K: '#A122F7', U: '#7AA2AA', Mo: '#B486B0', S: '#D9B43A', Fe: '#C4762B', I: '#7D3AB8' };
+  const C = { H: '#DAE0E8', Na: '#B1A4C8', K: '#A122F7', U: '#7AA2AA', Mo: '#B486B0', S: '#D9B43A', Fe: '#C4762B', I: '#7D3AB8', Cs: '#2FA39A', Ba: '#8B6BB8', O: '#D6402E' };
   const none = ['-'];   // a shot with no atoms drawn: the paper's figure covers the picture
 
   // ---------- solid hydrogen (J. Phys. Chem. Lett. 2026) ----------
@@ -191,6 +192,85 @@
         text: 'Hydrogen also binds at the vacancy. ΔG for hydrogen adsorption at the vacancy lies between −0.2 and 0.25 eV and can be tuned by adding or removing a small amount of charge, as doping or an electric field would. MoS<sub>2</sub> reaches ΔG = 0 with 0.07 electrons removed, WS<sub>2</sub> with 0.21 and WSe<sub>2</sub> with 0.15, whereas NbS<sub>2</sub> changes very little. Because vacancy concentrations can already be controlled in experiments, this is a route to electrides of tunable strength from a common 2D material, and the vacancy electrons could help catalyze hydrogen evolution.',
         alt: 'Figure 4 of the paper: the free energy of hydrogen adsorption at the vacancy as charge is added or removed.',
         shot: { scene: 'mos2_vacancy', only: none, cell: false, image: { src: 'assets/img/steps/tmdc-her.webp', alt: 'Free energy of hydrogen adsorption at the vacancy against added or removed charge, and charge-density differences', caption: 'Fig. 4 of the paper' } } }
+    ]
+  });
+
+  // ---------- Cs polyoxides (arXiv 2110.07865, v2 of 2026) ----------
+  const PAIR = [2.0801, 1.2009, 7.4978];   // the middle of one O-O pair of P6_3/mmc CsO, facing the viewer
+  const TURN = { rot: [[1, 0, -18], [0, 1, -30], [1, 0, 18]] };   // P6_3/mmc CsO turned 30° about c, so that its 2 × 2 block of cells looks compact
+  const CS2_R3M = [1, 4, 8, 14, 17, 21, 27, 32, 35, 39, 45, 48, 52, 58, 63, 68, 73];   // the Cs2 atoms of R-3m CsO (no O within 2.05 Å)
+  const CS2_PMMN = [2, 3, 12, 13, 22, 23, 31, 36, 39, 42, 44, 48, 49, 58, 59, 68, 69, 77, 82, 85, 88, 90];   // the Cs2 atoms of Pmmn Cs2O3
+  window.LP_paperScheme({
+    id: 'scheme-cso', cite: 'cs-polyoxides', label: 'The Cs polyoxide preprint, step by step',
+    title: 'How cesium oxides lose their O–O bonds under pressure as the Cs 5p core electrons begin to bond with oxygen.',
+    legend: sw(C.Cs, 'Cs') + sw(C.O, 'O'),
+    spec: '<b>CsO</b> (P6<sub>3</sub>/mmc at 150 GPa, R-3m at 250 GPa) and <b>Cs<sub>2</sub>O<sub>3</sub></b> (Pmmn, 400 GPa) from the structures behind the preprint · the search in step 5 is drawn schematically.',
+    fallback: { src: 'assets/img/cards/cs-polyoxides.webp', alt: 'Crystal structure of CsO at 150 GPa, with its O–O pairs' },
+    steps: [
+      { name: 'Why', dur: 2200, note: 'CsO · P6<sub>3</sub>/mmc · 150 GPa',
+        text: 'At high pressure the core electrons of an element can take part in bonding. Calculations predicted more than a decade ago that cesium forms CsF<sub>n</sub> compounds with excess fluorine by using its 5p core electrons, but liquid F<sub>2</sub> damages the diamond anvil cell, and no experiment has confirmed them. We therefore asked whether solid cesium oxides could show the same chemistry.',
+        alt: 'The P63/mmc structure of CsO at 150 GPa, with O–O pairs between the cesium atoms.',
+        shot: { scene: 'cso_p63mmc_150gpa', view: TURN } },
+      { name: 'Peroxide', dur: 1800, note: 'CsO · P6<sub>3</sub>/mmc · a peroxide',
+        text: 'We searched for the stable cesium oxides from 0 to 500 GPa, and CsO is stable over the whole range. Up to 221 GPa it is a peroxide, with O<sub>2</sub><sup>2−</sup> pairs between the cesium atoms. The Cs 5p states overlap with the O 2p states but do not bond with them, and cesium keeps its usual oxidation state of +1.',
+        alt: 'The same structure of CsO, with one O–O pair marked as a peroxide ion.',
+        shot: { scene: 'cso_p63mmc_150gpa', view: TURN, labels: [{ at: PAIR, text: 'an O<sub>2</sub><sup>2−</sup> pair', side: 'right' }] } },
+      { name: '221 GPa', dur: 2400, note: 'CsO · R-3m · 250 GPa',
+        text: 'At 221 GPa CsO transforms into an R-3m structure that has no O–O bonds. Half of its cesium atoms (Cs1) bind two oxygen atoms in linear [CsO<sub>2</sub>]<sup>−</sup> units, whereas the other half (Cs2) have their oxygen neighbors farther away.',
+        alt: 'The O–O pairs come apart and the atoms rearrange into R-3m CsO, in which each Cs1 atom sits between two oxygens in a straight line.',
+        shot: { scene: 'cso_r3m_250gpa', labels: [{ atom: 41, text: 'a linear [CsO<sub>2</sub>]<sup>−</sup> unit', side: 'right' }] } },
+      { name: 'Core electrons', dur: 2000, note: 'R-3m CsO · the Cs2 atoms faded',
+        text: 'In this structure electrons move from the Cs 5p states into the O 2p states, and Cs1 reaches an oxidation state above +1. The ELF and the bonding analysis show covalent Cs1–O bonds about four times as strong as the Cs2–O bonds. Pressure causes this by raising the energy of the Cs 5p orbitals above that of the O 2p orbitals, which happens at 318 GPa in a He matrix model.',
+        alt: 'R-3m CsO with the Cs2 atoms faded, leaving the linear O–Cs1–O units.',
+        shot: { scene: 'cso_r3m_250gpa', fade: CS2_R3M, labels: [{ atom: 41, text: 'Cs1', side: 'right' }] } },
+      { name: 'Above 300 GPa', dur: 3000, note: 'Cs<sub>2</sub>O<sub>3</sub> · Pmmn · 400 GPa',
+        text: 'Above about 300 GPa the stable compounds change. The superoxide CsO<sub>2</sub> becomes unstable, while CsO<sub>3</sub> and Cs<sub>2</sub>O<sub>3</sub>, shown here at 400 GPa, become stable without any O–O bonds. Pressure usually favors oxides with stronger O–O bonds, such as peroxides and superoxides, whereas in the cesium oxides these bonds disappear.',
+        alt: 'Cesium and oxygen atoms move around and settle into the Pmmn structure of Cs2O3 at 400 GPa.',
+        shot: { scene: 'cs2o3_pmmn_400gpa', search: true } },
+      { name: 'Cs₂O₃', dur: 2000, note: 'Cs<sub>2</sub>O<sub>3</sub> · the Cs2 atoms faded',
+        text: 'The two cesium sites of Cs<sub>2</sub>O<sub>3</sub> differ strongly, with Bader charges of 2.17 on Cs1 and 0.87 on Cs2. Cs1 forms strong covalent bonds with oxygen in buckled sheets, and Cs2 sits between the sheets, so the compound can be written as Cs<sup>+</sup>(CsO<sub>3</sub>)<sup>−</sup>. With its 5p electrons in bonds, cesium here behaves as a p-block element.',
+        alt: 'Cs2O3 with the Cs2 atoms faded, leaving the buckled sheets of Cs1 and oxygen.',
+        shot: { scene: 'cs2o3_pmmn_400gpa', fade: CS2_PMMN, labels: [{ atom: 57, text: 'Cs1, in a Cs–O sheet', side: 'right' }, { atom: 68, text: 'Cs2, between the sheets', side: 'left' }] } },
+      // a slide after the steps drawn here: the 3D figure of CsO at 150 and 250 GPa (fig-cso)
+      { name: 'In the lab', dur: 1500,
+        text: 'CsO is the most promising candidate for an experiment. It can be loaded into a diamond anvil cell as a solid, and because its composition does not change, nothing has to react inside the cell. The transformation near 221 GPa should show in X-ray diffraction, in IR and Raman spectra as the O–O pairs disappear, and in the Cs L<sub>3</sub>-edge XANES. It needs a higher pressure than the fluorides but no F<sub>2</sub>, which makes core reactivity testable in experiment.',
+        slide: { fig: 'fig-cso', pick: [0, 0] } }
+    ]
+  });
+
+  // ---------- Cs-Ba-O (arXiv 2611.06009) ----------
+  const O2 = [6.8986, 1.6569, 1.8198];   // the middle of one O2 unit of CsBaO4, facing the viewer
+  window.LP_paperScheme({
+    id: 'scheme-csbao', cite: 'cs-core', label: 'The Cs–Ba–O preprint, step by step',
+    title: 'How Cs<sub>2</sub>O and BaO<sub>2</sub> could serve as solid starting materials for Cs core reactivity under pressure.',
+    legend: sw(C.Cs, 'Cs') + sw(C.Ba, 'Ba') + sw(C.O, 'O') + iso('ELF'),
+    spec: '<b>CsBaO<sub>4</sub></b> and <b>Cs<sub>2</sub>BaO<sub>3</sub></b> (Cm, with its ELF) from the structures behind the preprint, and <b>CsO</b> (R-3m), all at 250 GPa · the search in step 2 is drawn schematically.',
+    fallback: { src: 'assets/img/cards/cs-core.webp', alt: 'Crystal structure of Cs2BaO3 at 250 GPa, with each cesium between two oxygens' },
+    steps: [
+      { name: 'Why', dur: 2200, note: 'CsO · R-3m · 250 GPa',
+        text: 'CsO, a peroxide at ambient pressure, is predicted to transform near 221 GPa into a phase with nearly linear O–Cs–O units, in which the Cs 5p core electrons bond with oxygen. We asked whether a mixture of two solids, Cs<sub>2</sub>O and the commercially available peroxide BaO<sub>2</sub>, could serve as the starting material instead. A 1:1 mixture has the composition of Cs<sub>2</sub>BaO<sub>3</sub>, but it could also form CsO and BaO.',
+        alt: 'R-3m CsO at 250 GPa, in which cesium atoms sit between two oxygens in straight O–Cs–O units.',
+        shot: { scene: 'cso_r3m_250gpa', labels: [{ atom: 41, text: 'an O–Cs–O unit of CsO', side: 'right' }] } },
+      { name: 'Search', dur: 3000, note: 'CsBaO<sub>4</sub> · Cm · 250 GPa',
+        text: 'We searched for Cs–Ba–O compounds at 150 and 250 GPa and built their convex hulls. Three ternaries are stable at 150 GPa, and CsBaO<sub>4</sub>, shown here, joins them at 250 GPa. Cs<sub>2</sub>BaO<sub>3</sub> is stable at neither pressure, although it comes closer to the hull as the pressure rises.',
+        alt: 'Cesium, barium and oxygen atoms move around and settle into the Cm structure of CsBaO4 at 250 GPa.',
+        shot: { scene: 'csbao4_cm_250gpa', search: true } },
+      { name: 'O₂ units', dur: 1800, note: 'CsBaO<sub>4</sub> · O<sub>2</sub> units',
+        text: 'CsBa<sub>3</sub>O<sub>8</sub> and CsBaO<sub>4</sub>, the stable ternaries richest in oxygen, keep O<sub>2</sub> units. Their Cs 5p electrons take only a small part in bonding, as in the superoxide CsO<sub>2</sub>, and their O<sub>2</sub> units carry more antibonding electrons than those of CsO<sub>2</sub>, which makes them more peroxide-like.',
+        alt: 'CsBaO4 at 250 GPa, with one of its O2 units marked.',
+        shot: { scene: 'csbao4_cm_250gpa', labels: [{ at: O2, text: 'an O<sub>2</sub> unit', side: 'right' }] } },
+      { name: 'Cs₂BaO₃', dur: 2400, note: 'Cs<sub>2</sub>BaO<sub>3</sub> · Cm · 250 GPa',
+        text: 'Cs<sub>2</sub>BaO<sub>3</sub> has no O<sub>2</sub> units, and both of its cesium sites sit in nearly linear O–Cs–O units, with shorter Cs–O contacts at Cs(1), as in core-reactive CsO. Its empty states near 1 eV above the Fermi level also have a large Cs 5p and O 2p component, like those of CsO.',
+        alt: 'Cs2BaO3 at 250 GPa, with straight O–Cs–O units at both cesium sites, Cs(1) and Cs(2).',
+        shot: { scene: 'cs2bao3_cm_250gpa', labels: [{ atom: 48, text: 'Cs(1)', side: 'top' }, { atom: 49, text: 'Cs(2)', side: 'left' }] } },
+      { name: 'ELF', dur: 2400, note: 'ELF from DFT · isosurface 0.40',
+        text: 'In the ELF of Cs<sub>2</sub>BaO<sub>3</sub> the electrons localize along the O–Cs–O units, more strongly at Cs(1). The bonding analysis gives it the strongest Cs 5p–O 2p bonds among the ternaries, although weaker at Cs(1) than in CsO. Cs<sub>2</sub>BaO<sub>3</sub> is metastable, however, and would decompose into CsO and BaO.',
+        alt: 'Cs2BaO3 with a yellow ELF isosurface and colored cuts, with localization along the O–Cs–O units.',
+        shot: { scene: 'cs2bao3_elf_250gpa', iso: true, sections: true, labels: [{ atom: 48, text: 'Cs(1)', side: 'top' }, { atom: 49, text: 'Cs(2)', side: 'left' }] } },
+      // a slide after the steps drawn here: the 3D figure of Cs2BaO3 with its structure and ELF (fig-cs2bao3)
+      { name: 'Precursors', dur: 1500,
+        text: 'Cs<sub>2</sub>O and BaO<sub>2</sub> can react to form Cs<sub>2</sub>BaO<sub>3</sub>, and its decomposition into CsO and BaO lowers the enthalpy further. Because CsO at 250 GPa is the R-3m phase whose 5p electrons bond with oxygen, the mixture is a solid starting point for core reactivity even if the ternary does not form. Calculated X-ray diffraction patterns can tell these phases apart in a diamond anvil cell, and Cs L<sub>3</sub>-edge XANES spectra add information on the cesium environment.',
+        slide: { fig: 'fig-cs2bao3', pick: [0, 0] } }
     ]
   });
 })();

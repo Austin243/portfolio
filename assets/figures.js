@@ -140,11 +140,12 @@
       caps: {
         cah6_ca_elfnet: 'The calcium lattice of CaH<sub>6</sub>, with the hydrogen left out of the calculation. ELFNet predicts its ELF from superposed atomic densities, and the other view is the DFT calculation. In both, the yellow isosurface encloses the hydrogen sites of CaH<sub>6</sub>, which are drawn as small spheres.' },
       specs: { cah6_ca_elfnet: 'Ca lattice of <b>CaH<sub>6</sub></b> · ELFNet on a 32×32×32 grid, DFT on 28×28×28' } },
-    // the other projects: a preprint and work in progress
+    // the two preprints: each is a slide at the end of its step figure (assets/paper-steps.js)
     { id: 'fig-cso', title: 'CsO at 150 and 250 GPa.', panels: [
       { name: 'CsO', states: [['cso_p63mmc_150gpa', 'CsO · 150 GPa'], ['cso_r3m_250gpa', 'CsO · 250 GPa']] }] },
     { id: 'fig-cs2bao3', title: 'Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa.', panels: [
       { name: 'Cs<sub>2</sub>BaO<sub>3</sub>', states: [['cs2bao3_cm_250gpa', 'Structure'], ['cs2bao3_elf_250gpa', 'ELF']] }] },
+    // the other projects: work in progress
     { id: 'fig-tas2', title: 'A sulfur vacancy in a TaS<sub>2</sub> sheet.', panels: [
       { name: 'TaS<sub>2</sub> vacancy', states: [['tas2_vacancy', 'TaS₂ · S vacancy']] }] }
   ];

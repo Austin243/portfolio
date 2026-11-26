@@ -3,14 +3,16 @@
    cuts, and the picture moves from one step's structure to the next: atoms the two have in common stay, the rest shrink
    away or grow in. A step can also scatter the atoms and let them settle into place (a structure search, drawn
    schematically), put labels on points of the structure, or show a figure of the paper in place of the 3D picture.
-   The steps of each paper are in assets/paper-steps.js. Without WebGL the steps show the paper's own figure instead. */
+   After the steps drawn here, a step can be a slide that shows a 3D figure of the page (see scheme-base.js).
+   The steps of each paper are in assets/paper-steps.js. Without WebGL the steps show the paper's own figure instead,
+   and the slides are left out, their figures staying in the card as they do for WISP and ELFNet. */
 window.LP_paperScheme = (def) => {
   'use strict';
   const host = document.getElementById(def.id);
   if (!host || !window.LP_scheme) return null;
-  const gl3d = typeof Stage3D !== 'undefined' && typeof WebGLRenderingContext !== 'undefined';
+  const gl3d = !def.flat && typeof Stage3D !== 'undefined' && typeof WebGLRenderingContext !== 'undefined';
   host.dataset.view = gl3d ? '3d' : 'flat';
-  const STEPS = def.steps;
+  const STEPS = gl3d ? def.steps : def.steps.filter((s) => !s.slide);
   const cite = window.LP_CITE ? window.LP_CITE(def.cite) : '';
   const WHITE = [1, 1, 1], YELLOW = [0.98, 0.83, 0.22], LINE = [0.22, 0.22, 0.22];
   const clamp01 = (x) => Math.max(0, Math.min(1, x));
@@ -180,7 +182,12 @@ window.LP_paperScheme = (def) => {
           const sc0 = scenes[STEPS[0].shot.scene];
           eng = new Stage3D(W, H, { center: sc0 ? sc0.center : [0, 0, 0], radius: sc0 ? sc0.radius : 6, width: sc0 ? sc0.width : 12, aspect: 1.4, view: sc0 ? sc0.view : [[1, 0, 0], [0, 1, 0], [0, 0, 1]], axes: [[1, 0, 0], [0, 1, 0], [0, 0, 1]], triad: false });
           eng.attach(undefined, ov); eng.attach(cv);
-          if (eng.status === 'nogl') { eng = null; flat = true; stage.classList.add('flat'); host.dataset.view = 'flat'; sync(st.step); return true; }
+          if (eng.status === 'nogl') {
+            eng = null;
+            // no WebGL after all: a figure with slides starts again without them, the others show the paper's figure in place
+            if (STEPS.some((s) => s.slide)) { api.dead = true; api.giveBack(); host.innerHTML = ''; window.LP_paperScheme(Object.assign({}, def, { flat: true })); return false; }
+            flat = true; stage.classList.add('flat'); host.dataset.view = 'flat'; sync(st.step); return true;
+          }
           eng.paint = paint;
           if (saved && saved.M) { Object.assign(eng.d, saved.d); eng.M = saved.M; eng.zoom = saved.zoom; } else snap();
           loadAll();

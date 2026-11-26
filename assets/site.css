@@ -399,6 +399,14 @@ h1 { margin: 0 0 0 -3px; font: 400 clamp(54px, 6.5vw, 94px)/.95 var(--serif); fo
 .sch-slide .fig-bar { margin-bottom: 8px; }
 .sch-slide .pair { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .sch-slide .pair .stage { height: auto; min-height: 0; aspect-ratio: 1.24; }
+/* a figure with one view: the view fills the slide under its bar, its states stay on the plate, and of its caption only
+   the legend stays */
+.sch-slide > .fig:not(.wide) { display: flex; flex-direction: column; align-items: stretch; height: 100%; }
+.sch-slide > .fig:not(.wide) .fig-main { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.sch-slide > .fig:not(.wide) .stage { flex: 1; min-height: 0; aspect-ratio: auto; }
+.sch-slide > .fig:not(.wide) .fig-side { flex: none; padding: 10px 2px 0; }
+.sch-slide > .fig:not(.wide) .fig-title, .sch-slide > .fig:not(.wide) .cap { display: none; }
+.sch-slide > .fig:not(.wide) .legend { margin: 0; padding: 0; border: 0; max-width: none; }
 .sch-wrap.slid .sch-stage > :not(.sch-slide), .sch-wrap.slid .sch-info { visibility: hidden; }
 @media (prefers-reduced-motion: reduce) { .sch-slide.in { animation: none; } }
 @container (max-width: 560px) {
