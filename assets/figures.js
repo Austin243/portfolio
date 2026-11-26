@@ -3,7 +3,7 @@
 (() => {
   'use strict';
   const C = { H: '#DAE0E8', Na: '#B1A4C8', K: '#A122F7', U: '#7AA2AA', Mo: '#B486B0', S: '#D9B43A', Ta: '#6F8FB5', Ca: '#5E93B8',
-    Mn: '#A0489C', Pd: '#B4B8B2', Sc: '#B58AC6', Cl: '#5DB870', Fe: '#C4762B', I: '#7D3AB8', Cs: '#2FA39A', O: '#D6402E',
+    Mn: '#A0489C', Pd: '#B4B8B2', Sc: '#B58AC6', Cl: '#5DB870', Fe: '#C4762B', I: '#7D3AB8', Cs: '#2FA39A', Ba: '#8B6BB8', O: '#D6402E',
     C: '#3A444F', N: '#3157BB' };
   const el = (...names) => names.map((n) => [n, C[n]]);
   const ELF = (max) => ({ name: 'ELF', max: max || 1, unit: '' });
@@ -109,6 +109,10 @@
       spec: '<b>CsO</b> · R-3m · 250 GPa · Cs 2, O 2',
       label: 'Interactive 3D view: CsO at 250 GPa with the oxygen pairs broken up',
       cap: 'CsO at 250 GPa, past the transition near 221 GPa. The pairs have come apart, and each oxygen now sits 1.93 Å from a cesium.' },
+    cs2bao3_cm_250gpa: { ref: 'cs-core', legend: el('Cs', 'Ba', 'O'),
+      spec: '<b>Cs<sub>2</sub>BaO<sub>3</sub></b> · Cm · 250 GPa · Cs 4, Ba 2, O 6',
+      label: 'Interactive 3D view: Cs2BaO3 at 250 GPa, with each cesium between two oxygens in a nearly straight line',
+      cap: 'Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa. There are no O–O pairs: the closest two oxygens are 2.56 Å apart. Each cesium sits between two oxygens in a nearly straight line, 2.06 to 2.14 Å away.' },
 
     // reactions
     acn_m4_35gpa: { ref: 'polymerization', legend: el('C', 'H', 'N').concat([['unreacted', '#BCC2C8']]),
@@ -149,6 +153,8 @@
     // the other projects: a preprint and work in progress
     { id: 'fig-cso', title: 'CsO at 150 and 250 GPa.', panels: [
       { name: 'CsO', states: [['cso_p63mmc_150gpa', 'CsO · 150 GPa'], ['cso_r3m_250gpa', 'CsO · 250 GPa']] }] },
+    { id: 'fig-cs2bao3', title: 'Cs<sub>2</sub>BaO<sub>3</sub> at 250 GPa.', panels: [
+      { name: 'Cs<sub>2</sub>BaO<sub>3</sub>', states: [['cs2bao3_cm_250gpa', 'Cs₂BaO₃ · 250 GPa']] }] },
     { id: 'fig-tas2', title: 'A sulfur vacancy in a TaS<sub>2</sub> sheet.', panels: [
       { name: 'TaS<sub>2</sub> vacancy', states: [['tas2_vacancy', 'TaS₂ · S vacancy']] }] },
     { id: 'fig-reactions', title: 'Acetonitrile under pressure and on sodium.', panels: [
